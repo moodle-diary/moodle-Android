@@ -1,4 +1,4 @@
-package com.sese.moodle
+package eu.tutorial.moodle
 
 import org.junit.Test
 
