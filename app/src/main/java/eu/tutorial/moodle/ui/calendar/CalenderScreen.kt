@@ -1,4 +1,4 @@
-package eu.tutorial.moodle.ui.calender
+package eu.tutorial.moodle.ui.calendar
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -43,11 +43,20 @@ import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.NavType
 import eu.tutorial.moodle.ui.home.DetailHomeScreen
+import eu.tutorial.moodle.ui.navigation.NavigationDestination
 
+object CalendarDestination : NavigationDestination{
+    override val route: String
+        get() = "Calendar"
+    override val titleRes: Int
+        get() = R.string.calendar_title
+}
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun CalendarScreen() {
+fun CalendarScreen(
+    onTabPressed: () -> Unit = {}
+) {
     val navigationItemContentList = listOf(
         NavigationItemContent(
             mailboxType = NavType.Home,
@@ -55,9 +64,9 @@ fun CalendarScreen() {
             text = "Home"
         ),
         NavigationItemContent(
-            mailboxType = NavType.Calender,
+            mailboxType = NavType.Calendar,
             icon = Icons.Default.CalendarMonth,
-            text = "Calender"
+            text = "Calendar"
         ),
         NavigationItemContent(
             mailboxType = NavType.Edit,
@@ -77,10 +86,12 @@ fun CalendarScreen() {
     )
 
     Scaffold(
-        topBar = { CalenderTopBar() },
-        bottomBar = { BottomNavBar(navigationItemContentList = navigationItemContentList) }
+        topBar = { CalendarTopBar() },
+        bottomBar = { BottomNavBar(
+            navigationItemContentList = navigationItemContentList,
+            onTabPressed = onTabPressed
+        ) }
     ) { innerPadding ->
-
         Column(
             modifier = Modifier.padding(innerPadding)
         ) {
@@ -92,15 +103,15 @@ fun CalendarScreen() {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(313.dp)
+                        .height(359.dp)
                         .background(Color(0XFFD9D9D9)),
                     contentAlignment = Alignment.Center
                 ) {
-                    HorizontalCalender()
+                    HorizontalCalendar()
                 }
             }
 
-            Spacer(modifier = Modifier.padding(6.dp))
+            Spacer(modifier = Modifier.size(11.dp))
 
             Card(
                 modifier = Modifier.padding(start = 12.dp, end = 12.dp),
@@ -109,7 +120,7 @@ fun CalendarScreen() {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(266.dp)
+                        .height(247.dp)
                         .background(Color(0XFFEFEFEF)),
                     contentAlignment = Alignment.Center
                 ) {
@@ -118,7 +129,7 @@ fun CalendarScreen() {
             }
         }
 
-        val isVisible by remember { mutableStateOf(true) }
+        val isVisible by remember { mutableStateOf(false) }
         Box(
             modifier = Modifier.padding(top = innerPadding.calculateTopPadding())
         ){
@@ -142,8 +153,8 @@ fun CalendarScreen() {
 @Composable
 private fun BottomNavBar(
     navigationItemContentList: List<NavigationItemContent>,
+    onTabPressed: (() -> Unit) = {},
 ) {
-
     NavigationBar(
         modifier = Modifier
             .height(92.dp),
@@ -153,7 +164,7 @@ private fun BottomNavBar(
             if (navItem.mailboxType != NavType.Edit) {
                 NavigationBarItem(
                     selected = false,
-                    onClick = { /*TODO*/ },
+                    onClick = onTabPressed ,
                     icon = {
                         Icon(
                             imageVector = navItem.icon,
@@ -168,7 +179,7 @@ private fun BottomNavBar(
             } else {
                 NavigationBarItem(
                     selected = false,
-                    onClick = { /*TODO*/ },
+                    onClick = onTabPressed ,
                     icon = {
                         Box(
                             modifier = Modifier
@@ -195,7 +206,7 @@ private fun BottomNavBar(
 }
 
 @Composable
-fun CalenderTopBar(){
+fun CalendarTopBar(){
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -218,7 +229,7 @@ fun CalenderTopBar(){
     showBackground = true
 )
 @Composable
-fun CalenderScreenPreview() {
+fun CalendarScreenPreview() {
     CalendarScreen()
 }
 

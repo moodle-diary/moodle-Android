@@ -1,5 +1,6 @@
 package eu.tutorial.moodle.ui.home
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -38,10 +39,20 @@ import eu.tutorial.moodle.R
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import eu.tutorial.moodle.data.NavType
+import eu.tutorial.moodle.ui.navigation.NavigationDestination
 
+object HomeDestination : NavigationDestination{
+    override val route: String
+        get() = "Diary"
+    override val titleRes: Int
+        get() = R.string.home_title
+
+}
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(){
+fun HomeScreen(
+    onTabPressed : () -> Unit = {}
+){
     val navigationItemContentList = listOf(
         NavigationItemContent(
             mailboxType = NavType.Home,
@@ -49,9 +60,9 @@ fun HomeScreen(){
             text = "Home"
         ),
         NavigationItemContent(
-            mailboxType = NavType.Calender,
+            mailboxType = NavType.Calendar,
             icon = Icons.Default.CalendarMonth,
-            text = "Calender"
+            text = "Calendar"
         ),
         NavigationItemContent(
             mailboxType = NavType.Edit,
@@ -72,10 +83,16 @@ fun HomeScreen(){
 
     Scaffold(
         topBar = { TopAppBar() },
-        bottomBar = { BottomNavBar(navigationItemContentList = navigationItemContentList) }
+        bottomBar = { BottomNavBar(
+            navigationItemContentList = navigationItemContentList,
+            onTabPressed = {
+                onTabPressed()
+                Log.d("debug", "debug")
+            }
+        ) }
     ) {innerPadding ->
-        DetailHomeScreen(innerPaddingValues = innerPadding)
-//        EmptyHomeScreen(innerPaddingValues = innerPadding)
+//        DetailHomeScreen(innerPaddingValues = innerPadding)
+        EmptyHomeScreen(innerPaddingValues = innerPadding)
     }
 }
 
@@ -96,7 +113,7 @@ fun TopAppBar(){
                 text = "August",
                 style = TextStyle(
                     fontSize = 24.sp,
-                    fontFamily = FontFamily(Font(R.font.poppins)),
+                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
                     color = Color(0xFF000000),
                 )
             )
@@ -131,6 +148,7 @@ fun TopAppBar(){
 @Composable
 private fun BottomNavBar(
     navigationItemContentList : List<NavigationItemContent>,
+    onTabPressed: (() -> Unit) = {},
 ){
 
     NavigationBar(
@@ -142,7 +160,7 @@ private fun BottomNavBar(
             if(navItem.mailboxType != NavType.Edit){
                 NavigationBarItem(
                     selected = false,
-                    onClick = { /*TODO*/ },
+                    onClick =  onTabPressed,
                     icon = {
                         Icon(
                             imageVector = navItem.icon,
@@ -157,7 +175,7 @@ private fun BottomNavBar(
             }else{
                 NavigationBarItem(
                     selected = false,
-                    onClick = { /*TODO*/ },
+                    onClick =  onTabPressed ,
                     icon = {
                         Box(
                             modifier = Modifier

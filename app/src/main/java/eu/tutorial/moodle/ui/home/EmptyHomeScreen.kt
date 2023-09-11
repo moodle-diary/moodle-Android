@@ -25,7 +25,7 @@ import eu.tutorial.moodle.R
 
 @Composable
 fun EmptyHomeScreen(
-    innerPaddingValues: PaddingValues
+    innerPaddingValues: PaddingValues = PaddingValues(0.dp)
 ){
     Column(
         modifier = Modifier

@@ -129,7 +129,7 @@ fun DetailHomeScreen(
                     modifier = Modifier
                         .padding(start = 18.dp, top = 32.dp, bottom = 32.dp, end = 18.dp),
                     style = TextStyle(
-                        fontFamily = FontFamily(Font(R.font.poppins)),
+                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
                         fontSize = 16.sp
                     )
 

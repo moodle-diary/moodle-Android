@@ -1,19 +1,16 @@
-package eu.tutorial.moodle.ui.calender
+package eu.tutorial.moodle.ui.calendar
 
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -44,31 +41,14 @@ import java.util.Locale
 @OptIn(ExperimentalFoundationApi::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HorizontalCalender(
+fun HorizontalCalendar(
     modifier: Modifier = Modifier,
     currentDate: LocalDate = LocalDate.now()
 ){
-    val currentMonth = YearMonth.now()
-    val startOfMonth = currentMonth.atDay(1)
-    val endOfMonth = currentMonth.atEndOfMonth()
-
-    // 현재 달의 모든 날짜 가져오기
-    val datesInCurrentMonth = generateSequence(startOfMonth) { it.plusDays(1) }
-        .takeWhile { it <= endOfMonth }
-
-    val daysOfWeek = (0 until 7).map {
-        currentMonth
-            .atDay(it + 1)
-            .dayOfWeek
-            .getDisplayName(TextStyle.SHORT, Locale.getDefault())
-    }
-
-    val firstDayOfWeek = currentMonth.atDay(1).with(DayOfWeek.SUNDAY)
-
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(top = 24.dp)
+            .padding(top = 24.dp, bottom = 16.dp)
     ) {
         val pageCount = 144
         HorizontalPager(
@@ -99,23 +79,32 @@ fun CalendarMonthItem(
     selectedDate: LocalDate
 ) {
     val lastDay = currentDate.lengthOfMonth()
-    val firstDayOfWeek = YearMonth.now().atDay(1).dayOfWeek.value
+
+    val currentMonth = YearMonth.now()
+    val firstDayOfMonth = currentMonth.atDay(1).dayOfWeek.value
+
     val days = IntRange(1, lastDay).toList()
+
+    val lastMonthDate = currentMonth.atDay(1).minusDays(1)
+
+    val lastDays = IntRange(lastMonthDate.lengthOfMonth() - firstDayOfMonth + 1, lastMonthDate.lengthOfMonth()).toList()
+
+    val nextDays = IntRange(1, 42 - lastDays.size - days.size).toList()
 
     Column(modifier = modifier.fillMaxSize()) {
         DayOfWeek()
         LazyVerticalGrid(
-            modifier = Modifier.height(260.dp),
-            columns = GridCells.Fixed(7)
+            modifier = Modifier.fillMaxSize(),
+            columns = GridCells.Fixed(7),
         ) {
-            for (i in 1 until firstDayOfWeek + 1) { // 처음 날짜가 시작하는 요일 전까지 빈 박스 생성
-                item {
-                    Box(
-                        modifier = Modifier
-                            .size(30.dp)
-                            .padding(top = 10.dp)
-                    )
-                }
+            items(lastDays) {day ->
+                CalendarDay(
+                    modifier = Modifier.padding(top = 10.dp),
+                    day = day,
+                    isToday = false,
+                    isSelected = false,
+                    isCurrentMonth = false
+                )
             }
             items(days) { day ->
                 val date = currentDate.withDayOfMonth(day)
@@ -124,9 +113,18 @@ fun CalendarMonthItem(
                 }
                 CalendarDay(
                     modifier = Modifier.padding(top = 10.dp),
-                    date = date,
+                    day = day,
                     isToday = date == LocalDate.now(),
                     isSelected = isSelected
+                )
+            }
+            items(nextDays) {day ->
+                CalendarDay(
+                    modifier = Modifier.padding(top = 8.dp),
+                    day = day,
+                    isToday = false,
+                    isSelected = false,
+                    isCurrentMonth = false
                 )
             }
         }
@@ -137,28 +135,43 @@ fun CalendarMonthItem(
 @Composable
 fun CalendarDay(
     modifier: Modifier = Modifier,
-    date: LocalDate,
+    day: Int,
     isToday: Boolean,
-    isSelected: Boolean
+    isSelected: Boolean,
+    isCurrentMonth: Boolean = true
 ) {
+    val boxColor =
+        if(isCurrentMonth)
+            if (isToday) Color(0XFF414141) else Color(0XFFEFEFEF)
+        else
+            Color(0X80EFEFEF)
+
+    val textColor =
+        if(isCurrentMonth)
+            if (isToday) Color(0XFFFFFFFF) else Color(0XFF000000)
+        else
+            Color(0X4D000000)
     Box(
         modifier = modifier
             .wrapContentSize()
-            .size(30.dp)
+            .size(38.dp)
             .clip(shape = RoundedCornerShape(10.dp))
-            .background(color = Color(0XFFEFEFEF)),
+            .background(
+                color = boxColor
+            ),
         contentAlignment = Alignment.Center
     ) {
         Text(
             modifier = Modifier,
             textAlign = TextAlign.Center,
-            text = date.dayOfMonth.toString(),
+            text = day.toString(),
             style = androidx.compose.ui.text.TextStyle(
                 fontFamily = FontFamily(Font(R.font.poppins_medium)),
                 fontSize = 11.69.sp,
                 platformStyle = PlatformTextStyle(
                     includeFontPadding = false
-                )
+                ),
+                color = textColor
             ),
 
         )
@@ -186,7 +199,7 @@ fun DayOfWeek(
                 text = day.getDisplayName(TextStyle.NARROW, Locale.ENGLISH).lowercase(),
                 textAlign = TextAlign.Center,
                 style = androidx.compose.ui.text.TextStyle(
-                    fontFamily = FontFamily(Font(R.font.poppins)),
+                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
                     fontSize = 20.sp,
                     platformStyle = PlatformTextStyle(
                         includeFontPadding = false
@@ -205,7 +218,7 @@ fun DayOfWeek(
                 text = day.getDisplayName(TextStyle.NARROW, Locale.ENGLISH).lowercase(),
                 textAlign = TextAlign.Center,
                 style = androidx.compose.ui.text.TextStyle(
-                    fontFamily = FontFamily(Font(R.font.poppins)),
+                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
                     fontSize = 20.sp,
                     platformStyle = PlatformTextStyle(
                         includeFontPadding = false
@@ -217,6 +230,8 @@ fun DayOfWeek(
     }
 }
 
+
+
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(
     showBackground = true,
@@ -224,5 +239,5 @@ fun DayOfWeek(
 )
 @Composable
 fun CalendarPreview(){
-    HorizontalCalender()
+    HorizontalCalendar()
 }
