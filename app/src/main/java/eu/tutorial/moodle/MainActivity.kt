@@ -12,7 +12,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import eu.tutorial.moodle.ui.home.HomeScreen
 import eu.tutorial.moodle.ui.theme.MoodleTheme
 
 class MainActivity : ComponentActivity() {

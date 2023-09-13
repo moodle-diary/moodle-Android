@@ -1,10 +1,13 @@
 package eu.tutorial.moodle.ui.home
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
@@ -30,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,7 +43,9 @@ import eu.tutorial.moodle.R
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import eu.tutorial.moodle.data.NavType
+import eu.tutorial.moodle.ui.calendar.CalendarDestination
 import eu.tutorial.moodle.ui.navigation.NavigationDestination
+import java.time.LocalDate
 
 object HomeDestination : NavigationDestination{
     override val route: String
@@ -48,57 +54,15 @@ object HomeDestination : NavigationDestination{
         get() = R.string.home_title
 
 }
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun HomeScreen(
-    onTabPressed : () -> Unit = {}
-){
-    val navigationItemContentList = listOf(
-        NavigationItemContent(
-            mailboxType = NavType.Home,
-            icon = Icons.Default.Home,
-            text = "Home"
-        ),
-        NavigationItemContent(
-            mailboxType = NavType.Calendar,
-            icon = Icons.Default.CalendarMonth,
-            text = "Calendar"
-        ),
-        NavigationItemContent(
-            mailboxType = NavType.Edit,
-            icon = Icons.Rounded.Edit,
-            text = "Edit"
-        ),
-        NavigationItemContent(
-            mailboxType = NavType.Chart,
-            icon = Icons.Default.BarChart,
-            text = "Chart"
-        ),
-        NavigationItemContent(
-            mailboxType = NavType.Setting,
-            icon = Icons.Default.Settings,
-            text = "Settings"
-        )
-    )
-
-    Scaffold(
-        topBar = { TopAppBar() },
-        bottomBar = { BottomNavBar(
-            navigationItemContentList = navigationItemContentList,
-            onTabPressed = {
-                onTabPressed()
-                Log.d("debug", "debug")
-            }
-        ) }
-    ) {innerPadding ->
-//        DetailHomeScreen(innerPaddingValues = innerPadding)
-        EmptyHomeScreen(innerPaddingValues = innerPadding)
-    }
-}
-
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBar(){
+    val today = LocalDate.now()
+
+    val currentMonth = today.month
+    val currentDate = today.dayOfMonth
+    val currentDay = today.dayOfWeek
     Box(
         modifier = Modifier
             .height(148.dp)
@@ -110,22 +74,28 @@ fun TopAppBar(){
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "August",
+                text = currentMonth.toString(),
                 style = TextStyle(
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
                     color = Color(0xFF000000),
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    ),
                 )
             )
 
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text="31  Thursday",
+                        text="%s  %s".format(currentDate, currentDay),
                         style = TextStyle(
                             fontSize = 32.sp,
                             fontFamily = FontFamily(Font(R.font.poppins_bold)),
                             color = Color(0xFF000000),
+                            platformStyle = PlatformTextStyle(
+                                includeFontPadding = false
+                            ),
                         ),
                         textAlign = TextAlign.Center
                     ) },
@@ -139,81 +109,15 @@ fun TopAppBar(){
                     } },
             )
 
-
         }
     }
 
 }
 
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Preview
 @Composable
-private fun BottomNavBar(
-    navigationItemContentList : List<NavigationItemContent>,
-    onTabPressed: (() -> Unit) = {},
-){
-
-    NavigationBar(
-        modifier = Modifier
-            .height(92.dp),
-        containerColor = Color(0XEFEFEFEF),
-    ) {
-        for(navItem in navigationItemContentList){
-            if(navItem.mailboxType != NavType.Edit){
-                NavigationBarItem(
-                    selected = false,
-                    onClick =  onTabPressed,
-                    icon = {
-                        Icon(
-                            imageVector = navItem.icon,
-                            contentDescription = navItem.text,
-                            modifier = Modifier
-                                .width(30.dp)
-                                .height(30.dp)
-                            // 여기 dp 값 임의 수정함
-                        )
-                    },
-                )
-            }else{
-                NavigationBarItem(
-                    selected = false,
-                    onClick =  onTabPressed ,
-                    icon = {
-                        Box(
-                            modifier = Modifier
-                                .size(60.dp) // 동그란 배경의 크기 설정
-                                .background(Color(0XFF414141), CircleShape), // 동그란 배경 추가
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                imageVector = navItem.icon,
-                                contentDescription = navItem.text,
-                                modifier = Modifier
-                                    .width(30.dp)
-                                    .height(30.dp),
-                                tint = Color(0XEFEFEFEF)
-                                // 여기 dp 값 임의 수정함
-                            )
-                        }
-
-                    },
-
-                )
-            }
-        }
-    }
-
+fun TopBarPreview(){
+    TopAppBar()
 }
-
-@Preview(
-    showBackground = true,
-    showSystemUi = true
-)
-@Composable
-fun HomeScreenPreview(){
-    HomeScreen()
-}
-
-private data class NavigationItemContent(
-    val mailboxType: NavType,
-    val icon: ImageVector,
-    val text: String
-)
