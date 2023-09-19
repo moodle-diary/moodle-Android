@@ -96,7 +96,6 @@ fun HorizontalCalendar(
                 currentDate = date,
                 selectedDate = currentSelectedDate,
                 onSelectedDate = { selectedDate ->
-                    Log.d("selected", selectedDate.toString())
                     currentSelectedDate = selectedDate
                 }
             )

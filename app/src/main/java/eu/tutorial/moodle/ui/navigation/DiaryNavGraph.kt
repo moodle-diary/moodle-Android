@@ -51,13 +51,13 @@ import eu.tutorial.moodle.ui.home.TopAppBar
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DiaryNavHost(
-    navController : NavHostController,
-){
+    navController: NavHostController,
+) {
     NavHost(
         navController = navController,
         startDestination = HomeDestination.route,
-    ){
-        composable(route = HomeDestination.route){
+    ) {
+        composable(route = HomeDestination.route) {
             Scaffold(
                 topBar = { TopAppBar() },
                 bottomBar = { BottomNavBar(navController = navController) },
@@ -73,18 +73,17 @@ fun DiaryNavHost(
                             .size(60.dp)
                     ) {
                         Icon(
-                            imageVector = Icons.Filled.Edit
-                            , contentDescription = "Edit"
+                            imageVector = Icons.Filled.Edit, contentDescription = "Edit"
                         )
                     }
                 }
-            ) {innerPadding ->
+            ) { innerPadding ->
 //        DetailHomeScreen(innerPaddingValues = innerPadding)
                 EmptyHomeScreen(innerPaddingValues = innerPadding)
             }
         }
 
-        composable(route = CalendarDestination.route){
+        composable(route = CalendarDestination.route) {
             Scaffold(
                 bottomBar = { BottomNavBar(navController = navController) },
                 floatingActionButtonPosition = FabPosition.Center,
@@ -99,12 +98,12 @@ fun DiaryNavHost(
                             .size(60.dp)
                     ) {
                         Icon(
-                            imageVector = Icons.Filled.Edit
-                            , contentDescription = "Edit"
+                            imageVector = Icons.Filled.Edit, contentDescription = "Edit"
                         )
                     }
                 }
             ) { innerPadding ->
+                val visible = true
                 CalendarMainCard(
                     innerPadding = innerPadding
                 )
@@ -115,8 +114,8 @@ fun DiaryNavHost(
 
 @Composable
 fun BottomNavBar(
-    navController : NavHostController,
-){
+    navController: NavHostController,
+) {
 
     val navigationItemContentList = listOf(
         NavigationItemContent(
@@ -158,11 +157,11 @@ fun BottomNavBar(
             .fillMaxSize(),
         containerColor = Color(0XEFEFEFEF),
     ) {
-        for(navItem in navigationItemContentList){
-            if(navItem.mailboxType != NavType.Edit){
+        for (navItem in navigationItemContentList) {
+            if (navItem.mailboxType != NavType.Edit) {
                 NavigationBarItem(
                     selected = false,
-                    onClick =  { navController.navigate(navItem.route) },
+                    onClick = { navController.navigate(navItem.route) },
                     icon = {
                         Icon(
                             imageVector = navItem.icon,
@@ -174,7 +173,7 @@ fun BottomNavBar(
                         )
                     },
                 )
-            }else{
+            } else {
                 SmallFloatingActionButton(
                     onClick = { navController.navigate(navItem.route) },
                     shape = CircleShape,
@@ -201,6 +200,6 @@ fun BottomNavBar(
 
 @Preview()
 @Composable
-fun BottomNavBarPreview(){
+fun BottomNavBarPreview() {
     BottomNavBar(navController = rememberNavController())
 }
