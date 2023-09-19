@@ -45,6 +45,7 @@ import eu.tutorial.moodle.data.NavType
 import eu.tutorial.moodle.ui.home.DetailHomeScreen
 import eu.tutorial.moodle.ui.navigation.NavigationDestination
 import java.time.LocalDate
+import java.time.YearMonth
 
 object CalendarDestination : NavigationDestination{
     override val route: String
@@ -54,9 +55,9 @@ object CalendarDestination : NavigationDestination{
 }
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun CalendarTopBar(){
-    val currentYear = LocalDate.now().year
-    val currentMonth = LocalDate.now().month
+fun CalendarTopBar(
+    currentMonth: YearMonth
+){
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -64,21 +65,11 @@ fun CalendarTopBar(){
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "%s %d".format(currentMonth, currentYear),
+            text = "%s %d".format(currentMonth.month, currentMonth.year),
             style = androidx.compose.ui.text.TextStyle(
                 fontSize = 24.sp,
                 fontFamily = FontFamily(Font(R.font.poppins_bold))
             )
         )
     }
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-@Preview(
-    showSystemUi = true,
-    showBackground = true
-)
-@Composable
-fun CalendarScreenPreview() {
-    CalendarTopBar()
 }

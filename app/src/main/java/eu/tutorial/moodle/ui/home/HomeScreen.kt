@@ -100,13 +100,6 @@ fun TopAppBar(){
                         textAlign = TextAlign.Center
                     ) },
                 modifier = Modifier,
-                navigationIcon = {
-                    IconButton(onClick = {}) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.arrow_back),
-                            contentDescription = "go back",
-                        )
-                    } },
             )
 
         }
