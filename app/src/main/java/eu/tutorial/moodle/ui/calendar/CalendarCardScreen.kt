@@ -23,6 +23,7 @@ import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
@@ -49,10 +50,24 @@ import java.util.Locale
 fun HorizontalCalendar(
     modifier: Modifier = Modifier,
     currentDate: LocalDate = LocalDate.now(),
-    pagerState : PagerState
-){
+    pagerState: PagerState
+) {
 
     var currentSelectedDate by remember { mutableStateOf(currentDate) }
+
+    LaunchedEffect(currentSelectedDate) {
+        val idx = currentSelectedDate.month.value + 12 * (currentSelectedDate.year - 1970) - 1
+        // 개수로 세면 1월이 0 부터 시작인데, 실제는 1
+
+        if (idx < (pagerState.currentPage)) {
+            pagerState.scrollToPage(page = pagerState.currentPage - 1)
+        } else if (idx > (pagerState.currentPage)) {
+            pagerState.scrollToPage(page = pagerState.currentPage + 1)
+
+        }
+    }
+
+
 
     Column(
         modifier = modifier
@@ -67,6 +82,7 @@ fun HorizontalCalendar(
             pageCount = pageCount,
             state = pagerState
         ) { page ->
+
             Log.d("page", page.toString())
             val date = LocalDate.of(
                 page / 12 + 1970,
@@ -82,11 +98,6 @@ fun HorizontalCalendar(
                 onSelectedDate = { selectedDate ->
                     Log.d("selected", selectedDate.toString())
                     currentSelectedDate = selectedDate
-                    if(selectedDate.month.value < (page % 12 + 1)){
-                        page.minus(1)
-                    }else if(selectedDate.month.value > (page % 12 + 1)){
-                        page.plus(1)
-                    }
                 }
             )
         }
@@ -107,7 +118,10 @@ fun CalendarMonthItem(
 
     val lastMonthDate = LocalDate.of(currentDate.year, currentDate.month, 1).minusDays(1)
 
-    val lastDays = IntRange( lastMonthDate.lengthOfMonth() - lastMonthDate.dayOfWeek.value, lastMonthDate.lengthOfMonth()).toList()
+    val lastDays = IntRange(
+        lastMonthDate.lengthOfMonth() - lastMonthDate.dayOfWeek.value,
+        lastMonthDate.lengthOfMonth()
+    ).toList()
 
     val nextMonthDate = LocalDate.of(currentDate.year, currentDate.month, lastDay).plusDays(1)
 
@@ -118,7 +132,7 @@ fun CalendarMonthItem(
             modifier = Modifier.fillMaxSize(),
             columns = GridCells.Fixed(7),
         ) {
-            items(lastDays) {day ->
+            items(lastDays) { day ->
 
                 val date = lastMonthDate.withDayOfMonth(day)
                 val isSelected = remember(selectedDate) {
@@ -151,7 +165,7 @@ fun CalendarMonthItem(
                     onSelectedDate = onSelectedDate
                 )
             }
-            items(nextDays) {day ->
+            items(nextDays) { day ->
 
                 val date = nextMonthDate.withDayOfMonth(day)
                 val isSelected = remember(selectedDate) {
@@ -184,13 +198,13 @@ fun CalendarDay(
     onSelectedDate: (LocalDate) -> Unit = {}
 ) {
     val boxColor =
-        if(isCurrentMonth)
+        if (isCurrentMonth)
             if (isToday) Color(0XFF414141) else Color(0XFFEFEFEF)
         else
             Color(0X80EFEFEF)
 
     val textColor =
-        if(isCurrentMonth)
+        if (isCurrentMonth)
             if (isToday) Color(0XFFFFFFFF) else Color(0XFF000000)
         else
             Color(0X4D000000)
@@ -209,7 +223,7 @@ fun CalendarDay(
             .background(
                 color = boxColor
             )
-            .clickable{
+            .clickable {
                 onSelectedDate(date)
             },
         contentAlignment = Alignment.Center
@@ -227,7 +241,7 @@ fun CalendarDay(
                 color = textColor
             ),
 
-        )
+            )
     }
 }
 
