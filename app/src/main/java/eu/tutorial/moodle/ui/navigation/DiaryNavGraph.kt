@@ -47,6 +47,8 @@ import eu.tutorial.moodle.ui.calendar.CalendarTopBar
 import eu.tutorial.moodle.ui.home.EmptyHomeScreen
 import eu.tutorial.moodle.ui.home.HomeDestination
 import eu.tutorial.moodle.ui.home.TopAppBar
+import eu.tutorial.moodle.ui.post.PostDestination
+import eu.tutorial.moodle.ui.post.PostEmotionScreen
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -65,7 +67,7 @@ fun DiaryNavHost(
                 floatingActionButton = {
                     FloatingActionButton(
                         shape = CircleShape,
-                        onClick = { },
+                        onClick = { navController.navigate(PostDestination.route) },
                         contentColor = Color.White,
                         containerColor = Color(0XFF414141),
                         modifier = Modifier
@@ -73,7 +75,8 @@ fun DiaryNavHost(
                             .size(60.dp)
                     ) {
                         Icon(
-                            imageVector = Icons.Filled.Edit, contentDescription = "Edit"
+                            imageVector = Icons.Filled.Edit,
+                            contentDescription = "Edit"
                         )
                     }
                 }
@@ -90,7 +93,7 @@ fun DiaryNavHost(
                 floatingActionButton = {
                     FloatingActionButton(
                         shape = CircleShape,
-                        onClick = { },
+                        onClick = { navController.navigate(PostDestination.route) },
                         contentColor = Color.White,
                         containerColor = Color(0XFF414141),
                         modifier = Modifier
@@ -108,6 +111,12 @@ fun DiaryNavHost(
                     innerPadding = innerPadding
                 )
             }
+        }
+
+        composable(route = PostDestination.route) {
+            PostEmotionScreen(
+                navController = navController
+            )
         }
     }
 }

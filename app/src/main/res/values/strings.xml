@@ -4,4 +4,6 @@
 
     <string name="calendar_title">calendar_title</string>
     <string name="home_title">home</string>
+
+    <string name="post_emo">postEmo</string>
 </resources>
