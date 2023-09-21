@@ -102,7 +102,7 @@ fun PlaceGrid() {
                         ) {
                             Icon(
                                 Icons.Default.Place,
-                                contentDescription = "circle"
+                                contentDescription = "place"
                             )
                         }
                         Text(
