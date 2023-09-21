@@ -1,6 +1,8 @@
 package eu.tutorial.moodle.ui.post
 
-import androidx.compose.foundation.ExperimentalFoundationApi
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,15 +11,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.PhotoAlbum
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,11 +37,21 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 
 @Composable
 fun ImgGrid() {
-    var text by remember { mutableStateOf(TextFieldValue()) }
-    var textVisible by remember { mutableStateOf(true) }
+
+    // Uri 타입의 변수 imageUri 선언
+    var imageUri: Uri? by remember { mutableStateOf(null) }
+
+    // Boolean 타입의 변수 imageTy 선언
+    var imageTy by remember { mutableStateOf(false) }
+
+    val launcher = rememberLauncherForActivityResult(contract =
+    ActivityResultContracts.GetContent()) { uri: Uri? ->
+        imageUri = uri
+    }
 
     Box(
         modifier = Modifier
@@ -58,51 +72,44 @@ fun ImgGrid() {
                 textAlign = TextAlign.Center
             )
 
-            if (textVisible) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Button(
-                        onClick = { textVisible = false },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0XFFFFFFFF),
-                            contentColor = Color(0XFF414141)
-                        ),
-                        elevation = ButtonDefaults.buttonElevation( //버튼 그림자 없애기
-                            defaultElevation = 0.dp,
-                            pressedElevation = 0.dp
-                        ),
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 78.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+
+                if (imageUri == null){
+                    IconButton(
+                        onClick = {
+                            imageTy = true
+                            launcher.launch("image/*")
+                        },
                         modifier = Modifier
-                            .padding(16.dp)
                             .size(50.dp)
                             .clip(shape = CircleShape.copy(all = CornerSize(20.dp)))
+                            .background(Color(0XFFFFFFFF))
                     ) {
                         Icon(
                             Icons.Default.Add,
-                            contentDescription = "add"
+                            contentDescription = "add",
+                            modifier = Modifier.size(24.dp),
+                            tint = Color(0XFF000000)
                         )
                     }
                     Text(
+                        modifier = Modifier.padding(top = 16.dp),
                         text = "Any photos",
                         textAlign = TextAlign.Center
                     )
-                }
-            } else {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color(color = 0XffEFEFEF)),
-                ) {
-                    BasicTextField(
-                        value = text,
-                        onValueChange = {
-                            text = it
-                        },
-                        textStyle = TextStyle(fontSize = 16.sp),
+                } else{
+                    AsyncImage(
+                        model = imageUri,
+                        contentDescription = null,
                         modifier = Modifier
-                            .padding(16.dp)
-                            .background(Color(color = 0XffEFEFEF))
+                            .wrapContentWidth(align = Alignment.Start)
+                            .padding(3.dp)
                     )
                 }
             }
