@@ -21,6 +21,10 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Place
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -41,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.Locale
 
@@ -50,7 +55,9 @@ import java.util.Locale
 fun HorizontalCalendar(
     modifier: Modifier = Modifier,
     currentDate: LocalDate = LocalDate.now(),
-    pagerState: PagerState
+    currentMonth: YearMonth,
+    pagerState: PagerState,
+    changeVisible : () -> Unit,
 ) {
 
     var currentSelectedDate by remember { mutableStateOf(currentDate) }
@@ -59,12 +66,15 @@ fun HorizontalCalendar(
         val idx = currentSelectedDate.month.value + 12 * (currentSelectedDate.year - 1970) - 1
         // 개수로 세면 1월이 0 부터 시작인데, 실제는 1
 
-        if (idx < (pagerState.currentPage)) {
-            pagerState.scrollToPage(page = pagerState.currentPage - 1)
-        } else if (idx > (pagerState.currentPage)) {
-            pagerState.scrollToPage(page = pagerState.currentPage + 1)
-
+        // TODO : 앞 혹은 뒤로 많이 갔을 때, 현재 날짜로 변경 되면, 그 페이지로 한 번에 돌아 가도록 한다.
+        while(idx != pagerState.currentPage){
+            if (idx < (pagerState.currentPage)) {
+                pagerState.scrollToPage(page = pagerState.currentPage - 1)
+            } else {
+                pagerState.scrollToPage(page = pagerState.currentPage + 1)
+            }
         }
+
     }
 
 
@@ -75,6 +85,25 @@ fun HorizontalCalendar(
             .padding(top = 24.dp, bottom = 16.dp)
             .padding(horizontal = 20.dp)
     ) {
+
+        Row() {
+            Text(
+                text = "%s %d".format(currentMonth.month, currentMonth.year),
+                style = androidx.compose.ui.text.TextStyle(
+                    fontSize = 24.sp,
+                    fontFamily = FontFamily(Font(R.font.poppins_bold))
+                )
+            )
+
+            IconButton(
+                onClick = { currentSelectedDate = LocalDate.now() },
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Place,
+                    contentDescription = "move current date")
+            }
+        }
+
         DayOfWeek()
         Log.d("current", currentDate.monthValue.toString())
         val pageCount = (2133 - 1970) * 12
@@ -97,7 +126,8 @@ fun HorizontalCalendar(
                 selectedDate = currentSelectedDate,
                 onSelectedDate = { selectedDate ->
                     currentSelectedDate = selectedDate
-                }
+                    changeVisible()
+                },
             )
         }
     }
@@ -109,7 +139,7 @@ fun CalendarMonthItem(
     modifier: Modifier = Modifier,
     currentDate: LocalDate,
     selectedDate: LocalDate,
-    onSelectedDate: (LocalDate) -> Unit
+    onSelectedDate: (LocalDate) -> Unit,
 ) {
     val lastDay = currentDate.lengthOfMonth()
 
@@ -239,8 +269,7 @@ fun CalendarDay(
                 ),
                 color = textColor
             ),
-
-            )
+        )
     }
 }
 
@@ -295,15 +324,3 @@ fun DayOfWeek(
         }
     }
 }
-
-
-//
-//@RequiresApi(Build.VERSION_CODES.O)
-//@Preview(
-//    showBackground = true,
-//    showSystemUi = true
-//)
-//@Composable
-//fun CalendarPreview(){
-//    HorizontalCalendar()
-//}

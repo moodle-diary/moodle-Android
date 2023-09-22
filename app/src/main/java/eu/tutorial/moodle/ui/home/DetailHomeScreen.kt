@@ -14,7 +14,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -42,8 +47,8 @@ import eu.tutorial.moodle.data.local.diaryText
 
 @Composable
 fun DetailHomeScreen(
+    modifier: Modifier = Modifier,
     innerPaddingValues: PaddingValues = PaddingValues(0.dp),
-    modifier: Modifier = Modifier
 ){
     val verticalScrollState = rememberScrollState()
 
@@ -53,9 +58,9 @@ fun DetailHomeScreen(
             .verticalScroll(verticalScrollState)
     ) {
 
-//        Spacer(
-//            modifier = Modifier.size(400.dp)
-//        )
+        Spacer(
+            modifier = Modifier.size(50.dp)
+        )
 
         Card(
             modifier = Modifier
@@ -76,20 +81,20 @@ fun DetailHomeScreen(
 
         Card(
             modifier = Modifier
+                .height(186.dp)        // TODO : item 개수에 따라서 height 값을 조절 해야 합니다. 1 - 4 : 104 / 5 - 8 : 186 / 9 - 12 : 268
                 .padding(start = 12.dp, end = 12.dp),
             shape = RoundedCornerShape(32.dp)
         ) {
             Box(
                 modifier = Modifier
-                    .height(104.dp)
-                    .fillMaxWidth()
                     .background(color = Color(0XD9D9D9D9)),
                 contentAlignment = Alignment.Center,
-            ){
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp), // // content의 패딩
-                    contentPadding = PaddingValues(16.dp),
-                    modifier = Modifier
+            ) {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(4),
+                    contentPadding = PaddingValues(horizontal = 16.5.dp, vertical = 16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),// 가로
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
                 ){
                     items(allEmojis){ item ->
                         AlignYourBodyElement(
@@ -155,7 +160,7 @@ fun AlignYourBodyElement(
                 contentScale = ContentScale.Crop, // 동그랗게 만듬
                 modifier = Modifier
                     .size(44.dp)
-                    .clip(CircleShape)
+
             )
         }
     }
