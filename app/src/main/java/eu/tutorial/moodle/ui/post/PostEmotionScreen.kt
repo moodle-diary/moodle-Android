@@ -89,26 +89,6 @@ fun PostEmotionScreen(navController: NavController) {
             unSelectedColor = Color(0XFFD9D9D9)
         )
 
-//        HorizontalPager(
-//            modifier = Modifier.height(520.dp),
-//            pageCount = pageCount,
-//            state = pagerState,
-//            pageSpacing = 10.dp,
-//        ) { page ->
-//            PageCard(
-//                page = page % actualPageCount,
-//                modifier = Modifier.clip(shape = CircleShape.copy(all = CornerSize(32.dp)))
-//            ) {
-//                when (page % actualPageCount) {
-//                    0 -> MoodGrid()
-//                    1, 2 -> ActGrid()
-//                    3 -> PlaceGrid()
-//                    4 -> PostGrid()
-//                    5 -> ImgGrid()
-//                }
-//            }
-//        }
-
         val pageCount = actualPageCount
 
         HorizontalPager(
@@ -132,7 +112,6 @@ fun PostEmotionScreen(navController: NavController) {
                 }
             }
         }
-
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -203,12 +182,12 @@ fun PostEmotionScreen(navController: NavController) {
                         modifier = Modifier
                             .width(282.dp)
                             .height(175.dp)
-                            .background(Color.White)
-                            .clip(shape = CircleShape.copy(all = CornerSize(52.dp)))
+                            .background(Color.Transparent)
+                            .clip(shape = CircleShape.copy(all = CornerSize(32.dp)))
                     ) {
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier.fillMaxSize().background(Color.White)
                         ) {
                             Text(
                                 text = dialogText,
@@ -277,13 +256,6 @@ fun PageCard(page: Int, modifier: Modifier = Modifier, content: @Composable () -
             content()
         }
     }
-}
-
-@Composable
-fun canChangePage(currentPage: Int): Boolean {
-    // 여기에서 페이지 변경을 제한하는 논리를 구현합니다.
-    // 예를 들어, currentPage == 5 일 때 0으로 이동하지 못하도록 할 수 있습니다.
-    return true // 이동을 허용하려면 true를 반환하고, 제한하려면 false를 반환합니다.
 }
 
 
