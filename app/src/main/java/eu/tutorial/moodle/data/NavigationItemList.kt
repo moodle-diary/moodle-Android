@@ -1,0 +1,36 @@
+package eu.tutorial.moodle.data
+
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BarChart
+import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
+import eu.tutorial.moodle.ui.navigation.CalendarDestination
+import eu.tutorial.moodle.ui.navigation.HomeDestination
+
+val navigationItemContentList = listOf(
+    NavigationItemContent(
+        mailboxType = NavType.Home,
+        icon = Icons.Default.Home,
+        text = "Home",
+        route = HomeDestination.route
+    ),
+    NavigationItemContent(
+        mailboxType = NavType.Calendar,
+        icon = Icons.Default.CalendarMonth,
+        text = "Calendar",
+        route = CalendarDestination.route
+    ),
+    NavigationItemContent(
+        mailboxType = NavType.Chart,
+        icon = Icons.Default.BarChart,
+        text = "Chart",
+        route = ""
+    ),
+    NavigationItemContent(
+        mailboxType = NavType.Setting,
+        icon = Icons.Default.Settings,
+        text = "Settings",
+        route = ""
+    )
+)

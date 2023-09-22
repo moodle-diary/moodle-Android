@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
 
+// TODO 이 부분을 이번 달에 일기를 얼마나 썻는지 통계 표시
 @Composable
 fun EmotionChart(){
     Column(

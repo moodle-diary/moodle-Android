@@ -26,13 +26,6 @@ import androidx.compose.ui.text.style.TextAlign
 import eu.tutorial.moodle.ui.navigation.NavigationDestination
 import java.time.LocalDate
 
-object HomeDestination : NavigationDestination{
-    override val route: String
-        get() = "Diary"
-    override val titleRes: Int
-        get() = R.string.home_title
-
-}
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
