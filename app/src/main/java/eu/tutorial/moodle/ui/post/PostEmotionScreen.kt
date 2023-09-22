@@ -57,10 +57,9 @@ fun PostEmotionScreen(navController: NavController) {
     var isCancel by remember { mutableStateOf(false) }
 
     val actualPageCount = 6
-    val pageCount = Int.MAX_VALUE
-    val maxNumOfRounds = Int.MAX_VALUE / actualPageCount
+    val initialPage = 0
     val pagerState = rememberPagerState(
-        initialPage = (maxNumOfRounds / 2) * actualPageCount
+        initialPage = initialPage,
     )
 
     Column(
@@ -90,17 +89,41 @@ fun PostEmotionScreen(navController: NavController) {
             unSelectedColor = Color(0XFFD9D9D9)
         )
 
+//        HorizontalPager(
+//            modifier = Modifier.height(520.dp),
+//            pageCount = pageCount,
+//            state = pagerState,
+//            pageSpacing = 10.dp,
+//        ) { page ->
+//            PageCard(
+//                page = page % actualPageCount,
+//                modifier = Modifier.clip(shape = CircleShape.copy(all = CornerSize(32.dp)))
+//            ) {
+//                when (page % actualPageCount) {
+//                    0 -> MoodGrid()
+//                    1, 2 -> ActGrid()
+//                    3 -> PlaceGrid()
+//                    4 -> PostGrid()
+//                    5 -> ImgGrid()
+//                }
+//            }
+//        }
+
+        val pageCount = actualPageCount
+
         HorizontalPager(
             modifier = Modifier.height(520.dp),
-            pageCount = pageCount,
+            pageCount = pageCount, // pageCount를 변경한 값으로 설정
             state = pagerState,
             pageSpacing = 10.dp,
         ) { page ->
+            val actualPage = page % actualPageCount // 실제 페이지를 계산합니다
+
             PageCard(
-                page = page % actualPageCount,
+                page = actualPage,
                 modifier = Modifier.clip(shape = CircleShape.copy(all = CornerSize(32.dp)))
             ) {
-                when (page % actualPageCount) {
+                when (actualPage) {
                     0 -> MoodGrid()
                     1, 2 -> ActGrid()
                     3 -> PlaceGrid()
@@ -109,6 +132,7 @@ fun PostEmotionScreen(navController: NavController) {
                 }
             }
         }
+
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -123,7 +147,7 @@ fun PostEmotionScreen(navController: NavController) {
                     showDialog = true
                     isCancel = true },
                 modifier = Modifier
-                    .width(90.dp)
+                    .width(100.dp)
                     .height(60.dp)
                     .clip(shape = CircleShape.copy(all = CornerSize(32.dp))),
                 colors = ButtonDefaults.buttonColors(
@@ -135,7 +159,6 @@ fun PostEmotionScreen(navController: NavController) {
                 )
             ) {
                 Text(
-
                     fontSize = 16.sp,
                     fontWeight = FontWeight(400),
                     text = "Cancel",
@@ -254,6 +277,13 @@ fun PageCard(page: Int, modifier: Modifier = Modifier, content: @Composable () -
             content()
         }
     }
+}
+
+@Composable
+fun canChangePage(currentPage: Int): Boolean {
+    // 여기에서 페이지 변경을 제한하는 논리를 구현합니다.
+    // 예를 들어, currentPage == 5 일 때 0으로 이동하지 못하도록 할 수 있습니다.
+    return true // 이동을 허용하려면 true를 반환하고, 제한하려면 false를 반환합니다.
 }
 
 
