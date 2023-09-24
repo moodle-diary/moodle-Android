@@ -31,18 +31,11 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import eu.tutorial.moodle.R
-import eu.tutorial.moodle.ui.home.HomeDestination
+import eu.tutorial.moodle.ui.navigation.HomeDestination
 import eu.tutorial.moodle.ui.navigation.NavigationDestination
 import java.time.LocalDate
 
 
-object PostDestination : NavigationDestination {
-    override val route: String
-        get() = "PostEmo"
-    override val titleRes: Int
-        get() = R.string.post_emo
-
-}
 
 
 @RequiresApi(Build.VERSION_CODES.O)

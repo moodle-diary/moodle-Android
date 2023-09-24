@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -25,6 +26,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.ui.component.EmotionComponent
+import eu.tutorial.moodle.ui.component.IconsComponent
+import eu.tutorial.moodle.ui.component.NotesComponent
 
 @Composable
 fun EmptyHomeScreen(
@@ -38,78 +42,17 @@ fun EmptyHomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
 
     ) {
-        Card(
-            modifier = Modifier
-                .padding(start = 12.dp, end = 12.dp),
-            shape = RoundedCornerShape(32.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .height(300.dp)
-                    .fillMaxWidth()
-                    .background(color = Color(0XEFEFEFEF)),
-                contentAlignment = Alignment.Center
-            ){
-                Text(
-                    text = "Emotions",
-                    style = TextStyle(
-                        fontSize = 32.sp,
-                        fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                        color = Color(0XFF414141)
-                    ),
-                )
-            }
-        }
+        EmotionComponent(exist = false)
+        
+        Spacer(modifier = Modifier.size(12.dp))
 
-        Spacer(modifier = Modifier.padding(6.dp))
+        IconsComponent(exist = false)
 
-        Card(
-            modifier = Modifier
-                .padding(start = 12.dp, end = 12.dp),
-            shape = RoundedCornerShape(32.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .height(104.dp)
-                    .fillMaxWidth()
-                    .background(color = Color(0XD9D9D9D9)),
-                contentAlignment = Alignment.Center,
-            ){
-                Text(
-                    text = "Icons",
-                    style = TextStyle(
-                        fontSize = 32.sp,
-                        fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                        color = Color(0XFFFFFFFF)
-                    ),
-                )
-            }
-        }
+        Spacer(modifier = Modifier.size(12.dp))
 
-        Spacer(modifier = Modifier.padding(6.dp))
+        NotesComponent(exist = false)
 
-        Card(
-            modifier = Modifier
-                .padding(start = 12.dp, end = 12.dp),
-            shape = RoundedCornerShape(32.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .height(104.dp)
-                    .fillMaxWidth()
-                    .background(color = Color(0XD9D9D9D9)),
-                contentAlignment = Alignment.Center,
-            ){
-                Text(
-                    text = "Notes",
-                    style = TextStyle(
-                        fontSize = 32.sp,
-                        fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                        color = Color(0XFFFFFFFF)
-                    ),
-                )
-            }
-        }
+        Spacer(modifier = Modifier.size(12.dp))
 
     }
 
