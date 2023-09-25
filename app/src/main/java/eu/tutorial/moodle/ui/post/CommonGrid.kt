@@ -1,6 +1,5 @@
 package eu.tutorial.moodle.ui.post
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,11 +15,13 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.People
+import androidx.compose.material.icons.filled.Pets
+import androidx.compose.material.icons.filled.Place
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Place
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
@@ -28,23 +29,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import eu.tutorial.moodle.data.activitiesData
+import eu.tutorial.moodle.data.peopleData
+import eu.tutorial.moodle.data.placesData
 
 @Composable
-fun PlaceGrid() {
-    val data = listOf(
-        "Home", "School", "Office", "Restaurant", "Park"
-    )
-    val buttonStates = remember {
-        mutableStateListOf(
-            mutableStateListOf(false, false, false, false),
-            mutableStateListOf(false)
-        )
-    }
-
+fun CommonGrid(
+    title: String,
+    subtitle: String,
+    data: List<String>,
+    buttonStates: List<Boolean>,
+    onItemClick: (Int) -> Unit,
+    icon: ImageVector
+) {
     Box(
         modifier = Modifier
             .height(520.dp)
@@ -58,51 +60,46 @@ fun PlaceGrid() {
         ) {
             Text(
                 modifier = Modifier.padding(top = 20.dp),
-                text = "Places",
+                text = title,
                 fontSize = 24.sp,
                 fontWeight = FontWeight(600),
                 textAlign = TextAlign.Center
             )
             Text(
                 modifier = Modifier.padding(top = 4.dp, bottom = 28.dp),
-                text = "Where did you spend your time?",
+                text = subtitle,
                 fontSize = 16.sp,
                 fontWeight = FontWeight(400),
                 textAlign = TextAlign.Center
             )
-
             LazyVerticalGrid(
-                columns = GridCells.Fixed(4),
-                //modifier = Modifier.padding(top = 108.dp, start = 20.dp)
-
+                columns = GridCells.Fixed(4)
             ) {
                 itemsIndexed(data) { index, item ->
-                    // 각 데이터 아이템을 Row 컴포넌트 내에서 텍스트와 버튼으로 구성
                     Column(
                         verticalArrangement = Arrangement.SpaceBetween,
                         horizontalAlignment = Alignment.CenterHorizontally
-
                     ) {
-                        val isClicked = buttonStates[index / 4][index % 4]
+                        val isClicked = buttonStates[index]
+
                         val backgroundColor = if (isClicked) {
-                            Color(0XFF414141) //클릭된 경우
+                            Color(0XFF414141)
                         } else {
-                            Color(0XFFC5C1C1) //클릭되지 않은 경우
+                            Color(0XFFC5C1C1)
                         }
 
                         IconButton(
                             onClick = {
-                                // 클릭된 버튼의 상태를 토글합니다.
-                                buttonStates[index / 4][index % 4] = !isClicked
+                                onItemClick(index)
                             },
                             modifier = Modifier
                                 .size(60.dp)
                                 .clip(RoundedCornerShape(20.dp))
-                                .background(backgroundColor) // 배경색 설정
+                                .background(backgroundColor)
                         ) {
                             Icon(
-                                Icons.Default.Place,
-                                contentDescription = "circle"
+                                icon,
+                                contentDescription = "place"
                             )
                         }
                         Text(
@@ -119,4 +116,75 @@ fun PlaceGrid() {
             }
         }
     }
+}
+
+@Composable
+fun ActGrid() {
+    val data = activitiesData
+
+    val buttonStates = remember {
+        mutableStateListOf<Boolean>()
+    }
+    for (i in data.indices) {
+        buttonStates.add(false)
+    }
+
+    CommonGrid(
+        title = "Activities",
+        subtitle = "What did you do to spend\n" +
+                "your time today?",
+        data = data,
+        buttonStates = buttonStates,
+        icon = Icons.Default.Pets,
+        onItemClick = { index ->
+            // Handle item click here
+            buttonStates[index] = !buttonStates[index]
+        }
+    )
+}
+
+@Composable
+fun PlaceGrid() {
+    val data = placesData
+    val buttonStates = remember {
+        mutableStateListOf<Boolean>()
+    }
+    for (i in data.indices) {
+        buttonStates.add(false)
+    }
+
+    CommonGrid(
+        title = "Places",
+        subtitle = "Where did you spend your time?",
+        data = data,
+        buttonStates = buttonStates,
+        icon = Icons.Default.Place,
+        onItemClick = { index ->
+            // Handle item click here
+            buttonStates[index] = !buttonStates[index]
+        }
+    )
+}
+
+@Composable
+fun PeopleGrid() {
+    val data = peopleData
+    val buttonStates = remember {
+        mutableStateListOf<Boolean>()
+    }
+    for (i in data.indices) {
+        buttonStates.add(false)
+    }
+
+    CommonGrid(
+        title = "People",
+        subtitle = "Who did you spend time with?",
+        data = data,
+        buttonStates = buttonStates,
+        icon = Icons.Default.People,
+        onItemClick = { index ->
+            // Handle item click here
+            buttonStates[index] = !buttonStates[index]
+        }
+    )
 }

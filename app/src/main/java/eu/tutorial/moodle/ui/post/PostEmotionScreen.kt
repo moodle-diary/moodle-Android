@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,10 +51,9 @@ fun PostEmotionScreen(navController: NavController) {
     var isCancel by remember { mutableStateOf(false) }
 
     val actualPageCount = 6
-    val pageCount = Int.MAX_VALUE
-    val maxNumOfRounds = Int.MAX_VALUE / actualPageCount
+    val initialPage = 0
     val pagerState = rememberPagerState(
-        initialPage = (maxNumOfRounds / 2) * actualPageCount
+        initialPage = initialPage,
     )
 
     Column(
@@ -68,7 +68,10 @@ fun PostEmotionScreen(navController: NavController) {
             textAlign = TextAlign.Center,
             fontSize = 24.sp,
             fontWeight = FontWeight(500),
-            text = "$day $month"
+            text = "$day $month",
+//            platformStyle = PlatformTextStyle(
+//                includeFontPadding = false
+//            )
         )
 
         PagerIndicator(
@@ -83,20 +86,25 @@ fun PostEmotionScreen(navController: NavController) {
             unSelectedColor = Color(0XFFD9D9D9)
         )
 
+        val pageCount = actualPageCount
+
         HorizontalPager(
             modifier = Modifier.height(520.dp),
-            pageCount = pageCount,
+            pageCount = pageCount, // pageCount를 변경한 값으로 설정
             state = pagerState,
             pageSpacing = 10.dp,
         ) { page ->
+            val actualPage = page % actualPageCount // 실제 페이지를 계산합니다
+
             PageCard(
-                page = page % actualPageCount,
+                page = actualPage,
                 modifier = Modifier.clip(shape = CircleShape.copy(all = CornerSize(32.dp)))
             ) {
-                when (page % actualPageCount) {
+                when (actualPage) {
                     0 -> MoodGrid()
-                    1, 2 -> ActGrid()
-                    3 -> PlaceGrid()
+                    1 -> ActGrid()
+                    2 -> PlaceGrid()
+                    3 -> PeopleGrid()
                     4 -> PostGrid()
                     5 -> ImgGrid()
                 }
@@ -116,7 +124,7 @@ fun PostEmotionScreen(navController: NavController) {
                     showDialog = true
                     isCancel = true },
                 modifier = Modifier
-                    .width(90.dp)
+                    .width(100.dp)
                     .height(60.dp)
                     .clip(shape = CircleShape.copy(all = CornerSize(32.dp))),
                 colors = ButtonDefaults.buttonColors(
@@ -128,7 +136,6 @@ fun PostEmotionScreen(navController: NavController) {
                 )
             ) {
                 Text(
-
                     fontSize = 16.sp,
                     fontWeight = FontWeight(400),
                     text = "Cancel",
@@ -173,12 +180,14 @@ fun PostEmotionScreen(navController: NavController) {
                         modifier = Modifier
                             .width(282.dp)
                             .height(175.dp)
-                            .background(Color.White)
-                            .clip(shape = CircleShape.copy(all = CornerSize(52.dp)))
+                            .background(Color.Transparent)
+                            .clip(shape = CircleShape.copy(all = CornerSize(32.dp)))
                     ) {
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(Color.White)
                         ) {
                             Text(
                                 text = dialogText,

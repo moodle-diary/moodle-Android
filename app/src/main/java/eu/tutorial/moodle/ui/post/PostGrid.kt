@@ -12,13 +12,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
-import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,6 +32,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -59,33 +60,31 @@ fun PostGrid() {
                 textAlign = TextAlign.Center
             )
 
+
             if (textVisible) {
                 Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(bottom = 50.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Button(
+                    IconButton(
                         onClick = { textVisible = false },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0XFFFFFFFF),
-                            contentColor = Color(0XFF414141)
-                        ),
-                        elevation = ButtonDefaults.buttonElevation( //버튼 그림자 없애기
-                            defaultElevation = 0.dp,
-                            pressedElevation = 0.dp
-                        ),
                         modifier = Modifier
                             .size(50.dp)
                             .clip(shape = CircleShape.copy(all = CornerSize(20.dp)))
+                            .background(Color(0XFFFFFFFF))
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Edit,
-                            contentDescription = "circle",
+                            imageVector = Icons.Default.Create,
+                            contentDescription = "create",
                             modifier = Modifier.size(24.dp),
                             tint = Color(0XFF000000)
                         )
                     }
                     Text(
+                        modifier = Modifier.padding(top = 16.dp),
                         text = "Can you describe your\n" + "day in words?",
                         textAlign = TextAlign.Center
                     )
@@ -111,3 +110,12 @@ fun PostGrid() {
         }
     }
 }
+
+//@Preview(
+//    showBackground = true,
+//    showSystemUi = true
+//)
+//@Composable
+//fun PostPreview(){
+//    PostGrid()
+//}
