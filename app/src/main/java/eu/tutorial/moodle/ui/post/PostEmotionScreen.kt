@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -74,7 +75,10 @@ fun PostEmotionScreen(navController: NavController) {
             textAlign = TextAlign.Center,
             fontSize = 24.sp,
             fontWeight = FontWeight(500),
-            text = "$day $month"
+            text = "$day $month",
+//            platformStyle = PlatformTextStyle(
+//                includeFontPadding = false
+//            )
         )
 
         PagerIndicator(
@@ -105,8 +109,9 @@ fun PostEmotionScreen(navController: NavController) {
             ) {
                 when (actualPage) {
                     0 -> MoodGrid()
-                    1, 2 -> ActGrid()
-                    3 -> PlaceGrid()
+                    1 -> ActGrid()
+                    2 -> PlaceGrid()
+                    3 -> PeopleGrid()
                     4 -> PostGrid()
                     5 -> ImgGrid()
                 }
@@ -187,7 +192,9 @@ fun PostEmotionScreen(navController: NavController) {
                     ) {
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier.fillMaxSize().background(Color.White)
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(Color.White)
                         ) {
                             Text(
                                 text = dialogText,
