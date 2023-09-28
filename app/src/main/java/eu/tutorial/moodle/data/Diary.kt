@@ -11,6 +11,7 @@ import java.time.Month
 data class Diary(
     @PrimaryKey
     val currentDate : LocalDate,
+    val diaryText : String,
 )
 
 
