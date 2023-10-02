@@ -1,5 +1,6 @@
 package eu.tutorial.moodle.ui.component
 
+import android.util.Log
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -22,7 +23,9 @@ fun FloatingButton(
     if(isVisible){
         FloatingActionButton(
             shape = CircleShape,
-            onClick = { navController.navigate(PostDestination.route) },
+            onClick = {
+                navController.navigate(PostDestination.route)
+                Log.d("tag", PostDestination.route) },
             contentColor = Color.White,
             containerColor = Color(0XFF414141),
             modifier = Modifier

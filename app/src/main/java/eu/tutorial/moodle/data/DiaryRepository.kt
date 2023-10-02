@@ -3,7 +3,7 @@ package eu.tutorial.moodle.data
 import androidx.annotation.WorkerThread
 import kotlinx.coroutines.flow.Flow
 
-class DiaryRepository(private val diaryDao: DiaryDao) {
+interface DiaryRepository{
 
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
@@ -15,7 +15,5 @@ class DiaryRepository(private val diaryDao: DiaryDao) {
     // off the main thread.
 //    @Suppress("RedundantSuspendModifier")
 //    @WorkerThread
-    suspend fun insert(diary: Diary) {
-        diaryDao.insert(diary)
-    }
+    suspend fun insertDiary(diary: Diary)
 }

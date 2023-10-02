@@ -35,9 +35,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import eu.tutorial.moodle.data.local.diaryText
+import eu.tutorial.moodle.ui.AppViewModelProvider
+
 
 @Composable
-fun PostGrid() {
+fun PostGrid(
+    diaryUiState: DiaryUiState,
+    valueChange : (DiaryDetails) -> Unit
+) {
     var text by remember { mutableStateOf(TextFieldValue()) }
     var textVisible by remember { mutableStateOf(true) }
 
@@ -96,10 +103,8 @@ fun PostGrid() {
                         .background(Color(color = 0XffEFEFEF)),
                 ) {
                     BasicTextField(
-                        value = text,
-                        onValueChange = {
-                            text = it
-                        },
+                        value = diaryUiState.diaryDetails.diaryText,
+                        onValueChange = {valueChange(diaryUiState.diaryDetails.copy(diaryText = it))}, //{ onValueChange(itemDetails.copy(name = it)) }
                         textStyle = TextStyle(fontSize = 16.sp),
                         modifier = Modifier
                             .padding(16.dp)
