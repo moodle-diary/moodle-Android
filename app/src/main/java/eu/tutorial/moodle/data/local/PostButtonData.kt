@@ -1,4 +1,4 @@
-package eu.tutorial.moodle.data
+package eu.tutorial.moodle.data.local
 
 val activitiesData = listOf("Travel", "Shopping", "Reading", "Work", "Work out")
 

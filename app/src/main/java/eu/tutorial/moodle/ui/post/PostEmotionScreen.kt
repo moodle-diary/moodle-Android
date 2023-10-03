@@ -1,6 +1,7 @@
 package eu.tutorial.moodle.ui.post
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -64,6 +65,16 @@ fun PostEmotionScreen(
 
     val coroutineScope = rememberCoroutineScope()
 
+
+    val buttonStates = remember {
+        mutableStateListOf(
+            mutableStateListOf(false, false, false, false),
+            mutableStateListOf(false, false, false, false),
+            mutableStateListOf(false, false, false, false),
+            mutableStateListOf(false, false, false, false)
+        )
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -109,7 +120,11 @@ fun PostEmotionScreen(
                 modifier = Modifier.clip(shape = CircleShape.copy(all = CornerSize(32.dp)))
             ) {
                 when (actualPage) {
-                    0 -> MoodGrid()
+                    0 -> MoodGrid(
+                        buttonStates = buttonStates,
+                        diaryUiState = viewModel.diaryUiState,
+                        onClick = viewModel::updateUiState,
+                    )
                     1 -> ActGrid()
                     2 -> PlaceGrid()
                     3 -> PeopleGrid()
@@ -235,6 +250,9 @@ fun PostEmotionScreen(
                                         coroutineScope.launch {
                                             navController.navigate(HomeDestination.route)
                                             viewModel.saveItem()
+                                            for (i in buttonStates)
+                                                for (j in i)
+                                                    Log.d("table", j.toString())
                                         }
                                     },
                                     colors = ButtonDefaults.buttonColors(

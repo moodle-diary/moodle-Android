@@ -1,7 +1,6 @@
 package eu.tutorial.moodle.data.local
 
 import eu.tutorial.moodle.R
-import eu.tutorial.moodle.data.Emoji
 
 val allEmojis = listOf<Emoji>(
     Emoji(

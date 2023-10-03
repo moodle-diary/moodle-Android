@@ -7,19 +7,9 @@ import java.time.Month
 
 @Entity(tableName = "diaries")
 data class Diary(
-    @PrimaryKey(autoGenerate = false)
+    @PrimaryKey(autoGenerate = true)
+    val id : Int = 0,
     val currentDate : String,
+    val emotions : Int,
     val diaryText : String,
-)
-
-
-@Entity(
-    tableName = "emotions",
-    primaryKeys = ["month", "date", "emotion"]
-)
-data class Emotion(
-    val month: Month,
-    val date: LocalDate,
-    val emotion : String,
-    val cnt : Int
 )

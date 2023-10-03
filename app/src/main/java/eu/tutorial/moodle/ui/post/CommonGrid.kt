@@ -34,9 +34,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import eu.tutorial.moodle.data.activitiesData
-import eu.tutorial.moodle.data.peopleData
-import eu.tutorial.moodle.data.placesData
+import eu.tutorial.moodle.data.local.activitiesData
+import eu.tutorial.moodle.data.local.peopleData
+import eu.tutorial.moodle.data.local.placesData
 
 @Composable
 fun CommonGrid(

@@ -1,11 +1,14 @@
 package eu.tutorial.moodle.ui.post
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import eu.tutorial.moodle.data.Diary
 import eu.tutorial.moodle.data.DiaryRepository
+import java.time.LocalDateTime
 
 class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() {
 
@@ -36,12 +39,15 @@ data class DiaryUiState(
 
 data class DiaryDetails(
     val currentDate : String = "",
+    val emotions : Int = 0,
     val diaryText : String = "",
-)
+
+    )
 
 fun DiaryDetails.toDiary(): Diary = Diary(
     currentDate = currentDate,
-    diaryText = diaryText
+    emotions = emotions,
+    diaryText = diaryText,
 )
 
 /**
@@ -57,5 +63,6 @@ fun Diary.toDiaryUiState(isEntryValid: Boolean = false): DiaryUiState = DiaryUiS
  */
 fun Diary.toDiaryDetails(): DiaryDetails = DiaryDetails(
     currentDate = currentDate,
+    emotions = emotions,
     diaryText = diaryText,
 )

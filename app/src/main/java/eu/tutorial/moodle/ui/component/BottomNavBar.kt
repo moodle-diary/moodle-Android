@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import eu.tutorial.moodle.data.navigationItemContentList
+import eu.tutorial.moodle.data.navigation.navigationItemContentList
 
 @Composable
 fun BottomNavBar(
