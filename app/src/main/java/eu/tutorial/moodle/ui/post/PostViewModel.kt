@@ -1,14 +1,11 @@
 package eu.tutorial.moodle.ui.post
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import eu.tutorial.moodle.data.Diary
 import eu.tutorial.moodle.data.DiaryRepository
-import java.time.LocalDateTime
 
 class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() {
 

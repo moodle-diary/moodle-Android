@@ -4,7 +4,9 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DiaryDao {
@@ -18,5 +20,7 @@ interface DiaryDao {
     @Delete
     suspend fun delete(diary: Diary)
 
+    @Query("SELECT * FROM diaries WHERE currentDate = :currentDate")
+    fun getDiaries(currentDate : String) : List<Diary>
 
 }

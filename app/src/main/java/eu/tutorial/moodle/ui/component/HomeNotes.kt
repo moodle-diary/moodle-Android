@@ -23,7 +23,8 @@ import eu.tutorial.moodle.data.local.diaryText
 
 @Composable
 fun NotesComponent(
-    exist : Boolean
+    exist : Boolean,
+    text : String = ""
 ){
     Card( // TODO 이 부분 코드 개선.. value를 빼서 Composable 줄이는 방향
         modifier = Modifier
@@ -37,7 +38,7 @@ fun NotesComponent(
                     .background(color = Color(0XD9D9D9D9)),
             ){
                 Text(
-                    text = diaryText,
+                    text = text,
                     modifier = Modifier
                         .padding(start = 18.dp, top = 32.dp, bottom = 32.dp, end = 18.dp),
                     style = TextStyle(

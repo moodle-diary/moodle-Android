@@ -40,7 +40,8 @@ fun IconsComponent(
     exist : Boolean
 ){
 
-    if(exist){ // TODO 이 부분 코드 개선.. value를 빼서 Composable 줄이는 방향
+    // TODO 이 부분 코드 개선.. value를 빼서 Composable 줄이는 방향
+    if(exist){
         Card(
             modifier = Modifier
                 .height(186.dp)        // TODO : item 개수에 따라서 height 값을 조절 해야 합니다. 1 - 4 : 104 / 5 - 8 : 186 / 9 - 12 : 268

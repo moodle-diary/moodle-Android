@@ -31,7 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -106,7 +106,7 @@ fun MoodGrid(
                                 buttonStates[index / 4][index % 4] = !isClicked
                                 onClick(
                                     diaryUiState.diaryDetails.copy(
-                                        currentDate = LocalDateTime.now().toString(),
+                                        currentDate = LocalDate.now().toString(),
                                         emotions = convertToBitMap(buttonStates)
                                     )
                                 )

@@ -1,23 +1,17 @@
 package eu.tutorial.moodle.ui.calendar
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material3.Icon
@@ -29,24 +23,25 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.component.CalendarMonthItem
 import eu.tutorial.moodle.ui.component.DayOfWeek
-import java.time.DayOfWeek
+import eu.tutorial.moodle.ui.home.HomeViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.YearMonth
-import java.time.format.TextStyle
-import java.util.Locale
 
 @OptIn(ExperimentalFoundationApi::class)
 @RequiresApi(Build.VERSION_CODES.O)
@@ -57,6 +52,7 @@ fun HorizontalCalendar(
     currentMonth: YearMonth,
     pagerState: PagerState,
     changeVisible : () -> Unit,
+    viewModel: HomeViewModel
 ) {
 
     var currentSelectedDate by remember { mutableStateOf(currentDate) }
@@ -67,11 +63,13 @@ fun HorizontalCalendar(
 
         // TODO : 앞 혹은 뒤로 많이 갔을 때, 현재 날짜로 변경 되면, 그 페이지로 한 번에 돌아 가도록 한다.
         while(idx != pagerState.currentPage){
+
             if (idx < (pagerState.currentPage)) {
                 pagerState.scrollToPage(page = pagerState.currentPage - 1)
             } else {
                 pagerState.scrollToPage(page = pagerState.currentPage + 1)
             }
+
         }
 
     }
@@ -101,7 +99,10 @@ fun HorizontalCalendar(
             )
 
             IconButton(
-                onClick = { currentSelectedDate = LocalDate.now() },
+                onClick = {
+                    currentSelectedDate = LocalDate.now()
+
+                },
             ) {
                 Icon(
                     imageVector = Icons.Default.Place,
@@ -132,6 +133,10 @@ fun HorizontalCalendar(
                     currentSelectedDate = selectedDate
                     changeVisible()
                 },
+                onClickAction = {
+                    viewModel.getDiaries(it)
+                    // 결과를 처리하거나 ViewModel에 저장
+                }
             )
         }
     }
