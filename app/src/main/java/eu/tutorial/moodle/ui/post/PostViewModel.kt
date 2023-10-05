@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import eu.tutorial.moodle.data.Diary
 import eu.tutorial.moodle.data.DiaryRepository
+import eu.tutorial.moodle.data.Emoji
 
 class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() {
 
@@ -38,13 +39,14 @@ data class DiaryDetails(
     val currentDate : String = "",
     val emotions : Int = 0,
     val diaryText : String = "",
-
-    )
+    val emojis : List<Emoji> = emptyList()
+)
 
 fun DiaryDetails.toDiary(): Diary = Diary(
     currentDate = currentDate,
     emotions = emotions,
     diaryText = diaryText,
+    emojis = emojis,
 )
 
 /**
@@ -62,4 +64,5 @@ fun Diary.toDiaryDetails(): DiaryDetails = DiaryDetails(
     currentDate = currentDate,
     emotions = emotions,
     diaryText = diaryText,
+    emojis = emojis
 )

@@ -19,11 +19,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
-import eu.tutorial.moodle.data.local.diaryText
 
 @Composable
 fun NotesComponent(
-    exist : Boolean,
     text : String = ""
 ){
     Card( // TODO 이 부분 코드 개선.. value를 빼서 Composable 줄이는 방향
@@ -31,7 +29,7 @@ fun NotesComponent(
             .padding(start = 12.dp, end = 12.dp),
         shape = RoundedCornerShape(32.dp)
     ) {
-        if(exist){
+        if(text != ""){
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -48,8 +46,7 @@ fun NotesComponent(
 
                 )
             }
-        }
-        else{
+        } else{
             Box(
                 modifier = Modifier
                     .height(104.dp)

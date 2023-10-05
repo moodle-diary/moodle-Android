@@ -54,28 +54,38 @@ fun DetailHomeScreen(
             .padding(innerPaddingValues)
             .verticalScroll(rememberScrollState())
     ) {
-
-        Spacer(
-            modifier = Modifier.size(50.dp)
-        )
-
         // TODO 이 부분 exist 속성 값 vm 에서 받아 와서 수정 Detail HomeScreen 이랑 통합
-        EmotionComponent( exist = true )
+        EmotionComponent( emotion = getDiaryEmotion(diaryList) )
 
         Spacer(modifier = Modifier.size(12.dp)) // Spacer 적용시 padding 보다 size 적ㅖ
 
-        IconsComponent( exist = true )
+        IconsComponent( emojis = emptyList() )
 
         Spacer(modifier = Modifier.size(12.dp))
 
         NotesComponent(
-            exist = true,
             text = getDiaryText(diaryList)
         )
 
         Spacer(modifier = Modifier.size(12.dp))
 
     }
+}
+
+fun getDiaryEmotion(diaryList: List<Diary>) : Int {
+    var emotion = 0
+
+    for (i in diaryList)
+        emotion += i.emotions
+
+    return emotion
+}
+
+fun getDiaryEmoji(diaryList: List<Diary>): String {
+    var result = ""
+
+    return result
+
 }
 
 fun getDiaryText(diaryList: List<Diary>) : String {

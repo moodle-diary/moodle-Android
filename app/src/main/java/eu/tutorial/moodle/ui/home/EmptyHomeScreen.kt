@@ -34,26 +34,26 @@ import eu.tutorial.moodle.ui.component.NotesComponent
 fun EmptyHomeScreen(
     innerPaddingValues: PaddingValues = PaddingValues(0.dp)
 ){
-    Column(
-        modifier = Modifier
-            .padding(innerPaddingValues)
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally,
-
-    ) {
-        EmotionComponent(exist = false)
-        
-        Spacer(modifier = Modifier.size(12.dp))
-
-        IconsComponent(exist = false)
-
-        Spacer(modifier = Modifier.size(12.dp))
-
-        NotesComponent(exist = false)
-
-        Spacer(modifier = Modifier.size(12.dp))
-
-    }
+//    Column(
+//        modifier = Modifier
+//            .padding(innerPaddingValues)
+//            .fillMaxSize()
+//            .verticalScroll(rememberScrollState()),
+//        horizontalAlignment = Alignment.CenterHorizontally,
+//
+//    ) {
+//        EmotionComponent(exist = false)
+//
+//        Spacer(modifier = Modifier.size(12.dp))
+//
+//        IconsComponent(exist = false)
+//
+//        Spacer(modifier = Modifier.size(12.dp))
+//
+//        NotesComponent(exist = false)
+//
+//        Spacer(modifier = Modifier.size(12.dp))
+//
+//    }
 
 }
