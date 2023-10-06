@@ -5,8 +5,10 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 
 // TODO @Parcelize ??
+@TypeConverters(Converters::class)
 @Entity(tableName = "diaries")
 data class Diary(
     @PrimaryKey(autoGenerate = true)

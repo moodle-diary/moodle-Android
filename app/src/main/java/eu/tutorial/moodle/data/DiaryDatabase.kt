@@ -4,7 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
 
+@TypeConverters(Converters::class)
 @Database(entities = [Diary::class], version = 1, exportSchema = false) // 백업 스키마 유지 하지 않도록
 abstract class DiaryDatabase : RoomDatabase() {
     abstract fun diaryDao(): DiaryDao
