@@ -125,9 +125,20 @@ fun PostEmotionScreen(
                         diaryUiState = viewModel.diaryUiState,
                         onClick = viewModel::updateUiState,
                     )
-                    1 -> ActGrid()
-                    2 -> PlaceGrid()
-                    3 -> PeopleGrid()
+
+                    1 -> ActGrid(
+                        diaryUiState = viewModel.diaryUiState,
+                        onClick = viewModel::updateUiState,
+                    )
+                    2 -> PlaceGrid(
+                        diaryUiState = viewModel.diaryUiState,
+                        onClick = viewModel::updateUiState,
+                    )
+                    3 -> PeopleGrid(
+                        diaryUiState = viewModel.diaryUiState,
+                        onClick = viewModel::updateUiState,
+                    )
+
                     4 -> PostGrid(
                         diaryUiState = viewModel.diaryUiState,
                         valueChange = viewModel::updateUiState

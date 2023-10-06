@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.data.local.activitiesData
 import eu.tutorial.moodle.data.local.peopleData
 import eu.tutorial.moodle.data.local.placesData
+import java.time.LocalDate
 
 @Composable
 fun CommonGrid(
@@ -45,7 +46,11 @@ fun CommonGrid(
     data: List<String>,
     buttonStates: List<Boolean>,
     onItemClick: (Int) -> Unit,
-    icon: ImageVector
+    icon: ImageVector,
+
+    // view model
+    diaryUiState : DiaryUiState,
+    onClick : (DiaryDetails) -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -119,12 +124,16 @@ fun CommonGrid(
 }
 
 @Composable
-fun ActGrid() {
+fun ActGrid(
+    diaryUiState : DiaryUiState,
+    onClick : (DiaryDetails) -> Unit,
+) {
     val data = activitiesData
 
     val buttonStates = remember {
         mutableStateListOf<Boolean>()
     }
+
     for (i in data.indices) {
         buttonStates.add(false)
     }
@@ -139,12 +148,19 @@ fun ActGrid() {
         onItemClick = { index ->
             // Handle item click here
             buttonStates[index] = !buttonStates[index]
-        }
+        },
+
+        // view model
+        diaryUiState = diaryUiState,
+        onClick = onClick,
     )
 }
 
 @Composable
-fun PlaceGrid() {
+fun PlaceGrid(
+    diaryUiState : DiaryUiState,
+    onClick : (DiaryDetails) -> Unit,
+) {
     val data = placesData
     val buttonStates = remember {
         mutableStateListOf<Boolean>()
@@ -162,12 +178,19 @@ fun PlaceGrid() {
         onItemClick = { index ->
             // Handle item click here
             buttonStates[index] = !buttonStates[index]
-        }
+        },
+
+        // view model
+        diaryUiState = diaryUiState,
+        onClick = onClick,
     )
 }
 
 @Composable
-fun PeopleGrid() {
+fun PeopleGrid(
+    diaryUiState : DiaryUiState,
+    onClick : (DiaryDetails) -> Unit,
+) {
     val data = peopleData
     val buttonStates = remember {
         mutableStateListOf<Boolean>()
@@ -185,6 +208,10 @@ fun PeopleGrid() {
         onItemClick = { index ->
             // Handle item click here
             buttonStates[index] = !buttonStates[index]
-        }
+        },
+
+        // view model
+        diaryUiState = diaryUiState,
+        onClick = onClick,
     )
 }

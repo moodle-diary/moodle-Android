@@ -4,9 +4,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import eu.tutorial.moodle.data.Activity
 import eu.tutorial.moodle.data.Diary
 import eu.tutorial.moodle.data.DiaryRepository
-import eu.tutorial.moodle.data.Emoji
+import eu.tutorial.moodle.data.People
+import eu.tutorial.moodle.data.Place
 
 class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() {
 
@@ -39,30 +41,33 @@ data class DiaryDetails(
     val currentDate : String = "",
     val emotions : Int = 0,
     val diaryText : String = "",
-    val emojis : List<Emoji> = emptyList()
+
+    val activities : List<Activity> = emptyList(),
+    val places: List<Place> = emptyList(),
+    val people: List<People> = emptyList(),
 )
 
 fun DiaryDetails.toDiary(): Diary = Diary(
     currentDate = currentDate,
     emotions = emotions,
     diaryText = diaryText,
-    emojis = emojis,
+
+    activities = activities,
+    places = places,
+    people = people
 )
 
-/**
- * Extension function to convert [Item] to [ItemUiState]
- */
 fun Diary.toDiaryUiState(isEntryValid: Boolean = false): DiaryUiState = DiaryUiState(
     diaryDetails = this.toDiaryDetails(),
     isEntryValid = isEntryValid
 )
 
-/**
- * Extension function to convert [Item] to [ItemDetails]
- */
 fun Diary.toDiaryDetails(): DiaryDetails = DiaryDetails(
     currentDate = currentDate,
     emotions = emotions,
     diaryText = diaryText,
-    emojis = emojis
+
+    activities = activities,
+    places = places,
+    people = people
 )
