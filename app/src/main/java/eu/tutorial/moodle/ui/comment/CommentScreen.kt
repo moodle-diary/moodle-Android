@@ -21,6 +21,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -39,7 +40,7 @@ import eu.tutorial.moodle.ui.theme.poppins
 
 @Composable
 fun CommentScreen(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.fillMaxSize(),
     innerPaddingValues: PaddingValues = PaddingValues(0.dp),
     onCloseClick: () -> Unit,
     comments: List<String>
@@ -47,102 +48,112 @@ fun CommentScreen(
     var isAddingComment by remember { mutableStateOf(false) }
     var newComment by remember { mutableStateOf("") }
 
-    Column(
-        modifier = modifier
+    Scaffold(
+        containerColor = Color.Black.copy(alpha = 0.3f),
+        modifier = Modifier
             .fillMaxSize()
-            .padding(innerPaddingValues)
-            .verticalScroll(rememberScrollState())
-    ) {
-        Spacer(
-            modifier = Modifier.weight(1f)
-        )
-
-        for (comment in comments) {
-            CommentBox(comment = comment)
-        }
-
-        if (isAddingComment) {
-            BasicTextField(
+            .background(Color.Transparent),
+        bottomBar = {
+            Card(
                 modifier = Modifier
-                    .padding(10.dp, 12.dp)
                     .fillMaxWidth()
-                    .height(150.dp)
-                    .clip(RoundedCornerShape(32.dp)),
-                value = newComment,
-                onValueChange = { newComment = it },
-                singleLine = false,
-                textStyle = LocalTextStyle.current.copy(
-                    color = Color.Black,
-                    fontSize = 16.sp
-                ),
-                decorationBox = { innerTextField ->
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(Color(0XFFEFEFEF))
-                            .border(
-                                width = 1.dp,
-                                color = Color.Black,
-                                shape = RoundedCornerShape(size = 32.dp)
-                            )
-                            .padding(20.dp, 26.dp),
+                    .height(110.dp)
+                    .padding(top = 16.dp, bottom = 24.dp, start = 12.dp, end = 12.dp),
+                shape = RoundedCornerShape(32.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color(0XFFEFEFEF)
+                )
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(start = 12.dp, end = 12.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Button(
+                        onClick = { onCloseClick() },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.Transparent
+                        )
+
                     ) {
-                        if (newComment.isEmpty()) {
-                            Text(
-                                text = "Enter comment..",
-                                fontSize = 16.sp,
-                                color = Color.LightGray
-                            )
-                        }
-                        innerTextField()
+                        Text(
+                            text = "Close",
+                            fontSize = 16.sp,
+                            fontFamily = poppins,
+                            color = Color.Black
+                        )
+                    }
+                    Button(
+                        onClick = { isAddingComment = true },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0XFF414141)
+                        )
+                    ) {
+                        Text(
+                            text = "Add Comments",
+                            fontSize = 16.sp,
+                            fontFamily = poppins,
+                            color = Color.White
+                        )
                     }
                 }
-            )
+            }
         }
-
-        Card(
+    ) { innerPadding ->
+        Column(
             modifier = Modifier
-                .padding(top = 16.dp, bottom = 24.dp, start = 12.dp, end = 12.dp)
-                .height(74.dp),
-            shape = RoundedCornerShape(32.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = Color(0XFFEFEFEF)
-            )
+                .padding(bottom = 100.dp)
+                .fillMaxSize()
+                .then(Modifier.padding(innerPaddingValues))
+                .then(Modifier.verticalScroll(rememberScrollState()))
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(start = 16.dp, end = 16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Button(
-                    onClick = { onCloseClick() },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Transparent
-                    )
+            Spacer(
+                modifier = Modifier.weight(1f)
+            )
 
-                ) {
-                    Text(
-                        text = "Close",
-                        fontSize = 16.sp,
-                        fontFamily = poppins,
-                        color = Color.Black
-                    )
-                }
-                Button(
-                    onClick = { isAddingComment = true },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0XFF414141)
-                    )
-                ) {
-                    Text(
-                        text = "Add Comments",
-                        fontSize = 16.sp,
-                        fontFamily = poppins,
-                        color = Color.White
-                    )
-                }
+            for (comment in comments) {
+                CommentBox(comment = comment)
+            }
+
+            if (isAddingComment) {
+                BasicTextField(
+                    modifier = Modifier
+                        .padding(10.dp, 12.dp)
+                        .fillMaxWidth()
+                        .height(150.dp)
+                        .clip(RoundedCornerShape(32.dp)),
+                    value = newComment,
+                    onValueChange = { newComment = it },
+                    singleLine = false,
+                    textStyle = LocalTextStyle.current.copy(
+                        color = Color.Black,
+                        fontSize = 16.sp
+                    ),
+                    decorationBox = { innerTextField ->
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(Color(0XFFEFEFEF))
+                                .border(
+                                    width = 1.dp,
+                                    color = Color(0XFFEFEFEF),
+                                    shape = RoundedCornerShape(size = 32.dp)
+                                )
+                                .padding(20.dp, 26.dp),
+                        ) {
+                            if (newComment.isEmpty()) {
+                                Text(
+                                    text = "Enter comment..",
+                                    fontSize = 16.sp,
+                                    color = Color.LightGray
+                                )
+                            }
+                            innerTextField()
+                        }
+                    }
+                )
             }
         }
     }
