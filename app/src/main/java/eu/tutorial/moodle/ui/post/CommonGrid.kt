@@ -1,5 +1,7 @@
 package eu.tutorial.moodle.ui.post
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,11 +36,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import eu.tutorial.moodle.data.Activity
+import eu.tutorial.moodle.data.People
+import eu.tutorial.moodle.data.Place
 import eu.tutorial.moodle.data.local.activitiesData
 import eu.tutorial.moodle.data.local.peopleData
 import eu.tutorial.moodle.data.local.placesData
-import java.time.LocalDate
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CommonGrid(
     title: String,
@@ -49,8 +54,7 @@ fun CommonGrid(
     icon: ImageVector,
 
     // view model
-    diaryUiState : DiaryUiState,
-    onClick : (DiaryDetails) -> Unit,
+    onClick: Unit,
 ) {
     Box(
         modifier = Modifier
@@ -96,6 +100,7 @@ fun CommonGrid(
                         IconButton(
                             onClick = {
                                 onItemClick(index)
+                                onClick
                             },
                             modifier = Modifier
                                 .size(60.dp)
@@ -123,6 +128,7 @@ fun CommonGrid(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ActGrid(
     diaryUiState : DiaryUiState,
@@ -151,11 +157,16 @@ fun ActGrid(
         },
 
         // view model
-        diaryUiState = diaryUiState,
-        onClick = onClick,
+        onClick = onClick(
+            diaryUiState.diaryDetails.copy(
+                // TODO : activityId icon descriptor id로 바꾸기
+                activities = data.map { Activity(activityId = 1, activityDescription = it) }
+            )
+        ),
     )
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PlaceGrid(
     diaryUiState : DiaryUiState,
@@ -181,11 +192,16 @@ fun PlaceGrid(
         },
 
         // view model
-        diaryUiState = diaryUiState,
-        onClick = onClick,
+        onClick = onClick(
+            diaryUiState.diaryDetails.copy(
+                // TODO : placeId icon descriptor id로 바꾸기
+                places = data.map { Place(placeId = 1, placeDescription = it) }
+            )
+        ),
     )
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PeopleGrid(
     diaryUiState : DiaryUiState,
@@ -211,7 +227,11 @@ fun PeopleGrid(
         },
 
         // view model
-        diaryUiState = diaryUiState,
-        onClick = onClick,
+        onClick = onClick(
+            diaryUiState.diaryDetails.copy(
+                // TODO : peopleId icon descriptor id로 바꾸기
+                people = data.map { People(peopleId = 1, peopleDescription = it) }
+            )
+        ),
     )
 }
