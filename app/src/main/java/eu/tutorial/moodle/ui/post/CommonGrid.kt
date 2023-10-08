@@ -43,7 +43,6 @@ import eu.tutorial.moodle.data.local.activitiesData
 import eu.tutorial.moodle.data.local.peopleData
 import eu.tutorial.moodle.data.local.placesData
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CommonGrid(
     title: String,
@@ -52,10 +51,7 @@ fun CommonGrid(
     buttonStates: List<Boolean>,
     onItemClick: (Int) -> Unit,
     icon: ImageVector,
-
-    // view model
-    onClick: Unit,
-) {
+    ) {
     Box(
         modifier = Modifier
             .height(520.dp)
@@ -100,7 +96,6 @@ fun CommonGrid(
                         IconButton(
                             onClick = {
                                 onItemClick(index)
-                                onClick
                             },
                             modifier = Modifier
                                 .size(60.dp)
@@ -128,7 +123,6 @@ fun CommonGrid(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ActGrid(
     diaryUiState : DiaryUiState,
@@ -144,6 +138,13 @@ fun ActGrid(
         buttonStates.add(false)
     }
 
+    onClick(
+        diaryUiState.diaryDetails.copy(
+            // TODO : activityId icon descriptor id로 바꾸기
+            activities = getTrue(buttonStates,data).map { Activity(activityId = 1, activityDescription = it) }
+        )
+    )
+
     CommonGrid(
         title = "Activities",
         subtitle = "What did you do to spend\n" +
@@ -156,17 +157,9 @@ fun ActGrid(
             buttonStates[index] = !buttonStates[index]
         },
 
-        // view model
-        onClick = onClick(
-            diaryUiState.diaryDetails.copy(
-                // TODO : activityId icon descriptor id로 바꾸기
-                activities = data.map { Activity(activityId = 1, activityDescription = it) }
-            )
-        ),
     )
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PlaceGrid(
     diaryUiState : DiaryUiState,
@@ -180,6 +173,13 @@ fun PlaceGrid(
         buttonStates.add(false)
     }
 
+    onClick(
+        diaryUiState.diaryDetails.copy(
+            // TODO : activityId icon descriptor id로 바꾸기
+            places = getTrue(buttonStates,data).map { Place(placeId = 1, placeDescription = it) }
+        )
+    )
+
     CommonGrid(
         title = "Places",
         subtitle = "Where did you spend your time?",
@@ -191,13 +191,6 @@ fun PlaceGrid(
             buttonStates[index] = !buttonStates[index]
         },
 
-        // view model
-        onClick = onClick(
-            diaryUiState.diaryDetails.copy(
-                // TODO : placeId icon descriptor id로 바꾸기
-                places = data.map { Place(placeId = 1, placeDescription = it) }
-            )
-        ),
     )
 }
 
@@ -215,6 +208,13 @@ fun PeopleGrid(
         buttonStates.add(false)
     }
 
+    onClick(
+        diaryUiState.diaryDetails.copy(
+            // TODO : activityId icon descriptor id로 바꾸기
+            people = getTrue(buttonStates,data).map { People(peopleId = 1, peopleDescription = it) }
+        )
+    )
+
     CommonGrid(
         title = "People",
         subtitle = "Who did you spend time with?",
@@ -225,13 +225,18 @@ fun PeopleGrid(
             // Handle item click here
             buttonStates[index] = !buttonStates[index]
         },
-
-        // view model
-        onClick = onClick(
-            diaryUiState.diaryDetails.copy(
-                // TODO : peopleId icon descriptor id로 바꾸기
-                people = data.map { People(peopleId = 1, peopleDescription = it) }
-            )
-        ),
     )
+}
+
+fun getTrue(
+    states : List<Boolean>,
+    data: List<String>
+): ArrayList<String> {
+    val result = ArrayList<String>()
+
+    for (i in states.indices){
+        if(states[i]) result.add(data[i])
+    }
+    
+    return result
 }
