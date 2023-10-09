@@ -51,25 +51,41 @@ fun DiaryNavHost(
         composable(route = CalendarDestination.route) {
 
             var visibleMore by remember { mutableStateOf(false) }
+            var showCommentScreen by remember { mutableStateOf(false) }
 
             Scaffold(
-                bottomBar = { BottomNavBar(
-                    navController = navController,
-                    isVisible = visibleMore
-                ) },
+                bottomBar = {
+                if (showCommentScreen) {
+                    BottomNavBar(navController = navController, isVisible = showCommentScreen)
+                } else {
+                    BottomNavBar(
+                        navController = navController,
+                        isVisible = visibleMore
+                    ) }
+                },
                 floatingActionButtonPosition = FabPosition.Center,
                 floatingActionButton = {
-                    FloatingButton(
-                        navController = navController,
-                        isVisible = !visibleMore
-                    )
+                    if (showCommentScreen) {
+                        FloatingButton(
+                            navController = navController,
+                            isVisible = !showCommentScreen
+                        )
+                    } else {
+                        FloatingButton(
+                            navController = navController,
+                            isVisible = !visibleMore
+                        ) }
+
                 }
             ) { innerPadding ->
 
                 CalendarMainCard(
                     innerPadding = innerPadding,
                     visibleMore = visibleMore,
-                    changeVisibleMore = {visibleMore = !visibleMore}
+                    changeVisibleMore = {visibleMore = !visibleMore},
+                    showCommentScreen = showCommentScreen,
+                    setShowCommentScreen = { showCommentScreen = it },
+                    onCloseClick = {showCommentScreen = false}
                 )
             }
         }
