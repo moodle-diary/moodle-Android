@@ -16,10 +16,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.local.diaryText
+import eu.tutorial.moodle.ui.comment.CommentBox
 
 @Composable
 fun NotesComponent(
@@ -68,4 +70,13 @@ fun NotesComponent(
         }
     }
 
+}
+
+@Preview(
+    showSystemUi = true,
+    showBackground = true
+)
+@Composable
+fun EmotionChartPreview(){
+    NotesComponent(exist = true)
 }
