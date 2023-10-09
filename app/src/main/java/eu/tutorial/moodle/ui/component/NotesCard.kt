@@ -20,26 +20,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
+//<<<<<<< HEAD:app/src/main/java/eu/tutorial/moodle/ui/component/NotesCard.kt
+//=======
 import eu.tutorial.moodle.data.local.diaryText
 import eu.tutorial.moodle.ui.comment.CommentBox
+//>>>>>>> main:app/src/main/java/eu/tutorial/moodle/ui/component/HomeNotes.kt
 
 @Composable
 fun NotesComponent(
-    exist : Boolean
+    text : String = ""
 ){
     Card( // TODO 이 부분 코드 개선.. value를 빼서 Composable 줄이는 방향
         modifier = Modifier
             .padding(start = 12.dp, end = 12.dp),
         shape = RoundedCornerShape(32.dp)
     ) {
-        if(exist){
+        if(text != ""){
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(color = Color(0XD9D9D9D9)),
             ){
                 Text(
-                    text = diaryText,
+                    text = text,
                     modifier = Modifier
                         .padding(start = 18.dp, top = 32.dp, bottom = 32.dp, end = 18.dp),
                     style = TextStyle(
@@ -49,8 +52,7 @@ fun NotesComponent(
 
                 )
             }
-        }
-        else{
+        } else{
             Box(
                 modifier = Modifier
                     .height(104.dp)
@@ -72,11 +74,11 @@ fun NotesComponent(
 
 }
 
-@Preview(
-    showSystemUi = true,
-    showBackground = true
-)
-@Composable
-fun EmotionChartPreview(){
-    NotesComponent(exist = true)
-}
+//@Preview(
+//    showSystemUi = true,
+//    showBackground = true
+//)
+//@Composable
+//fun EmotionChartPreview(){
+//    NotesComponent(exist = true)
+//}

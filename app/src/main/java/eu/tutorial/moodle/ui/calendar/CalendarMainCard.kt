@@ -38,6 +38,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import eu.tutorial.moodle.ui.AppViewModelProvider
+import eu.tutorial.moodle.ui.home.DetailHomeScreen
+import eu.tutorial.moodle.ui.home.HomeViewModel
 import eu.tutorial.moodle.data.local.comments
 import eu.tutorial.moodle.ui.comment.CommentScreen
 import eu.tutorial.moodle.ui.component.BottomNavBar
@@ -54,6 +58,7 @@ fun CalendarMainCard(
     currentDate: LocalDate = LocalDate.now(),
     visibleMore : Boolean,
     changeVisibleMore: () -> Unit,
+    viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory),
     showCommentScreen: Boolean,
     setShowCommentScreen: (Boolean) -> Unit,
     onCloseClick: () -> Unit
@@ -97,7 +102,8 @@ fun CalendarMainCard(
                         visibleEmotion = !visibleEmotion
                         Log.d("visible", visibleEmotion.toString())
                     },
-                    currentMonth = currentMonth
+                    currentMonth = currentMonth,
+                    viewModel = viewModel
                 )
             }
         }
@@ -196,6 +202,7 @@ fun CalendarMainCard(
 //            modifier = Modifier
 //                .align(Alignment.BottomCenter) // 이 align 은 box scope 이기 때문에 안에서 써야 한다.
         ) {
+            // TODO 이 부분 DetailHomeScreen에서 독립
             DetailHomeScreen(
                 modifier = Modifier
 //                    .clip(shape = RoundedCornerShape(32.dp)) // 이게 먼저 와야함

@@ -15,7 +15,7 @@ import androidx.navigation.compose.composable
 import eu.tutorial.moodle.ui.calendar.CalendarMainCard
 import eu.tutorial.moodle.ui.component.BottomNavBar
 import eu.tutorial.moodle.ui.component.FloatingButton
-import eu.tutorial.moodle.ui.home.EmptyHomeScreen
+import eu.tutorial.moodle.ui.home.DetailHomeScreen
 import eu.tutorial.moodle.ui.home.TopAppBar
 import eu.tutorial.moodle.ui.post.PostEmotionScreen
 
@@ -42,8 +42,8 @@ fun DiaryNavHost(
                     )
                 }
             ) { innerPadding ->
-//        DetailHomeScreen(innerPaddingValues = innerPadding)
-                EmptyHomeScreen(innerPaddingValues = innerPadding)
+                    DetailHomeScreen(innerPaddingValues = innerPadding)
+//                EmptyHomeScreen(innerPaddingValues = innerPadding)
             }
         }
 

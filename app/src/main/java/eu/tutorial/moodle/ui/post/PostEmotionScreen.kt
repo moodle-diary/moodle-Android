@@ -1,6 +1,7 @@
 package eu.tutorial.moodle.ui.post
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -30,10 +31,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.navigation.HomeDestination
 import eu.tutorial.moodle.ui.navigation.NavigationDestination
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 
@@ -42,7 +46,10 @@ import java.time.LocalDate
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun PostEmotionScreen(navController: NavController) {
+fun PostEmotionScreen(
+    navController: NavController,
+    viewModel: PostViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
     val localDate: LocalDate = LocalDate.now()
     val day = localDate.dayOfMonth
     val month = localDate.dayOfWeek
@@ -55,6 +62,18 @@ fun PostEmotionScreen(navController: NavController) {
     val pagerState = rememberPagerState(
         initialPage = initialPage,
     )
+
+    val coroutineScope = rememberCoroutineScope()
+
+
+    val buttonStates = remember {
+        mutableStateListOf(
+            mutableStateListOf(false, false, false, false),
+            mutableStateListOf(false, false, false, false),
+            mutableStateListOf(false, false, false, false),
+            mutableStateListOf(false, false, false, false)
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -101,11 +120,29 @@ fun PostEmotionScreen(navController: NavController) {
                 modifier = Modifier.clip(shape = CircleShape.copy(all = CornerSize(32.dp)))
             ) {
                 when (actualPage) {
-                    0 -> MoodGrid()
-                    1 -> ActGrid()
-                    2 -> PlaceGrid()
-                    3 -> PeopleGrid()
-                    4 -> PostGrid()
+                    0 -> MoodGrid(
+                        buttonStates = buttonStates,
+                        diaryUiState = viewModel.diaryUiState,
+                        onClick = viewModel::updateUiState,
+                    )
+
+                    1 -> ActGrid(
+                        diaryUiState = viewModel.diaryUiState,
+                        onClick = viewModel::updateUiState,
+                    )
+                    2 -> PlaceGrid(
+                        diaryUiState = viewModel.diaryUiState,
+                        onClick = viewModel::updateUiState,
+                    )
+                    3 -> PeopleGrid(
+                        diaryUiState = viewModel.diaryUiState,
+                        onClick = viewModel::updateUiState,
+                    )
+
+                    4 -> PostGrid(
+                        diaryUiState = viewModel.diaryUiState,
+                        valueChange = viewModel::updateUiState
+                    )
                     5 -> ImgGrid()
                 }
             }
@@ -144,8 +181,10 @@ fun PostEmotionScreen(navController: NavController) {
             }
 
             Button(
-                onClick = { showDialog = true
-                    isCancel = false},
+                onClick = {
+                    showDialog = true
+                    isCancel = false
+                          },
                 modifier = Modifier
                     .width(163.dp)
                     .height(60.dp)
@@ -219,7 +258,13 @@ fun PostEmotionScreen(navController: NavController) {
                                 }
                                 Button(
                                     onClick = {
-                                        navController.navigate(HomeDestination.route)
+                                        coroutineScope.launch {
+                                            navController.navigate(HomeDestination.route)
+                                            viewModel.saveItem()
+                                            for (i in buttonStates)
+                                                for (j in i)
+                                                    Log.d("table", j.toString())
+                                        }
                                     },
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = Color(0xFFD9D9D9),

@@ -1,5 +1,7 @@
 package eu.tutorial.moodle.ui.post
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,9 +36,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import eu.tutorial.moodle.data.activitiesData
-import eu.tutorial.moodle.data.peopleData
-import eu.tutorial.moodle.data.placesData
+import eu.tutorial.moodle.data.Activity
+import eu.tutorial.moodle.data.People
+import eu.tutorial.moodle.data.Place
+import eu.tutorial.moodle.data.local.activitiesData
+import eu.tutorial.moodle.data.local.peopleData
+import eu.tutorial.moodle.data.local.placesData
 
 @Composable
 fun CommonGrid(
@@ -45,8 +50,8 @@ fun CommonGrid(
     data: List<String>,
     buttonStates: List<Boolean>,
     onItemClick: (Int) -> Unit,
-    icon: ImageVector
-) {
+    icon: ImageVector,
+    ) {
     Box(
         modifier = Modifier
             .height(520.dp)
@@ -119,15 +124,26 @@ fun CommonGrid(
 }
 
 @Composable
-fun ActGrid() {
+fun ActGrid(
+    diaryUiState : DiaryUiState,
+    onClick : (DiaryDetails) -> Unit,
+) {
     val data = activitiesData
 
     val buttonStates = remember {
         mutableStateListOf<Boolean>()
     }
+
     for (i in data.indices) {
         buttonStates.add(false)
     }
+
+    onClick(
+        diaryUiState.diaryDetails.copy(
+            // TODO : activityId icon descriptor id로 바꾸기
+            activities = getTrue(buttonStates,data).map { Activity(activityId = 1, activityDescription = it) }
+        )
+    )
 
     CommonGrid(
         title = "Activities",
@@ -139,12 +155,16 @@ fun ActGrid() {
         onItemClick = { index ->
             // Handle item click here
             buttonStates[index] = !buttonStates[index]
-        }
+        },
+
     )
 }
 
 @Composable
-fun PlaceGrid() {
+fun PlaceGrid(
+    diaryUiState : DiaryUiState,
+    onClick : (DiaryDetails) -> Unit,
+) {
     val data = placesData
     val buttonStates = remember {
         mutableStateListOf<Boolean>()
@@ -152,6 +172,13 @@ fun PlaceGrid() {
     for (i in data.indices) {
         buttonStates.add(false)
     }
+
+    onClick(
+        diaryUiState.diaryDetails.copy(
+            // TODO : activityId icon descriptor id로 바꾸기
+            places = getTrue(buttonStates,data).map { Place(placeId = 1, placeDescription = it) }
+        )
+    )
 
     CommonGrid(
         title = "Places",
@@ -162,12 +189,17 @@ fun PlaceGrid() {
         onItemClick = { index ->
             // Handle item click here
             buttonStates[index] = !buttonStates[index]
-        }
+        },
+
     )
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun PeopleGrid() {
+fun PeopleGrid(
+    diaryUiState : DiaryUiState,
+    onClick : (DiaryDetails) -> Unit,
+) {
     val data = peopleData
     val buttonStates = remember {
         mutableStateListOf<Boolean>()
@@ -175,6 +207,13 @@ fun PeopleGrid() {
     for (i in data.indices) {
         buttonStates.add(false)
     }
+
+    onClick(
+        diaryUiState.diaryDetails.copy(
+            // TODO : activityId icon descriptor id로 바꾸기
+            people = getTrue(buttonStates,data).map { People(peopleId = 1, peopleDescription = it) }
+        )
+    )
 
     CommonGrid(
         title = "People",
@@ -185,6 +224,19 @@ fun PeopleGrid() {
         onItemClick = { index ->
             // Handle item click here
             buttonStates[index] = !buttonStates[index]
-        }
+        },
     )
+}
+
+fun getTrue(
+    states : List<Boolean>,
+    data: List<String>
+): ArrayList<String> {
+    val result = ArrayList<String>()
+
+    for (i in states.indices){
+        if(states[i]) result.add(data[i])
+    }
+    
+    return result
 }

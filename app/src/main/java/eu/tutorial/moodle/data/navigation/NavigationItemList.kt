@@ -1,4 +1,4 @@
-package eu.tutorial.moodle.data
+package eu.tutorial.moodle.data.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BarChart

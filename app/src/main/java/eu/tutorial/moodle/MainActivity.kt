@@ -31,13 +31,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-@RequiresApi(Build.VERSION_CODES.O)
-@Preview(
-    showBackground = true,
-    showSystemUi = true
-)
-@Composable
-fun AppPreview(){
-    MoodleApp()
-}

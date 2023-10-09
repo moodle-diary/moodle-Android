@@ -1,6 +1,7 @@
 package eu.tutorial.moodle.ui.post
 
-import androidx.compose.foundation.ExperimentalFoundationApi
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,13 +13,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,12 +31,17 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import java.time.LocalDateTime
 
+
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun PostGrid() {
+fun PostGrid(
+    diaryUiState: DiaryUiState,
+    valueChange : (DiaryDetails) -> Unit
+) {
     var text by remember { mutableStateOf(TextFieldValue()) }
     var textVisible by remember { mutableStateOf(true) }
 
@@ -96,10 +100,14 @@ fun PostGrid() {
                         .background(Color(color = 0XffEFEFEF)),
                 ) {
                     BasicTextField(
-                        value = text,
+                        value = diaryUiState.diaryDetails.diaryText,
                         onValueChange = {
-                            text = it
-                        },
+                            valueChange(
+                                diaryUiState.diaryDetails.copy(
+                                    diaryText = it,
+                                )
+                            )
+                                        }, //{ onValueChange(itemDetails.copy(name = it)) }
                         textStyle = TextStyle(fontSize = 16.sp),
                         modifier = Modifier
                             .padding(16.dp)

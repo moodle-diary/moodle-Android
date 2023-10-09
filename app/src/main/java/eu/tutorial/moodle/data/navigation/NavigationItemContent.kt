@@ -1,4 +1,4 @@
-package eu.tutorial.moodle.data
+package eu.tutorial.moodle.data.navigation
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

@@ -1,6 +1,7 @@
 package eu.tutorial.moodle.ui.calendar
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -29,9 +31,15 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.component.CalendarMonthItem
 import eu.tutorial.moodle.ui.component.DayOfWeek
+import eu.tutorial.moodle.ui.home.HomeViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.YearMonth
 
@@ -44,6 +52,7 @@ fun HorizontalCalendar(
     currentMonth: YearMonth,
     pagerState: PagerState,
     changeVisible : () -> Unit,
+    viewModel: HomeViewModel
 ) {
 
     var currentSelectedDate by remember { mutableStateOf(currentDate) }
@@ -54,11 +63,13 @@ fun HorizontalCalendar(
 
         // TODO : 앞 혹은 뒤로 많이 갔을 때, 현재 날짜로 변경 되면, 그 페이지로 한 번에 돌아 가도록 한다.
         while(idx != pagerState.currentPage){
+
             if (idx < (pagerState.currentPage)) {
                 pagerState.scrollToPage(page = pagerState.currentPage - 1)
             } else {
                 pagerState.scrollToPage(page = pagerState.currentPage + 1)
             }
+
         }
 
     }
@@ -89,7 +100,10 @@ fun HorizontalCalendar(
             )
 
             IconButton(
-                onClick = { currentSelectedDate = LocalDate.now() },
+                onClick = {
+                    currentSelectedDate = LocalDate.now()
+
+                },
             ) {
                 Icon(
                     imageVector = Icons.Default.Place,
@@ -120,6 +134,10 @@ fun HorizontalCalendar(
                     currentSelectedDate = selectedDate
                     changeVisible()
                 },
+                onClickAction = {
+                    viewModel.getDiaries(it)
+                    // 결과를 처리하거나 ViewModel에 저장
+                }
             )
         }
     }

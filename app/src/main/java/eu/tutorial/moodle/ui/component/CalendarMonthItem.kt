@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,6 +31,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -39,6 +43,7 @@ fun CalendarMonthItem(
     currentDate: LocalDate,
     selectedDate: LocalDate,
     onSelectedDate: (LocalDate) -> Unit,
+    onClickAction: (String) -> Unit
 ) {
     val lastDay = currentDate.lengthOfMonth()
     val days = IntRange(1, lastDay).toList()
@@ -79,7 +84,8 @@ fun CalendarMonthItem(
                     isToday = false,
                     isSelected = isSelected,
                     isCurrentMonth = false,
-                    onSelectedDate = onSelectedDate
+                    onSelectedDate = onSelectedDate,
+                    onClickAction = onClickAction
                 )
             }
             items(days) { day ->
@@ -95,7 +101,8 @@ fun CalendarMonthItem(
                     date = date,
                     isToday = date == LocalDate.now(),
                     isSelected = isSelected,
-                    onSelectedDate = onSelectedDate
+                    onSelectedDate = onSelectedDate,
+                    onClickAction = onClickAction
                 )
             }
             items(nextDays) { day ->
@@ -112,7 +119,8 @@ fun CalendarMonthItem(
                     isToday = false,
                     isSelected = isSelected,
                     isCurrentMonth = false,
-                    onSelectedDate = onSelectedDate
+                    onSelectedDate = onSelectedDate,
+                    onClickAction = onClickAction
                 )
             }
         }
@@ -128,7 +136,8 @@ fun CalendarDay(
     date: LocalDate = LocalDate.now(),
     isSelected: Boolean,
     isCurrentMonth: Boolean = true,
-    onSelectedDate: (LocalDate) -> Unit = {}
+    onSelectedDate: (LocalDate) -> Unit = {},
+    onClickAction: (String) -> Unit = {}
 ) {
     val boxColor =
         if (isCurrentMonth)
@@ -143,6 +152,9 @@ fun CalendarDay(
             Color(0X4D000000)
 
     val borderColor = if (isSelected) Color(0XFF414141) else Color(0X00414141)
+
+    val coroutineScope = rememberCoroutineScope()
+
     Box(
         modifier = modifier
             .wrapContentSize()
@@ -158,6 +170,15 @@ fun CalendarDay(
             )
             .clickable {
                 onSelectedDate(date)
+
+                coroutineScope.launch {
+                    withContext(Dispatchers.IO) {
+                        // 데이터베이스 쿼리를 비동기적으로 수행
+                        onClickAction(date.toString())
+                        // 결과를 처리하거나 ViewModel에 저장
+                    }
+                }
+
             },
         contentAlignment = Alignment.Center
     ) {

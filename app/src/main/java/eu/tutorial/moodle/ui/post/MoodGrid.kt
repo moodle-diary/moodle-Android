@@ -1,6 +1,7 @@
 package eu.tutorial.moodle.ui.post
 
-import androidx.compose.foundation.ExperimentalFoundationApi
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,8 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,9 +31,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import java.time.LocalDate
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun MoodGrid() {
+fun MoodGrid(
+    buttonStates :  SnapshotStateList<SnapshotStateList<Boolean>>,
+    diaryUiState: DiaryUiState,
+    onClick : (DiaryDetails) -> Unit
+) {
 
     val data = listOf(
         "Furious", "Nervous", "Cheerful", "Ecstatic",
@@ -41,14 +47,14 @@ fun MoodGrid() {
         "Lonely", "Sad", "At ease", "Content",
         "Hopeless", "Disappointed", "Calm", "Serene"
     )
-    val buttonStates = remember {
-        mutableStateListOf(
-            mutableStateListOf(false, false, false, false),
-            mutableStateListOf(false, false, false, false),
-            mutableStateListOf(false, false, false, false),
-            mutableStateListOf(false, false, false, false)
-        )
-    }
+//    val buttonStates = remember {
+//        mutableStateListOf(
+//            mutableStateListOf(false, false, false, false),
+//            mutableStateListOf(false, false, false, false),
+//            mutableStateListOf(false, false, false, false),
+//            mutableStateListOf(false, false, false, false)
+//        )
+//    }
 
     Box(
         modifier = Modifier
@@ -79,7 +85,6 @@ fun MoodGrid() {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(4),
                 //modifier = Modifier.padding(top = 108.dp, start = 20.dp)
-
             ) {
                 itemsIndexed(data) { index, item ->
                     // 각 데이터 아이템을 Row 컴포넌트 내에서 텍스트와 버튼으로 구성
@@ -99,6 +104,12 @@ fun MoodGrid() {
                             onClick = {
                                 // 클릭된 버튼의 상태를 토글합니다.
                                 buttonStates[index / 4][index % 4] = !isClicked
+                                onClick(
+                                    diaryUiState.diaryDetails.copy(
+                                        currentDate = LocalDate.now().toString(),
+                                        emotions = convertToBitMap(buttonStates)
+                                    )
+                                )
                             },
                             modifier = Modifier
                                 .size(60.dp)
@@ -124,4 +135,18 @@ fun MoodGrid() {
             }
         }
     }
+}
+
+fun convertToBitMap(
+    buttonStates :  SnapshotStateList<SnapshotStateList<Boolean>>,
+) : Int{
+    var result = 0b0000000000000000
+
+    for (i in 0 until 4)
+        for (j in 0 until 4 )
+            if(buttonStates[i][j]){
+                result = result or 1.shl(i * 4 + j)
+            }
+
+    return result
 }
