@@ -15,20 +15,51 @@ class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() 
     var diaryUiState by mutableStateOf(DiaryUiState())
         private set // ?
 
-    fun updateUiState(diaryDetails: DiaryDetails) {
+    var activityUiState by mutableStateOf(ActivityUiState())
+        private set // ?
+
+    var placeUiState by mutableStateOf(PlaceUiState())
+        private set // ?
+
+    var peopleUiState by mutableStateOf(PeopleUiState())
+        private set // ?
+
+    fun updateDiaryUiState(diaryDetails: DiaryDetails) {
         diaryUiState =
             DiaryUiState(diaryDetails = diaryDetails, isEntryValid = true)
     }
-
+    fun updateActivityUiState(activityDetails: ActivityDetails) {
+        activityUiState =
+            ActivityUiState(activityDetails = activityDetails, isEntryValid = true)
+    }
+    fun updatePlaceUiState(placeDetails: PlaceDetails) {
+        placeUiState =
+            PlaceUiState(placeDetails = placeDetails, isEntryValid = true)
+    }
+    fun updatePeopleUiState(peopleDetails: PeopleDetails) {
+        peopleUiState =
+            PeopleUiState(peopleDetails = peopleDetails, isEntryValid = true)
+    }
     private fun validateInput(diaryDetails: DiaryDetails = diaryUiState.diaryDetails): Boolean {
         TODO("Not yet implemented")
         return true
     }
 
-    suspend fun saveItem() {
+    suspend fun saveDiary() {
         diaryRepository.insertDiary(diaryUiState.diaryDetails.toDiary())
     }
 
+    suspend fun saveActivity() {
+        diaryRepository.insertDiary(diaryUiState.diaryDetails.toDiary())
+    }
+
+    suspend fun savePlace() {
+        diaryRepository.insertDiary(diaryUiState.diaryDetails.toDiary())
+    }
+
+    suspend fun savePeople() {
+        diaryRepository.insertDiary(diaryUiState.diaryDetails.toDiary())
+    }
 }
 
 data class DiaryUiState(
@@ -36,26 +67,62 @@ data class DiaryUiState(
     val isEntryValid: Boolean = false
 )
 
+data class ActivityUiState(
+    val activityDetails: ActivityDetails = ActivityDetails(),
+    val isEntryValid: Boolean = false
+)
+
+data class PlaceUiState(
+    val placeDetails: PlaceDetails = PlaceDetails(),
+    val isEntryValid: Boolean = false
+)
+
+data class PeopleUiState(
+    val peopleDetails: PeopleDetails = PeopleDetails(),
+    val isEntryValid: Boolean = false
+)
 
 data class DiaryDetails(
     val currentDate : String = "",
     val emotions : Int = 0,
     val diaryText : String = "",
+)
+data class ActivityDetails(
+    val activityId : Int = 0,
+    val activityDescription : String = "",
+)
 
-    val activities : List<Activity> = emptyList(),
-    val places: List<Place> = emptyList(),
-    val people: List<People> = emptyList(),
+data class PlaceDetails(
+    val placeId : Int = 0,
+    val placeDescription : String = "",
+)
+
+data class PeopleDetails(
+    val peopleId : Int = 0,
+    val peopleDescription : String = "",
 )
 
 fun DiaryDetails.toDiary(): Diary = Diary(
     currentDate = currentDate,
     emotions = emotions,
     diaryText = diaryText,
-
-    activities = activities,
-    places = places,
-    people = people
 )
+
+fun ActivityDetails.toActivity() : Activity = Activity(
+    activityId = activityId,
+    activityDescription = activityDescription,
+)
+
+fun PlaceDetails.toPlace() : Place = Place(
+    placeId = placeId,
+    placeDescription = placeDescription,
+)
+
+fun PeopleDetails.toPeople() : People = People(
+    peopleId = peopleId,
+    peopleDescription = peopleDescription,
+)
+
 
 fun Diary.toDiaryUiState(isEntryValid: Boolean = false): DiaryUiState = DiaryUiState(
     diaryDetails = this.toDiaryDetails(),
@@ -66,8 +133,4 @@ fun Diary.toDiaryDetails(): DiaryDetails = DiaryDetails(
     currentDate = currentDate,
     emotions = emotions,
     diaryText = diaryText,
-
-    activities = activities,
-    places = places,
-    people = people
 )

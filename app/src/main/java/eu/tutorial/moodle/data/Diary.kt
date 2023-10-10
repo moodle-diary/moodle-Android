@@ -18,23 +18,10 @@ data class Diary(
     val currentDate : String,
     val emotions : Int,
     val diaryText : String,
-
-    val activities : List<Activity>,
-    val places: List<Place>,
-    val people: List<People>,
-
 )
 
 @Entity(
     tableName = "activity",
-    foreignKeys = [
-        ForeignKey(
-            entity = Diary::class,
-            parentColumns = ["diary_id"],
-            childColumns = ["activity_id"],
-            onDelete = CASCADE
-        )
-    ]
 )
 data class Activity(
     @PrimaryKey(autoGenerate = true)
@@ -47,14 +34,6 @@ data class Activity(
 
 @Entity(
     tableName = "place",
-    foreignKeys = [
-        ForeignKey(
-            entity = Diary::class,
-            parentColumns = ["diary_id"],
-            childColumns = ["place_id"],
-            onDelete = CASCADE
-        )
-    ]
 )
 data class Place(
     @PrimaryKey(autoGenerate = true)
@@ -67,14 +46,6 @@ data class Place(
 
 @Entity(
     tableName = "people",
-    foreignKeys = [
-        ForeignKey(
-            entity = Diary::class,
-            parentColumns = ["diary_id"],
-            childColumns = ["people_id"],
-            onDelete = CASCADE
-        )
-    ]
 )
 data class People(
     @PrimaryKey(autoGenerate = true)

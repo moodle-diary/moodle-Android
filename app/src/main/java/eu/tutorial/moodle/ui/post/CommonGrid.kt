@@ -141,7 +141,6 @@ fun ActGrid(
     onClick(
         diaryUiState.diaryDetails.copy(
             // TODO : activityId icon descriptor id로 바꾸기
-            activities = getTrue(buttonStates,data).map { Activity(activityId = 1, activityDescription = it) }
         )
     )
 
@@ -176,7 +175,6 @@ fun PlaceGrid(
     onClick(
         diaryUiState.diaryDetails.copy(
             // TODO : activityId icon descriptor id로 바꾸기
-            places = getTrue(buttonStates,data).map { Place(placeId = 1, placeDescription = it) }
         )
     )
 
@@ -211,7 +209,6 @@ fun PeopleGrid(
     onClick(
         diaryUiState.diaryDetails.copy(
             // TODO : activityId icon descriptor id로 바꾸기
-            people = getTrue(buttonStates,data).map { People(peopleId = 1, peopleDescription = it) }
         )
     )
 
