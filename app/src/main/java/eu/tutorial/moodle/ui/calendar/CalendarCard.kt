@@ -26,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -96,6 +97,7 @@ fun HorizontalCalendar(
                     platformStyle = PlatformTextStyle(
                         includeFontPadding = false
                     ),
+                    color = Color(0XFFDFDFDF)
                 )
             )
 
@@ -107,7 +109,9 @@ fun HorizontalCalendar(
             ) {
                 Icon(
                     imageVector = Icons.Default.Place,
-                    contentDescription = "move current date")
+                    contentDescription = "move current date",
+                    tint = Color(0XFFDFDFDF)
+                )
             }
         }
 

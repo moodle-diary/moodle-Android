@@ -2,6 +2,9 @@ package eu.tutorial.moodle.ui.view
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,8 +27,13 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,11 +46,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.data.local.comments
 import eu.tutorial.moodle.data.local.diaryText
+import eu.tutorial.moodle.ui.comment.CommentScreen
 import eu.tutorial.moodle.ui.theme.poppins
 
 @Composable
-fun ViewScreen() {
+fun ViewScreen(
+    showCommentScreen: Boolean,
+    setShowCommentScreen: (Boolean) -> Unit,
+    onCloseClick: () -> Unit
+) {
 
     Column(
         modifier = Modifier
@@ -73,12 +87,14 @@ fun ViewScreen() {
                     color = Color(0XFFDFDFDF)
                 )
             }
-            Icon(
-                imageVector = Icons.Default.Close,
-                contentDescription = "close",
-                tint = Color(0XFFDFDFDF),
-                modifier = Modifier.size(24.dp)
-            )
+            IconButton(onClick = { onCloseClick() }) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "close",
+                    tint = Color(0XFFDFDFDF),
+                    modifier = Modifier.size(24.dp)
+                )
+            }
         }
 
         Text(
@@ -100,7 +116,7 @@ fun ViewScreen() {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    repeat(5) { columnIndex ->
+                    repeat(2) { columnIndex ->
                         Image(
                             painter = painterResource(id = R.drawable.angry),
                             contentDescription = "angry",
@@ -199,7 +215,7 @@ fun ViewScreen() {
             horizontalArrangement = Arrangement.Center
         ) {
             Button(
-                onClick = {  },
+                onClick = { setShowCommentScreen(true) },
                 modifier = Modifier
                     .defaultMinSize(
                         minWidth = 1.dp,
@@ -222,6 +238,26 @@ fun ViewScreen() {
         }
 
     }
+    Box(
+        modifier = Modifier
+            .background(color = Color(0X00000000))
+    ){
+        androidx.compose.animation.AnimatedVisibility(
+            visible = showCommentScreen,
+            enter = slideInVertically(initialOffsetY = { it }),
+            exit = slideOutVertically(targetOffsetY = { it }),
+//            modifier = Modifier
+//                .align(Alignment.BottomCenter) // 이 align 은 box scope 이기 때문에 안에서 써야 한다.
+        ) {
+            CommentScreen(
+                modifier = Modifier
+//                    .clip(shape = RoundedCornerShape(32.dp)) // 이게 먼저 와야함
+                    .background(color = Color.Black.copy(alpha = 0.3f)),
+                onCloseClick = onCloseClick,
+                comments = comments
+            )
+        }
+    }
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -231,5 +267,11 @@ fun ViewScreen() {
 )
 @Composable
 fun ViewScreenPreview(){
-    ViewScreen()
+    var showCommentScreen by remember { mutableStateOf(false) }
+    ViewScreen(
+        showCommentScreen = showCommentScreen,
+        setShowCommentScreen = { showCommentScreen = it }
+    ) {
+
+    }
 }

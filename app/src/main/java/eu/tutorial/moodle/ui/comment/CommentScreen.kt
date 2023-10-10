@@ -49,7 +49,7 @@ fun CommentScreen(
     var newComment by remember { mutableStateOf("") }
 
     Scaffold(
-        containerColor = Color.Black.copy(alpha = 0.3f),
+        containerColor = Color.Black.copy(alpha = 0.9f),
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Transparent),
@@ -59,9 +59,9 @@ fun CommentScreen(
                     .fillMaxWidth()
                     .height(110.dp)
                     .padding(top = 16.dp, bottom = 24.dp, start = 12.dp, end = 12.dp),
-                shape = RoundedCornerShape(32.dp),
+                shape = RoundedCornerShape(18.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = Color(0XFFEFEFEF)
+                    containerColor = Color(0XFF363637)
                 )
             ) {
                 Row(
@@ -82,20 +82,21 @@ fun CommentScreen(
                             text = "Close",
                             fontSize = 16.sp,
                             fontFamily = poppins,
-                            color = Color.Black
+                            color = Color(0XFFDFDFDF)
                         )
                     }
                     Button(
                         onClick = { isAddingComment = true },
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0XFF414141)
-                        )
+                            containerColor = Color(0XFF151515)
+                        ),
+                        shape = RoundedCornerShape(6.dp)
                     ) {
                         Text(
                             text = "Add Comments",
                             fontSize = 16.sp,
                             fontFamily = poppins,
-                            color = Color.White
+                            color = Color(0XFFDFDFDF)
                         )
                     }
                 }
@@ -135,10 +136,10 @@ fun CommentScreen(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(Color(0XFFEFEFEF))
+                                .background(Color(0XFFEDEDED))
                                 .border(
                                     width = 1.dp,
-                                    color = Color(0XFFEFEFEF),
+                                    color = Color(0XFFEDEDED),
                                     shape = RoundedCornerShape(size = 32.dp)
                                 )
                                 .padding(20.dp, 26.dp),

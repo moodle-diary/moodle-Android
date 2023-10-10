@@ -65,7 +65,9 @@ fun CalendarMonthItem(
         1, 42 - lastDays.size - days.size
     ).toList()
 
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(modifier = modifier
+        .fillMaxSize()
+    ) {
         LazyVerticalGrid(
             modifier = Modifier.fillMaxSize(),
             columns = GridCells.Fixed(7),
@@ -141,17 +143,17 @@ fun CalendarDay(
 ) {
     val boxColor =
         if (isCurrentMonth)
-            if (isToday) Color(0XFF414141) else Color(0XFFEFEFEF)
+            if (isToday) Color(0XFFEDEDED) else Color(0XFF363637)
         else
-            Color(0X80EFEFEF)
+            Color(0XFF212122)
 
     val textColor =
         if (isCurrentMonth)
-            if (isToday) Color(0XFFFFFFFF) else Color(0XFF000000)
+            if (isToday) Color(0XFF151515) else Color(0XFFDFDFDF)
         else
-            Color(0X4D000000)
+            Color(0XFF686868)
 
-    val borderColor = if (isSelected) Color(0XFF414141) else Color(0X00414141)
+    val borderColor = if (isSelected) Color(0XFFEDEDED) else Color.Transparent
 
     val coroutineScope = rememberCoroutineScope()
 
