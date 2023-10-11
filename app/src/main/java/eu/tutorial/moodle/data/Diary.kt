@@ -8,7 +8,6 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 
 // TODO @Parcelize ??
-@TypeConverters(Converters::class)
 @Entity(
     tableName = "diaries"
 )
@@ -27,7 +26,7 @@ data class Diary(
 data class Activity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "activity_id")
-    val id : Int = 0,
+    val id : Long = 0,
 
     val diaryId : Long = 0,
     val activityDescription : String,
@@ -39,8 +38,9 @@ data class Activity(
 data class Place(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "place_id")
-    val id : Int = 0,
+    val id : Long = 0,
 
+    val diaryId : Long = 0,
     val placeDescription : String,
 )
 
@@ -50,8 +50,9 @@ data class Place(
 data class People(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "people_id")
-    val id : Int = 0,
+    val id : Long = 0,
 
+    val diaryId : Long = 0,
     val peopleDescription : String,
 )
 

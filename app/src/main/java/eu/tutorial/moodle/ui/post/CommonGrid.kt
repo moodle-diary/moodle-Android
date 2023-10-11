@@ -141,72 +141,53 @@ fun ActGrid(
             // Handle item click here
             actButtonStates[index] = !actButtonStates[index]
         },
-
-        )
+    )
 }
 
 @Composable
 fun PlaceGrid(
-    placeUiState : PlaceUiState,
-    onClick : (PlaceDetails) -> Unit,
+    placeButtonStates : SnapshotStateList<Boolean>
 ) {
     val data = placesData
-    val buttonStates = remember {
-        mutableStateListOf<Boolean>()
-    }
-    for (i in data.indices) {
-        buttonStates.add(false)
-    }
 
-    onClick(
-        placeUiState.placeDetails.copy(
-            // TODO : activityId icon descriptor id로 바꾸기
-        )
-    )
+    for (i in data.indices) {
+        placeButtonStates.add(false)
+    }
 
     CommonGrid(
         title = "Places",
         subtitle = "Where did you spend your time?",
         data = data,
-        buttonStates = buttonStates,
+        buttonStates = placeButtonStates,
         icon = Icons.Default.Place,
         onItemClick = { index ->
             // Handle item click here
-            buttonStates[index] = !buttonStates[index]
+            placeButtonStates[index] = !placeButtonStates[index]
         },
 
     )
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PeopleGrid(
-    peopleUiState : PeopleUiState,
-    onClick : (PeopleDetails) -> Unit,
+    peopleButtonStates : SnapshotStateList<Boolean>
 ) {
     val data = peopleData
-    val buttonStates = remember {
-        mutableStateListOf<Boolean>()
-    }
+
     for (i in data.indices) {
-        buttonStates.add(false)
+        peopleButtonStates.add(false)
     }
 
-    onClick(
-        peopleUiState.peopleDetails.copy(
-            // TODO : activityId icon descriptor id로 바꾸기
-        )
-    )
 
     CommonGrid(
         title = "People",
         subtitle = "Who did you spend time with?",
         data = data,
-        buttonStates = buttonStates,
+        buttonStates = peopleButtonStates,
         icon = Icons.Default.People,
         onItemClick = { index ->
             // Handle item click here
-            buttonStates[index] = !buttonStates[index]
+            peopleButtonStates[index] = !peopleButtonStates[index]
         },
     )
 }

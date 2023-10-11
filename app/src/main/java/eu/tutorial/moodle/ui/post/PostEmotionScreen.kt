@@ -35,6 +35,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.local.activitiesData
+import eu.tutorial.moodle.data.local.peopleData
+import eu.tutorial.moodle.data.local.placesData
 import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.navigation.HomeDestination
 import eu.tutorial.moodle.ui.navigation.NavigationDestination
@@ -112,6 +114,14 @@ fun PostEmotionScreen(
             mutableStateListOf<Boolean>()
         }
 
+        val placeButtonStates = remember {
+            mutableStateListOf<Boolean>()
+        }
+
+        val peopleButtonStates = remember {
+            mutableStateListOf<Boolean>()
+        }
+
         HorizontalPager(
             modifier = Modifier.height(520.dp),
             pageCount = pageCount, // pageCount를 변경한 값으로 설정
@@ -136,13 +146,11 @@ fun PostEmotionScreen(
                     )
 
                     2 -> PlaceGrid(
-                        placeUiState = viewModel.placeUiState,
-                        onClick = viewModel::updatePlaceUiState,
+                        placeButtonStates = placeButtonStates
                     )
 
                     3 -> PeopleGrid(
-                        peopleUiState = viewModel.peopleUiState,
-                        onClick = viewModel::updatePeopleUiState,
+                        peopleButtonStates = peopleButtonStates
                     )
 
                     4 -> PostGrid(
@@ -275,6 +283,17 @@ fun PostEmotionScreen(
                                                 if(actButtonStates[i]) viewModel.saveActivity(
                                                     activitiesData[i] , key
                                                 )
+
+                                            for (i in 0 until placeButtonStates.size)
+                                                if(placeButtonStates[i]) viewModel.savePlace(
+                                                    placesData[i] , key
+                                                )
+
+                                            for (i in 0 until peopleButtonStates.size)
+                                                if(peopleButtonStates[i]) viewModel.savePeople(
+                                                    peopleData[i] , key
+                                                )
+
                                         }
                                     },
                                     colors = ButtonDefaults.buttonColors(
