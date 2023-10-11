@@ -9,11 +9,12 @@ import androidx.room.TypeConverters
 
 // TODO @Parcelize ??
 @TypeConverters(Converters::class)
-@Entity(tableName = "diaries")
+@Entity(
+    tableName = "diaries"
+)
 data class Diary(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "diary_id")
-    val id : Int = 0,
+    val id : Long = 0,
 
     val currentDate : String,
     val emotions : Int,
@@ -28,7 +29,7 @@ data class Activity(
     @ColumnInfo(name = "activity_id")
     val id : Int = 0,
 
-    val activityId : Int,
+    val diaryId : Long = 0,
     val activityDescription : String,
 )
 
@@ -40,7 +41,6 @@ data class Place(
     @ColumnInfo(name = "place_id")
     val id : Int = 0,
 
-    val placeId : Int,
     val placeDescription : String,
 )
 
@@ -52,7 +52,6 @@ data class People(
     @ColumnInfo(name = "people_id")
     val id : Int = 0,
 
-    val peopleId : Int,
     val peopleDescription : String,
 )
 
