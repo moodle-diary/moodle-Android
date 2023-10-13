@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.local.Emoji
 import eu.tutorial.moodle.data.local.allEmojis
+import eu.tutorial.moodle.ui.theme.poppins
 
 
 @Composable
@@ -70,26 +72,51 @@ fun IconsComponent(
             }
         }
     } else{
-        Card(
+        Column(
             modifier = Modifier
-                .padding(start = 12.dp, end = 12.dp),
-            shape = RoundedCornerShape(32.dp)
+                .padding(start = 50.dp, end = 50.dp)
+                .fillMaxWidth()
         ) {
-            Box(
+            
+            Row(
                 modifier = Modifier
-                    .height(104.dp)
                     .fillMaxWidth()
-                    .background(color = Color(0XD9D9D9D9)),
-                contentAlignment = Alignment.Center,
-            ){
+                    .padding(bottom = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
                 Text(
                     text = "Icons",
-                    style = TextStyle(
-                        fontSize = 32.sp,
-                        fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                        color = Color(0XFFFFFFFF)
-                    ),
+                    fontSize = 16.sp,
+                    fontFamily = FontFamily(Font(R.font.poppins_bold)),
+                    color = Color(0XFFDFDFDF)
                 )
+                Text(
+                    text = "더보기",
+                    fontSize = 12.sp,
+                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                    color = Color(0XFF7E7E7E)
+                )
+            }
+            
+            Card(
+                shape = RoundedCornerShape(18.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .height(192.dp)
+                        .fillMaxWidth()
+                        .background(color = Color(0XFF212122)),
+                    contentAlignment = Alignment.Center,
+                ){
+                    Text(
+                        text = "No Icons",
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                            color = Color(0XFF7E7E7E)
+                        ),
+                    )
+                }
             }
         }
     }

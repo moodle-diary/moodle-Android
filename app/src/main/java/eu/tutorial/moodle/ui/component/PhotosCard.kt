@@ -16,41 +16,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
-//<<<<<<< HEAD:app/src/main/java/eu/tutorial/moodle/ui/component/NotesCard.kt
-//=======
-import eu.tutorial.moodle.data.local.diaryText
-import eu.tutorial.moodle.ui.comment.CommentBox
-//>>>>>>> main:app/src/main/java/eu/tutorial/moodle/ui/component/HomeNotes.kt
+
 
 @Composable
-fun NotesComponent(
-    text : String = ""
+fun PhotosComponent(
+    photo : String = ""
 ){
-    Card( // TODO 이 부분 코드 개선.. value를 빼서 Composable 줄이는 방향
+    Card(
         modifier = Modifier
             .padding(start = 12.dp, end = 12.dp),
         shape = RoundedCornerShape(18.dp)
     ) {
-        if(text != ""){
+        if(photo != ""){
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
+                    .height(300.dp)
                     .background(color = Color(0XFF2A292B)),
             ){
-                Text(
-                    text = text,
-                    modifier = Modifier
-                        .padding(start = 18.dp, top = 32.dp, bottom = 32.dp, end = 18.dp),
-                    style = TextStyle(
-                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                        fontSize = 16.sp
-                    ),
-                    color = Color(0XFFDFDFDF)
-                )
+                // 사진 불러오기
             }
         } else{
             Box(
@@ -61,7 +48,7 @@ fun NotesComponent(
                 contentAlignment = Alignment.Center,
             ){
                 Text(
-                    text = "No Journal",
+                    text = "No Photos",
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontFamily = FontFamily(Font(R.font.poppins_regular)),

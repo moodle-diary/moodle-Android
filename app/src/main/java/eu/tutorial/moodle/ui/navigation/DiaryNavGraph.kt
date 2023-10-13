@@ -2,6 +2,7 @@ package eu.tutorial.moodle.ui.navigation
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -9,6 +10,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -34,13 +37,13 @@ fun DiaryNavHost(
                 bottomBar = { BottomNavBar(
                     navController = navController
                 ) },
-                floatingActionButtonPosition = FabPosition.Center,
-                floatingActionButton = {
-                    FloatingButton(
-                        navController = navController,
-                        isVisible = true
-                    )
-                }
+//                floatingActionButtonPosition = FabPosition.Center,
+//                floatingActionButton = {
+//                    FloatingButton(
+//                        navController = navController,
+//                        isVisible = true
+//                    )
+//                }
             ) { innerPadding ->
                     DetailHomeScreen(innerPaddingValues = innerPadding)
 //                EmptyHomeScreen(innerPaddingValues = innerPadding)
@@ -63,29 +66,26 @@ fun DiaryNavHost(
                         isVisible = visibleMore
                     ) }
                 },
-                floatingActionButtonPosition = FabPosition.Center,
-                floatingActionButton = {
-                    if (showCommentScreen) {
-                        FloatingButton(
-                            navController = navController,
-                            isVisible = !showCommentScreen
-                        )
-                    } else {
-                        FloatingButton(
-                            navController = navController,
-                            isVisible = !visibleMore
-                        ) }
-
-                }
+//                floatingActionButtonPosition = FabPosition.Center,
+//                floatingActionButton = {
+//                    if (showCommentScreen) {
+//                        FloatingButton(
+//                            navController = navController,
+//                            isVisible = !showCommentScreen
+//                        )
+//                    } else {
+//                        FloatingButton(
+//                            navController = navController,
+//                            isVisible = !visibleMore
+//                        ) }
+//
+//                },
             ) { innerPadding ->
 
                 CalendarMainCard(
                     innerPadding = innerPadding,
                     visibleMore = visibleMore,
-                    changeVisibleMore = {visibleMore = !visibleMore},
-                    showCommentScreen = showCommentScreen,
-                    setShowCommentScreen = { showCommentScreen = it },
-                    onCloseClick = {showCommentScreen = false}
+                    showViewScreen = {visibleMore = !visibleMore}
                 )
             }
         }
