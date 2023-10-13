@@ -36,7 +36,7 @@ fun CommentBox(
 
     Card(
         modifier = Modifier
-            .padding(12.dp, 10.dp)
+            .padding(10.dp, 12.dp)
             .fillMaxWidth(),
         shape = RoundedCornerShape(32.dp),
         colors = CardDefaults.cardColors(

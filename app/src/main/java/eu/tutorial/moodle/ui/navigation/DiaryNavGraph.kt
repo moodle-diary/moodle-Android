@@ -85,7 +85,7 @@ fun DiaryNavHost(
                 CalendarMainCard(
                     innerPadding = innerPadding,
                     visibleMore = visibleMore,
-                    changeVisibleMore = {visibleMore = !visibleMore}
+                    showViewScreen = {visibleMore = !visibleMore}
                 )
             }
         }

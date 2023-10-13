@@ -55,6 +55,7 @@ import eu.tutorial.moodle.ui.theme.poppins
 fun ViewScreen(
     showCommentScreen: Boolean,
     setShowCommentScreen: (Boolean) -> Unit,
+    showViewScreen: () -> Unit,
     onCloseClick: () -> Unit
 ) {
 
@@ -87,7 +88,7 @@ fun ViewScreen(
                     color = Color(0XFFDFDFDF)
                 )
             }
-            IconButton(onClick = { onCloseClick() }) {
+            IconButton(onClick = showViewScreen) {
                 Icon(
                     imageVector = Icons.Default.Close,
                     contentDescription = "close",
@@ -253,25 +254,12 @@ fun ViewScreen(
                 modifier = Modifier
 //                    .clip(shape = RoundedCornerShape(32.dp)) // 이게 먼저 와야함
                     .background(color = Color.Black.copy(alpha = 0.3f)),
-                onCloseClick = onCloseClick,
+                onCloseClick = {
+                    setShowCommentScreen(false)
+                },
                 comments = comments
             )
         }
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
-@Preview(
-    showSystemUi = true,
-    showBackground = true
-)
-@Composable
-fun ViewScreenPreview(){
-    var showCommentScreen by remember { mutableStateOf(false) }
-    ViewScreen(
-        showCommentScreen = showCommentScreen,
-        setShowCommentScreen = { showCommentScreen = it }
-    ) {
-
-    }
-}

@@ -50,7 +50,7 @@ fun TopAppBar(){
                 style = TextStyle(
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                    color = Color(0xFF000000),
+                    color = Color(0xFFDFDFDF),
                     platformStyle = PlatformTextStyle(
                         includeFontPadding = false
                     ),
@@ -64,7 +64,7 @@ fun TopAppBar(){
                         style = TextStyle(
                             fontSize = 32.sp,
                             fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                            color = Color(0xFF000000),
+                            color = Color(0xFFDFDFDF),
                             platformStyle = PlatformTextStyle(
                                 includeFontPadding = false
                             ),

@@ -68,8 +68,8 @@ fun CalendarMainCard(
     innerPadding : PaddingValues = PaddingValues(0.dp),
     currentDate: LocalDate = LocalDate.now(),
     visibleMore : Boolean,
-    changeVisibleMore: () -> Unit,
-    viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    showViewScreen : () -> Unit,
+    viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory),
 ){
 
     val initialPage = (currentDate.year - 1970) * 12 + currentDate.monthValue - 1
@@ -81,6 +81,8 @@ fun CalendarMainCard(
     var visibleEmotion by remember { mutableStateOf(false) }
 
     var showCommentScreen by remember { mutableStateOf(false) }
+
+
 
 
     LaunchedEffect(pagerState.currentPage) {
@@ -142,7 +144,7 @@ fun CalendarMainCard(
                     ){
                         Button(
                             onClick = {
-                                changeVisibleMore()
+                                showViewScreen()
                             },
                             modifier = Modifier
                                 .align(Alignment.BottomEnd)
@@ -212,7 +214,8 @@ fun CalendarMainCard(
             // TODO 이 부분 DetailHomeScreen에서 독립
             ViewScreen(
                 showCommentScreen = showCommentScreen,
-                setShowCommentScreen = { showCommentScreen = it }
+                setShowCommentScreen = { showCommentScreen = it },
+                showViewScreen = showViewScreen
             ){
 
             }
