@@ -44,7 +44,7 @@ fun TopAppBar(){
 
     Box(
         modifier = Modifier
-            .height(148.dp)
+            .height(108.dp)
             .fillMaxWidth(),
         contentAlignment = Alignment.Center,
     ){

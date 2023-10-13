@@ -19,6 +19,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -46,9 +49,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.data.local.allEmojis
 import eu.tutorial.moodle.data.local.comments
 import eu.tutorial.moodle.data.local.diaryText
 import eu.tutorial.moodle.ui.comment.CommentScreen
+import eu.tutorial.moodle.ui.component.AlignYourBodyElement
 import eu.tutorial.moodle.ui.theme.poppins
 
 @Composable
@@ -139,6 +144,8 @@ fun ViewScreen(
             modifier = Modifier.padding(top = 24.dp)
         )
 
+
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -151,23 +158,25 @@ fun ViewScreen(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     repeat(5) { columnIndex ->
-                        Button(
-                            onClick = {
-                                //
-                            },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFF363637)
-                            ),
-                            modifier = Modifier
-                                .padding(5.dp)
-                                .size(60.dp),
-                            shape = RoundedCornerShape(20.dp)
-                        ) {
-                            Text(
-                                text = "🏠",
-                                fontSize = 30.sp,
-                                textAlign = TextAlign.Center
-                            )
+                        if (rowIndex * 5 + columnIndex < 14) { // 13개까지만 버튼 생성
+                            Button(
+                                onClick = {
+                                    // 버튼 클릭 시 수행할 작업
+                                },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFF363637)
+                                ),
+                                modifier = Modifier
+                                    .padding(5.dp)
+                                    .size(60.dp),
+                                shape = RoundedCornerShape(20.dp)
+                            ) {
+                                Text(
+                                    text = "🏠",
+                                    fontSize = 30.sp,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
                         }
                     }
                 }

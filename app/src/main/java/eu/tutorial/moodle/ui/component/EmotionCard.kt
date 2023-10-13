@@ -5,13 +5,17 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,17 +49,24 @@ fun EmotionComponent(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ){
-            Button(
-                onClick = { /*TODO*/ },
+            Button(onClick = { /*TODO*/ },
                 modifier = Modifier
-                    .size(70.dp)
-                    .fillMaxSize()
-                    .background(Color(0XFF1E1E1E)),
-                ) {
+                    .padding(bottom = 12.dp)
+                    .defaultMinSize(
+                        minWidth = 66.dp,
+                        minHeight = 66.dp
+                    ),
+                contentPadding = PaddingValues(10.dp),
+                shape = CircleShape,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF212122)
+                ),
+                elevation = ButtonDefaults.buttonElevation(0.dp)
+            ) {
                 Image(
                     painter = painterResource(id = R.drawable.plusbutton),
-                    contentDescription = "plus",
-                    modifier = Modifier.size(40.dp)
+                    contentDescription = "plusbutton",
+                    modifier = Modifier.size(32.dp)
                 )
             }
 
