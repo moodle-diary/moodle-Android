@@ -27,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,9 +37,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import eu.tutorial.moodle.data.Activity
-import eu.tutorial.moodle.data.People
-import eu.tutorial.moodle.data.Place
 import eu.tutorial.moodle.data.local.activitiesData
 import eu.tutorial.moodle.data.local.peopleData
 import eu.tutorial.moodle.data.local.placesData
@@ -51,7 +49,7 @@ fun CommonGrid(
     buttonStates: List<Boolean>,
     onItemClick: (Int) -> Unit,
     icon: ImageVector,
-    ) {
+) {
     Box(
         modifier = Modifier
             .height(520.dp)
@@ -125,105 +123,71 @@ fun CommonGrid(
 
 @Composable
 fun ActGrid(
-    diaryUiState : DiaryUiState,
-    onClick : (DiaryDetails) -> Unit,
+    actButtonStates : SnapshotStateList<Boolean>
 ) {
     val data = activitiesData
-
-    val buttonStates = remember {
-        mutableStateListOf<Boolean>()
-    }
-
     for (i in data.indices) {
-        buttonStates.add(false)
+        actButtonStates.add(false)
     }
-
-    onClick(
-        diaryUiState.diaryDetails.copy(
-            // TODO : activityId icon descriptor id로 바꾸기
-            activities = getTrue(buttonStates,data).map { Activity(activityId = 1, activityDescription = it) }
-        )
-    )
 
     CommonGrid(
         title = "Activities",
         subtitle = "What did you do to spend\n" +
                 "your time today?",
         data = data,
-        buttonStates = buttonStates,
+        buttonStates = actButtonStates,
         icon = Icons.Default.Pets,
         onItemClick = { index ->
             // Handle item click here
-            buttonStates[index] = !buttonStates[index]
+            actButtonStates[index] = !actButtonStates[index]
         },
-
     )
 }
 
 @Composable
 fun PlaceGrid(
-    diaryUiState : DiaryUiState,
-    onClick : (DiaryDetails) -> Unit,
+    placeButtonStates : SnapshotStateList<Boolean>
 ) {
     val data = placesData
-    val buttonStates = remember {
-        mutableStateListOf<Boolean>()
-    }
-    for (i in data.indices) {
-        buttonStates.add(false)
-    }
 
-    onClick(
-        diaryUiState.diaryDetails.copy(
-            // TODO : activityId icon descriptor id로 바꾸기
-            places = getTrue(buttonStates,data).map { Place(placeId = 1, placeDescription = it) }
-        )
-    )
+    for (i in data.indices) {
+        placeButtonStates.add(false)
+    }
 
     CommonGrid(
         title = "Places",
         subtitle = "Where did you spend your time?",
         data = data,
-        buttonStates = buttonStates,
+        buttonStates = placeButtonStates,
         icon = Icons.Default.Place,
         onItemClick = { index ->
             // Handle item click here
-            buttonStates[index] = !buttonStates[index]
+            placeButtonStates[index] = !placeButtonStates[index]
         },
 
     )
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PeopleGrid(
-    diaryUiState : DiaryUiState,
-    onClick : (DiaryDetails) -> Unit,
+    peopleButtonStates : SnapshotStateList<Boolean>
 ) {
     val data = peopleData
-    val buttonStates = remember {
-        mutableStateListOf<Boolean>()
-    }
+
     for (i in data.indices) {
-        buttonStates.add(false)
+        peopleButtonStates.add(false)
     }
 
-    onClick(
-        diaryUiState.diaryDetails.copy(
-            // TODO : activityId icon descriptor id로 바꾸기
-            people = getTrue(buttonStates,data).map { People(peopleId = 1, peopleDescription = it) }
-        )
-    )
 
     CommonGrid(
         title = "People",
         subtitle = "Who did you spend time with?",
         data = data,
-        buttonStates = buttonStates,
+        buttonStates = peopleButtonStates,
         icon = Icons.Default.People,
         onItemClick = { index ->
             // Handle item click here
-            buttonStates[index] = !buttonStates[index]
+            peopleButtonStates[index] = !peopleButtonStates[index]
         },
     )
 }

@@ -34,6 +34,9 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.data.local.activitiesData
+import eu.tutorial.moodle.data.local.peopleData
+import eu.tutorial.moodle.data.local.placesData
 import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.navigation.HomeDestination
 import eu.tutorial.moodle.ui.navigation.NavigationDestination
@@ -107,6 +110,18 @@ fun PostEmotionScreen(
 
         val pageCount = actualPageCount
 
+        val actButtonStates = remember {
+            mutableStateListOf<Boolean>()
+        }
+
+        val placeButtonStates = remember {
+            mutableStateListOf<Boolean>()
+        }
+
+        val peopleButtonStates = remember {
+            mutableStateListOf<Boolean>()
+        }
+
         HorizontalPager(
             modifier = Modifier.height(520.dp),
             pageCount = pageCount, // pageCount를 변경한 값으로 설정
@@ -123,26 +138,26 @@ fun PostEmotionScreen(
                     0 -> MoodGrid(
                         buttonStates = buttonStates,
                         diaryUiState = viewModel.diaryUiState,
-                        onClick = viewModel::updateUiState,
+                        onClick = viewModel::updateDiaryUiState,
                     )
 
                     1 -> ActGrid(
-                        diaryUiState = viewModel.diaryUiState,
-                        onClick = viewModel::updateUiState,
+                        actButtonStates = actButtonStates
                     )
+
                     2 -> PlaceGrid(
-                        diaryUiState = viewModel.diaryUiState,
-                        onClick = viewModel::updateUiState,
+                        placeButtonStates = placeButtonStates
                     )
+
                     3 -> PeopleGrid(
-                        diaryUiState = viewModel.diaryUiState,
-                        onClick = viewModel::updateUiState,
+                        peopleButtonStates = peopleButtonStates
                     )
 
                     4 -> PostGrid(
                         diaryUiState = viewModel.diaryUiState,
-                        valueChange = viewModel::updateUiState
+                        valueChange = viewModel::updateDiaryUiState
                     )
+
                     5 -> ImgGrid()
                 }
             }
@@ -258,12 +273,27 @@ fun PostEmotionScreen(
                                 }
                                 Button(
                                     onClick = {
+                                        //TODO : Transaction 고려
                                         coroutineScope.launch {
                                             navController.navigate(HomeDestination.route)
-                                            viewModel.saveItem()
-                                            for (i in buttonStates)
-                                                for (j in i)
-                                                    Log.d("table", j.toString())
+
+                                            val key = viewModel.saveDiary()
+
+                                            for (i in 0 until actButtonStates.size)
+                                                if(actButtonStates[i]) viewModel.saveActivity(
+                                                    activitiesData[i] , key
+                                                )
+
+                                            for (i in 0 until placeButtonStates.size)
+                                                if(placeButtonStates[i]) viewModel.savePlace(
+                                                    placesData[i] , key
+                                                )
+
+                                            for (i in 0 until peopleButtonStates.size)
+                                                if(peopleButtonStates[i]) viewModel.savePeople(
+                                                    peopleData[i] , key
+                                                )
+
                                         }
                                     },
                                     colors = ButtonDefaults.buttonColors(
