@@ -76,7 +76,6 @@ fun HorizontalCalendar(
     }
 
 
-
     Column(
         modifier = modifier
             .fillMaxSize()

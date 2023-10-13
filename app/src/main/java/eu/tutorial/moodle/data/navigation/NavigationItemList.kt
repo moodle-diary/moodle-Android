@@ -3,10 +3,14 @@ package eu.tutorial.moodle.data.navigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Icon
+import androidx.compose.ui.graphics.Color
 import eu.tutorial.moodle.ui.navigation.CalendarDestination
 import eu.tutorial.moodle.ui.navigation.HomeDestination
+import eu.tutorial.moodle.ui.navigation.PostDestination
 
 val navigationItemContentList = listOf(
     NavigationItemContent(
@@ -20,6 +24,12 @@ val navigationItemContentList = listOf(
         icon = Icons.Default.CalendarMonth,
         text = "Calendar",
         route = CalendarDestination.route
+    ),
+    NavigationItemContent(
+        mailboxType = NavType.Post,
+        icon = Icons.Default.Edit,
+        text = "Post",
+        route = PostDestination.route
     ),
     NavigationItemContent(
         mailboxType = NavType.Chart,

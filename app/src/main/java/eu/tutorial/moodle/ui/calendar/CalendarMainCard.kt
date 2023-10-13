@@ -83,8 +83,6 @@ fun CalendarMainCard(
     var showCommentScreen by remember { mutableStateOf(false) }
 
 
-
-
     LaunchedEffect(pagerState.currentPage) {
         val addMonth = (pagerState.currentPage - currentPage).toLong()
         currentMonth = currentMonth.plusMonths(addMonth)
@@ -94,9 +92,9 @@ fun CalendarMainCard(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color(0XFF151515))
             .padding(innerPadding)
             .verticalScroll(rememberScrollState())
-            .background(Color(0XFF151515))
     ) {
 
         Card(

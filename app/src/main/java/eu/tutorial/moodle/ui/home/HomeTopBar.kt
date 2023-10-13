@@ -2,14 +2,19 @@ package eu.tutorial.moodle.ui.home
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,20 +40,25 @@ fun TopAppBar(){
     val currentMonth = today.month
     val currentDate = today.dayOfMonth
     val currentDay = today.dayOfWeek
+    val currentYear = today.year
+
     Box(
         modifier = Modifier
             .height(148.dp)
             .fillMaxWidth(),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ){
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0XFF151515))
+                .padding(start = 50.dp),
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = currentMonth.toString(),
+                text = "%s %s".format(currentMonth.toString(), currentYear),
                 style = TextStyle(
-                    fontSize = 24.sp,
+                    fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
                     color = Color(0xFFDFDFDF),
                     platformStyle = PlatformTextStyle(
@@ -56,24 +66,17 @@ fun TopAppBar(){
                     ),
                 )
             )
-
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        text="%s  %s".format(currentDate, currentDay),
-                        style = TextStyle(
-                            fontSize = 32.sp,
-                            fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                            color = Color(0xFFDFDFDF),
-                            platformStyle = PlatformTextStyle(
-                                includeFontPadding = false
-                            ),
-                        ),
-                        textAlign = TextAlign.Center
-                    ) },
-                modifier = Modifier,
+            Text(
+                text="%s  %s".format(currentDate, currentDay),
+                style = TextStyle(
+                    fontSize = 24.sp,
+                    fontFamily = FontFamily(Font(R.font.poppins_bold)),
+                    color = Color(0xFFDFDFDF),
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    ),
+                )
             )
-
         }
     }
 }
