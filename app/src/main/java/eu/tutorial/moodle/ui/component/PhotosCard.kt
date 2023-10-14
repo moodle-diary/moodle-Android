@@ -61,12 +61,3 @@ fun PhotosComponent(
     }
 
 }
-
-//@Preview(
-//    showSystemUi = true,
-//    showBackground = true
-//)
-//@Composable
-//fun EmotionChartPreview(){
-//    NotesComponent(exist = true)
-//}
