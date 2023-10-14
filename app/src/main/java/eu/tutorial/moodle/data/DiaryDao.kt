@@ -18,49 +18,64 @@ interface DiaryDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertPeople(people: People)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertFood(food: Food)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertImg(Img : Img)
+
     @Update
     suspend fun update(diary: Diary)
     @Delete
     suspend fun delete(diary: Diary)
 
     // 오늘 하루의 emotion, text
-    // TODO : DTO 에 클래스 반환 정의
     @Query(
-        "SELECT * FROM diaries WHERE diaries.currentDate = :currentDate"
+        "SELECT emotions, diaryText FROM diaries WHERE diaries.currentDate = :currentDate"
     )
-    fun getDiaries(currentDate : String) : List<Diary>
+    fun getDiaries(currentDate : String) : List<DiaryDto>
 
-    /**
-     *
     // 오늘 하루의 activity
-    // TODO : dto return data class 정의
     @Query(
         "SELECT activity.activityDescription " +
         "FROM diaries " +
         "INNER JOIN activity on activity.diaryId = diaries.id "+
         "WHERE diaries.currentDate = :currentDate"
     )
-    fun todayActivity(currentDate : String) : List<Diary>
+    fun getActivity(currentDate : String) : List<ActivityDto>
 
     // 오늘 하루의 place
-    // TODO : dto return data class 정의
     @Query(
         "SELECT place.placeDescription " +
                 "FROM diaries " +
                 "INNER JOIN place on place.diaryId = diaries.id "+
                 "WHERE diaries.currentDate = :currentDate"
     )
-    fun todayPlace(currentDate : String) : List<Diary>
+    fun getPlaces(currentDate : String) : List<PlaceDto>
 
     // 오늘 하루의 people
-    // TODO : dto return data class 정의
     @Query(
         "SELECT people.peopleDescription " +
                 "FROM diaries " +
                 "INNER JOIN people on people.diaryId = diaries.id "+
                 "WHERE diaries.currentDate = :currentDate"
     )
-    fun todayPeople(currentDate : String) : List<Diary>
+    fun getPeople(currentDate : String) : List<PeopleDto>
 
-    **/
+    @Query(
+        "SELECT food.foodDescription " +
+                "FROM diaries " +
+                "INNER JOIN food on food.diaryId = diaries.id "+
+                "WHERE diaries.currentDate = :currentDate"
+    )
+    fun getFood(currentDate: String) : List<FoodDto>
+
+    // 우선 여러 이미지를 받을 수 있도록 만들었습니다.
+    @Query(
+        "SELECT image.imgUri " +
+                "FROM diaries " +
+                "INNER JOIN image on image.diaryId = diaries.id "+
+                "WHERE diaries.currentDate = :currentDate"
+    )
+    fun getImg(currentDate: String) : List<ImgDto>
 }

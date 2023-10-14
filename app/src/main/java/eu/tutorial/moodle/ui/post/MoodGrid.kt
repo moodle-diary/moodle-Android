@@ -47,14 +47,6 @@ fun MoodGrid(
         "Lonely", "Sad", "At ease", "Content",
         "Hopeless", "Disappointed", "Calm", "Serene"
     )
-//    val buttonStates = remember {
-//        mutableStateListOf(
-//            mutableStateListOf(false, false, false, false),
-//            mutableStateListOf(false, false, false, false),
-//            mutableStateListOf(false, false, false, false),
-//            mutableStateListOf(false, false, false, false)
-//        )
-//    }
 
     Box(
         modifier = Modifier

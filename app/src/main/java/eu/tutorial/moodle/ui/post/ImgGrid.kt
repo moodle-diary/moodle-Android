@@ -11,18 +11,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.PhotoAlbum
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,26 +29,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 
 @Composable
-fun ImgGrid() {
-
-    // Uri 타입의 변수 imageUri 선언
-    var imageUri: Uri? by remember { mutableStateOf(null) }
-
+fun ImgGrid(
+    imgUri :  MutableState<Uri?>
+) {
     // Boolean 타입의 변수 imageTy 선언
     var imageTy by remember { mutableStateOf(false) }
 
-    val launcher = rememberLauncherForActivityResult(contract =
-    ActivityResultContracts.GetContent()) { uri: Uri? ->
-        imageUri = uri
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        // val 이기 때문에 .value로 접근해서 변경
+        imgUri.value = uri
     }
 
     Box(
@@ -79,8 +75,7 @@ fun ImgGrid() {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-
-                if (imageUri == null){
+                if (imgUri.value == null){
                     IconButton(
                         onClick = {
                             imageTy = true
@@ -105,7 +100,7 @@ fun ImgGrid() {
                     )
                 } else{
                     AsyncImage(
-                        model = imageUri,
+                        model = imgUri.value,
                         contentDescription = null,
                         modifier = Modifier
                             .wrapContentWidth(align = Alignment.Start)
