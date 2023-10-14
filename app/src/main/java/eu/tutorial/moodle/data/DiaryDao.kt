@@ -18,6 +18,9 @@ interface DiaryDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertPeople(people: People)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertFood(food: Food)
+
     @Update
     suspend fun update(diary: Diary)
     @Delete

@@ -56,4 +56,15 @@ data class People(
     val peopleDescription : String,
 )
 
+@Entity(
+    tableName = "food",
+)
+data class Food(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "food_id")
+    val id : Long = 0,
+
+    val diaryId : Long = 0,
+    val foodDescription : String,
+)
 
