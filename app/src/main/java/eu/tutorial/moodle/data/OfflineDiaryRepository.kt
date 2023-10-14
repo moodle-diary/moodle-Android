@@ -8,5 +8,8 @@ class OfflineDiaryRepository(private val diaryDao: DiaryDao) : DiaryRepository {
     override suspend fun insertPeople(people: People) = diaryDao.insertPeople(people)
     override suspend fun insertFood(food: Food) = diaryDao.insertFood(food)
     override suspend fun updateDiary(diary: Diary) = diaryDao.update(diary)
-    override fun getDiaries(currentDate: String): List<Diary>  = diaryDao.getDiaries(currentDate)
+    override fun getDiaries(currentDate: String): List<DiaryDto>  = diaryDao.getDiaries(currentDate)
+    override fun getActivities(currentDate: String): List<ActivityDto> = diaryDao.getActivity(currentDate)
+    override fun getPlaces(currentDate: String): List<PlaceDto> = diaryDao.getPlaces(currentDate)
+    override fun getPeople(currentDate: String): List<PeopleDto> = diaryDao.getPeople(currentDate)
 }

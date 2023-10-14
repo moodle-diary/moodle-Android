@@ -35,6 +35,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.local.activitiesData
+import eu.tutorial.moodle.data.local.foodData
 import eu.tutorial.moodle.data.local.peopleData
 import eu.tutorial.moodle.data.local.placesData
 import eu.tutorial.moodle.ui.AppViewModelProvider
@@ -60,7 +61,7 @@ fun PostEmotionScreen(
     var showDialog by remember { mutableStateOf(false) }
     var isCancel by remember { mutableStateOf(false) }
 
-    val actualPageCount = 6
+    val actualPageCount = 7
     val initialPage = 0
     val pagerState = rememberPagerState(
         initialPage = initialPage,
@@ -68,8 +69,7 @@ fun PostEmotionScreen(
 
     val coroutineScope = rememberCoroutineScope()
 
-
-    val buttonStates = remember {
+    val emotionButtonStates = remember {
         mutableStateListOf(
             mutableStateListOf(false, false, false, false),
             mutableStateListOf(false, false, false, false),
@@ -108,8 +108,6 @@ fun PostEmotionScreen(
             unSelectedColor = Color(0XFFD9D9D9)
         )
 
-        val pageCount = actualPageCount
-
         val actButtonStates = remember {
             mutableStateListOf<Boolean>()
         }
@@ -122,9 +120,13 @@ fun PostEmotionScreen(
             mutableStateListOf<Boolean>()
         }
 
+        val foodButtonStates = remember {
+            mutableStateListOf<Boolean>()
+        }
+
         HorizontalPager(
             modifier = Modifier.height(520.dp),
-            pageCount = pageCount, // pageCount를 변경한 값으로 설정
+            pageCount = actualPageCount, // pageCount를 변경한 값으로 설정
             state = pagerState,
             pageSpacing = 10.dp,
         ) { page ->
@@ -136,7 +138,7 @@ fun PostEmotionScreen(
             ) {
                 when (actualPage) {
                     0 -> MoodGrid(
-                        buttonStates = buttonStates,
+                        buttonStates = emotionButtonStates,
                         diaryUiState = viewModel.diaryUiState,
                         onClick = viewModel::updateDiaryUiState,
                     )
@@ -153,12 +155,16 @@ fun PostEmotionScreen(
                         peopleButtonStates = peopleButtonStates
                     )
 
-                    4 -> PostGrid(
+                    4 -> FoodGrid(
+                        foodButtonStates = foodButtonStates
+                    )
+
+                    5 -> PostGrid(
                         diaryUiState = viewModel.diaryUiState,
                         valueChange = viewModel::updateDiaryUiState
                     )
 
-                    5 -> ImgGrid()
+                    6 -> ImgGrid()
                 }
             }
         }
@@ -281,19 +287,23 @@ fun PostEmotionScreen(
 
                                             for (i in 0 until actButtonStates.size)
                                                 if(actButtonStates[i]) viewModel.saveActivity(
-                                                    activitiesData[i] , key
+                                                    activitiesData[i], key
                                                 )
 
                                             for (i in 0 until placeButtonStates.size)
                                                 if(placeButtonStates[i]) viewModel.savePlace(
-                                                    placesData[i] , key
+                                                    placesData[i], key
                                                 )
 
                                             for (i in 0 until peopleButtonStates.size)
                                                 if(peopleButtonStates[i]) viewModel.savePeople(
-                                                    peopleData[i] , key
+                                                    peopleData[i], key
                                                 )
 
+                                            for(i in 0 until foodButtonStates.size)
+                                                if(foodButtonStates[i]) viewModel.saveFood(
+                                                    foodData[i], key
+                                                )
                                         }
                                     },
                                     colors = ButtonDefaults.buttonColors(

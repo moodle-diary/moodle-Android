@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.Diary
+import eu.tutorial.moodle.data.DiaryDto
 import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.component.EmotionComponent
 import eu.tutorial.moodle.ui.component.EmotionQuadrant
@@ -161,7 +162,7 @@ fun DetailHomeScreen(
     }
 }
 
-fun getDiaryEmotion(diaryList: List<Diary>) : Int {
+fun getDiaryEmotion(diaryList: List<DiaryDto>) : Int {
     var emotion = 0
 
     for (i in diaryList)
@@ -170,14 +171,7 @@ fun getDiaryEmotion(diaryList: List<Diary>) : Int {
     return emotion
 }
 
-fun getDiaryEmoji(diaryList: List<Diary>): String {
-    var result = ""
-
-    return result
-
-}
-
-fun getDiaryText(diaryList: List<Diary>) : String {
+fun getDiaryText(diaryList: List<DiaryDto>) : String {
     var result = ""
 
     for ( i in diaryList)
@@ -185,6 +179,13 @@ fun getDiaryText(diaryList: List<Diary>) : String {
 
     return result
 }
+fun getDiaryEmoji(diaryList: List<Diary>): String {
+    var result = ""
+
+    return result
+
+}
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(

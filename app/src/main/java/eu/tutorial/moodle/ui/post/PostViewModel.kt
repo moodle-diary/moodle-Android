@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import eu.tutorial.moodle.data.Activity
 import eu.tutorial.moodle.data.Diary
 import eu.tutorial.moodle.data.DiaryRepository
+import eu.tutorial.moodle.data.Food
 import eu.tutorial.moodle.data.People
 import eu.tutorial.moodle.data.Place
 
@@ -44,6 +45,12 @@ class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() 
     suspend fun savePeople(description : String, diaryId : Long) {
         diaryRepository.insertPeople(
             People(peopleDescription = description, diaryId = diaryId)
+        )
+    }
+
+    suspend fun saveFood(description: String, diaryId : Long) {
+        diaryRepository.insertFood(
+            Food(foodDescription = description, diaryId = diaryId)
         )
     }
 }

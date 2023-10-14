@@ -27,43 +27,37 @@ interface DiaryDao {
     suspend fun delete(diary: Diary)
 
     // 오늘 하루의 emotion, text
-    // TODO : DTO 에 클래스 반환 정의
     @Query(
-        "SELECT * FROM diaries WHERE diaries.currentDate = :currentDate"
+        "SELECT emotions, diaryText FROM diaries WHERE diaries.currentDate = :currentDate"
     )
-    fun getDiaries(currentDate : String) : List<Diary>
+    fun getDiaries(currentDate : String) : List<DiaryDto>
 
-    /**
-     *
     // 오늘 하루의 activity
-    // TODO : dto return data class 정의
     @Query(
         "SELECT activity.activityDescription " +
         "FROM diaries " +
         "INNER JOIN activity on activity.diaryId = diaries.id "+
         "WHERE diaries.currentDate = :currentDate"
     )
-    fun todayActivity(currentDate : String) : List<Diary>
+    fun getActivity(currentDate : String) : List<ActivityDto>
 
     // 오늘 하루의 place
-    // TODO : dto return data class 정의
     @Query(
         "SELECT place.placeDescription " +
                 "FROM diaries " +
                 "INNER JOIN place on place.diaryId = diaries.id "+
                 "WHERE diaries.currentDate = :currentDate"
     )
-    fun todayPlace(currentDate : String) : List<Diary>
+    fun getPlaces(currentDate : String) : List<PlaceDto>
 
     // 오늘 하루의 people
-    // TODO : dto return data class 정의
     @Query(
         "SELECT people.peopleDescription " +
                 "FROM diaries " +
                 "INNER JOIN people on people.diaryId = diaries.id "+
                 "WHERE diaries.currentDate = :currentDate"
     )
-    fun todayPeople(currentDate : String) : List<Diary>
+    fun getPeople(currentDate : String) : List<PeopleDto>
 
-    **/
+
 }

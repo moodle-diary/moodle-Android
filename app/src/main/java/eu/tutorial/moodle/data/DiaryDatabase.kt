@@ -6,8 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
-
-@Database(entities = [Diary::class, Activity::class, Place::class, People::class], version = 3, exportSchema = false) // 백업 스키마 유지 하지 않도록
+// 이때의 version??
+@Database(entities = [Diary::class, Activity::class, Place::class, People::class, Food::class], version = 3, exportSchema = false) // 백업 스키마 유지 하지 않도록
 abstract class DiaryDatabase : RoomDatabase() {
     abstract fun diaryDao(): DiaryDao
 

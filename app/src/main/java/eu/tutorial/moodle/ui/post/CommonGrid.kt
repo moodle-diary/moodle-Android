@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Fastfood
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Pets
 import androidx.compose.material.icons.filled.Place
@@ -38,6 +39,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.data.local.activitiesData
+import eu.tutorial.moodle.data.local.foodData
 import eu.tutorial.moodle.data.local.peopleData
 import eu.tutorial.moodle.data.local.placesData
 
@@ -192,15 +194,26 @@ fun PeopleGrid(
     )
 }
 
-fun getTrue(
-    states : List<Boolean>,
-    data: List<String>
-): ArrayList<String> {
-    val result = ArrayList<String>()
+@Composable
+fun FoodGrid(
+    foodButtonStates : SnapshotStateList<Boolean>
+) {
+    val data = foodData
 
-    for (i in states.indices){
-        if(states[i]) result.add(data[i])
+    for (i in data.indices) {
+        foodButtonStates.add(false)
     }
-    
-    return result
+
+
+    CommonGrid(
+        title = "Food",
+        subtitle = "What did you eat?",
+        data = data,
+        buttonStates = foodButtonStates,
+        icon = Icons.Default.Fastfood,
+        onItemClick = { index ->
+            // Handle item click here
+            foodButtonStates[index] = !foodButtonStates[index]
+        },
+    )
 }

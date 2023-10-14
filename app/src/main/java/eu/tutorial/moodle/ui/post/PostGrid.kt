@@ -118,12 +118,3 @@ fun PostGrid(
         }
     }
 }
-
-//@Preview(
-//    showBackground = true,
-//    showSystemUi = true
-//)
-//@Composable
-//fun PostPreview(){
-//    PostGrid()
-//}

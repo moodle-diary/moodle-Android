@@ -10,6 +10,9 @@ interface DiaryRepository{
     suspend fun insertPeople(people: People)
     suspend fun insertFood(food: Food)
     suspend fun updateDiary(diary: Diary)
-    fun getDiaries( currentDate : String ) : List<Diary>
+    fun getDiaries( currentDate : String ) : List<DiaryDto>
+    fun getActivities( currentDate: String ) : List<ActivityDto>
+    fun getPlaces( currentDate: String ) : List<PlaceDto>
+    fun getPeople( currentDate: String ) : List<PeopleDto>
 
 }
