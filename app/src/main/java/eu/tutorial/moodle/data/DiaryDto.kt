@@ -24,3 +24,7 @@ data class FoodDto(
     val foodDescription : String
 )
 
+data class ImgDto(
+    val imgUri : String
+)
+

@@ -1,5 +1,6 @@
 package eu.tutorial.moodle.ui.post
 
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -124,6 +125,10 @@ fun PostEmotionScreen(
             mutableStateListOf<Boolean>()
         }
 
+        val imageUri = remember {
+            mutableStateOf<Uri?>(null)
+        }
+
         HorizontalPager(
             modifier = Modifier.height(520.dp),
             pageCount = actualPageCount, // pageCount를 변경한 값으로 설정
@@ -164,7 +169,9 @@ fun PostEmotionScreen(
                         valueChange = viewModel::updateDiaryUiState
                     )
 
-                    6 -> ImgGrid()
+                    6 -> ImgGrid(
+                        imgUri = imageUri
+                    )
                 }
             }
         }
@@ -304,6 +311,10 @@ fun PostEmotionScreen(
                                                 if(foodButtonStates[i]) viewModel.saveFood(
                                                     foodData[i], key
                                                 )
+
+                                            viewModel.saveImg(
+                                                imageUri.value, key
+                                            )
                                         }
                                     },
                                     colors = ButtonDefaults.buttonColors(

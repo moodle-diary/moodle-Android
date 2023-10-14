@@ -68,3 +68,14 @@ data class Food(
     val foodDescription : String,
 )
 
+@Entity(
+    tableName = "image",
+)
+data class Img(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "image_id")
+    val id : Long = 0,
+
+    val diaryId : Long = 0,
+    val imgUri: String?
+)

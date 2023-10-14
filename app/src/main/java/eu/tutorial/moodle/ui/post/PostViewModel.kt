@@ -1,5 +1,6 @@
 package eu.tutorial.moodle.ui.post
 
+import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,6 +9,7 @@ import eu.tutorial.moodle.data.Activity
 import eu.tutorial.moodle.data.Diary
 import eu.tutorial.moodle.data.DiaryRepository
 import eu.tutorial.moodle.data.Food
+import eu.tutorial.moodle.data.Img
 import eu.tutorial.moodle.data.People
 import eu.tutorial.moodle.data.Place
 
@@ -53,18 +55,24 @@ class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() 
             Food(foodDescription = description, diaryId = diaryId)
         )
     }
+
+    suspend fun saveImg(uri : Uri?, diaryId: Long) {
+        diaryRepository.insertImg(
+            Img(imgUri = uri.toString(), diaryId = diaryId)
+        )
+    }
 }
- //
+
 data class DiaryUiState(
     val diaryDetails: DiaryDetails = DiaryDetails(),
     val isEntryValid: Boolean = false
 )
- //
+
 data class DiaryDetails(
     val currentDate : String = "",
     val emotions : Int = 0,
     val diaryText : String = "",
-) //
+)
 fun DiaryDetails.toDiary(): Diary = Diary(
     currentDate = currentDate,
     emotions = emotions,

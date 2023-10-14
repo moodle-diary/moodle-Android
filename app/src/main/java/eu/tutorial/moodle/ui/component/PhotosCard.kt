@@ -30,6 +30,7 @@ fun PhotosComponent(
             .padding(start = 12.dp, end = 12.dp),
         shape = RoundedCornerShape(18.dp)
     ) {
+        // TODO : 구현시 String 으로 받아와서 Uri로 parse 해야 합니다. use Uri.parse
         if(photo != ""){
             Box(
                 modifier = Modifier
