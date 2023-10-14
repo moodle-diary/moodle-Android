@@ -33,6 +33,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.data.ActivityDto
+import eu.tutorial.moodle.data.FoodDto
+import eu.tutorial.moodle.data.PeopleDto
+import eu.tutorial.moodle.data.PlaceDto
 import eu.tutorial.moodle.data.local.Emoji
 import eu.tutorial.moodle.data.local.allEmojis
 import eu.tutorial.moodle.ui.theme.poppins
@@ -40,36 +44,73 @@ import eu.tutorial.moodle.ui.theme.poppins
 
 @Composable
 fun IconsComponent(
-    emojis : List<Emoji> = emptyList()
+    activityList : List<ActivityDto> = emptyList(),
+    placeList : List<PlaceDto> = emptyList(),
+    peopleList: List<PeopleDto> = emptyList(),
+    foodList : List<FoodDto> = emptyList(),
+
 ){
+    val emojis : List<String> = activityList.map { it.activityDescription } +
+            placeList.map { it.placeDescription } +
+            peopleList.map { it.peopleDescription } +
+            foodList.map { it.foodDescription }
 
     // TODO 이 부분 코드 개선.. value를 빼서 Composable 줄이는 방향
     if(emojis.isNotEmpty()){
-        Card(
+        Column(
             modifier = Modifier
-                .height(186.dp)        // TODO : item 개수에 따라서 height 값을 조절 해야 합니다. 1 - 4 : 104 / 5 - 8 : 186 / 9 - 12 : 268
-                .padding(start = 12.dp, end = 12.dp),
-            shape = RoundedCornerShape(32.dp)
+                .padding(start = 50.dp, end = 50.dp)
+                .fillMaxWidth()
         ) {
-            Box(
+            Row(
                 modifier = Modifier
-                    .background(color = Color(0XD9D9D9D9)),
-                contentAlignment = Alignment.Center,
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(4),
-                    contentPadding = PaddingValues(horizontal = 16.5.dp, vertical = 16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),// 가로
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
-                ){
-                    items(allEmojis){ item ->
-                        AlignYourBodyElement(
-                            drawable = item.emojiPaintId,
-                            text = item.emojiDescriptionId
-                        )
+                Text(
+                    text = "Icons",
+                    fontSize = 16.sp,
+                    fontFamily = FontFamily(Font(R.font.poppins_bold)),
+                    color = Color(0XFFDFDFDF)
+                )
+                Text(
+                    text = "더보기",
+                    fontSize = 12.sp,
+                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                    color = Color(0XFF7E7E7E)
+                )
+            }
+
+            Card(
+                modifier = Modifier
+                    .height(186.dp)
+                    .background(color = Color(0XFF151515)),
+                shape = RoundedCornerShape(32.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .background(color = Color(0XFF151515)),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(4),
+                        contentPadding = PaddingValues(vertical = 24.dp),
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),// 가로
+                        verticalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        items(emojis) { item ->
+                            allEmojis[item]?.let {
+                                AlignYourBodyElement(
+                                    drawable = it,
+                                )
+                            }
+                        }
                     }
                 }
             }
+
+
         }
     } else{
         Column(
@@ -77,7 +118,7 @@ fun IconsComponent(
                 .padding(start = 50.dp, end = 50.dp)
                 .fillMaxWidth()
         ) {
-            
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -127,7 +168,6 @@ fun IconsComponent(
 @Composable
 fun AlignYourBodyElement(
     @DrawableRes drawable: Int,
-    @StringRes text: Int,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -143,7 +183,7 @@ fun AlignYourBodyElement(
         ){
             Box(modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0XFFEFEFEF))
+                .background(Color(0XFF363637))
             )
             Image(
                 painter = painterResource(drawable),
