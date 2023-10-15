@@ -35,7 +35,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tutorial.moodle.data.local.comments
+import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.theme.poppins
 
 @Composable
@@ -43,10 +45,13 @@ fun CommentScreen(
     modifier: Modifier = Modifier.fillMaxSize(),
     innerPaddingValues: PaddingValues = PaddingValues(0.dp),
     onCloseClick: () -> Unit,
-    comments: List<String>
+    comments: List<String>,
+    viewModel: CommentViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     var isAddingComment by remember { mutableStateOf(false) }
     var newComment by remember { mutableStateOf("") }
+
+    var commentUiState = viewModel.commentUiState
 
     Scaffold(
         containerColor = Color.Black.copy(alpha = 0.9f),
@@ -125,8 +130,14 @@ fun CommentScreen(
                         .fillMaxWidth()
                         .height(150.dp)
                         .clip(RoundedCornerShape(32.dp)),
-                    value = newComment,
-                    onValueChange = { newComment = it },
+                    value = commentUiState.commentDetails.comment,
+                    onValueChange = {
+                        viewModel.updateCommentUiState(
+                            commentUiState.commentDetails.copy(
+                                comment = it
+                            )
+                        )
+                                    },
                     singleLine = false,
                     textStyle = LocalTextStyle.current.copy(
                         color = Color.Black,

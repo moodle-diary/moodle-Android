@@ -22,7 +22,10 @@ interface DiaryDao {
     suspend fun insertFood(food: Food)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertImg(Img : Img)
+    suspend fun insertImg(img : Img)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertComment(comment : Comment)
 
     @Update
     suspend fun update(diary: Diary)
@@ -110,4 +113,8 @@ interface DiaryDao {
                 "ORDER BY COUNT(food_id) DESC"
     )fun getFoodGrade(targetMonth: String) : List<FoodGrade>
 
+
+    @Query(
+        "SELECT commentDate, comment from comment WHERE commentDate = :commentDate"
+    )fun getComments(commentDate : String) :List<CommentDto>
 }

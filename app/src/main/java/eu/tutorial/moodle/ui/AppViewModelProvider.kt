@@ -7,6 +7,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import eu.tutorial.moodle.MoodleApplication
+import eu.tutorial.moodle.ui.comment.CommentViewModel
 import eu.tutorial.moodle.ui.home.HomeViewModel
 import eu.tutorial.moodle.ui.post.PostViewModel
 
@@ -20,6 +21,10 @@ object AppViewModelProvider {
 
         initializer {
             HomeViewModel(moodleApplication().container.diaryRepository)
+        }
+
+        initializer {
+            CommentViewModel(moodleApplication().container.diaryRepository)
         }
     }
 }

@@ -47,3 +47,8 @@ data class FoodGrade(
     val foodDescription: String,
     val cnt : Int
 )
+
+data class CommentDto(
+    val commentDate : String,
+    val comment: String
+)
