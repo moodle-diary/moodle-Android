@@ -6,36 +6,27 @@ import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Article
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -50,12 +41,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tutorial.moodle.ui.AppViewModelProvider
-import eu.tutorial.moodle.ui.home.DetailHomeScreen
 import eu.tutorial.moodle.ui.home.HomeViewModel
-import eu.tutorial.moodle.data.local.comments
-import eu.tutorial.moodle.ui.comment.CommentScreen
-import eu.tutorial.moodle.ui.component.BottomNavBar
-import eu.tutorial.moodle.ui.home.DetailHomeScreen
 import eu.tutorial.moodle.ui.theme.poppins
 import eu.tutorial.moodle.ui.view.ViewScreen
 import java.time.LocalDate
@@ -82,6 +68,7 @@ fun CalendarMainCard(
 
     var showCommentScreen by remember { mutableStateOf(false) }
 
+    val currentSelectedDate = remember { mutableStateOf(currentDate) }
 
     LaunchedEffect(pagerState.currentPage) {
         val addMonth = (pagerState.currentPage - currentPage).toLong()
@@ -116,7 +103,8 @@ fun CalendarMainCard(
                         Log.d("visible", visibleEmotion.toString())
                     },
                     currentMonth = currentMonth,
-                    viewModel = viewModel
+                    viewModel = viewModel,
+                    currentSelectedDate = currentSelectedDate
                 )
             }
         }
@@ -209,14 +197,12 @@ fun CalendarMainCard(
 //            modifier = Modifier
 //                .align(Alignment.BottomCenter) // 이 align 은 box scope 이기 때문에 안에서 써야 한다.
         ) {
-            // TODO 이 부분 DetailHomeScreen에서 독립
             ViewScreen(
                 showCommentScreen = showCommentScreen,
                 setShowCommentScreen = { showCommentScreen = it },
-                showViewScreen = showViewScreen
-            ){
-
-            }
+                showViewScreen = showViewScreen,
+                selectedDate = currentSelectedDate
+            ){}
         }
     }
 

@@ -1,11 +1,9 @@
 package eu.tutorial.moodle.ui.comment
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,19 +14,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -43,13 +36,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import eu.tutorial.moodle.data.local.comments
 import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.theme.poppins
 import kotlinx.coroutines.Dispatchers
@@ -60,11 +50,10 @@ import java.time.LocalDate
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CommentScreen(
-    modifier: Modifier = Modifier.fillMaxSize(),
     innerPaddingValues: PaddingValues = PaddingValues(0.dp),
     onCloseClick: () -> Unit,
-    comments: List<String>,
-    viewModel: CommentViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: CommentViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    selectedDate: LocalDate,
 ) {
     var isAddingComment by remember { mutableStateOf(false) }
 
@@ -73,12 +62,11 @@ fun CommentScreen(
 
     val coroutineScope = rememberCoroutineScope()
 
-    // TODO 달력 클릭시 해당 날짜로 변경
     LaunchedEffect(isAddingComment){
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
                 // 데이터베이스 쿼리를 비동기적으로 수행
-                viewModel.getComment(LocalDate.now().toString())
+                viewModel.getComment(selectedDate.toString())
             }
         }
     }
@@ -155,10 +143,9 @@ fun CommentScreen(
 
             if (isAddingComment) {
                 Button(
-                    // TODO : 오늘 날짜가 아닌 선택된 날짜로 수정
                     onClick = {
                         coroutineScope.launch {
-                            viewModel.saveComment( LocalDate.now().toString())
+                            viewModel.saveComment( selectedDate.toString())
                             isAddingComment = false
                             viewModel.updateCommentUiState(
                                 commentUiState.commentDetails.copy(
