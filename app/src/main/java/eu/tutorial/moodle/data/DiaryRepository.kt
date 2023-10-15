@@ -10,6 +10,7 @@ interface DiaryRepository{
     suspend fun insertPeople(people: People)
     suspend fun insertFood(food: Food)
     suspend fun insertImg(img : Img)
+    suspend fun insertComment(comment: Comment)
     suspend fun updateDiary(diary: Diary)
     fun getDiaries( currentDate : String ) : List<DiaryDto>
     fun getActivities( currentDate: String ) : List<ActivityDto>
@@ -17,4 +18,10 @@ interface DiaryRepository{
     fun getPeople( currentDate: String ) : List<PeopleDto>
     fun getFood( currentDate: String ) : List<FoodDto>
     fun getImg( currentDate: String ) : List<ImgDto>
+
+    fun getActivityGrade(targetMonth: String) : List <ActGrade>
+    fun getPeopleGrade(targetMonth: String) : List <PeopleGrade>
+    fun getPlaceGrade(targetMonth: String) : List <PlaceGrade>
+    fun getFoodGrade(targetMonth: String) : List <FoodGrade>
+    fun getComments(commentDate :String) : List<CommentDto>
 }

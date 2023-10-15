@@ -22,7 +22,10 @@ interface DiaryDao {
     suspend fun insertFood(food: Food)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertImg(Img : Img)
+    suspend fun insertImg(img : Img)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertComment(comment : Comment)
 
     @Update
     suspend fun update(diary: Diary)
@@ -78,4 +81,40 @@ interface DiaryDao {
                 "WHERE diaries.currentDate = :currentDate"
     )
     fun getImg(currentDate: String) : List<ImgDto>
+    @Query(
+        "SELECT activityDescription, COUNT(activity_id) AS cnt FROM diaries " +
+                "INNER JOIN activity on activity.diaryId = diaries.id " +
+                "WHERE diaries.currentDate LIKE :targetMonth " +
+                "GROUP BY activityDescription " +
+                "ORDER BY COUNT(activity_id) DESC"
+    )fun getActivityGrade(targetMonth: String) : List<ActGrade>
+
+    @Query(
+        "SELECT placeDescription, COUNT(place_id) AS cnt FROM diaries " +
+                "INNER JOIN place on place.diaryId = diaries.id " +
+                "WHERE diaries.currentDate LIKE :targetMonth " +
+                "GROUP BY placeDescription " +
+                "ORDER BY COUNT(place_id) DESC"
+    )fun getPlaceGrade(targetMonth: String) : List<PlaceGrade>
+
+    @Query(
+        "SELECT peopleDescription, COUNT(people_id) AS cnt FROM diaries " +
+                "INNER JOIN people on people.diaryId = diaries.id " +
+                "WHERE diaries.currentDate LIKE :targetMonth " +
+                "GROUP BY peopleDescription " +
+                "ORDER BY COUNT(people_id) DESC"
+    )fun getPeopleGrade(targetMonth: String) : List<PeopleGrade>
+
+    @Query(
+        "SELECT foodDescription, COUNT(food_id) AS cnt FROM diaries " +
+                "INNER JOIN food on food.diaryId = diaries.id " +
+                "WHERE diaries.currentDate LIKE :targetMonth " +
+                "GROUP BY foodDescription " +
+                "ORDER BY COUNT(food_id) DESC"
+    )fun getFoodGrade(targetMonth: String) : List<FoodGrade>
+
+
+    @Query(
+        "SELECT commentDate, comment from comment WHERE commentDate = :commentDate"
+    )fun getComments(commentDate : String) :List<CommentDto>
 }

@@ -1,5 +1,8 @@
 package eu.tutorial.moodle.ui.component
 
+import android.net.Uri
+import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,35 +13,69 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImagePainter
+import coil.compose.ImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.data.ImgDto
 
 
 @Composable
 fun PhotosComponent(
-    photo : String = ""
+    imgList: List<ImgDto>
 ){
+
+    val imgUri = imgList[0].imgUri
+
     Card(
         modifier = Modifier
             .padding(start = 12.dp, end = 12.dp),
         shape = RoundedCornerShape(18.dp)
     ) {
         // TODO : 구현시 String 으로 받아와서 Uri로 parse 해야 합니다. use Uri.parse
-        if(photo != ""){
+        if(imgUri != ""){
+            Log.d("photo",Uri.parse(imgUri).toString())
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(300.dp)
                     .background(color = Color(0XFF2A292B)),
             ){
-                // 사진 불러오기
+
+                val painter = rememberAsyncImagePainter(model = imgUri)
+                // 이미지가 로드될 때까지 대기
+                LaunchedEffect(painter) {
+                    while (painter.state is AsyncImagePainter.State.Loading) {
+                        Log.d("state", painter.state.toString())
+                        // 이미지 로딩 중
+                    }
+                }
+
+                Image(
+                    painter = painter,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxSize() // 이미지를 화면 크기로 채우도록 설정
+                )
+            //                val painter = rememberAsyncImagePainter(model = Uri.parse(imgUri))
+//                Image(
+//                    painter = painter,
+//                    contentDescription = null
+//                )
+
             }
         } else{
             Box(
@@ -61,12 +98,3 @@ fun PhotosComponent(
     }
 
 }
-
-//@Preview(
-//    showSystemUi = true,
-//    showBackground = true
-//)
-//@Composable
-//fun EmotionChartPreview(){
-//    NotesComponent(exist = true)
-//}

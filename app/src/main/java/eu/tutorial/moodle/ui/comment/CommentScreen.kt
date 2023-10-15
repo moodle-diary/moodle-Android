@@ -1,5 +1,7 @@
 package eu.tutorial.moodle.ui.comment
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -24,9 +26,11 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,18 +39,37 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import eu.tutorial.moodle.data.local.comments
+import androidx.lifecycle.viewmodel.compose.viewModel
+import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.theme.poppins
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.time.LocalDate
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CommentScreen(
-    modifier: Modifier = Modifier.fillMaxSize(),
     innerPaddingValues: PaddingValues = PaddingValues(0.dp),
     onCloseClick: () -> Unit,
-    comments: List<String>
+    viewModel: CommentViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    selectedDate: LocalDate,
 ) {
     var isAddingComment by remember { mutableStateOf(false) }
-    var newComment by remember { mutableStateOf("") }
+
+    val commentUiState = viewModel.commentUiState
+    val commentList = viewModel.commentList
+
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(isAddingComment){
+        coroutineScope.launch {
+            withContext(Dispatchers.IO) {
+                // 데이터베이스 쿼리를 비동기적으로 수행
+                viewModel.getComment(selectedDate.toString())
+            }
+        }
+    }
 
     Scaffold(
         containerColor = Color.Black.copy(alpha = 0.9f),
@@ -105,7 +128,7 @@ fun CommentScreen(
     ) { innerPadding ->
         Column(
             modifier = Modifier
-                .padding(bottom = 100.dp)
+                .padding(bottom = innerPadding.calculateBottomPadding(),)
                 .fillMaxSize()
                 .then(Modifier.padding(innerPaddingValues))
                 .then(Modifier.verticalScroll(rememberScrollState()))
@@ -114,19 +137,39 @@ fun CommentScreen(
                 modifier = Modifier.weight(1f)
             )
 
-            for (comment in comments) {
-                CommentBox(comment = comment)
+            for (comment in commentList) {
+                CommentBox(comment = comment.comment)
             }
 
             if (isAddingComment) {
+                Button(
+                    onClick = {
+                        coroutineScope.launch {
+                            viewModel.saveComment( selectedDate.toString())
+                            isAddingComment = false
+                            viewModel.updateCommentUiState(
+                                commentUiState.commentDetails.copy(
+                                    comment = ""
+                                )
+                            )
+                        }
+                    }
+                ){
+                    Text( text = "저장하기")
+                }
+
                 BasicTextField(
                     modifier = Modifier
                         .padding(10.dp, 12.dp)
                         .fillMaxWidth()
                         .height(150.dp)
                         .clip(RoundedCornerShape(32.dp)),
-                    value = newComment,
-                    onValueChange = { newComment = it },
+                    value = commentUiState.commentDetails.comment,
+                    onValueChange = {viewModel.updateCommentUiState(
+                        commentUiState.commentDetails.copy(
+                            comment = it
+                        )
+                    )},
                     singleLine = false,
                     textStyle = LocalTextStyle.current.copy(
                         color = Color.Black,
@@ -144,7 +187,7 @@ fun CommentScreen(
                                 )
                                 .padding(20.dp, 26.dp),
                         ) {
-                            if (newComment.isEmpty()) {
+                            if (commentUiState.commentDetails.comment == "") {
                                 Text(
                                     text = "Enter comment..",
                                     fontSize = 16.sp,
@@ -166,5 +209,5 @@ fun CommentScreen(
 )
 @Composable
 fun DetailScreenPreview(){
-    CommentScreen(onCloseClick = {}, comments = comments)
+//    CommentScreen(onCloseClick = {}, comments = comments)
 }

@@ -64,6 +64,13 @@ fun DetailHomeScreen(
 ){
     val diaryList = viewModel.diaryUiState
 
+    val activityList = viewModel.activitiesUiState
+    val placeList = viewModel.placesUiState
+    val peopleList = viewModel.peopleUiState
+    val foodList = viewModel.foodsUiState
+
+    val imgList = viewModel.imgUiState
+
     val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(Unit){
@@ -72,6 +79,12 @@ fun DetailHomeScreen(
             withContext(Dispatchers.IO) {
                 // 데이터베이스 쿼리를 비동기적으로 수행
                 viewModel.getDiaries(LocalDate.now().toString())
+                viewModel.getActivities(LocalDate.now().toString())
+                viewModel.getPlaces(LocalDate.now().toString())
+                viewModel.getPeople(LocalDate.now().toString())
+                viewModel.getFoods(LocalDate.now().toString())
+
+                viewModel.getImg((LocalDate.now().toString()))
             }
         }
 
@@ -93,11 +106,14 @@ fun DetailHomeScreen(
 
         Spacer(modifier = Modifier.size(12.dp))
 
-        IconsComponent( emojis = emptyList() )
+        IconsComponent(
+            activityList = activityList,
+            placeList = placeList,
+            peopleList = peopleList,
+            foodList = foodList
+        )
 
         Spacer(modifier = Modifier.size(32.dp))
-
-
 
         var isBottomSheetVisible by remember { mutableStateOf(false) }
 
@@ -146,7 +162,7 @@ fun DetailHomeScreen(
                     
                     Spacer(modifier = Modifier.size(12.dp))
 
-                    PhotosComponent(photo = "")
+                    PhotosComponent(imgList = imgList)
                 }
             }
         }

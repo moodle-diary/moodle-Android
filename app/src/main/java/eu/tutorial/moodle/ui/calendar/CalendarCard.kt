@@ -19,9 +19,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -32,14 +32,10 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tutorial.moodle.R
-import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.component.CalendarMonthItem
 import eu.tutorial.moodle.ui.component.DayOfWeek
 import eu.tutorial.moodle.ui.home.HomeViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.YearMonth
@@ -49,20 +45,18 @@ import java.time.YearMonth
 @Composable
 fun HorizontalCalendar(
     modifier: Modifier = Modifier,
-    currentDate: LocalDate = LocalDate.now(),
     currentMonth: YearMonth,
     pagerState: PagerState,
-    changeVisible : () -> Unit,
-    viewModel: HomeViewModel
+    changeVisible: () -> Unit,
+    viewModel: HomeViewModel,
+    currentSelectedDate: MutableState<LocalDate>
 ) {
+    LaunchedEffect(currentSelectedDate.value) {
 
-    var currentSelectedDate by remember { mutableStateOf(currentDate) }
-
-    LaunchedEffect(currentSelectedDate) {
-        val idx = currentSelectedDate.month.value + 12 * (currentSelectedDate.year - 1970) - 1
+        // TODO 무한 스크롤 로 변경
+        val idx = currentSelectedDate.value.month.value + 12 * (currentSelectedDate.value.year - 1970) - 1
         // 개수로 세면 1월이 0 부터 시작인데, 실제는 1
 
-        // TODO : 앞 혹은 뒤로 많이 갔을 때, 현재 날짜로 변경 되면, 그 페이지로 한 번에 돌아 가도록 한다.
         while(idx != pagerState.currentPage){
 
             if (idx < (pagerState.currentPage)) {
@@ -70,7 +64,6 @@ fun HorizontalCalendar(
             } else {
                 pagerState.scrollToPage(page = pagerState.currentPage + 1)
             }
-
         }
 
     }
@@ -102,8 +95,7 @@ fun HorizontalCalendar(
 
             IconButton(
                 onClick = {
-                    currentSelectedDate = LocalDate.now()
-
+                    currentSelectedDate.value = LocalDate.now()
                 },
             ) {
                 Icon(
@@ -132,9 +124,9 @@ fun HorizontalCalendar(
                 modifier = Modifier
                     .fillMaxWidth(),
                 currentDate = date,
-                selectedDate = currentSelectedDate,
+                selectedDate = currentSelectedDate.value,
                 onSelectedDate = { selectedDate ->
-                    currentSelectedDate = selectedDate
+                    currentSelectedDate.value = selectedDate
                     changeVisible()
                 },
                 onClickAction = {

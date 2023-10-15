@@ -79,3 +79,15 @@ data class Img(
     val diaryId : Long = 0,
     val imgUri: String?
 )
+
+@Entity(
+    tableName = "comment"
+)
+data class Comment(
+    @PrimaryKey(autoGenerate = true)
+    val id : Long = 0,
+
+    val commentDate : String,
+    val comment : String,
+)
+

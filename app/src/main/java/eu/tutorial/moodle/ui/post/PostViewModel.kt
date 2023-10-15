@@ -17,6 +17,7 @@ class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() 
 
     var diaryUiState by mutableStateOf(DiaryUiState())
         private set
+    // TODO have to impl valid
     fun updateDiaryUiState(diaryDetails: DiaryDetails) {
         diaryUiState =
             DiaryUiState(diaryDetails = diaryDetails, isEntryValid = true)

@@ -32,7 +32,6 @@ import eu.tutorial.moodle.ui.navigation.NavigationDestination
 import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBar(){
     val today = LocalDate.now()

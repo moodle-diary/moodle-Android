@@ -28,3 +28,27 @@ data class ImgDto(
     val imgUri : String
 )
 
+data class ActGrade(
+    val activityDescription: String,
+    val cnt : Int
+)
+
+data class PlaceGrade(
+    val placeDescription: String,
+    val cnt : Int
+)
+
+data class PeopleGrade(
+    val peopleDescription: String,
+    val cnt : Int
+)
+
+data class FoodGrade(
+    val foodDescription: String,
+    val cnt : Int
+)
+
+data class CommentDto(
+    val commentDate : String,
+    val comment: String
+)

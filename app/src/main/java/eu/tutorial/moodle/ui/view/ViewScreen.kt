@@ -2,7 +2,6 @@ package eu.tutorial.moodle.ui.view
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.BorderStroke
@@ -19,9 +18,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -33,10 +29,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -45,25 +38,23 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
-import eu.tutorial.moodle.data.local.allEmojis
-import eu.tutorial.moodle.data.local.comments
 import eu.tutorial.moodle.data.local.diaryText
 import eu.tutorial.moodle.ui.comment.CommentScreen
-import eu.tutorial.moodle.ui.component.AlignYourBodyElement
 import eu.tutorial.moodle.ui.theme.poppins
+import java.time.LocalDate
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ViewScreen(
     showCommentScreen: Boolean,
     setShowCommentScreen: (Boolean) -> Unit,
     showViewScreen: () -> Unit,
-    onCloseClick: () -> Unit
+    selectedDate: MutableState<LocalDate>,
+    onCloseClick: () -> Unit,
 ) {
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -117,12 +108,12 @@ fun ViewScreen(
                 .padding(top = 8.dp),
             verticalArrangement = Arrangement.SpaceBetween,
         ) {
-            repeat(1) { rowIndex ->
+            repeat(1) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    repeat(2) { columnIndex ->
+                    repeat(2) {
                         Image(
                             painter = painterResource(id = R.drawable.angry),
                             contentDescription = "angry",
@@ -260,13 +251,10 @@ fun ViewScreen(
 //                .align(Alignment.BottomCenter) // 이 align 은 box scope 이기 때문에 안에서 써야 한다.
         ) {
             CommentScreen(
-                modifier = Modifier
-//                    .clip(shape = RoundedCornerShape(32.dp)) // 이게 먼저 와야함
-                    .background(color = Color.Black.copy(alpha = 0.3f)),
                 onCloseClick = {
                     setShowCommentScreen(false)
                 },
-                comments = comments
+                selectedDate = selectedDate.value
             )
         }
     }

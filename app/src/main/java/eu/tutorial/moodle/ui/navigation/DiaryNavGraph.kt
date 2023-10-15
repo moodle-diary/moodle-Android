@@ -37,16 +37,8 @@ fun DiaryNavHost(
                 bottomBar = { BottomNavBar(
                     navController = navController
                 ) },
-//                floatingActionButtonPosition = FabPosition.Center,
-//                floatingActionButton = {
-//                    FloatingButton(
-//                        navController = navController,
-//                        isVisible = true
-//                    )
-//                }
             ) { innerPadding ->
                     DetailHomeScreen(innerPaddingValues = innerPadding)
-//                EmptyHomeScreen(innerPaddingValues = innerPadding)
             }
         }
 
@@ -66,20 +58,6 @@ fun DiaryNavHost(
                         isVisible = visibleMore
                     ) }
                 },
-//                floatingActionButtonPosition = FabPosition.Center,
-//                floatingActionButton = {
-//                    if (showCommentScreen) {
-//                        FloatingButton(
-//                            navController = navController,
-//                            isVisible = !showCommentScreen
-//                        )
-//                    } else {
-//                        FloatingButton(
-//                            navController = navController,
-//                            isVisible = !visibleMore
-//                        ) }
-//
-//                },
             ) { innerPadding ->
 
                 CalendarMainCard(
