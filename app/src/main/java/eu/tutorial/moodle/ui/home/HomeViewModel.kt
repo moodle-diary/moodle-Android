@@ -50,6 +50,4 @@ class HomeViewModel( private val diaryRepository: DiaryRepository ) : ViewModel(
     fun getImg(currentDate : String) {
         imgUiState = diaryRepository.getImg(currentDate = currentDate)
     }
-
-
 }
