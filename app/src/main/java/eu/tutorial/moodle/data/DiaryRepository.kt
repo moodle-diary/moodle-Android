@@ -17,4 +17,10 @@ interface DiaryRepository{
     fun getPeople( currentDate: String ) : List<PeopleDto>
     fun getFood( currentDate: String ) : List<FoodDto>
     fun getImg( currentDate: String ) : List<ImgDto>
+
+    fun getActivityGrade(targetMonth: String) : List <ActGrade>
+    fun getPeopleGrade(targetMonth: String) : List <PeopleGrade>
+    fun getPlaceGrade(targetMonth: String) : List <PlaceGrade>
+    fun getFoodGrade(targetMonth: String) : List <FoodGrade>
+
 }

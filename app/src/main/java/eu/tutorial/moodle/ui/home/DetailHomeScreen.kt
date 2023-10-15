@@ -83,6 +83,8 @@ fun DetailHomeScreen(
                 viewModel.getPlaces(LocalDate.now().toString())
                 viewModel.getPeople(LocalDate.now().toString())
                 viewModel.getFoods(LocalDate.now().toString())
+
+                viewModel.getImg((LocalDate.now().toString()))
             }
         }
 
@@ -160,7 +162,7 @@ fun DetailHomeScreen(
                     
                     Spacer(modifier = Modifier.size(12.dp))
 
-                    PhotosComponent(photo = "")
+                    PhotosComponent(imgList = imgList)
                 }
             }
         }

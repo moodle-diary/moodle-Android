@@ -55,14 +55,14 @@ fun HorizontalCalendar(
     changeVisible : () -> Unit,
     viewModel: HomeViewModel
 ) {
-
     var currentSelectedDate by remember { mutableStateOf(currentDate) }
 
     LaunchedEffect(currentSelectedDate) {
+
+        // TODO 무한 스크롤 로 변경
         val idx = currentSelectedDate.month.value + 12 * (currentSelectedDate.year - 1970) - 1
         // 개수로 세면 1월이 0 부터 시작인데, 실제는 1
 
-        // TODO : 앞 혹은 뒤로 많이 갔을 때, 현재 날짜로 변경 되면, 그 페이지로 한 번에 돌아 가도록 한다.
         while(idx != pagerState.currentPage){
 
             if (idx < (pagerState.currentPage)) {
@@ -70,7 +70,6 @@ fun HorizontalCalendar(
             } else {
                 pagerState.scrollToPage(page = pagerState.currentPage + 1)
             }
-
         }
 
     }

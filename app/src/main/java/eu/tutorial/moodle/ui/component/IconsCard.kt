@@ -37,13 +37,11 @@ fun IconsComponent(
     placeList : List<PlaceDto> = emptyList(),
     peopleList: List<PeopleDto> = emptyList(),
     foodList : List<FoodDto> = emptyList(),
-
 ){
     val emojis : List<String> = activityList.map { it.activityDescription } +
             placeList.map { it.placeDescription } +
             peopleList.map { it.peopleDescription } +
             foodList.map { it.foodDescription }
-
     Column(
         modifier = Modifier
             .padding(start = 50.dp, end = 50.dp)

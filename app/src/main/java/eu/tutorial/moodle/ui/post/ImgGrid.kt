@@ -1,8 +1,10 @@
 package eu.tutorial.moodle.ui.post
 
 import android.net.Uri
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,6 +36,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import coil.compose.rememberImagePainter
 
 @Composable
 fun ImgGrid(
@@ -106,6 +109,14 @@ fun ImgGrid(
                             .wrapContentWidth(align = Alignment.Start)
                             .padding(3.dp)
                     )
+//                    Log.d("save", imgUri.value.toString())
+//                    Image(
+//                        painter = rememberImagePainter(data = imgUri.value),
+//                        contentDescription = null,
+//                        modifier = Modifier
+//                                .wrapContentWidth(align = Alignment.Start)
+//                                .padding(3.dp)
+//                    )
                 }
             }
         }

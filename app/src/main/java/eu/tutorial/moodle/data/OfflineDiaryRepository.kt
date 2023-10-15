@@ -17,4 +17,17 @@ class OfflineDiaryRepository(private val diaryDao: DiaryDao) : DiaryRepository {
     override fun getPeople(currentDate: String): List<PeopleDto> = diaryDao.getPeople(currentDate)
     override fun getFood(currentDate: String): List<FoodDto> = diaryDao.getFood(currentDate)
     override fun getImg(currentDate: String): List<ImgDto> = diaryDao.getImg(currentDate)
+
+
+    override fun getActivityGrade(targetMonth: String): List<ActGrade> =
+        diaryDao.getActivityGrade(targetMonth)
+
+    override fun getPlaceGrade(targetMonth: String): List<PlaceGrade> =
+        diaryDao.getPlaceGrade(targetMonth)
+
+    override fun getPeopleGrade(targetMonth: String): List<PeopleGrade> =
+        diaryDao.getPeopleGrade(targetMonth)
+
+    override fun getFoodGrade(targetMonth: String): List<FoodGrade> =
+        diaryDao.getFoodGrade(targetMonth)
 }

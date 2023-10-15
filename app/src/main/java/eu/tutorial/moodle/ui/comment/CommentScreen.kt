@@ -105,7 +105,7 @@ fun CommentScreen(
     ) { innerPadding ->
         Column(
             modifier = Modifier
-                .padding(bottom = 100.dp)
+                .padding(bottom = innerPadding.calculateBottomPadding(),)
                 .fillMaxSize()
                 .then(Modifier.padding(innerPaddingValues))
                 .then(Modifier.verticalScroll(rememberScrollState()))
