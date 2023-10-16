@@ -25,8 +25,6 @@ fun NotesComponent(
 ){
     Card(
         // TODO 이 부분 코드 개선.. value를 빼서 Composable 줄이는 방향
-        modifier = Modifier
-            .padding(start = 12.dp, end = 12.dp),
         shape = RoundedCornerShape(18.dp)
     ) {
         if(text != ""){

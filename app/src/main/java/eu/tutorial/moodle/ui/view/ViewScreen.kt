@@ -29,7 +29,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,12 +42,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.data.DiaryDto
 import eu.tutorial.moodle.data.local.diaryText
+import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.comment.CommentScreen
+import eu.tutorial.moodle.ui.component.IconsComponent
+import eu.tutorial.moodle.ui.component.NotesComponent
 import eu.tutorial.moodle.ui.theme.poppins
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -53,8 +66,37 @@ fun ViewScreen(
     setShowCommentScreen: (Boolean) -> Unit,
     showViewScreen: () -> Unit,
     selectedDate: MutableState<LocalDate>,
+    viewModel: DetailViewModel = viewModel(factory = AppViewModelProvider.Factory),
     onCloseClick: () -> Unit,
 ) {
+    val diaryList = viewModel.diaryUiState
+
+    val activityList = viewModel.activitiesUiState
+    val placeList = viewModel.placesUiState
+    val peopleList = viewModel.peopleUiState
+    val foodList = viewModel.foodsUiState
+
+    val imgList = viewModel.imgUiState
+
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit){
+
+        coroutineScope.launch {
+            withContext(Dispatchers.IO) {
+                // 데이터베이스 쿼리를 비동기적으로 수행
+                viewModel.getDiaries(LocalDate.now().toString())
+                viewModel.getActivities(LocalDate.now().toString())
+                viewModel.getPlaces(LocalDate.now().toString())
+                viewModel.getPeople(LocalDate.now().toString())
+                viewModel.getFoods(LocalDate.now().toString())
+
+                viewModel.getImg((LocalDate.now().toString()))
+            }
+        }
+
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -94,121 +136,18 @@ fun ViewScreen(
             }
         }
 
-        Text(
-            text = "감정",
-            fontSize = 16.sp,
-            fontFamily = FontFamily(Font(R.font.poppins_bold)),
-            color = Color(0XFFDFDFDF),
-            modifier = Modifier.padding(top = 24.dp)
+        emotionComponent()
+
+        IconsComponent(
+            activityList = activityList,
+            placeList = placeList,
+            peopleList = peopleList,
+            foodList = foodList,
         )
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp),
-            verticalArrangement = Arrangement.SpaceBetween,
-        ) {
-            repeat(1) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    repeat(2) {
-                        Image(
-                            painter = painterResource(id = R.drawable.angry),
-                            contentDescription = "angry",
-                            modifier = Modifier
-                                .padding(5.dp)
-                                .size(58.dp)
-                        )
-                    }
-                }
-            }
-        }
+        NotesComponent(text = getDiaryText(diaryList))
 
-
-        Text(
-            text = "활동",
-            fontSize = 16.sp,
-            fontFamily = FontFamily(Font(R.font.poppins_bold)),
-            color = Color(0XFFDFDFDF),
-            modifier = Modifier.padding(top = 24.dp)
-        )
-
-
-
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp),
-            verticalArrangement = Arrangement.SpaceBetween,
-        ) {
-            repeat(3) { rowIndex ->
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    repeat(5) { columnIndex ->
-                        if (rowIndex * 5 + columnIndex < 14) { // 13개까지만 버튼 생성
-                            Button(
-                                onClick = {
-                                    // 버튼 클릭 시 수행할 작업
-                                },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(0xFF363637)
-                                ),
-                                modifier = Modifier
-                                    .padding(5.dp)
-                                    .size(60.dp),
-                                shape = RoundedCornerShape(20.dp)
-                            ) {
-                                Text(
-                                    text = "🏠",
-                                    fontSize = 30.sp,
-                                    textAlign = TextAlign.Center
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-
-        Text(
-            text = "기록",
-            fontSize = 16.sp,
-            fontFamily = FontFamily(Font(R.font.poppins_bold)),
-            color = Color(0XFFDFDFDF),
-            modifier = Modifier.padding(top = 24.dp)
-        )
-
-        Box(
-            modifier = Modifier
-                .padding(top = 12.dp)
-                .clip(shape = RoundedCornerShape(18.dp))
-                .background(Color(0XFF2A292B))
-                .fillMaxWidth(),
-        ){
-            Text(
-                text = diaryText,
-                fontSize = 16.sp,
-                fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                color = Color(0XFFDFDFDF),
-                modifier = Modifier.padding(16.dp, 20.dp)
-            )
-        }
-
-        Box(
-            modifier = Modifier
-                .padding(top = 16.dp)
-                .clip(shape = RoundedCornerShape(18.dp))
-                .background(Color(0XFF2A292B))
-                .fillMaxWidth()
-                .height(300.dp),
-        ) {
-
-        }
+        ImgComponent()
 
         Row(
             modifier = Modifier
@@ -247,8 +186,6 @@ fun ViewScreen(
             visible = showCommentScreen,
             enter = slideInVertically(initialOffsetY = { it }),
             exit = slideOutVertically(targetOffsetY = { it }),
-//            modifier = Modifier
-//                .align(Alignment.BottomCenter) // 이 align 은 box scope 이기 때문에 안에서 써야 한다.
         ) {
             CommentScreen(
                 onCloseClick = {
@@ -260,3 +197,28 @@ fun ViewScreen(
     }
 }
 
+fun getDiaryText(diaryList: List<DiaryDto>) : String {
+    var result = ""
+
+    for ( i in diaryList)
+        result += i.diaryText
+
+    return result
+}
+
+
+//@RequiresApi(Build.VERSION_CODES.O)
+//@Preview(
+//    showBackground = true,
+//    showSystemUi = true,
+//)
+//@Composable
+//fun ShowPreview() {
+//    ViewScreen(
+//        showCommentScreen = true,
+//        setShowCommentScreen = {},
+//        showViewScreen = { /*TODO*/ },
+////        selectedDate = remember { mutableStateOf(LocalDate.now()) }
+//    )
+//}
+//

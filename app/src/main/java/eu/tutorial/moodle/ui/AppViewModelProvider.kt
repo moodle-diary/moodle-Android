@@ -10,6 +10,7 @@ import eu.tutorial.moodle.MoodleApplication
 import eu.tutorial.moodle.ui.comment.CommentViewModel
 import eu.tutorial.moodle.ui.home.HomeViewModel
 import eu.tutorial.moodle.ui.post.PostViewModel
+import eu.tutorial.moodle.ui.view.DetailViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
@@ -25,6 +26,10 @@ object AppViewModelProvider {
 
         initializer {
             CommentViewModel(moodleApplication().container.diaryRepository)
+        }
+
+        initializer {
+            DetailViewModel(moodleApplication().container.diaryRepository)
         }
     }
 }

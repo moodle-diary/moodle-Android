@@ -49,6 +49,7 @@ data class FoodGrade(
 )
 
 data class CommentDto(
+    val id : Int,
     val commentDate : String,
     val comment: String
 )

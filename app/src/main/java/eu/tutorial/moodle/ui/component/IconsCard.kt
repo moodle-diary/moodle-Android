@@ -33,6 +33,7 @@ import eu.tutorial.moodle.data.local.allEmojis
 
 @Composable
 fun IconsComponent(
+    modifier: Modifier = Modifier,
     activityList : List<ActivityDto> = emptyList(),
     placeList : List<PlaceDto> = emptyList(),
     peopleList: List<PeopleDto> = emptyList(),
@@ -43,12 +44,11 @@ fun IconsComponent(
             peopleList.map { it.peopleDescription } +
             foodList.map { it.foodDescription }
     Column(
-        modifier = Modifier
-            .padding(start = 50.dp, end = 50.dp)
+        modifier = modifier
             .fillMaxWidth()
     ) {
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {

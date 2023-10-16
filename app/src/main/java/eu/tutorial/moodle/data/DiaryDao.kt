@@ -115,7 +115,7 @@ interface DiaryDao {
 
 
     @Query(
-        "SELECT commentDate, comment FROM comment WHERE commentDate = :commentDate"
+        "SELECT id, commentDate, comment FROM comment WHERE commentDate = :commentDate"
     )fun getComments(commentDate : String) :List<CommentDto>
 
     @Query(
