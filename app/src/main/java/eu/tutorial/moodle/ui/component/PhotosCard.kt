@@ -36,16 +36,14 @@ fun PhotosComponent(
     imgList: List<ImgDto>
 ){
 
-    val imgUri = imgList[0].imgUri
-
     Card(
         modifier = Modifier
             .padding(start = 12.dp, end = 12.dp),
         shape = RoundedCornerShape(18.dp)
     ) {
-        // TODO : 구현시 String 으로 받아와서 Uri로 parse 해야 합니다. use Uri.parse
-        if(imgUri != ""){
-            Log.d("photo",Uri.parse(imgUri).toString())
+        if(imgList.isNotEmpty()){
+
+            val imgUri = imgList[0].imgUri
 
             Box(
                 modifier = Modifier
@@ -70,7 +68,7 @@ fun PhotosComponent(
                     modifier = Modifier
                         .fillMaxSize() // 이미지를 화면 크기로 채우도록 설정
                 )
-            //                val painter = rememberAsyncImagePainter(model = Uri.parse(imgUri))
+//                val painter = rememberAsyncImagePainter(model = Uri.parse(imgUri))
 //                Image(
 //                    painter = painter,
 //                    contentDescription = null
