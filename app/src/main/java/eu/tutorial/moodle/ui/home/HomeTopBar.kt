@@ -30,15 +30,16 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import eu.tutorial.moodle.ui.navigation.NavigationDestination
 import java.time.LocalDate
+import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TopAppBar(){
     val today = LocalDate.now()
 
-    val currentMonth = today.month
+    val currentMonth = today.monthValue
     val currentDate = today.dayOfMonth
-    val currentDay = today.dayOfWeek
+    val currentDay = today.dayOfWeek.getDisplayName(java.time.format.TextStyle.FULL, Locale.KOREAN)
     val currentYear = today.year
 
     Box(
@@ -55,7 +56,7 @@ fun TopAppBar(){
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "%s %s".format(currentMonth.toString(), currentYear),
+                text = "%s %s월".format(currentYear, currentMonth),
                 style = TextStyle(
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
@@ -66,7 +67,7 @@ fun TopAppBar(){
                 )
             )
             Text(
-                text="%s  %s".format(currentDate, currentDay),
+                text="%s일  %s".format(currentDate, currentDay),
                 style = TextStyle(
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_bold)),

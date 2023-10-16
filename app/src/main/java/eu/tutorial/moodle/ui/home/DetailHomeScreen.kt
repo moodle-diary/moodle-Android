@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.Diary
 import eu.tutorial.moodle.data.DiaryDto
@@ -60,7 +61,8 @@ import java.time.LocalDate
 fun DetailHomeScreen(
     modifier: Modifier = Modifier,
     innerPaddingValues: PaddingValues = PaddingValues(0.dp),
-    viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    navController: NavController
 ){
     val diaryList = viewModel.diaryUiState
 
@@ -102,7 +104,7 @@ fun DetailHomeScreen(
 //        Spacer(modifier = Modifier.size(12.dp))
 
         // TODO 이 부분 exist 속성 값 vm 에서 받아 와서 수정 Detail HomeScreen 이랑 통합
-        EmotionComponent( emotion = getDiaryEmotion(diaryList) )
+        EmotionComponent( emotion = getDiaryEmotion(diaryList), navController )
 
         Spacer(modifier = Modifier.size(12.dp))
 
@@ -209,15 +211,4 @@ fun getDiaryEmoji(diaryList: List<Diary>): String {
 
     return result
 
-}
-
-
-@RequiresApi(Build.VERSION_CODES.O)
-@Preview(
-    showSystemUi = true,
-    showBackground = true
-)
-@Composable
-fun DetailScreenPreview(){
-    DetailHomeScreen()
 }

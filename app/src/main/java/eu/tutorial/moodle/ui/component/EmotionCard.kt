@@ -28,11 +28,14 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.ui.navigation.PostDestination
 
 @Composable
 fun EmotionComponent(
-    emotion : Int
+    emotion : Int,
+    navController: NavController
 ){
     val emotionItem = if (emotion != 0) emotion.toString() else "오늘 기분이 어때요?"
 
@@ -49,7 +52,7 @@ fun EmotionComponent(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ){
-            Button(onClick = { /*TODO*/ },
+            Button(onClick = { navController.navigate(PostDestination.route) },
                 modifier = Modifier
                     .padding(bottom = 12.dp)
                     .defaultMinSize(
