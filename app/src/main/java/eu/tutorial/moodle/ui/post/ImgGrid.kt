@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -31,12 +32,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.compose.rememberImagePainter
+import eu.tutorial.moodle.R
 
 @Composable
 fun ImgGrid(
@@ -54,8 +59,8 @@ fun ImgGrid(
 
     Box(
         modifier = Modifier
-            .height(520.dp)
-            .background(Color(color = 0XffEFEFEF))
+            .fillMaxHeight()
+            .background(Color(color = 0Xff212122))
             .clip(shape = CircleShape.copy(all = CornerSize(45.dp)))
     ) {
         Column(
@@ -64,11 +69,12 @@ fun ImgGrid(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                modifier = Modifier.padding(top = 20.dp, bottom = 28.dp),
-                text = "Photos",
+                modifier = Modifier.padding(top = 20.dp, bottom = 48.dp),
+                text = "사진",
                 fontSize = 24.sp,
-                fontWeight = FontWeight(600),
-                textAlign = TextAlign.Center
+                fontFamily = FontFamily(Font(R.font.poppins_bold)),
+                textAlign = TextAlign.Center,
+                color = Color(0XFFEDEDED)
             )
 
             Column(
@@ -85,21 +91,25 @@ fun ImgGrid(
                             launcher.launch("image/*")
                         },
                         modifier = Modifier
+                            .padding(top = 36.dp)
                             .size(50.dp)
                             .clip(shape = CircleShape.copy(all = CornerSize(20.dp)))
-                            .background(Color(0XFFFFFFFF))
+                            .background(Color(0XFF363637))
                     ) {
                         Icon(
                             Icons.Default.Add,
                             contentDescription = "add",
                             modifier = Modifier.size(24.dp),
-                            tint = Color(0XFF000000)
+                            tint = Color(0XFFEDEDED)
                         )
                     }
                     Text(
                         modifier = Modifier.padding(top = 16.dp),
-                        text = "Any photos",
-                        textAlign = TextAlign.Center
+                        text = "하루를 요약하는 사진이 있나요?",
+                        fontSize = 12.sp,
+                        textAlign = TextAlign.Center,
+                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                        color = Color(0XFFEDEDED)
                     )
                 } else{
                     AsyncImage(

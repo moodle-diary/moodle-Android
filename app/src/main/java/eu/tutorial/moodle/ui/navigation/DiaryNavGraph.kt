@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -38,7 +39,8 @@ fun DiaryNavHost(
                     navController = navController
                 ) },
             ) { innerPadding ->
-                    DetailHomeScreen(innerPaddingValues = innerPadding)
+                    DetailHomeScreen(innerPaddingValues = innerPadding, navController = navController)
+//                EmptyHomeScreen(innerPaddingValues = innerPadding)
             }
         }
 

@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -34,10 +35,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import eu.tutorial.moodle.R
+import eu.tutorial.moodle.data.Activity
+import eu.tutorial.moodle.data.People
+import eu.tutorial.moodle.data.Place
 import eu.tutorial.moodle.data.local.activitiesData
 import eu.tutorial.moodle.data.local.foodData
 import eu.tutorial.moodle.data.local.peopleData
@@ -54,8 +61,8 @@ fun CommonGrid(
 ) {
     Box(
         modifier = Modifier
-            .height(520.dp)
-            .background(Color(color = 0XffEFEFEF))
+            .fillMaxHeight()
+            .background(Color(color = 0Xff212122))
             .clip(shape = CircleShape.copy(all = CornerSize(45.dp)))
     ) {
         Column(
@@ -67,15 +74,17 @@ fun CommonGrid(
                 modifier = Modifier.padding(top = 20.dp),
                 text = title,
                 fontSize = 24.sp,
-                fontWeight = FontWeight(600),
-                textAlign = TextAlign.Center
+                fontFamily = FontFamily(Font(R.font.poppins_bold)),
+                textAlign = TextAlign.Center,
+                color = Color(0XFFEDEDED)
             )
             Text(
                 modifier = Modifier.padding(top = 4.dp, bottom = 28.dp),
                 text = subtitle,
                 fontSize = 16.sp,
-                fontWeight = FontWeight(400),
-                textAlign = TextAlign.Center
+                fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                textAlign = TextAlign.Center,
+                color = Color(0XFFEDEDED)
             )
             LazyVerticalGrid(
                 columns = GridCells.Fixed(4)
@@ -88,9 +97,9 @@ fun CommonGrid(
                         val isClicked = buttonStates[index]
 
                         val backgroundColor = if (isClicked) {
-                            Color(0XFF414141)
+                            Color(0XFFDFDFDF)
                         } else {
-                            Color(0XFFC5C1C1)
+                            Color(0XFF363637)
                         }
 
                         IconButton(
@@ -110,11 +119,12 @@ fun CommonGrid(
                         Text(
                             text = item,
                             fontSize = 12.sp,
-                            fontWeight = FontWeight(400),
+                            fontFamily = FontFamily(Font(R.font.poppins_regular)),
                             textAlign = TextAlign.Center,
                             modifier = Modifier
                                 .width(65.dp)
-                                .padding(top = 4.dp, bottom = 8.dp)
+                                .padding(top = 4.dp, bottom = 8.dp),
+                            color = Color(0XFFEDEDED)
                         )
                     }
                 }
@@ -133,9 +143,8 @@ fun ActGrid(
     }
 
     CommonGrid(
-        title = "Activities",
-        subtitle = "What did you do to spend\n" +
-                "your time today?",
+        title = "활동",
+        subtitle = "오늘 어떤 일을 했나요?",
         data = data,
         buttonStates = actButtonStates,
         icon = Icons.Default.Pets,
@@ -157,8 +166,8 @@ fun PlaceGrid(
     }
 
     CommonGrid(
-        title = "Places",
-        subtitle = "Where did you spend your time?",
+        title = "장소",
+        subtitle = "오늘 어느 곳에서 시간을 보냈나요?",
         data = data,
         buttonStates = placeButtonStates,
         icon = Icons.Default.Place,
@@ -182,8 +191,8 @@ fun PeopleGrid(
 
 
     CommonGrid(
-        title = "People",
-        subtitle = "Who did you spend time with?",
+        title = "관계",
+        subtitle = "오늘 누구를 만났나요?",
         data = data,
         buttonStates = peopleButtonStates,
         icon = Icons.Default.People,
@@ -206,8 +215,8 @@ fun FoodGrid(
 
 
     CommonGrid(
-        title = "Food",
-        subtitle = "What did you eat?",
+        title = "식사",
+        subtitle = "오늘 어떤 음식을 먹었나요?",
         data = data,
         buttonStates = foodButtonStates,
         icon = Icons.Default.Fastfood,
