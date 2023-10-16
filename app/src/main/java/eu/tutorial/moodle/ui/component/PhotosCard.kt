@@ -35,14 +35,11 @@ import eu.tutorial.moodle.data.ImgDto
 fun PhotosComponent(
     imgList: List<ImgDto>
 ){
-
     Card(
-        modifier = Modifier
-            .padding(start = 12.dp, end = 12.dp),
         shape = RoundedCornerShape(18.dp)
     ) {
-        if(imgList.isNotEmpty()){
-
+        // TODO img null 처리
+        if(imgList.isNotEmpty() && imgList[0].imgUri.isNotEmpty()){
             val imgUri = imgList[0].imgUri
 
             Box(

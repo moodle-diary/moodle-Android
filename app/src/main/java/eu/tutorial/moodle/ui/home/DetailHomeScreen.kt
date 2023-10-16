@@ -106,12 +106,17 @@ fun DetailHomeScreen(
 
         Spacer(modifier = Modifier.size(12.dp))
 
-        IconsComponent(
-            activityList = activityList,
-            placeList = placeList,
-            peopleList = peopleList,
-            foodList = foodList
-        )
+        Row(
+            modifier = Modifier.padding(start = 50.dp, end = 50.dp)
+        ) {
+            IconsComponent(
+                activityList = activityList,
+                placeList = placeList,
+                peopleList = peopleList,
+                foodList = foodList
+            )
+
+        }
 
         Spacer(modifier = Modifier.size(32.dp))
 
@@ -155,7 +160,11 @@ fun DetailHomeScreen(
                 tonalElevation = 0.dp,
                 scrimColor = Color.Transparent,
             ) {
-                Column {
+                Column(
+                    modifier = Modifier
+                        .padding(start = 12.dp, end = 12.dp),
+
+                    ) {
                     Spacer(modifier = Modifier.size(12.dp))
                     
                     NotesComponent(text = getDiaryText(diaryList))

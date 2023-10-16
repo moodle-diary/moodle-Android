@@ -202,7 +202,7 @@ fun CalendarMainCard(
                 setShowCommentScreen = { showCommentScreen = it },
                 showViewScreen = showViewScreen,
                 selectedDate = currentSelectedDate
-            ){}
+            ) {}
         }
     }
 

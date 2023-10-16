@@ -312,9 +312,8 @@ fun PostEmotionScreen(
                                                     foodData[i], key
                                                 )
 
-                                            viewModel.saveImg(
-                                                imageUri.value, key
-                                            )
+                                            if(imageUri.value != null)
+                                                viewModel.saveImg(imageUri.value, key)
                                         }
                                     },
                                     colors = ButtonDefaults.buttonColors(
