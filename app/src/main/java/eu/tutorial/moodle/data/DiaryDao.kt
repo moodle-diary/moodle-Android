@@ -115,6 +115,11 @@ interface DiaryDao {
 
 
     @Query(
-        "SELECT commentDate, comment from comment WHERE commentDate = :commentDate"
+        "SELECT commentDate, comment FROM comment WHERE commentDate = :commentDate"
     )fun getComments(commentDate : String) :List<CommentDto>
+
+    @Query(
+        "DELETE from comment where id = :commentId"
+    )
+    fun deleteComment(commentId: Int)
 }
