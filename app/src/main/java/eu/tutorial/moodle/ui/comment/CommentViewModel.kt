@@ -1,7 +1,6 @@
 package eu.tutorial.moodle.ui.comment
 
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
@@ -16,7 +15,7 @@ class CommentViewModel (private val diaryRepository: DiaryRepository) : ViewMode
     var commentList by mutableStateOf(emptyList<CommentDto>())
         private set
 
-    // TODO have to impl valid
+    // TODO : have to impl valid
     fun updateCommentUiState(commentDetails: CommentDetails) {
         commentUiState = CommentUiState(
             commentDetails = commentDetails,
