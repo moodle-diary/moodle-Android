@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -24,9 +23,13 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.data.ActGrade
+import eu.tutorial.moodle.data.DescriptionDto
 
 @Composable
-fun ActivityRankCard() {
+fun ActivityRankCard(
+    activityState : List<DescriptionDto>
+) {
 
     var isFolder by remember { mutableStateOf(true) } // 접혀 있으면 true
 
@@ -74,7 +77,9 @@ fun ActivityRankCard() {
         if (isFolder) {
             RowRankItem()
         } else {
-            ColumnRankItem()
+            ColumnRankItem(
+                listState = activityState
+            )
         }
     }
 }
