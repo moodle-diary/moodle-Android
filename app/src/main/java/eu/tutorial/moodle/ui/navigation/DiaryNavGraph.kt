@@ -2,23 +2,19 @@ package eu.tutorial.moodle.ui.navigation
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.background
-import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import eu.tutorial.moodle.ui.calendar.CalendarMainCard
+import eu.tutorial.moodle.ui.chart.ChartScreen
+import eu.tutorial.moodle.ui.chart.ChartTopBar
 import eu.tutorial.moodle.ui.component.BottomNavBar
-import eu.tutorial.moodle.ui.component.FloatingButton
 import eu.tutorial.moodle.ui.home.DetailHomeScreen
 import eu.tutorial.moodle.ui.home.TopAppBar
 import eu.tutorial.moodle.ui.post.PostEmotionScreen
@@ -74,6 +70,17 @@ fun DiaryNavHost(
             PostEmotionScreen(
                 navController = navController
             )
+        }
+
+        composable(route = ChartDestination.route) {
+            Scaffold(
+                topBar = { ChartTopBar() },
+                bottomBar = { BottomNavBar(
+                    navController = navController
+                ) },
+            ) { innerPadding ->
+                ChartScreen(innerPaddingValues = innerPadding, navController = navController)
+            }
         }
     }
 }

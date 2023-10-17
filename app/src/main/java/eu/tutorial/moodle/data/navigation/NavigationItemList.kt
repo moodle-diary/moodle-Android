@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import eu.tutorial.moodle.ui.navigation.CalendarDestination
+import eu.tutorial.moodle.ui.navigation.ChartDestination
 import eu.tutorial.moodle.ui.navigation.HomeDestination
 import eu.tutorial.moodle.ui.navigation.PostDestination
 
@@ -33,7 +34,7 @@ val navigationItemContentList = listOf(
         mailboxType = NavType.Chart,
         icon = Icons.Default.BarChart,
         text = "Chart",
-        route = ""
+        route = ChartDestination.route
     ),
     NavigationItemContent(
         mailboxType = NavType.Setting,
