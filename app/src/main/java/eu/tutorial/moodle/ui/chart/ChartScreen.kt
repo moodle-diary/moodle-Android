@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
@@ -35,7 +36,6 @@ fun ChartScreen(
     viewModel: ChartViewModel = viewModel(factory = AppViewModelProvider.Factory),
     navController: NavController,
 ) {
-
     val scrollState = rememberScrollState()
     
     val activityState = viewModel.activityList
