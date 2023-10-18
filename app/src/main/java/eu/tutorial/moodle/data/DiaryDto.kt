@@ -53,3 +53,8 @@ data class CommentDto(
     val commentDate : String,
     val comment: String
 )
+
+data class DescriptionDto(
+    val description : String,
+    val cnt : Int
+)

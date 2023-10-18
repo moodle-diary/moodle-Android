@@ -27,9 +27,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.data.ActGrade
+import eu.tutorial.moodle.data.DescriptionDto
 
 @Composable
-fun EmotionRankCard() {
+fun EmotionRankCard(
+    activityState : List<DescriptionDto>
+) {
 
     var isFolder by remember { mutableStateOf(true) } // 접혀 있으면 true
 
@@ -75,9 +79,13 @@ fun EmotionRankCard() {
         }
 
         if (isFolder) {
-            RowRankItem()
+            RowRankItem(
+                listState = activityState
+            )
         } else {
-            ColumnRankItem()
+            ColumnRankItem(
+                listState = activityState
+            )
         }
     }
 }
@@ -86,5 +94,5 @@ fun EmotionRankCard() {
 @Preview
 @Composable
 fun EmotionRankCardPreview(){
-    EmotionRankCard()
+//    EmotionRankCard()
 }

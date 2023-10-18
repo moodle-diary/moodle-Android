@@ -24,9 +24,13 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.data.ActGrade
+import eu.tutorial.moodle.data.DescriptionDto
 
 @Composable
-fun FoodRankCard() {
+fun FoodRankCard(
+    foodState : List<DescriptionDto>
+) {
 
     var isFolder by remember { mutableStateOf(true) } // 접혀 있으면 true
 
@@ -72,9 +76,13 @@ fun FoodRankCard() {
         }
 
         if (isFolder) {
-            RowRankItem()
+            RowRankItem(
+                listState = foodState
+            )
         } else {
-            ColumnRankItem()
+            ColumnRankItem(
+                listState = foodState
+            )
         }
     }
 }
