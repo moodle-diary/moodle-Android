@@ -6,15 +6,16 @@ import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,7 +24,6 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -37,16 +37,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tutorial.moodle.ui.AppViewModelProvider
-import eu.tutorial.moodle.ui.home.DetailHomeScreen
 import eu.tutorial.moodle.ui.home.HomeViewModel
-import eu.tutorial.moodle.data.local.comments
-import eu.tutorial.moodle.ui.comment.CommentScreen
-import eu.tutorial.moodle.ui.component.BottomNavBar
-import eu.tutorial.moodle.ui.home.DetailHomeScreen
 import eu.tutorial.moodle.ui.theme.poppins
+import eu.tutorial.moodle.ui.view.ViewScreen
 import java.time.LocalDate
 import java.time.YearMonth
 
@@ -57,11 +54,8 @@ fun CalendarMainCard(
     innerPadding : PaddingValues = PaddingValues(0.dp),
     currentDate: LocalDate = LocalDate.now(),
     visibleMore : Boolean,
-    changeVisibleMore: () -> Unit,
+    showViewScreen : () -> Unit,
     viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory),
-    showCommentScreen: Boolean,
-    setShowCommentScreen: (Boolean) -> Unit,
-    onCloseClick: () -> Unit
 ){
 
     val initialPage = (currentDate.year - 1970) * 12 + currentDate.monthValue - 1
@@ -72,6 +66,10 @@ fun CalendarMainCard(
 
     var visibleEmotion by remember { mutableStateOf(false) }
 
+    var showCommentScreen by remember { mutableStateOf(false) }
+
+    val currentSelectedDate = remember { mutableStateOf(currentDate) }
+
     LaunchedEffect(pagerState.currentPage) {
         val addMonth = (pagerState.currentPage - currentPage).toLong()
         currentMonth = currentMonth.plusMonths(addMonth)
@@ -80,6 +78,8 @@ fun CalendarMainCard(
 
     Column(
         modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0XFF151515))
             .padding(innerPadding)
             .verticalScroll(rememberScrollState())
     ) {
@@ -93,7 +93,7 @@ fun CalendarMainCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(394.dp)
-                    .background(Color(0XFFD9D9D9)),
+                    .background(Color(0XFF212122)),
                 contentAlignment = Alignment.Center
             ) {
                 HorizontalCalendar(
@@ -103,12 +103,13 @@ fun CalendarMainCard(
                         Log.d("visible", visibleEmotion.toString())
                     },
                     currentMonth = currentMonth,
-                    viewModel = viewModel
+                    viewModel = viewModel,
+                    currentSelectedDate = currentSelectedDate
                 )
             }
         }
 
-        Spacer(modifier = Modifier.size(12.dp))
+        Spacer(modifier = Modifier.size(16.dp))
 
         AnimatedVisibility(
             visible = visibleEmotion,
@@ -124,48 +125,41 @@ fun CalendarMainCard(
                         modifier = Modifier
                             .height(226.dp)
                             .fillMaxWidth()
-                            .background(color = Color(0XEFEFEFEF)),
+                            .background(color = Color(0XFF212122)),
                         contentAlignment = Alignment.Center
                     ){
                         Button(
                             onClick = {
-                                changeVisibleMore()
+                                showViewScreen()
                             },
                             modifier = Modifier
                                 .align(Alignment.BottomEnd)
                                 .padding(12.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0XFFD9D9D9)
+                                containerColor = Color.Transparent
                             ),
                         ) {
-                            Text(
-                                text = "more",
-                                color = Color.Black,
-                                fontFamily = poppins
-                            )
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Image(
+                                    painter = painterResource(id = eu.tutorial.moodle.R.drawable.journal), 
+                                    contentDescription = "journal",
+                                    modifier = Modifier.padding(end = 8.dp)
+                                )
+
+                                Text(
+                                    text = "일기 조회",
+                                    color = Color(0XFFDFDFDF),
+                                    fontFamily = poppins,
+                                    modifier = Modifier.padding(top = 2.dp)
+                                )
+                            }
                         }
                     }
-                }
-                Button(
-                    onClick = { setShowCommentScreen(true) },
-                    modifier = Modifier
-                        .defaultMinSize(
-                            minWidth = 1.dp,
-                            minHeight = 31.dp
-                        )
-                        .padding(bottom = 27.dp),
-                    contentPadding = PaddingValues(top = 5.dp, bottom = 5.dp, start = 17.dp, end = 17.dp),
-                    shape = RoundedCornerShape(20.dp),
-                    border = BorderStroke(1.dp, Color.Black),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Transparent
-                    )
-                ) {
-                    Text(
-                        text = "%d Comments".format(1),
-                        color = Color.Black,
-                        fontFamily = poppins
-                    )
                 }
             }
         }
@@ -174,14 +168,15 @@ fun CalendarMainCard(
             visible = !visibleEmotion,
         ) {
             Card(
-                modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 12.dp),
-                shape = RoundedCornerShape(32.dp),
+                modifier = Modifier
+                    .padding(start = 12.dp, end = 12.dp, bottom = 12.dp),
+                shape = RoundedCornerShape(32.dp)
             ) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(247.dp)
-                        .background(Color(0XFFEFEFEF)),
+                        .height(180.dp)
+                        .background(Color(0XFF212122)),
                     contentAlignment = Alignment.Center
                 ) {
                     EmotionChart()
@@ -202,33 +197,12 @@ fun CalendarMainCard(
 //            modifier = Modifier
 //                .align(Alignment.BottomCenter) // 이 align 은 box scope 이기 때문에 안에서 써야 한다.
         ) {
-            // TODO 이 부분 DetailHomeScreen에서 독립
-            DetailHomeScreen(
-                modifier = Modifier
-//                    .clip(shape = RoundedCornerShape(32.dp)) // 이게 먼저 와야함
-                    .background(color = Color(0XFF9D9D9D)),
-            )
-        }
-    }
-
-    Box(
-        modifier = Modifier
-            .background(color = Color(0X00000000))
-    ){
-        AnimatedVisibility(
-            visible = showCommentScreen,
-            enter = slideInVertically(initialOffsetY = { it }),
-            exit = slideOutVertically(targetOffsetY = { it }),
-//            modifier = Modifier
-//                .align(Alignment.BottomCenter) // 이 align 은 box scope 이기 때문에 안에서 써야 한다.
-        ) {
-            CommentScreen(
-                modifier = Modifier
-//                    .clip(shape = RoundedCornerShape(32.dp)) // 이게 먼저 와야함
-                    .background(color = Color.Black.copy(alpha = 0.3f)),
-                onCloseClick = onCloseClick,
-                comments = comments
-            )
+            ViewScreen(
+                showCommentScreen = showCommentScreen,
+                setShowCommentScreen = { showCommentScreen = it },
+                showViewScreen = showViewScreen,
+                selectedDate = currentSelectedDate
+            ) {}
         }
     }
 

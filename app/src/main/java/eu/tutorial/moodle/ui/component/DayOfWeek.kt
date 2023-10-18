@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -34,7 +35,7 @@ fun DayOfWeek(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),
-                text = day.getDisplayName(TextStyle.SHORT, Locale.ENGLISH).lowercase(),
+                text = day.getDisplayName(TextStyle.SHORT, Locale.KOREAN).lowercase(),
                 textAlign = TextAlign.Center,
                 style = androidx.compose.ui.text.TextStyle(
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
@@ -42,7 +43,8 @@ fun DayOfWeek(
                     platformStyle = PlatformTextStyle(
                         includeFontPadding = false
                     )
-                )
+                ),
+                color = Color(0XFFDFDFDF)
             )
         }
 
@@ -53,7 +55,7 @@ fun DayOfWeek(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),
-                text = day.getDisplayName(TextStyle.SHORT, Locale.ENGLISH).lowercase(),
+                text = day.getDisplayName(TextStyle.SHORT, Locale.KOREAN).lowercase(),
                 textAlign = TextAlign.Center,
                 style = androidx.compose.ui.text.TextStyle(
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
@@ -61,7 +63,8 @@ fun DayOfWeek(
                     platformStyle = PlatformTextStyle(
                         includeFontPadding = false
                     )
-                )
+                ),
+                color = Color(0XFFDFDFDF)
             )
             startIndex++
         }

@@ -1,5 +1,4 @@
 package eu.tutorial.moodle.data.navigation
-
 enum class NavType {
-    Home, Calendar, Chart, Setting
+    Home, Calendar, Post, Chart, Setting
 }

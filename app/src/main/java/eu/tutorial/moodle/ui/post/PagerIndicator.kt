@@ -29,7 +29,7 @@ fun PagerIndicator(
         (0 until count).forEach { index ->
             Box(
                 modifier = Modifier
-                    .size(if (index == currentPage) dotSize * 2 else dotSize)
+                    .size(if (index == currentPage) dotSize * 1.5f else dotSize)
                     .background(
                         color = if (index == currentPage) {
                             selectedColor

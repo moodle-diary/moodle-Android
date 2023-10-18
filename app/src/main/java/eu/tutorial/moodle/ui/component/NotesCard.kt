@@ -16,30 +16,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
-//<<<<<<< HEAD:app/src/main/java/eu/tutorial/moodle/ui/component/NotesCard.kt
-//=======
-import eu.tutorial.moodle.data.local.diaryText
-import eu.tutorial.moodle.ui.comment.CommentBox
-//>>>>>>> main:app/src/main/java/eu/tutorial/moodle/ui/component/HomeNotes.kt
-
 @Composable
 fun NotesComponent(
     text : String = ""
 ){
-    Card( // TODO 이 부분 코드 개선.. value를 빼서 Composable 줄이는 방향
-        modifier = Modifier
-            .padding(start = 12.dp, end = 12.dp),
-        shape = RoundedCornerShape(32.dp)
+    Card(
+        // TODO 이 부분 코드 개선.. value를 빼서 Composable 줄이는 방향
+        shape = RoundedCornerShape(18.dp)
     ) {
         if(text != ""){
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(color = Color(0XD9D9D9D9)),
+                    .background(color = Color(0XFF2A292B)),
             ){
                 Text(
                     text = text,
@@ -48,8 +40,8 @@ fun NotesComponent(
                     style = TextStyle(
                         fontFamily = FontFamily(Font(R.font.poppins_regular)),
                         fontSize = 16.sp
-                    )
-
+                    ),
+                    color = Color(0XFFDFDFDF)
                 )
             }
         } else{
@@ -57,21 +49,20 @@ fun NotesComponent(
                 modifier = Modifier
                     .height(104.dp)
                     .fillMaxWidth()
-                    .background(color = Color(0XD9D9D9D9)),
+                    .background(color = Color(0XFF2A292B)),
                 contentAlignment = Alignment.Center,
             ){
                 Text(
-                    text = "Notes",
+                    text = "No Journal",
                     style = TextStyle(
-                        fontSize = 32.sp,
-                        fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                        color = Color(0XFFFFFFFF)
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                        color = Color(0XFFDFDFDF)
                     ),
                 )
             }
         }
     }
-
 }
 
 //@Preview(

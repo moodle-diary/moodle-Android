@@ -2,7 +2,6 @@ package eu.tutorial.moodle.ui.navigation
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -13,8 +12,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import eu.tutorial.moodle.ui.calendar.CalendarMainCard
+import eu.tutorial.moodle.ui.chart.ChartScreen
+import eu.tutorial.moodle.ui.chart.ChartTopBar
 import eu.tutorial.moodle.ui.component.BottomNavBar
-import eu.tutorial.moodle.ui.component.FloatingButton
 import eu.tutorial.moodle.ui.home.DetailHomeScreen
 import eu.tutorial.moodle.ui.home.TopAppBar
 import eu.tutorial.moodle.ui.post.PostEmotionScreen
@@ -34,15 +34,8 @@ fun DiaryNavHost(
                 bottomBar = { BottomNavBar(
                     navController = navController
                 ) },
-                floatingActionButtonPosition = FabPosition.Center,
-                floatingActionButton = {
-                    FloatingButton(
-                        navController = navController,
-                        isVisible = true
-                    )
-                }
             ) { innerPadding ->
-                    DetailHomeScreen(innerPaddingValues = innerPadding)
+                    DetailHomeScreen(innerPaddingValues = innerPadding, navController = navController)
 //                EmptyHomeScreen(innerPaddingValues = innerPadding)
             }
         }
@@ -63,29 +56,12 @@ fun DiaryNavHost(
                         isVisible = visibleMore
                     ) }
                 },
-                floatingActionButtonPosition = FabPosition.Center,
-                floatingActionButton = {
-                    if (showCommentScreen) {
-                        FloatingButton(
-                            navController = navController,
-                            isVisible = !showCommentScreen
-                        )
-                    } else {
-                        FloatingButton(
-                            navController = navController,
-                            isVisible = !visibleMore
-                        ) }
-
-                }
             ) { innerPadding ->
 
                 CalendarMainCard(
                     innerPadding = innerPadding,
                     visibleMore = visibleMore,
-                    changeVisibleMore = {visibleMore = !visibleMore},
-                    showCommentScreen = showCommentScreen,
-                    setShowCommentScreen = { showCommentScreen = it },
-                    onCloseClick = {showCommentScreen = false}
+                    showViewScreen = {visibleMore = !visibleMore}
                 )
             }
         }
@@ -94,6 +70,17 @@ fun DiaryNavHost(
             PostEmotionScreen(
                 navController = navController
             )
+        }
+
+        composable(route = ChartDestination.route) {
+            Scaffold(
+                topBar = { ChartTopBar() },
+                bottomBar = { BottomNavBar(
+                    navController = navController
+                ) },
+            ) { innerPadding ->
+                ChartScreen(innerPaddingValues = innerPadding, navController = navController)
+            }
         }
     }
 }

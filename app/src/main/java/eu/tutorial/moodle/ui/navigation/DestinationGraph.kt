@@ -24,3 +24,10 @@ object PostDestination : NavigationDestination {
         get() = R.string.post_emo
 
 }
+
+object ChartDestination : NavigationDestination{
+    override val route: String
+        get() = "Chart"
+    override val titleRes: Int
+        get() = R.string.analyze_title
+}

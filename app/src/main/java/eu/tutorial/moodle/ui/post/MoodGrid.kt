@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -27,10 +28,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import eu.tutorial.moodle.R
 import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -42,24 +46,16 @@ fun MoodGrid(
 ) {
 
     val data = listOf(
-        "Furious", "Nervous", "Cheerful", "Ecstatic",
-        "Worried", "Angry", "Happy", "Excited",
-        "Lonely", "Sad", "At ease", "Content",
-        "Hopeless", "Disappointed", "Calm", "Serene"
+        "화남", "긴장됨", "행복함", "기쁨",
+        "걱정됨", "불편함", "편안함", "신남",
+        "외로음", "슬픔", "차분함", "만족스러움",
+        "힘없음", "실망함", "느긋함", "감사함"
     )
-//    val buttonStates = remember {
-//        mutableStateListOf(
-//            mutableStateListOf(false, false, false, false),
-//            mutableStateListOf(false, false, false, false),
-//            mutableStateListOf(false, false, false, false),
-//            mutableStateListOf(false, false, false, false)
-//        )
-//    }
 
     Box(
         modifier = Modifier
-            .height(520.dp)
-            .background(Color(color = 0XffEFEFEF))
+            .fillMaxHeight()
+            .background(Color(color = 0Xff212122))
             .clip(shape = CircleShape.copy(all = CornerSize(45.dp)))
     ) {
         Column(
@@ -69,17 +65,19 @@ fun MoodGrid(
         ) {
             Text(
                 modifier = Modifier.padding(top = 20.dp),
-                text = "Emotions",
+                text = "감정 고르기",
                 fontSize = 24.sp,
-                fontWeight = FontWeight(600),
-                textAlign = TextAlign.Center
+                fontFamily = FontFamily(Font(R.font.poppins_bold)),
+                textAlign = TextAlign.Center,
+                color = Color(0XFFEDEDED)
             )
             Text(
                 modifier = Modifier.padding(top = 4.dp, bottom = 28.dp),
-                text = "What emotions have you felt?",
+                text = "어떤 감정들을 느낀것 같나요?",
                 fontSize = 16.sp,
-                fontWeight = FontWeight(400),
-                textAlign = TextAlign.Center
+                fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                textAlign = TextAlign.Center,
+                color = Color(0XFFEDEDED)
             )
 
             LazyVerticalGrid(
@@ -124,11 +122,12 @@ fun MoodGrid(
                         Text(
                             text = item,
                             fontSize = 12.sp,
-                            fontWeight = FontWeight(400),
+                            fontFamily = FontFamily(Font(R.font.poppins_regular)),
                             textAlign = TextAlign.Center,
                             modifier = Modifier
                                 .width(65.dp)
-                                .padding(top = 4.dp, bottom = 8.dp)
+                                .padding(top = 4.dp, bottom = 8.dp),
+                            color = Color(0XFFEDEDED)
                         )
                     }
                 }

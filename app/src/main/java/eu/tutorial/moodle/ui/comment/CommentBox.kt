@@ -36,11 +36,12 @@ fun CommentBox(
 
     Card(
         modifier = Modifier
-            .padding(12.dp, 10.dp)
+            .padding(10.dp, 12.dp)
             .fillMaxWidth(),
         shape = RoundedCornerShape(32.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0XFFEFEFEF)
+            containerColor = Color(0XFF363637),
+            contentColor = Color(0XFFDFDFDF)
         )
     ) {
         Column(
@@ -58,23 +59,25 @@ fun CommentBox(
                     fontSize = 14.sp,
                     fontFamily = poppins,
                     fontWeight = FontWeight.Medium,
+                    color = Color(0XFF888888)
                 )
                 if (isTrashIconVisible) {
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = "delete",
-                        tint = Color.Black,
+                        tint = Color(0XFF888888),
                         modifier = Modifier
                             .size(18.dp)
                             .clickable{isTrashIconVisible = false}
                     )
                 } else{
                     Text(
-                        text = "Delete?",
+                        text = "정말 삭제하시겠습니까?",
                         fontSize = 14.sp,
                         fontFamily = poppins,
                         fontWeight = FontWeight.Medium,
-                        modifier = Modifier.clickable{isTrashIconVisible = true}
+                        modifier = Modifier.clickable{isTrashIconVisible = true},
+                        color = Color(0XFF888888)
                     )
                 }
             }

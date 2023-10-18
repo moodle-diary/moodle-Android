@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -18,6 +19,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Fastfood
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Pets
 import androidx.compose.material.icons.filled.Place
@@ -27,19 +29,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.Activity
 import eu.tutorial.moodle.data.People
 import eu.tutorial.moodle.data.Place
 import eu.tutorial.moodle.data.local.activitiesData
+import eu.tutorial.moodle.data.local.foodData
 import eu.tutorial.moodle.data.local.peopleData
 import eu.tutorial.moodle.data.local.placesData
 
@@ -51,11 +58,11 @@ fun CommonGrid(
     buttonStates: List<Boolean>,
     onItemClick: (Int) -> Unit,
     icon: ImageVector,
-    ) {
+) {
     Box(
         modifier = Modifier
-            .height(520.dp)
-            .background(Color(color = 0XffEFEFEF))
+            .fillMaxHeight()
+            .background(Color(color = 0Xff212122))
             .clip(shape = CircleShape.copy(all = CornerSize(45.dp)))
     ) {
         Column(
@@ -67,15 +74,17 @@ fun CommonGrid(
                 modifier = Modifier.padding(top = 20.dp),
                 text = title,
                 fontSize = 24.sp,
-                fontWeight = FontWeight(600),
-                textAlign = TextAlign.Center
+                fontFamily = FontFamily(Font(R.font.poppins_bold)),
+                textAlign = TextAlign.Center,
+                color = Color(0XFFEDEDED)
             )
             Text(
                 modifier = Modifier.padding(top = 4.dp, bottom = 28.dp),
                 text = subtitle,
                 fontSize = 16.sp,
-                fontWeight = FontWeight(400),
-                textAlign = TextAlign.Center
+                fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                textAlign = TextAlign.Center,
+                color = Color(0XFFEDEDED)
             )
             LazyVerticalGrid(
                 columns = GridCells.Fixed(4)
@@ -88,9 +97,9 @@ fun CommonGrid(
                         val isClicked = buttonStates[index]
 
                         val backgroundColor = if (isClicked) {
-                            Color(0XFF414141)
+                            Color(0XFFDFDFDF)
                         } else {
-                            Color(0XFFC5C1C1)
+                            Color(0XFF363637)
                         }
 
                         IconButton(
@@ -110,11 +119,12 @@ fun CommonGrid(
                         Text(
                             text = item,
                             fontSize = 12.sp,
-                            fontWeight = FontWeight(400),
+                            fontFamily = FontFamily(Font(R.font.poppins_regular)),
                             textAlign = TextAlign.Center,
                             modifier = Modifier
                                 .width(65.dp)
-                                .padding(top = 4.dp, bottom = 8.dp)
+                                .padding(top = 4.dp, bottom = 8.dp),
+                            color = Color(0XFFEDEDED)
                         )
                     }
                 }
@@ -125,118 +135,94 @@ fun CommonGrid(
 
 @Composable
 fun ActGrid(
-    diaryUiState : DiaryUiState,
-    onClick : (DiaryDetails) -> Unit,
+    actButtonStates : SnapshotStateList<Boolean>
 ) {
     val data = activitiesData
-
-    val buttonStates = remember {
-        mutableStateListOf<Boolean>()
-    }
-
     for (i in data.indices) {
-        buttonStates.add(false)
+        actButtonStates.add(false)
     }
-
-    onClick(
-        diaryUiState.diaryDetails.copy(
-            // TODO : activityId icon descriptor id로 바꾸기
-            activities = getTrue(buttonStates,data).map { Activity(activityId = 1, activityDescription = it) }
-        )
-    )
 
     CommonGrid(
-        title = "Activities",
-        subtitle = "What did you do to spend\n" +
-                "your time today?",
+        title = "활동",
+        subtitle = "오늘 어떤 일을 했나요?",
         data = data,
-        buttonStates = buttonStates,
+        buttonStates = actButtonStates,
         icon = Icons.Default.Pets,
         onItemClick = { index ->
             // Handle item click here
-            buttonStates[index] = !buttonStates[index]
+            actButtonStates[index] = !actButtonStates[index]
         },
-
     )
 }
 
 @Composable
 fun PlaceGrid(
-    diaryUiState : DiaryUiState,
-    onClick : (DiaryDetails) -> Unit,
+    placeButtonStates : SnapshotStateList<Boolean>
 ) {
     val data = placesData
-    val buttonStates = remember {
-        mutableStateListOf<Boolean>()
-    }
-    for (i in data.indices) {
-        buttonStates.add(false)
-    }
 
-    onClick(
-        diaryUiState.diaryDetails.copy(
-            // TODO : activityId icon descriptor id로 바꾸기
-            places = getTrue(buttonStates,data).map { Place(placeId = 1, placeDescription = it) }
-        )
-    )
+    for (i in data.indices) {
+        placeButtonStates.add(false)
+    }
 
     CommonGrid(
-        title = "Places",
-        subtitle = "Where did you spend your time?",
+        title = "장소",
+        subtitle = "오늘 어느 곳에서 시간을 보냈나요?",
         data = data,
-        buttonStates = buttonStates,
+        buttonStates = placeButtonStates,
         icon = Icons.Default.Place,
         onItemClick = { index ->
             // Handle item click here
-            buttonStates[index] = !buttonStates[index]
+            placeButtonStates[index] = !placeButtonStates[index]
         },
 
     )
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PeopleGrid(
-    diaryUiState : DiaryUiState,
-    onClick : (DiaryDetails) -> Unit,
+    peopleButtonStates : SnapshotStateList<Boolean>
 ) {
     val data = peopleData
-    val buttonStates = remember {
-        mutableStateListOf<Boolean>()
-    }
+
     for (i in data.indices) {
-        buttonStates.add(false)
+        peopleButtonStates.add(false)
     }
 
-    onClick(
-        diaryUiState.diaryDetails.copy(
-            // TODO : activityId icon descriptor id로 바꾸기
-            people = getTrue(buttonStates,data).map { People(peopleId = 1, peopleDescription = it) }
-        )
-    )
 
     CommonGrid(
-        title = "People",
-        subtitle = "Who did you spend time with?",
+        title = "관계",
+        subtitle = "오늘 누구를 만났나요?",
         data = data,
-        buttonStates = buttonStates,
+        buttonStates = peopleButtonStates,
         icon = Icons.Default.People,
         onItemClick = { index ->
             // Handle item click here
-            buttonStates[index] = !buttonStates[index]
+            peopleButtonStates[index] = !peopleButtonStates[index]
         },
     )
 }
 
-fun getTrue(
-    states : List<Boolean>,
-    data: List<String>
-): ArrayList<String> {
-    val result = ArrayList<String>()
+@Composable
+fun FoodGrid(
+    foodButtonStates : SnapshotStateList<Boolean>
+) {
+    val data = foodData
 
-    for (i in states.indices){
-        if(states[i]) result.add(data[i])
+    for (i in data.indices) {
+        foodButtonStates.add(false)
     }
-    
-    return result
+
+
+    CommonGrid(
+        title = "식사",
+        subtitle = "오늘 어떤 음식을 먹었나요?",
+        data = data,
+        buttonStates = foodButtonStates,
+        icon = Icons.Default.Fastfood,
+        onItemClick = { index ->
+            // Handle item click here
+            foodButtonStates[index] = !foodButtonStates[index]
+        },
+    )
 }
