@@ -76,7 +76,9 @@ fun FoodRankCard(
         }
 
         if (isFolder) {
-            RowRankItem()
+            RowRankItem(
+                listState = foodState
+            )
         } else {
             ColumnRankItem(
                 listState = foodState

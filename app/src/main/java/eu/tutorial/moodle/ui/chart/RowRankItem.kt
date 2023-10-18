@@ -1,5 +1,6 @@
 package eu.tutorial.moodle.ui.chart
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,9 +22,13 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.data.DescriptionDto
 
 @Composable
-fun RowRankItem() {
+fun RowRankItem(
+    listState : List<DescriptionDto>
+) {
+    Log.d("inital", listState.toString())
     Row(
         modifier = Modifier
             .padding(start = 24.dp, end = 24.dp)
@@ -31,145 +36,45 @@ fun RowRankItem() {
             .height(104.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        // 1
-        Column(
-            modifier = Modifier
-                .width(60.dp)
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Icon(
-                imageVector = Icons.Default.Pets,
-                contentDescription = "icon",
-                modifier = Modifier
-                    .size(60.dp)
-                    .padding(bottom = 12.dp)
-            )
-            Text(
-                text = "슬픔",
-                fontSize = 12.sp,
-                color = Color(0XFFEDEDED),
-                fontFamily = FontFamily(Font(R.font.poppins_regular))
-            )
-            Text(
-                text = "24번",
-                fontSize = 12.sp,
-                color = Color(0XFFEDEDED).copy(alpha = 0.5f),
-                fontFamily = FontFamily(Font(R.font.poppins_regular))
+        repeat( listState.size ){
+            RankItem(
+                description = listState[it].description,
+                cnt = listState[it].cnt
             )
         }
-        // 2
-        Column(
+    }
+}
+
+@Composable
+fun RankItem(
+    description : String,
+    cnt : Int
+){
+    Column(
+        modifier = Modifier
+            .width(60.dp)
+            .fillMaxWidth(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Icon(
+            imageVector = Icons.Default.Pets,
+            contentDescription = "icon",
             modifier = Modifier
-                .width(60.dp)
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Icon(
-                imageVector = Icons.Default.Pets,
-                contentDescription = "icon",
-                modifier = Modifier
-                    .size(60.dp)
-                    .padding(bottom = 12.dp)
-            )
-            Text(
-                text = "슬픔",
-                fontSize = 12.sp,
-                color = Color(0XFFEDEDED),
-                fontFamily = FontFamily(Font(R.font.poppins_regular))
-            )
-            Text(
-                text = "24번",
-                fontSize = 12.sp,
-                color = Color(0XFFEDEDED).copy(alpha = 0.5f),
-                fontFamily = FontFamily(Font(R.font.poppins_regular))
-            )
-        }
-        // 3
-        Column(
-            modifier = Modifier
-                .width(60.dp)
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Icon(
-                imageVector = Icons.Default.Pets,
-                contentDescription = "icon",
-                modifier = Modifier
-                    .size(60.dp)
-                    .padding(bottom = 12.dp)
-            )
-            Text(
-                text = "슬픔",
-                fontSize = 12.sp,
-                color = Color(0XFFEDEDED),
-                fontFamily = FontFamily(Font(R.font.poppins_regular))
-            )
-            Text(
-                text = "24번",
-                fontSize = 12.sp,
-                color = Color(0XFFEDEDED).copy(alpha = 0.5f),
-                fontFamily = FontFamily(Font(R.font.poppins_regular))
-            )
-        }
-        // 4
-        Column(
-            modifier = Modifier
-                .width(60.dp)
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Icon(
-                imageVector = Icons.Default.Pets,
-                contentDescription = "icon",
-                modifier = Modifier
-                    .size(60.dp)
-                    .padding(bottom = 12.dp)
-            )
-            Text(
-                text = "슬픔",
-                fontSize = 12.sp,
-                color = Color(0XFFEDEDED),
-                fontFamily = FontFamily(Font(R.font.poppins_regular))
-            )
-            Text(
-                text = "24번",
-                fontSize = 12.sp,
-                color = Color(0XFFEDEDED).copy(alpha = 0.5f),
-                fontFamily = FontFamily(Font(R.font.poppins_regular))
-            )
-        }
-        // 5
-        Column(
-            modifier = Modifier
-                .width(60.dp)
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Icon(
-                imageVector = Icons.Default.Pets,
-                contentDescription = "icon",
-                modifier = Modifier
-                    .size(60.dp)
-                    .padding(bottom = 12.dp)
-            )
-            Text(
-                text = "슬픔",
-                fontSize = 12.sp,
-                color = Color(0XFFEDEDED),
-                fontFamily = FontFamily(Font(R.font.poppins_regular))
-            )
-            Text(
-                text = "24번",
-                fontSize = 12.sp,
-                color = Color(0XFFEDEDED).copy(alpha = 0.5f),
-                fontFamily = FontFamily(Font(R.font.poppins_regular))
-            )
-        }
+                .size(60.dp)
+                .padding(bottom = 12.dp)
+        )
+        Text(
+            text = description,
+            fontSize = 12.sp,
+            color = Color(0XFFEDEDED),
+            fontFamily = FontFamily(Font(R.font.poppins_regular))
+        )
+        Text(
+            text = cnt.toString() + "번",
+            fontSize = 12.sp,
+            color = Color(0XFFEDEDED).copy(alpha = 0.5f),
+            fontFamily = FontFamily(Font(R.font.poppins_regular))
+        )
     }
 }

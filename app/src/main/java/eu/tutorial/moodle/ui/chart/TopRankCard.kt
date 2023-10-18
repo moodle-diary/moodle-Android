@@ -28,10 +28,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.data.DescriptionDto
 import java.time.LocalDate
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun TopRankCard() {
+fun TopRankCard(
+    maxList: List<DescriptionDto>
+) {
 
     val today = LocalDate.now()
     val currentMonth = today.monthValue
@@ -57,7 +61,9 @@ fun TopRankCard() {
             modifier = Modifier.padding(bottom = 16.dp, start = 50.dp)
         )
 
-        RowRankItem()
+        RowRankItem(
+            listState = maxList
+        )
     }
 }
 
@@ -65,5 +71,5 @@ fun TopRankCard() {
 @Preview
 @Composable
 fun TopRankCardPreview(){
-    TopRankCard()
+//    TopRankCard()
 }

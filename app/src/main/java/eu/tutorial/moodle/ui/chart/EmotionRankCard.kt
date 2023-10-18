@@ -79,7 +79,9 @@ fun EmotionRankCard(
         }
 
         if (isFolder) {
-            RowRankItem()
+            RowRankItem(
+                listState = activityState
+            )
         } else {
             ColumnRankItem(
                 listState = activityState

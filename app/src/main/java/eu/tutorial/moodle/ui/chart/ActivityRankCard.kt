@@ -75,7 +75,9 @@ fun ActivityRankCard(
         }
 
         if (isFolder) {
-            RowRankItem()
+            RowRankItem(
+                listState = activityState
+            )
         } else {
             ColumnRankItem(
                 listState = activityState

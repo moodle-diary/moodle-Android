@@ -1,6 +1,7 @@
 package eu.tutorial.moodle.ui.chart
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -19,11 +20,15 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import eu.tutorial.moodle.data.DescriptionDto
 import eu.tutorial.moodle.ui.AppViewModelProvider
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.withContext
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ChartScreen(
     innerPaddingValues: PaddingValues = PaddingValues(0.dp),
@@ -38,8 +43,14 @@ fun ChartScreen(
     val peopleState = viewModel.peopleList
     val foodState = viewModel.foodList
 
+    val emptyDto = DescriptionDto(
+        description = "",
+        cnt = 0
+    )
+
+    val maxList : ArrayList<DescriptionDto> = arrayListOf(emptyDto, emptyDto, emptyDto, emptyDto)
     val coroutineScope = rememberCoroutineScope()
-    
+
     // TODO : 날짜 변경 필요
     LaunchedEffect(Unit){
         coroutineScope.launch {
@@ -51,7 +62,9 @@ fun ChartScreen(
                 viewModel.getFoodList("2023-10")
             }
         }
+
     }
+
 
     Column(
         modifier = Modifier
@@ -61,7 +74,9 @@ fun ChartScreen(
             .verticalScroll(scrollState)
     ) {
 
-        TopRankCard()
+        TopRankCard(
+            maxList = maxList.toList()
+        )
 
         EmotionRankCard(
             activityState = activityState

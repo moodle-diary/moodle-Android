@@ -76,7 +76,9 @@ fun PeopleRankCard(
         }
 
         if (isFolder) {
-            RowRankItem()
+            RowRankItem(
+                listState = peopleState
+            )
         } else {
             ColumnRankItem(
                 listState = peopleState

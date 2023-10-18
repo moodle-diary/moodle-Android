@@ -13,6 +13,7 @@ import eu.tutorial.moodle.data.PeopleGrade
 import eu.tutorial.moodle.data.PlaceGrade
 
 class ChartViewModel (private val diaryRepository: DiaryRepository) : ViewModel() {
+
     var activityList by mutableStateOf(emptyList<DescriptionDto>())
     var placeList by mutableStateOf(emptyList<DescriptionDto>())
     var peopleList by mutableStateOf(emptyList<DescriptionDto>())
@@ -21,15 +22,12 @@ class ChartViewModel (private val diaryRepository: DiaryRepository) : ViewModel(
     fun getActList(targetMonth : String){
         activityList = diaryRepository.getActivityGrade("$targetMonth%").map { it.toDesDto() }
     }
-
     fun getPlaceList(targetMonth : String) {
         placeList = diaryRepository.getPlaceGrade("$targetMonth%").map { it.toDesDto() }
     }
-
     fun getPeopleList(targetMonth : String) {
         peopleList = diaryRepository.getPeopleGrade("$targetMonth%").map { it.toDesDto() }
     }
-
     fun getFoodList(targetMonth : String) {
         foodList = diaryRepository.getFoodGrade("$targetMonth%").map { it.toDesDto() }
     }

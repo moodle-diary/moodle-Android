@@ -76,7 +76,9 @@ fun PlaceRankCard(
         }
 
         if (isFolder) {
-            RowRankItem()
+            RowRankItem(
+                listState = placeState
+            )
         } else {
             ColumnRankItem(
                 listState = placeState

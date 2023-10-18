@@ -54,7 +54,6 @@ fun ColumnRankItem(
             .fillMaxWidth()
     ) {
         repeat( listState.size ) {
-            it ->
             ChartBar(
                 brush = brush,
                 description = listState[it].description,
