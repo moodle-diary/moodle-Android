@@ -5,7 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import eu.tutorial.moodle.data.Activity
+import eu.tutorial.moodle.data.Cause
 import eu.tutorial.moodle.data.Diary
 import eu.tutorial.moodle.data.DiaryRepository
 import eu.tutorial.moodle.data.Food
@@ -34,8 +34,8 @@ class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() 
     }
 
     suspend fun saveActivity( description : String, diaryId : Long) {
-        diaryRepository.insertActivity(
-            Activity(activityDescription = description, diaryId = diaryId)
+        diaryRepository.insertCause(
+            Cause(cause = description, diaryId = diaryId)
         )
     }
 

@@ -21,15 +21,15 @@ data class Diary(
 )
 
 @Entity(
-    tableName = "activity",
+    tableName = "cause",
 )
-data class Activity(
+data class Cause(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "activity_id")
+    @ColumnInfo(name = "cause_id")
     val id : Long = 0,
 
     val diaryId : Long = 0,
-    val activityDescription : String,
+    val cause : String,
 )
 
 @Entity(

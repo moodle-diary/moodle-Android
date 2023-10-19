@@ -42,7 +42,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
-import eu.tutorial.moodle.data.Activity
 import eu.tutorial.moodle.data.People
 import eu.tutorial.moodle.data.Place
 import eu.tutorial.moodle.data.local.activitiesData

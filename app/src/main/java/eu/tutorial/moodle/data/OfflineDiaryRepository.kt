@@ -3,7 +3,7 @@ package eu.tutorial.moodle.data
 
 class OfflineDiaryRepository(private val diaryDao: DiaryDao) : DiaryRepository {
     override suspend fun insertDiary(diary: Diary) = diaryDao.insertDiary(diary)
-    override suspend fun insertActivity(activity: Activity) = diaryDao.insertActivity(activity)
+    override suspend fun insertCause(cause: Cause) = diaryDao.insertCause(cause)
     override suspend fun insertPlace(place: Place) = diaryDao.insertPlace(place)
     override suspend fun insertPeople(people: People) = diaryDao.insertPeople(people)
     override suspend fun insertFood(food: Food) = diaryDao.insertFood(food)
@@ -13,8 +13,8 @@ class OfflineDiaryRepository(private val diaryDao: DiaryDao) : DiaryRepository {
 
     override fun getDiaries(currentDate: String): List<DiaryDto> =
         diaryDao.getDiaries(currentDate)
-    override fun getActivities(currentDate: String): List<ActivityDto> =
-        diaryDao.getActivity(currentDate)
+    override fun getCauses(currentDate: String): List<CauseDto> =
+        diaryDao.getCauses(currentDate)
     override fun getPlaces(currentDate: String): List<PlaceDto> =
         diaryDao.getPlaces(currentDate)
     override fun getPeople(currentDate: String): List<PeopleDto> =
@@ -26,8 +26,8 @@ class OfflineDiaryRepository(private val diaryDao: DiaryDao) : DiaryRepository {
     override fun getComments(commentDate: String): List<CommentDto> =
         diaryDao.getComments(commentDate)
 // TODO : targetMonth 넘겨줄 때에 뒤에 "%" 추가 해야 합니다. because of LIKE
-    override fun getActivityGrade(targetMonth: String): List<ActGrade> =
-        diaryDao.getActivityGrade(targetMonth)
+    override fun getCauseGrade(targetMonth: String): List<CauseGrade> =
+        diaryDao.getCauseGrade(targetMonth)
 
     override fun getPlaceGrade(targetMonth: String): List<PlaceGrade> =
         diaryDao.getPlaceGrade(targetMonth)

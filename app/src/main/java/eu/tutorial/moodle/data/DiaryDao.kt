@@ -12,7 +12,7 @@ interface DiaryDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE) // 인수가 겹치면 새 항목을 무시 한다.
     suspend fun insertDiary(diary: Diary) : Long // 별도의 스레드에서 실행하도록 한다. // 여기 suspend
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertActivity(activity: Activity)
+    suspend fun insertCause(cause: Cause)
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertPlace(place: Place)
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -40,12 +40,12 @@ interface DiaryDao {
 
     // 오늘 하루의 activity
     @Query(
-        "SELECT activity.activityDescription " +
+        "SELECT cause.cause " +
         "FROM diaries " +
-        "INNER JOIN activity on activity.diaryId = diaries.id "+
+        "INNER JOIN cause on cause.diaryId = diaries.id "+
         "WHERE diaries.currentDate = :currentDate"
     )
-    fun getActivity(currentDate : String) : List<ActivityDto>
+    fun getCauses(currentDate : String) : List<CauseDto>
 
     // 오늘 하루의 place
     @Query(
@@ -82,12 +82,12 @@ interface DiaryDao {
     )
     fun getImg(currentDate: String) : List<ImgDto>
     @Query(
-        "SELECT activityDescription, COUNT(activity_id) AS cnt FROM diaries " +
-                "INNER JOIN activity on activity.diaryId = diaries.id " +
+        "SELECT cause, COUNT(cause_id) AS cnt FROM diaries " +
+                "INNER JOIN cause on cause.diaryId = diaries.id " +
                 "WHERE diaries.currentDate LIKE :targetMonth " +
-                "GROUP BY activityDescription " +
-                "ORDER BY COUNT(activity_id) DESC"
-    )fun getActivityGrade(targetMonth: String) : List<ActGrade>
+                "GROUP BY cause " +
+                "ORDER BY COUNT(cause_id) DESC"
+    )fun getCauseGrade(targetMonth: String) : List<CauseGrade>
 
     @Query(
         "SELECT placeDescription, COUNT(place_id) AS cnt FROM diaries " +

@@ -4,7 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import eu.tutorial.moodle.data.ActivityDto
+import eu.tutorial.moodle.data.CauseDto
 import eu.tutorial.moodle.data.DiaryDto
 import eu.tutorial.moodle.data.DiaryRepository
 import eu.tutorial.moodle.data.FoodDto
@@ -16,7 +16,7 @@ class DetailViewModel (private val diaryRepository: DiaryRepository) : ViewModel
     var diaryUiState by mutableStateOf(emptyList<DiaryDto>())
         private set
 
-    var activitiesUiState by mutableStateOf(emptyList<ActivityDto>())
+    var causesUiState by mutableStateOf(emptyList<CauseDto>())
         private set
 
     var placesUiState by mutableStateOf(emptyList<PlaceDto>())
@@ -34,8 +34,8 @@ class DetailViewModel (private val diaryRepository: DiaryRepository) : ViewModel
     fun getDiaries(selectedDate : String) {
         diaryUiState = diaryRepository.getDiaries(currentDate = selectedDate)
     }
-    fun getActivities(selectedDate : String) {
-        activitiesUiState = diaryRepository.getActivities(currentDate = selectedDate)
+    fun getCauses(selectedDate : String) {
+        causesUiState = diaryRepository.getCauses(currentDate = selectedDate)
     }
     fun getPlaces(selectedDate : String) {
         placesUiState = diaryRepository.getPlaces(currentDate = selectedDate)

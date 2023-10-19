@@ -38,7 +38,7 @@ fun ChartScreen(
 ) {
     val scrollState = rememberScrollState()
     
-    val activityState = viewModel.activityList
+    val causeState = viewModel.causeList
     val placeState = viewModel.placeList
     val peopleState = viewModel.peopleList
     val foodState = viewModel.foodList
@@ -79,10 +79,10 @@ fun ChartScreen(
         )
 
         EmotionRankCard(
-            activityState = activityState
+            causeState = causeState
         )
         ActivityRankCard(
-            activityState = activityState
+            causeState = causeState
         )
         PlaceRankCard(
             placeState = placeState

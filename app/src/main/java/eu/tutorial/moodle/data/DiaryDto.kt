@@ -6,8 +6,8 @@ data class DiaryDto(
     val diaryText : String,
 )
 
-data class ActivityDto(
-    val activityDescription : String,
+data class CauseDto(
+    val cause : String,
 )
 
 
@@ -28,8 +28,8 @@ data class ImgDto(
     val imgUri : String
 )
 
-data class ActGrade(
-    val activityDescription: String,
+data class CauseGrade(
+    val cause: String,
     val cnt : Int
 )
 

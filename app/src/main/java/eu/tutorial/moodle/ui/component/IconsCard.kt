@@ -25,7 +25,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
-import eu.tutorial.moodle.data.ActivityDto
+import eu.tutorial.moodle.data.CauseDto
 import eu.tutorial.moodle.data.FoodDto
 import eu.tutorial.moodle.data.PeopleDto
 import eu.tutorial.moodle.data.PlaceDto
@@ -34,12 +34,12 @@ import eu.tutorial.moodle.data.local.allEmojis
 @Composable
 fun IconsComponent(
     modifier: Modifier = Modifier,
-    activityList : List<ActivityDto> = emptyList(),
+    causeList : List<CauseDto> = emptyList(),
     placeList : List<PlaceDto> = emptyList(),
     peopleList: List<PeopleDto> = emptyList(),
     foodList : List<FoodDto> = emptyList(),
 ){
-    val emojis : List<String> = activityList.map { it.activityDescription } +
+    val emojis : List<String> = causeList.map { it.cause } +
             placeList.map { it.placeDescription } +
             peopleList.map { it.peopleDescription } +
             foodList.map { it.foodDescription }
