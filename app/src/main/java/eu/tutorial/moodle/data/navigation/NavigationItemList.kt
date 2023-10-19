@@ -10,6 +10,7 @@ import eu.tutorial.moodle.ui.navigation.CalendarDestination
 import eu.tutorial.moodle.ui.navigation.ChartDestination
 import eu.tutorial.moodle.ui.navigation.HomeDestination
 import eu.tutorial.moodle.ui.navigation.PostDestination
+import eu.tutorial.moodle.ui.navigation.SettingDestination
 
 val navigationItemContentList = listOf(
     NavigationItemContent(
@@ -39,7 +40,7 @@ val navigationItemContentList = listOf(
     NavigationItemContent(
         mailboxType = NavType.Setting,
         icon = Icons.Default.Settings,
-        text = "Settings",
-        route = ""
+        text = "Setting",
+        route = SettingDestination.route
     )
 )

@@ -31,3 +31,10 @@ object ChartDestination : NavigationDestination{
     override val titleRes: Int
         get() = R.string.analyze_title
 }
+
+object SettingDestination : NavigationDestination{
+    override val route: String
+        get() = "Setting"
+    override val titleRes: Int
+        get() = R.string.analyze_title
+}
