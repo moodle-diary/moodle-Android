@@ -7,7 +7,6 @@ object HomeDestination : NavigationDestination{
         get() = "Diary"
     override val titleRes: Int
         get() = R.string.home_title
-
 }
 
 object CalendarDestination : NavigationDestination{

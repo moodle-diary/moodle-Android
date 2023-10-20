@@ -114,6 +114,7 @@ fun SettingScreen(
                     .height(78.dp)
                     .clip(RoundedCornerShape(18.dp))
                     .background(Color(0XFF212122))
+                    .clickable { navController.navigate("settingAlarm") }
                     .padding(start = 22.dp, end = 22.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
@@ -187,6 +188,7 @@ fun SettingScreen(
                     .height(67.dp)
                     .clip(RoundedCornerShape(18.dp))
                     .background(Color(0XFF212122))
+                    .clickable { navController.navigate("settingPassword") }
                     .padding(start = 22.dp, end = 22.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
