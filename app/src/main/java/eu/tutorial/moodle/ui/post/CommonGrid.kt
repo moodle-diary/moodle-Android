@@ -142,7 +142,7 @@ fun ActGrid(
 
     CommonGrid(
         title = "활동",
-        subtitle = "오늘 어떤 일을 했나요?",
+        subtitle = "오늘 일이 나를 우울 하게 했나요?",
         data = data,
         buttonStates = actButtonStates,
         icon = Icons.Default.Pets,

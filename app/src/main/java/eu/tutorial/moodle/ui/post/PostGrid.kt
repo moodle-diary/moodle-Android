@@ -82,73 +82,9 @@ fun PostGrid(
 
 
             if (textVisible) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(bottom = 50.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    IconButton(
-                        onClick = { textVisible = false },
-                        modifier = Modifier
-                            .size(50.dp)
-                            .clip(shape = CircleShape.copy(all = CornerSize(20.dp)))
-                            .background(Color(0XFF363637))
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Create,
-                            contentDescription = "생각",
-                            modifier = Modifier.size(24.dp),
-                            tint = Color(0XFFEDEDED)
-                        )
-                    }
-                    Text(
-                        modifier = Modifier.padding(top = 16.dp),
-                        text = "작성하기",
-                        textAlign = TextAlign.Center,
-                        fontSize = 12.sp,
-                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                        color = Color(0XFFEDEDED)
-                    )
-                }
+                FilledTextBox { visible -> textVisible = visible}
             } else {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color(color = 0Xff212122)),
-                ) {
-                    BasicTextField(
-                        value = diaryUiState.diaryDetails.diaryText,
-                        onValueChange = {
-                            valueChange(
-                                diaryUiState.diaryDetails.copy(
-                                    diaryText = it,
-                                )
-                            )
-                                        }, //{ onValueChange(itemDetails.copy(name = it)) }
-                        textStyle = TextStyle(
-                            fontSize = 16.sp,
-                            fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                            color = Color(0XFFEDEDED)
-                        ),
-                        cursorBrush = SolidColor(Color(0XFFEDEDED)),
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .background(Color(color = 0Xff212122)),
-                        decorationBox = { innerTextField ->
-                            if (diaryUiState.diaryDetails.diaryText.isEmpty()) {
-                                Text(
-                                    text = "이곳에 생각을 작성하세요.",
-                                    fontSize = 14.sp,
-                                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                    color = Color(0XFF888888)
-                                )
-                            }
-                            innerTextField()
-                        }
-                    )
-                }
+                EmptyTextBox(diaryUiState = diaryUiState, valueChange = valueChange)
             }
         }
     }
