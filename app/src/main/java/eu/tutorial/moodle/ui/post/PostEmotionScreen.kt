@@ -143,8 +143,6 @@ fun PostEmotionScreen(
             mutableStateListOf<Boolean>()
         }
 
-
-
         Column(
             modifier = Modifier
                 .fillMaxHeight()
@@ -183,6 +181,10 @@ fun PostEmotionScreen(
                             valueChange = viewModel::updateDiaryUiState
                         )
 
+                        4 -> WhyGrid(
+                            diaryUiState = viewModel.diaryUiState,
+                            valueChange = viewModel::updateDiaryUiState
+                        )
                     }
                 }
             }
