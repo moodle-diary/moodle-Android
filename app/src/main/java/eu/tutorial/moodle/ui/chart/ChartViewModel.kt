@@ -7,9 +7,6 @@ import androidx.lifecycle.ViewModel
 import eu.tutorial.moodle.data.CauseGrade
 import eu.tutorial.moodle.data.DescriptionDto
 import eu.tutorial.moodle.data.DiaryRepository
-import eu.tutorial.moodle.data.FoodGrade
-import eu.tutorial.moodle.data.People
-import eu.tutorial.moodle.data.PeopleGrade
 import eu.tutorial.moodle.data.PlaceGrade
 
 class ChartViewModel (private val diaryRepository: DiaryRepository) : ViewModel() {
@@ -25,12 +22,6 @@ class ChartViewModel (private val diaryRepository: DiaryRepository) : ViewModel(
     fun getPlaceList(targetMonth : String) {
         placeList = diaryRepository.getPlaceGrade("$targetMonth%").map { it.toDesDto() }
     }
-    fun getPeopleList(targetMonth : String) {
-        peopleList = diaryRepository.getPeopleGrade("$targetMonth%").map { it.toDesDto() }
-    }
-    fun getFoodList(targetMonth : String) {
-        foodList = diaryRepository.getFoodGrade("$targetMonth%").map { it.toDesDto() }
-    }
 }
 
 fun CauseGrade.toDesDto() : DescriptionDto = DescriptionDto(
@@ -40,13 +31,5 @@ fun CauseGrade.toDesDto() : DescriptionDto = DescriptionDto(
 
 fun PlaceGrade.toDesDto() : DescriptionDto = DescriptionDto(
     description = placeDescription,
-    cnt = cnt,
-)
-fun PeopleGrade.toDesDto() : DescriptionDto = DescriptionDto(
-    description = peopleDescription,
-    cnt = cnt,
-)
-fun FoodGrade.toDesDto() : DescriptionDto = DescriptionDto(
-    description = foodDescription,
     cnt = cnt,
 )

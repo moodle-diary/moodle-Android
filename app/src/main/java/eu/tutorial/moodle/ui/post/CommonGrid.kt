@@ -42,7 +42,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
-import eu.tutorial.moodle.data.People
 import eu.tutorial.moodle.data.Place
 import eu.tutorial.moodle.data.local.activitiesData
 import eu.tutorial.moodle.data.local.foodData
@@ -175,53 +174,5 @@ fun PlaceGrid(
             placeButtonStates[index] = !placeButtonStates[index]
         },
 
-    )
-}
-
-@Composable
-fun PeopleGrid(
-    peopleButtonStates : SnapshotStateList<Boolean>
-) {
-    val data = peopleData
-
-    for (i in data.indices) {
-        peopleButtonStates.add(false)
-    }
-
-
-    CommonGrid(
-        title = "관계",
-        subtitle = "오늘 누구를 만났나요?",
-        data = data,
-        buttonStates = peopleButtonStates,
-        icon = Icons.Default.People,
-        onItemClick = { index ->
-            // Handle item click here
-            peopleButtonStates[index] = !peopleButtonStates[index]
-        },
-    )
-}
-
-@Composable
-fun FoodGrid(
-    foodButtonStates : SnapshotStateList<Boolean>
-) {
-    val data = foodData
-
-    for (i in data.indices) {
-        foodButtonStates.add(false)
-    }
-
-
-    CommonGrid(
-        title = "식사",
-        subtitle = "오늘 어떤 음식을 먹었나요?",
-        data = data,
-        buttonStates = foodButtonStates,
-        icon = Icons.Default.Fastfood,
-        onItemClick = { index ->
-            // Handle item click here
-            foodButtonStates[index] = !foodButtonStates[index]
-        },
     )
 }

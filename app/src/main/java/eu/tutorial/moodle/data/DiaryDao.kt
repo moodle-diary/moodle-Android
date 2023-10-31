@@ -16,15 +16,6 @@ interface DiaryDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertPlace(place: Place)
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertPeople(people: People)
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertFood(food: Food)
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertImg(img : Img)
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertComment(comment : Comment)
 
     @Update
@@ -56,31 +47,6 @@ interface DiaryDao {
     )
     fun getPlaces(currentDate : String) : List<PlaceDto>
 
-    // 오늘 하루의 people
-    @Query(
-        "SELECT people.peopleDescription " +
-                "FROM diaries " +
-                "INNER JOIN people on people.diaryId = diaries.id "+
-                "WHERE diaries.currentDate = :currentDate"
-    )
-    fun getPeople(currentDate : String) : List<PeopleDto>
-
-    @Query(
-        "SELECT food.foodDescription " +
-                "FROM diaries " +
-                "INNER JOIN food on food.diaryId = diaries.id "+
-                "WHERE diaries.currentDate = :currentDate"
-    )
-    fun getFood(currentDate: String) : List<FoodDto>
-
-    // 우선 여러 이미지를 받을 수 있도록 만들었습니다.
-    @Query(
-        "SELECT image.imgUri " +
-                "FROM diaries " +
-                "INNER JOIN image on image.diaryId = diaries.id "+
-                "WHERE diaries.currentDate = :currentDate"
-    )
-    fun getImg(currentDate: String) : List<ImgDto>
     @Query(
         "SELECT cause, COUNT(cause_id) AS cnt FROM diaries " +
                 "INNER JOIN cause on cause.diaryId = diaries.id " +
@@ -96,23 +62,6 @@ interface DiaryDao {
                 "GROUP BY placeDescription " +
                 "ORDER BY COUNT(place_id) DESC"
     )fun getPlaceGrade(targetMonth: String) : List<PlaceGrade>
-
-    @Query(
-        "SELECT peopleDescription, COUNT(people_id) AS cnt FROM diaries " +
-                "INNER JOIN people on people.diaryId = diaries.id " +
-                "WHERE diaries.currentDate LIKE :targetMonth " +
-                "GROUP BY peopleDescription " +
-                "ORDER BY COUNT(people_id) DESC"
-    )fun getPeopleGrade(targetMonth: String) : List<PeopleGrade>
-
-    @Query(
-        "SELECT foodDescription, COUNT(food_id) AS cnt FROM diaries " +
-                "INNER JOIN food on food.diaryId = diaries.id " +
-                "WHERE diaries.currentDate LIKE :targetMonth " +
-                "GROUP BY foodDescription " +
-                "ORDER BY COUNT(food_id) DESC"
-    )fun getFoodGrade(targetMonth: String) : List<FoodGrade>
-
 
     @Query(
         "SELECT id, commentDate, comment FROM comment WHERE commentDate = :commentDate"

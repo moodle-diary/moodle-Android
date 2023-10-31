@@ -67,7 +67,7 @@ fun PostEmotionScreen(
     var showDialog by remember { mutableStateOf(false) }
     var isCancel by remember { mutableStateOf(false) }
 
-    val actualPageCount = 7
+    val actualPageCount = 5
     val initialPage = 0
     val pagerState = rememberPagerState(
         initialPage = initialPage,
@@ -109,9 +109,6 @@ fun PostEmotionScreen(
                 fontFamily = FontFamily(Font(R.font.poppins_bold)),
                 color = Color(0XFFDFDFDF),
                 text = "$day $month",
-//            platformStyle = PlatformTextStyle(
-//                includeFontPadding = false
-//            )
             )
             Icon(
                 imageVector = Icons.Default.Close,
@@ -146,17 +143,6 @@ fun PostEmotionScreen(
             mutableStateListOf<Boolean>()
         }
 
-        val peopleButtonStates = remember {
-            mutableStateListOf<Boolean>()
-        }
-
-        val foodButtonStates = remember {
-            mutableStateListOf<Boolean>()
-        }
-
-        val imageUri = remember {
-            mutableStateOf<Uri?>(null)
-        }
 
 
         Column(
@@ -192,22 +178,11 @@ fun PostEmotionScreen(
                             placeButtonStates = placeButtonStates
                         )
 
-                        3 -> PeopleGrid(
-                            peopleButtonStates = peopleButtonStates
-                        )
-
-                        4 -> FoodGrid(
-                            foodButtonStates = foodButtonStates
-                        )
-
-                        5 -> PostGrid(
+                        3 -> PostGrid(
                             diaryUiState = viewModel.diaryUiState,
                             valueChange = viewModel::updateDiaryUiState
                         )
 
-                        6 -> ImgGrid(
-                            imgUri = imageUri
-                        )
                     }
                 }
             }
@@ -326,19 +301,6 @@ fun PostEmotionScreen(
                                                     if(placeButtonStates[i]) viewModel.savePlace(
                                                         placesData[i], key
                                                     )
-
-                                                for (i in 0 until peopleButtonStates.size)
-                                                    if(peopleButtonStates[i]) viewModel.savePeople(
-                                                        peopleData[i], key
-                                                    )
-
-                                                for(i in 0 until foodButtonStates.size)
-                                                    if(foodButtonStates[i]) viewModel.saveFood(
-                                                        foodData[i], key
-                                                    )
-
-                                                if(imageUri.value != null)
-                                                    viewModel.saveImg(imageUri.value, key)
                                             }
                                         },
                                         colors = ButtonDefaults.buttonColors(

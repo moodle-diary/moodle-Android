@@ -10,22 +10,8 @@ data class CauseDto(
     val cause : String,
 )
 
-
 data class PlaceDto(
     val placeDescription : String
-)
-
-
-data class PeopleDto(
-    val peopleDescription : String
-)
-
-data class FoodDto(
-    val foodDescription : String
-)
-
-data class ImgDto(
-    val imgUri : String
 )
 
 data class CauseGrade(
@@ -35,16 +21,6 @@ data class CauseGrade(
 
 data class PlaceGrade(
     val placeDescription: String,
-    val cnt : Int
-)
-
-data class PeopleGrade(
-    val peopleDescription: String,
-    val cnt : Int
-)
-
-data class FoodGrade(
-    val foodDescription: String,
     val cnt : Int
 )
 

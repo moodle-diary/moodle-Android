@@ -43,43 +43,7 @@ data class Place(
     val diaryId : Long = 0,
     val placeDescription : String,
 )
-
-@Entity(
-    tableName = "people",
-)
-data class People(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "people_id")
-    val id : Long = 0,
-
-    val diaryId : Long = 0,
-    val peopleDescription : String,
-)
-
-@Entity(
-    tableName = "food",
-)
-data class Food(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "food_id")
-    val id : Long = 0,
-
-    val diaryId : Long = 0,
-    val foodDescription : String,
-)
-
-@Entity(
-    tableName = "image",
-)
-data class Img(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "image_id")
-    val id : Long = 0,
-
-    val diaryId : Long = 0,
-    val imgUri: String?
-)
-
+// This is why
 @Entity(
     tableName = "comment"
 )
