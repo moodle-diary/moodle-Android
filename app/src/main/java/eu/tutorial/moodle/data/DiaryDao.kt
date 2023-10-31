@@ -38,7 +38,7 @@ interface DiaryDao {
     )
     fun getDiaries(currentDate : String) : List<DiaryDto>
 
-    // 오늘 하루의 activity
+    // 우울의 cause
     @Query(
         "SELECT cause.cause " +
         "FROM diaries " +
