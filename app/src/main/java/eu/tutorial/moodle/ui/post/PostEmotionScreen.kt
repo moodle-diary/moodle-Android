@@ -40,14 +40,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import eu.tutorial.moodle.R
-import eu.tutorial.moodle.data.local.activitiesData
-import eu.tutorial.moodle.data.local.foodData
-import eu.tutorial.moodle.data.local.peopleData
-import eu.tutorial.moodle.data.local.placesData
 import eu.tutorial.moodle.ui.AppViewModelProvider
-import eu.tutorial.moodle.ui.navigation.HomeDestination
-import eu.tutorial.moodle.ui.navigation.NavigationDestination
-import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.Locale
 @RequiresApi(Build.VERSION_CODES.O)
@@ -57,12 +50,11 @@ fun PostEmotionScreen(
     navController: NavController,
     viewModel: PostViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+
+    // TODO stateList 들 viewModel로 이전
     val localDate: LocalDate = LocalDate.now()
     val day = localDate.dayOfMonth
     val month = localDate.dayOfWeek.getDisplayName(java.time.format.TextStyle.FULL, Locale.KOREAN)
-
-    var showDialog by remember { mutableStateOf(false) }
-    var isCancel by remember { mutableStateOf(false) }
 
     val actualPageCount = 5
     val initialPage = 0
@@ -119,8 +111,8 @@ fun PostEmotionScreen(
                 modifier = Modifier
                     .size(24.dp)
                     .clickable {
-                        showDialog = true
-                        isCancel = true
+                        viewModel.showDialog = true
+                        viewModel.isCancel = true
                     },
                 tint = Color(0XFFDFDFDF)
             )
@@ -195,8 +187,8 @@ fun PostEmotionScreen(
             ) {
                 Button(
                     onClick = {
-                        showDialog = true
-                        isCancel = false
+                        viewModel.showDialog = true
+                        viewModel.isCancel = false
                     },
                     modifier = Modifier
                         .width(163.dp)
@@ -214,14 +206,14 @@ fun PostEmotionScreen(
                     )
                 }
 
-                if (showDialog) {
+                if (viewModel.showDialog) {
                     SaveDialog(
                         causeButtonStates = causeButtonStates,
                         placeButtonStates = placeButtonStates,
                         navController = navController,
                         viewModel = viewModel,
-                        isCancel = isCancel,
-                    ){ dialogVisible -> showDialog = dialogVisible }
+                        isCancel = viewModel.isCancel,
+                    ){ dialogVisible -> viewModel.showDialog = dialogVisible }
                 }
             }
         }

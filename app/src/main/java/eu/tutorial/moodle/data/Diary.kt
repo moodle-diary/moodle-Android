@@ -2,10 +2,7 @@ package eu.tutorial.moodle.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
 
 // TODO @Parcelize ??
 @Entity(
@@ -35,6 +32,16 @@ data class Cause(
 )
 
 @Entity(
+    tableName = "causeType"
+)
+data class CauseType(
+    @PrimaryKey(autoGenerate = true)
+    val id : Long = 0,
+
+    val causeType : String
+)
+
+@Entity(
     tableName = "place",
 )
 data class Place(
@@ -45,6 +52,17 @@ data class Place(
     val diaryId : Long = 0,
     val placeDescription : String,
 )
+
+@Entity(
+    tableName = "placeType"
+)
+data class PlaceType(
+    @PrimaryKey(autoGenerate = true)
+    val id : Long = 0,
+
+    val placeType : String
+)
+
 @Entity(
     tableName = "comment"
 )

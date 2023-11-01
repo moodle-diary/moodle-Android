@@ -18,6 +18,11 @@ interface DiaryDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertComment(comment : Comment)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertCauseType(causeType: CauseType)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertPlaceType(placeType: PlaceType)
+
     @Update
     suspend fun update(diary: Diary)
     @Delete
@@ -66,6 +71,14 @@ interface DiaryDao {
     @Query(
         "SELECT id, commentDate, comment FROM comment WHERE commentDate = :commentDate"
     )fun getComments(commentDate : String) :List<CommentDto>
+
+    @Query(
+        "SELECT causeType FROM causeType"
+    )fun getCauseTypes() : List<CauseTypeDto>
+
+    @Query(
+        "SELECT placeType FROM placeType"
+    )fun getPlaceTypes() : List<PlaceTypeDto>
 
     @Query(
         "DELETE from comment where id = :commentId"

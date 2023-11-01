@@ -1,7 +1,5 @@
 package eu.tutorial.moodle.ui.post
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -141,8 +139,8 @@ fun CauseGrid(
     }
 
     CommonGrid(
-        title = "활동",
-        subtitle = "오늘 일이 나를 우울 하게 했나요?",
+        title = "원인",
+        subtitle = "오늘 무엇이 나를 우울 하게 했나요?",
         data = data,
         buttonStates = causeButtonStates,
         icon = Icons.Default.Pets,
@@ -165,7 +163,7 @@ fun PlaceGrid(
 
     CommonGrid(
         title = "장소",
-        subtitle = "오늘 어느 곳에서 시간을 보냈나요?",
+        subtitle = "어느 곳에서 우울 했나요?",
         data = data,
         buttonStates = placeButtonStates,
         icon = Icons.Default.Place,

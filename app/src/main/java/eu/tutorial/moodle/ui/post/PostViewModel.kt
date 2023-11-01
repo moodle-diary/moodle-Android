@@ -1,8 +1,8 @@
 package eu.tutorial.moodle.ui.post
 
-import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import eu.tutorial.moodle.data.Cause
@@ -15,11 +15,16 @@ class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() 
     var diaryUiState by mutableStateOf(DiaryUiState())
         private set
     // TODO have to impl valid
+
+    var showDialog by  mutableStateOf(false)
+    var isCancel by mutableStateOf(false)
+
     fun updateDiaryUiState(diaryDetails: DiaryDetails) {
         diaryUiState =
             DiaryUiState(diaryDetails = diaryDetails, isEntryValid = true)
     }
-    //
+
+
     private fun validateInput(diaryDetails: DiaryDetails = diaryUiState.diaryDetails): Boolean {
         TODO("Not yet implemented")
         return true

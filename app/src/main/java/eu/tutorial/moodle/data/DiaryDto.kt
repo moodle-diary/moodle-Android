@@ -19,9 +19,17 @@ data class CauseGrade(
     val cnt : Int
 )
 
+data class CauseTypeDto(
+    val causeType : String
+)
+
 data class PlaceGrade(
     val placeDescription: String,
     val cnt : Int
+)
+
+data class PlaceTypeDto(
+    val placeType: String
 )
 
 data class CommentDto(
