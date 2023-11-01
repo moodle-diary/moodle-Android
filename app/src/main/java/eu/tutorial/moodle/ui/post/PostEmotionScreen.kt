@@ -157,11 +157,13 @@ fun PostEmotionScreen(
                         )
 
                         1 -> CauseGrid(
-                            causeButtonStates = causeButtonStates
+                            causeButtonStates = causeButtonStates,
+                            viewModel = viewModel,
                         )
 
                         2 -> PlaceGrid(
-                            placeButtonStates = placeButtonStates
+                            placeButtonStates = placeButtonStates,
+                            viewModel = viewModel,
                         )
 
                         3 -> PostGrid(

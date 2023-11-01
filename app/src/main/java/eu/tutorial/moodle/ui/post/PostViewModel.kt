@@ -6,16 +6,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import eu.tutorial.moodle.data.Cause
+import eu.tutorial.moodle.data.CauseType
 import eu.tutorial.moodle.data.Diary
 import eu.tutorial.moodle.data.DiaryRepository
 import eu.tutorial.moodle.data.Place
+import eu.tutorial.moodle.data.PlaceType
 
 class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() {
 
     var diaryUiState by mutableStateOf(DiaryUiState())
         private set
     // TODO have to impl valid
-
     var showDialog by  mutableStateOf(false)
     var isCancel by mutableStateOf(false)
 
@@ -29,8 +30,6 @@ class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() 
         TODO("Not yet implemented")
         return true
     }
-
-    //
     suspend fun saveDiary(): Long {
         return diaryRepository.insertDiary(diaryUiState.diaryDetails.toDiary())
     }
@@ -44,6 +43,16 @@ class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() 
     suspend fun savePlace( description : String, diaryId : Long )  {
         diaryRepository.insertPlace(
             Place(placeDescription = description, diaryId = diaryId)
+        )
+    }
+    suspend fun saveCauseType( causeType : String ) {
+        diaryRepository.insertCauseType(
+            CauseType(causeType = causeType)
+        )
+    }
+    suspend fun savePlaceType( placeType: String ) {
+        diaryRepository.insertPlaceType(
+            PlaceType(placeType = placeType)
         )
     }
 }
