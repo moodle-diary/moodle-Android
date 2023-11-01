@@ -30,7 +30,7 @@ class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() 
         return diaryRepository.insertDiary(diaryUiState.diaryDetails.toDiary())
     }
 
-    suspend fun saveActivity( description : String, diaryId : Long) {
+    suspend fun saveCause( description : String, diaryId : Long) {
         diaryRepository.insertCause(
             Cause(cause = description, diaryId = diaryId)
         )
@@ -52,11 +52,13 @@ data class DiaryDetails(
     val currentDate : String = "",
     val emotions : Int = 0,
     val diaryText : String = "",
+    val thought : String = ""
 )
 fun DiaryDetails.toDiary(): Diary = Diary(
     currentDate = currentDate,
     emotions = emotions,
     diaryText = diaryText,
+    thought = thought,
 )
 
 fun Diary.toDiaryUiState(isEntryValid: Boolean = false): DiaryUiState = DiaryUiState(
@@ -68,4 +70,5 @@ fun Diary.toDiaryDetails(): DiaryDetails = DiaryDetails(
     currentDate = currentDate,
     emotions = emotions,
     diaryText = diaryText,
+    thought = thought,
 )

@@ -17,7 +17,9 @@ data class Diary(
 
     val currentDate : String,
     val emotions : Int,
+
     val diaryText : String,
+    val thought : String,
 )
 
 @Entity(
@@ -43,7 +45,6 @@ data class Place(
     val diaryId : Long = 0,
     val placeDescription : String,
 )
-// This is why
 @Entity(
     tableName = "comment"
 )
@@ -54,4 +55,5 @@ data class Comment(
     val commentDate : String,
     val comment : String,
 )
+
 
