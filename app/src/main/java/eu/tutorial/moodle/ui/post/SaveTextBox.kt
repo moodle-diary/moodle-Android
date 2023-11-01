@@ -18,9 +18,9 @@ import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
 
 @Composable
-fun EmptyTextBox(
-    diaryUiState : DiaryUiState,
-    valueChange : (DiaryDetails) -> Unit
+fun SaveTextBox(
+    textValue :String,
+    valueChange: (String) -> Unit
 ){
     Box(
         modifier = Modifier
@@ -28,14 +28,8 @@ fun EmptyTextBox(
             .background(Color(color = 0Xff212122)),
     ) {
         BasicTextField(
-            value = diaryUiState.diaryDetails.diaryText,
-            onValueChange = {
-                valueChange(
-                    diaryUiState.diaryDetails.copy(
-                        diaryText = it,
-                    )
-                )
-            }, //{ onValueChange(itemDetails.copy(name = it)) }
+            value = textValue,
+            onValueChange = { valueChange(it) },
             textStyle = TextStyle(
                 fontSize = 16.sp,
                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
@@ -46,7 +40,7 @@ fun EmptyTextBox(
                 .padding(16.dp)
                 .background(Color(color = 0Xff212122)),
             decorationBox = { innerTextField ->
-                if (diaryUiState.diaryDetails.diaryText.isEmpty()) {
+                if (textValue.isEmpty()) {
                     Text(
                         text = "이곳에 생각을 작성하세요.",
                         fontSize = 14.sp,

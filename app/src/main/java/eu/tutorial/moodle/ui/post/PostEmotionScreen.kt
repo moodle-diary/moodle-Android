@@ -1,6 +1,5 @@
 package eu.tutorial.moodle.ui.post
 
-import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -51,8 +50,6 @@ import eu.tutorial.moodle.ui.navigation.NavigationDestination
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.Locale
-
-
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -80,6 +77,14 @@ fun PostEmotionScreen(
             mutableStateListOf(false, false, false, false),
             mutableStateListOf(false, false, false, false)
         )
+    }
+
+    val actButtonStates = remember {
+        mutableStateListOf<Boolean>()
+    }
+
+    val placeButtonStates = remember {
+        mutableStateListOf<Boolean>()
     }
 
     Column(
@@ -133,13 +138,6 @@ fun PostEmotionScreen(
             unSelectedColor = Color(0XFF686868)
         )
 
-        val actButtonStates = remember {
-            mutableStateListOf<Boolean>()
-        }
-
-        val placeButtonStates = remember {
-            mutableStateListOf<Boolean>()
-        }
 
         Column(
             modifier = Modifier
@@ -179,7 +177,7 @@ fun PostEmotionScreen(
                             valueChange = viewModel::updateDiaryUiState
                         )
 
-                        4 -> WhyGrid(
+                        4 -> ThoughtGrid(
                             diaryUiState = viewModel.diaryUiState,
                             valueChange = viewModel::updateDiaryUiState
                         )
@@ -242,7 +240,6 @@ fun PageCard(page: Int, modifier: Modifier = Modifier, content: @Composable () -
         }
     }
 }
-
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
