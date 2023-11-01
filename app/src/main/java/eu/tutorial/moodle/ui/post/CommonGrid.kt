@@ -132,23 +132,23 @@ fun CommonGrid(
 }
 
 @Composable
-fun ActGrid(
-    actButtonStates : SnapshotStateList<Boolean>
+fun CauseGrid(
+    causeButtonStates : SnapshotStateList<Boolean>
 ) {
     val data = activitiesData
     for (i in data.indices) {
-        actButtonStates.add(false)
+        causeButtonStates.add(false)
     }
 
     CommonGrid(
         title = "활동",
         subtitle = "오늘 일이 나를 우울 하게 했나요?",
         data = data,
-        buttonStates = actButtonStates,
+        buttonStates = causeButtonStates,
         icon = Icons.Default.Pets,
         onItemClick = { index ->
             // Handle item click here
-            actButtonStates[index] = !actButtonStates[index]
+            causeButtonStates[index] = !causeButtonStates[index]
         },
     )
 }

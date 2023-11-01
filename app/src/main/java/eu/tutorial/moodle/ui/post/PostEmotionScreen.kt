@@ -79,7 +79,7 @@ fun PostEmotionScreen(
         )
     }
 
-    val actButtonStates = remember {
+    val causeButtonStates = remember {
         mutableStateListOf<Boolean>()
     }
 
@@ -164,8 +164,8 @@ fun PostEmotionScreen(
                             onClick = viewModel::updateDiaryUiState,
                         )
 
-                        1 -> ActGrid(
-                            actButtonStates = actButtonStates
+                        1 -> CauseGrid(
+                            causeButtonStates = causeButtonStates
                         )
 
                         2 -> PlaceGrid(
@@ -216,7 +216,7 @@ fun PostEmotionScreen(
 
                 if (showDialog) {
                     SaveDialog(
-                        actButtonStates = actButtonStates,
+                        causeButtonStates = causeButtonStates,
                         placeButtonStates = placeButtonStates,
                         navController = navController,
                         viewModel = viewModel,

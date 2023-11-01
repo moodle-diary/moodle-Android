@@ -42,7 +42,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SaveDialog(
-    actButtonStates : SnapshotStateList<Boolean>,
+    causeButtonStates : SnapshotStateList<Boolean>,
     placeButtonStates : SnapshotStateList<Boolean>,
     isCancel : Boolean,
     navController : NavController,
@@ -125,8 +125,8 @@ fun SaveDialog(
 
                                 val key = viewModel.saveDiary()
 
-                                for (i in 0 until actButtonStates.size)
-                                    if(actButtonStates[i]) viewModel.saveCause(
+                                for (i in 0 until causeButtonStates.size)
+                                    if(causeButtonStates[i]) viewModel.saveCause(
                                         activitiesData[i], key
                                     )
 
