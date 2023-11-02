@@ -22,6 +22,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,9 +41,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import eu.tutorial.moodle.R
-import eu.tutorial.moodle.data.local.activitiesData
-import eu.tutorial.moodle.data.local.placesData
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun CommonGrid(
@@ -53,9 +54,9 @@ fun CommonGrid(
     onItemClick: (Int) -> Unit,
     icon: ImageVector,
     save : (String) -> Unit,
+    dialogVisible : Boolean,
+    onChange : (Boolean) -> Unit,
 ) {
-
-    var dialogVisible by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -105,8 +106,7 @@ fun CommonGrid(
                                 if(item != "plus")
                                     onItemClick(index)
                                 else
-                                    dialogVisible = true
-                            },
+                                    onChange(true) },
                             modifier = Modifier
                                 .size(60.dp)
                                 .clip(RoundedCornerShape(20.dp))
@@ -136,7 +136,7 @@ fun CommonGrid(
             SaveTypeDialog(
                 save = save
             ){
-                visible -> dialogVisible = visible
+                onChange(it)
             }
         }
     }
@@ -148,8 +148,18 @@ fun CauseGrid(
     viewModel : PostViewModel,
 ) {
     val coroutineScope = rememberCoroutineScope()
+    var dialogVisible by remember { mutableStateOf(false) }
+    val data = viewModel.causeTypes.map { it.causeType } + listOf("plus")
 
-    val data = activitiesData
+    LaunchedEffect(dialogVisible){
+        coroutineScope.launch {
+            withContext(Dispatchers.IO) {
+                // 데이터베이스 쿼리를 비동기적으로 수행
+                viewModel.getCauseTypes()
+            }
+        }
+    }
+
     for (i in data.indices) {
         causeButtonStates.add(false)
     }
@@ -164,12 +174,15 @@ fun CauseGrid(
             // Handle item click here
             causeButtonStates[index] = !causeButtonStates[index]
         },
-        save = { it ->
+        save = {
             coroutineScope.launch {
                 viewModel.saveCauseType(it)
             }
-        }
-    )
+        },
+        dialogVisible = dialogVisible,
+    ){
+        dialogVisible = it
+    }
 }
 
 @Composable
@@ -177,9 +190,18 @@ fun PlaceGrid(
     placeButtonStates : SnapshotStateList<Boolean>,
     viewModel: PostViewModel,
 ) {
-    val data = placesData
+    val data = viewModel.placesTypes.map { it.placeType } + listOf("plus")
     val coroutineScope = rememberCoroutineScope()
+    var dialogVisible by remember { mutableStateOf(false) }
 
+    LaunchedEffect(dialogVisible){
+        coroutineScope.launch {
+            withContext(Dispatchers.IO) {
+                // 데이터베이스 쿼리를 비동기적으로 수행
+                viewModel.getCauseTypes()
+            }
+        }
+    }
 
     for (i in data.indices) {
         placeButtonStates.add(false)
@@ -199,7 +221,9 @@ fun PlaceGrid(
             coroutineScope.launch {
                 viewModel.savePlaceType(it)
             }
-        }
-
-    )
+        },
+        dialogVisible = dialogVisible
+    ){
+        dialogVisible = it
+    }
 }

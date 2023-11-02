@@ -1,16 +1,18 @@
 package eu.tutorial.moodle.ui.post
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import eu.tutorial.moodle.data.Cause
 import eu.tutorial.moodle.data.CauseType
+import eu.tutorial.moodle.data.CauseTypeDto
 import eu.tutorial.moodle.data.Diary
 import eu.tutorial.moodle.data.DiaryRepository
 import eu.tutorial.moodle.data.Place
 import eu.tutorial.moodle.data.PlaceType
+import eu.tutorial.moodle.data.PlaceTypeDto
 
 class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() {
 
@@ -20,15 +22,24 @@ class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() 
     var showDialog by  mutableStateOf(false)
     var isCancel by mutableStateOf(false)
 
+    var causeTypes by mutableStateOf(emptyList<CauseTypeDto>())
+        private set
+
+    var placesTypes by mutableStateOf(emptyList<PlaceTypeDto>())
+        private set
     fun updateDiaryUiState(diaryDetails: DiaryDetails) {
         diaryUiState =
             DiaryUiState(diaryDetails = diaryDetails, isEntryValid = true)
     }
-
-
     private fun validateInput(diaryDetails: DiaryDetails = diaryUiState.diaryDetails): Boolean {
         TODO("Not yet implemented")
         return true
+    }
+    fun getCauseTypes() {
+        causeTypes = diaryRepository.getCauseTypes()
+    }
+    fun getPlaceTypes() {
+        placesTypes = diaryRepository.getPlaceTypes()
     }
     suspend fun saveDiary(): Long {
         return diaryRepository.insertDiary(diaryUiState.diaryDetails.toDiary())

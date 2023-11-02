@@ -51,7 +51,7 @@ fun PostEmotionScreen(
     viewModel: PostViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
 
-    // TODO stateList 들 viewModel로 이전
+    // TODO stateList 들 viewModel 로 이전
     val localDate: LocalDate = LocalDate.now()
     val day = localDate.dayOfMonth
     val month = localDate.dayOfWeek.getDisplayName(java.time.format.TextStyle.FULL, Locale.KOREAN)

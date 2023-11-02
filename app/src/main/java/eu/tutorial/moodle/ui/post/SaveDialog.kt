@@ -31,12 +31,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tutorial.moodle.R
-import eu.tutorial.moodle.data.local.activitiesData
-import eu.tutorial.moodle.data.local.placesData
-import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.navigation.HomeDestination
 import kotlinx.coroutines.launch
 
@@ -127,12 +123,12 @@ fun SaveDialog(
 
                                 for (i in 0 until causeButtonStates.size)
                                     if(causeButtonStates[i]) viewModel.saveCause(
-                                        activitiesData[i], key
+                                        viewModel.causeTypes[i].causeType, key
                                     )
 
                                 for (i in 0 until placeButtonStates.size)
                                     if(placeButtonStates[i]) viewModel.savePlace(
-                                        placesData[i], key
+                                        viewModel.placesTypes[i].placeType, key
                                     )
                             }
                         },

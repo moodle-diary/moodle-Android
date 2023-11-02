@@ -70,7 +70,6 @@ fun DetailHomeScreen(
     val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(Unit){
-
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
                 // 데이터베이스 쿼리를 비동기적으로 수행
