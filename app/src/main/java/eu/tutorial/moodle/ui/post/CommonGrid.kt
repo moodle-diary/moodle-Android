@@ -198,7 +198,7 @@ fun PlaceGrid(
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
                 // 데이터베이스 쿼리를 비동기적으로 수행
-                viewModel.getCauseTypes()
+                viewModel.getPlaceTypes()
             }
         }
     }
@@ -217,7 +217,7 @@ fun PlaceGrid(
             // Handle item click here
             placeButtonStates[index] = !placeButtonStates[index]
         },
-        save = { it ->
+        save = {
             coroutineScope.launch {
                 viewModel.savePlaceType(it)
             }
