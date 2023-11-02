@@ -37,7 +37,6 @@ import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
 import java.time.LocalDate
 
-@ExperimentalMaterial3Api
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ChartTopBar(){

@@ -18,6 +18,9 @@ import eu.tutorial.moodle.ui.component.BottomNavBar
 import eu.tutorial.moodle.ui.home.DetailHomeScreen
 import eu.tutorial.moodle.ui.home.TopAppBar
 import eu.tutorial.moodle.ui.post.PostEmotionScreen
+import eu.tutorial.moodle.ui.setting.SettingAlarmScreen
+import eu.tutorial.moodle.ui.setting.SettingPasswordScreen
+import eu.tutorial.moodle.ui.setting.SettingScreen
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -39,7 +42,6 @@ fun DiaryNavHost(
 //                EmptyHomeScreen(innerPaddingValues = innerPadding)
             }
         }
-
 
         composable(route = CalendarDestination.route) {
 
@@ -81,6 +83,23 @@ fun DiaryNavHost(
             ) { innerPadding ->
                 ChartScreen(innerPaddingValues = innerPadding, navController = navController)
             }
+        }
+
+        composable(route = SettingDestination.route) {
+            Scaffold(
+                bottomBar = { BottomNavBar(
+                    navController = navController
+                ) },
+            ) { innerPadding ->
+                SettingScreen(innerPaddingValues = innerPadding, navController = navController)
+            }
+        }
+
+        composable("settingAlarm") {
+            SettingAlarmScreen(navController)
+        }
+        composable("settingPassword") {
+            SettingPasswordScreen(navController)
         }
     }
 }

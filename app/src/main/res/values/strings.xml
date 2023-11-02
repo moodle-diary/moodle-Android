@@ -6,4 +6,5 @@
     <string name="home_title">home</string>
     <string name="post_emo">postEmo</string>
     <string name="analyze_title">analyze</string>
+    <string name="setting_title">setting</string>
 </resources>

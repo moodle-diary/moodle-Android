@@ -7,7 +7,6 @@ object HomeDestination : NavigationDestination{
         get() = "Diary"
     override val titleRes: Int
         get() = R.string.home_title
-
 }
 
 object CalendarDestination : NavigationDestination{
@@ -28,6 +27,13 @@ object PostDestination : NavigationDestination {
 object ChartDestination : NavigationDestination{
     override val route: String
         get() = "Chart"
+    override val titleRes: Int
+        get() = R.string.analyze_title
+}
+
+object SettingDestination : NavigationDestination{
+    override val route: String
+        get() = "Setting"
     override val titleRes: Int
         get() = R.string.analyze_title
 }
