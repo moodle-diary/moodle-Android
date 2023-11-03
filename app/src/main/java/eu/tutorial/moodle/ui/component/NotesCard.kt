@@ -2,6 +2,7 @@ package eu.tutorial.moodle.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -12,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -23,41 +25,39 @@ import eu.tutorial.moodle.R
 fun NotesComponent(
     text : String = ""
 ){
-    Card(
+    Column(
         // TODO 이 부분 코드 개선.. value를 빼서 Composable 줄이는 방향
-        shape = RoundedCornerShape(18.dp)
+        modifier = Modifier
+            .padding(0.dp, 4.dp)
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(18.dp))
+            .background(color = Color(0XFF2A292B)),
     ) {
         if(text != ""){
-            Box(
+            Text(
+                text = text,
                 modifier = Modifier
-                    .fillMaxSize()
-                    .background(color = Color(0XFF2A292B)),
-            ){
-                Text(
-                    text = text,
-                    modifier = Modifier
-                        .padding(start = 18.dp, top = 32.dp, bottom = 32.dp, end = 18.dp),
-                    style = TextStyle(
-                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                        fontSize = 16.sp
-                    ),
-                    color = Color(0XFFDFDFDF)
-                )
-            }
+                    .padding(start = 18.dp, top = 32.dp, bottom = 32.dp, end = 18.dp),
+                style = TextStyle(
+                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                    fontSize = 16.sp
+                ),
+                color = Color(0XFFDFDFDF)
+            )
         } else{
             Box(
                 modifier = Modifier
-                    .height(104.dp)
+                    .padding(0.dp, 31.dp)
                     .fillMaxWidth()
                     .background(color = Color(0XFF2A292B)),
                 contentAlignment = Alignment.Center,
             ){
                 Text(
-                    text = "No Journal",
+                    text = "아직 기록이 없어요",
                     style = TextStyle(
-                        fontSize = 16.sp,
+                        fontSize = 12.sp,
                         fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                        color = Color(0XFFDFDFDF)
+                        color = Color(0XFF686868)
                     ),
                 )
             }
