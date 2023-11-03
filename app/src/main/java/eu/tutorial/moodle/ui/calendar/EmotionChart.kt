@@ -31,14 +31,13 @@ import eu.tutorial.moodle.R
 @Composable
 fun EmotionChart(){
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
             .padding(start = 10.dp, end = 10.dp),
     ) {
         Text(
-            text = "2일 연속!",
-            modifier = Modifier.padding(top = 24.dp),
+            text = "2일 연속 기록중!",
+            modifier = Modifier.padding(top = 24.dp, start = 10.dp),
             style = TextStyle(
                 fontFamily = FontFamily(Font(R.font.poppins_semibold)),
                 fontSize = 18.sp,
@@ -46,17 +45,18 @@ fun EmotionChart(){
             )
         )
         Text(
-            text = "꾸준히 작성해서 일주일을 채워봐요!",
+            text = "좋아요! 일주일을 채워볼까요?",
+            modifier = Modifier.padding(start = 10.dp),
             style = TextStyle(
                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                fontSize = 16.sp,
+                fontSize = 12.sp,
                 color = Color(0XFFDFDFDF)
             )
         )
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp, start = 10.dp, end = 10.dp),
+                .padding(top = 16.dp),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
             for(i in 0 until 7){

@@ -36,6 +36,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -84,10 +85,10 @@ fun CalendarMainCard(
             .verticalScroll(rememberScrollState())
     ) {
 
-        Card(
+        Column(
             modifier = Modifier
-                .padding(start = 12.dp, end = 12.dp, top = 24.dp),
-            shape = RoundedCornerShape(32.dp),
+                .padding(start = 12.dp, end = 12.dp, top = 24.dp)
+                .clip(RoundedCornerShape(32.dp))
         ) {
             Box(
                 modifier = Modifier
@@ -117,9 +118,10 @@ fun CalendarMainCard(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Card(
-                    modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 12.dp),
-                    shape = RoundedCornerShape(32.dp),
+                Column(
+                    modifier = Modifier
+                        .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
+                        .clip(RoundedCornerShape(32.dp))
                 ) {
                     Box(
                         modifier = Modifier
@@ -167,10 +169,10 @@ fun CalendarMainCard(
         AnimatedVisibility(
             visible = !visibleEmotion,
         ) {
-            Card(
+            Column(
                 modifier = Modifier
-                    .padding(start = 12.dp, end = 12.dp, bottom = 12.dp),
-                shape = RoundedCornerShape(32.dp)
+                    .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
+                    .clip(RoundedCornerShape(18.dp))
             ) {
                 Box(
                     modifier = Modifier
