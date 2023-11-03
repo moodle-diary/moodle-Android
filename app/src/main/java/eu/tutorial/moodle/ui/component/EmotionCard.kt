@@ -37,9 +37,9 @@ fun EmotionComponent(
     emotion : Int,
     navController: NavController
 ){
-    val emotionItem = if (emotion != 0) emotion.toString() else "오늘 기분이 어때요?"
+    val emotionItem = if (emotion != 0) emotion.toString() else "기분이 어떠신가요?"
 
-    Card(
+    Column(
         modifier = Modifier
             .padding(start = 12.dp, end = 12.dp)
             .background(color = Color(0XFF151515)),

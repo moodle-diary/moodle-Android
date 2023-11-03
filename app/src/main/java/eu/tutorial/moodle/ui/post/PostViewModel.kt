@@ -1,41 +1,53 @@
 package eu.tutorial.moodle.ui.post
 
-import android.net.Uri
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import eu.tutorial.moodle.data.Activity
+import eu.tutorial.moodle.data.Cause
+import eu.tutorial.moodle.data.CauseType
+import eu.tutorial.moodle.data.CauseTypeDto
 import eu.tutorial.moodle.data.Diary
 import eu.tutorial.moodle.data.DiaryRepository
-import eu.tutorial.moodle.data.Food
-import eu.tutorial.moodle.data.Img
-import eu.tutorial.moodle.data.People
 import eu.tutorial.moodle.data.Place
+import eu.tutorial.moodle.data.PlaceType
+import eu.tutorial.moodle.data.PlaceTypeDto
 
 class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() {
 
     var diaryUiState by mutableStateOf(DiaryUiState())
         private set
     // TODO have to impl valid
+    var showDialog by  mutableStateOf(false)
+    var isCancel by mutableStateOf(false)
+
+    var causeTypes by mutableStateOf(emptyList<CauseTypeDto>())
+        private set
+
+    var placesTypes by mutableStateOf(emptyList<PlaceTypeDto>())
+        private set
     fun updateDiaryUiState(diaryDetails: DiaryDetails) {
         diaryUiState =
             DiaryUiState(diaryDetails = diaryDetails, isEntryValid = true)
     }
-    //
     private fun validateInput(diaryDetails: DiaryDetails = diaryUiState.diaryDetails): Boolean {
         TODO("Not yet implemented")
         return true
     }
-
-    //
+    fun getCauseTypes() {
+        causeTypes = diaryRepository.getCauseTypes()
+    }
+    fun getPlaceTypes() {
+        placesTypes = diaryRepository.getPlaceTypes()
+    }
     suspend fun saveDiary(): Long {
         return diaryRepository.insertDiary(diaryUiState.diaryDetails.toDiary())
     }
 
-    suspend fun saveActivity( description : String, diaryId : Long) {
-        diaryRepository.insertActivity(
-            Activity(activityDescription = description, diaryId = diaryId)
+    suspend fun saveCause( description : String, diaryId : Long) {
+        diaryRepository.insertCause(
+            Cause(cause = description, diaryId = diaryId)
         )
     }
 
@@ -44,22 +56,14 @@ class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() 
             Place(placeDescription = description, diaryId = diaryId)
         )
     }
-
-    suspend fun savePeople(description : String, diaryId : Long) {
-        diaryRepository.insertPeople(
-            People(peopleDescription = description, diaryId = diaryId)
+    suspend fun saveCauseType( causeType : String ) {
+        diaryRepository.insertCauseType(
+            CauseType(causeType = causeType)
         )
     }
-
-    suspend fun saveFood(description: String, diaryId : Long) {
-        diaryRepository.insertFood(
-            Food(foodDescription = description, diaryId = diaryId)
-        )
-    }
-
-    suspend fun saveImg(uri : Uri?, diaryId: Long) {
-        diaryRepository.insertImg(
-            Img(imgUri = uri.toString(), diaryId = diaryId)
+    suspend fun savePlaceType( placeType: String ) {
+        diaryRepository.insertPlaceType(
+            PlaceType(placeType = placeType)
         )
     }
 }
@@ -73,11 +77,13 @@ data class DiaryDetails(
     val currentDate : String = "",
     val emotions : Int = 0,
     val diaryText : String = "",
+    val thought : String = ""
 )
 fun DiaryDetails.toDiary(): Diary = Diary(
     currentDate = currentDate,
     emotions = emotions,
     diaryText = diaryText,
+    thought = thought,
 )
 
 fun Diary.toDiaryUiState(isEntryValid: Boolean = false): DiaryUiState = DiaryUiState(
@@ -89,4 +95,5 @@ fun Diary.toDiaryDetails(): DiaryDetails = DiaryDetails(
     currentDate = currentDate,
     emotions = emotions,
     diaryText = diaryText,
+    thought = thought,
 )

@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
@@ -25,45 +26,42 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
-import eu.tutorial.moodle.data.ActivityDto
-import eu.tutorial.moodle.data.FoodDto
-import eu.tutorial.moodle.data.PeopleDto
+import eu.tutorial.moodle.data.CauseDto
 import eu.tutorial.moodle.data.PlaceDto
 import eu.tutorial.moodle.data.local.allEmojis
 
 @Composable
 fun IconsComponent(
+    isHome : Boolean,
     modifier: Modifier = Modifier,
-    activityList : List<ActivityDto> = emptyList(),
+    causeList : List<CauseDto> = emptyList(),
     placeList : List<PlaceDto> = emptyList(),
-    peopleList: List<PeopleDto> = emptyList(),
-    foodList : List<FoodDto> = emptyList(),
 ){
-    val emojis : List<String> = activityList.map { it.activityDescription } +
-            placeList.map { it.placeDescription } +
-            peopleList.map { it.peopleDescription } +
-            foodList.map { it.foodDescription }
+    val emojis : List<String> = causeList.map { it.cause } +
+            placeList.map { it.placeDescription }
     Column(
         modifier = modifier
             .fillMaxWidth()
     ) {
-        Row(
-            modifier = modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = "Icons",
-                fontSize = 16.sp,
-                fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                color = Color(0XFFDFDFDF)
-            )
-            Text(
-                text = "더보기",
-                fontSize = 12.sp,
-                fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                color = Color(0XFF7E7E7E)
-            )
+        if (isHome){
+            Row(
+                modifier = modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "오늘의 활동",
+                    fontSize = 16.sp,
+                    fontFamily = FontFamily(Font(R.font.poppins_bold)),
+                    color = Color(0XFFDFDFDF)
+                )
+                Text(
+                    text = "모두 보기",
+                    fontSize = 12.sp,
+                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                    color = Color(0XFF7E7E7E)
+                )
+            }
         }
 
         if(emojis.isNotEmpty())
@@ -101,24 +99,22 @@ fun DetailCard(
 
 @Composable
 fun EmptyCard(){
-    Card(
-        shape = RoundedCornerShape(18.dp)
+    Column(
+        modifier = Modifier
+            .height(192.dp)
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(18.dp))
+            .background(color = Color(0XFF212122)),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        Box(
-            modifier = Modifier
-                .height(192.dp)
-                .fillMaxWidth()
-                .background(color = Color(0XFF212122)),
-            contentAlignment = Alignment.Center,
-        ){
-            Text(
-                text = "No Icons",
-                style = TextStyle(
-                    fontSize = 12.sp,
-                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                    color = Color(0XFF7E7E7E)
-                ),
-            )
-        }
+        Text(
+            text = "오늘 기록한 아이콘이 없어요",
+            style = TextStyle(
+                fontSize = 12.sp,
+                fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                color = Color(0XFF686868)
+            ),
+        )
     }
 }

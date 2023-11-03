@@ -38,7 +38,7 @@ fun ChartScreen(
 ) {
     val scrollState = rememberScrollState()
     
-    val activityState = viewModel.activityList
+    val causeState = viewModel.causeList
     val placeState = viewModel.placeList
     val peopleState = viewModel.peopleList
     val foodState = viewModel.foodList
@@ -58,8 +58,6 @@ fun ChartScreen(
                 // 데이터베이스 쿼리를 비동기적으로 수행
                 viewModel.getActList("2023-10")
                 viewModel.getPlaceList("2023-10")
-                viewModel.getPeopleList("2023-10")
-                viewModel.getFoodList("2023-10")
             }
         }
 
@@ -79,10 +77,10 @@ fun ChartScreen(
         )
 
         EmotionRankCard(
-            activityState = activityState
+            causeState = causeState
         )
         ActivityRankCard(
-            activityState = activityState
+            causeState = causeState
         )
         PlaceRankCard(
             placeState = placeState

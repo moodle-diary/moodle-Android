@@ -39,6 +39,7 @@ import eu.tutorial.moodle.ui.home.HomeViewModel
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.YearMonth
+import java.util.Locale
 
 @OptIn(ExperimentalFoundationApi::class)
 @RequiresApi(Build.VERSION_CODES.O)
@@ -82,7 +83,7 @@ fun HorizontalCalendar(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "%s %d".format(currentMonth.month, currentMonth.year),
+                text = "%s %d".format(currentMonth.month.getDisplayName(java.time.format.TextStyle.FULL, Locale.KOREAN), currentMonth.year),
                 style = androidx.compose.ui.text.TextStyle(
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_bold)),

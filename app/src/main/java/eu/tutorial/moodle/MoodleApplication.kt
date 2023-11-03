@@ -7,7 +7,6 @@ import eu.tutorial.moodle.data.AppDataContainer
 class MoodleApplication : Application() {
 
     lateinit var container: AppContainer
-
     override fun onCreate() {
         super.onCreate()
         container = AppDataContainer(this)

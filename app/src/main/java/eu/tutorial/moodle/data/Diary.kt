@@ -2,10 +2,7 @@ package eu.tutorial.moodle.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
 
 // TODO @Parcelize ??
 @Entity(
@@ -17,19 +14,31 @@ data class Diary(
 
     val currentDate : String,
     val emotions : Int,
+
     val diaryText : String,
+    val thought : String,
 )
 
 @Entity(
-    tableName = "activity",
+    tableName = "cause",
 )
-data class Activity(
+data class Cause(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "activity_id")
+    @ColumnInfo(name = "cause_id")
     val id : Long = 0,
 
     val diaryId : Long = 0,
-    val activityDescription : String,
+    val cause : String,
+)
+
+@Entity(
+    tableName = "causeType"
+)
+data class CauseType(
+    @PrimaryKey(autoGenerate = true)
+    val id : Long = 0,
+
+    val causeType : String
 )
 
 @Entity(
@@ -45,39 +54,13 @@ data class Place(
 )
 
 @Entity(
-    tableName = "people",
+    tableName = "placeType"
 )
-data class People(
+data class PlaceType(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "people_id")
     val id : Long = 0,
 
-    val diaryId : Long = 0,
-    val peopleDescription : String,
-)
-
-@Entity(
-    tableName = "food",
-)
-data class Food(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "food_id")
-    val id : Long = 0,
-
-    val diaryId : Long = 0,
-    val foodDescription : String,
-)
-
-@Entity(
-    tableName = "image",
-)
-data class Img(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "image_id")
-    val id : Long = 0,
-
-    val diaryId : Long = 0,
-    val imgUri: String?
+    val placeType : String
 )
 
 @Entity(
@@ -90,4 +73,5 @@ data class Comment(
     val commentDate : String,
     val comment : String,
 )
+
 

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -24,7 +25,9 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -77,21 +80,18 @@ fun CommentScreen(
             .fillMaxSize()
             .background(Color.Transparent),
         bottomBar = {
-            Card(
+            Surface(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(110.dp)
-                    .padding(top = 16.dp, bottom = 24.dp, start = 12.dp, end = 12.dp),
-                shape = RoundedCornerShape(18.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = Color(0XFF363637)
-                )
+                    .height(90.dp),
+                    //.padding(top = 16.dp, bottom = 24.dp, start = 12.dp, end = 12.dp),
+                color = Color(0XFF363637)
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(start = 12.dp, end = 12.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                    horizontalArrangement = Arrangement.SpaceAround,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Button(
@@ -102,10 +102,10 @@ fun CommentScreen(
 
                     ) {
                         Text(
-                            text = "Close",
+                            text = "닫기",
                             fontSize = 16.sp,
                             fontFamily = poppins,
-                            color = Color(0XFFDFDFDF)
+                            color = Color(0XFF888888)
                         )
                     }
                     Button(
@@ -113,10 +113,13 @@ fun CommentScreen(
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color(0XFF151515)
                         ),
-                        shape = RoundedCornerShape(6.dp)
+                        shape = RoundedCornerShape(6.dp),
+                        modifier = Modifier
+                            .width(170.dp)
+                            .height(46.dp)
                     ) {
                         Text(
-                            text = "Add Comments",
+                            text = "댓글 쓰기",
                             fontSize = 16.sp,
                             fontFamily = poppins,
                             color = Color(0XFFDFDFDF)
@@ -142,62 +145,90 @@ fun CommentScreen(
             }
 
             if (isAddingComment) {
-                Button(
-                    onClick = {
-                        coroutineScope.launch {
-                            viewModel.saveComment( selectedDate.toString())
-                            isAddingComment = false
-                            viewModel.updateCommentUiState(
-                                commentUiState.commentDetails.copy(
-                                    comment = ""
-                                )
+
+                Column(
+                    modifier = Modifier
+                        .padding(top = 12.dp, bottom = 12.dp, start = 10.dp, end = 10.dp)
+                        .height(160.dp)
+                        .fillMaxSize()
+                        .clip(RoundedCornerShape(32.dp))
+                        .background(Color(0XFFEDEDED)),
+                ){
+                    Row(
+                        modifier = Modifier
+                            .padding(top = 20.dp, start = 18.dp, end = 16.dp)
+                            .fillMaxWidth()
+                            .height(30.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "24년 12월 23일",
+                            fontSize = 12.sp,
+                            fontFamily = poppins,
+                            color = Color(0XFF414141)
+                        )
+                        TextButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    viewModel.saveComment( selectedDate.toString())
+                                    isAddingComment = false
+                                    viewModel.updateCommentUiState(
+                                        commentUiState.commentDetails.copy(
+                                            comment = ""
+                                        )
+                                    )
+                                }
+                            }
+                        ){
+                            Text(
+                                text = "저장하기",
+                                fontSize = 12.sp,
+                                color = Color.Black
                             )
                         }
                     }
-                ){
-                    Text( text = "저장하기")
-                }
 
-                BasicTextField(
-                    modifier = Modifier
-                        .padding(10.dp, 12.dp)
-                        .fillMaxWidth()
-                        .height(150.dp)
-                        .clip(RoundedCornerShape(32.dp)),
-                    value = commentUiState.commentDetails.comment,
-                    onValueChange = {viewModel.updateCommentUiState(
-                        commentUiState.commentDetails.copy(
-                            comment = it
-                        )
-                    )},
-                    singleLine = false,
-                    textStyle = LocalTextStyle.current.copy(
-                        color = Color.Black,
-                        fontSize = 16.sp
-                    ),
-                    decorationBox = { innerTextField ->
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(Color(0XFFEDEDED))
-                                .border(
-                                    width = 1.dp,
-                                    color = Color(0XFFEDEDED),
-                                    shape = RoundedCornerShape(size = 32.dp)
-                                )
-                                .padding(20.dp, 26.dp),
-                        ) {
-                            if (commentUiState.commentDetails.comment == "") {
-                                Text(
-                                    text = "Enter comment..",
-                                    fontSize = 16.sp,
-                                    color = Color.LightGray
-                                )
+                    BasicTextField(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(100.dp)
+                            .clip(RoundedCornerShape(32.dp)),
+                        value = commentUiState.commentDetails.comment,
+                        onValueChange = {viewModel.updateCommentUiState(
+                            commentUiState.commentDetails.copy(
+                                comment = it
+                            )
+                        )},
+                        singleLine = false,
+                        textStyle = LocalTextStyle.current.copy(
+                            color = Color.Black,
+                            fontSize = 16.sp
+                        ),
+                        decorationBox = { innerTextField ->
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Color(0XFFEDEDED))
+                                    .border(
+                                        width = 1.dp,
+                                        color = Color(0XFFEDEDED),
+                                        shape = RoundedCornerShape(size = 32.dp)
+                                    )
+                                    .padding(20.dp, 12.dp),
+                            ) {
+                                if (commentUiState.commentDetails.comment == "") {
+                                    Text(
+                                        text = "일기에 코멘트를 남겨봐요!",
+                                        fontSize = 16.sp,
+                                        color = Color.LightGray
+                                    )
+                                }
+                                innerTextField()
                             }
-                            innerTextField()
                         }
-                    }
-                )
+                    )
+                }
             }
         }
     }

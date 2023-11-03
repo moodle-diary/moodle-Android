@@ -26,11 +26,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
-
-
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun PostGrid(
+fun ThoughtGrid(
     diaryUiState: DiaryUiState,
     valueChange : (DiaryDetails) -> Unit
 ) {
@@ -49,7 +47,7 @@ fun PostGrid(
         ) {
             Text(
                 modifier = Modifier.padding(top = 20.dp),
-                text = "생각",
+                text = "왜",
                 fontSize = 24.sp,
                 fontFamily = FontFamily(Font(R.font.poppins_bold)),
                 textAlign = TextAlign.Center,
@@ -57,8 +55,7 @@ fun PostGrid(
             )
             Text(
                 modifier = Modifier.padding(top = 4.dp),
-                text = "오늘 하루 생각을 간단하게 적어두면\n" +
-                        "나중에 돌아봤을때 나를 더 잘 알게 될거에요",
+                text = "왜 그랬을까요?",
                 fontSize = 16.sp,
                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
                 textAlign = TextAlign.Center,
@@ -70,11 +67,11 @@ fun PostGrid(
                 InitialTextBox { visible -> textVisible = visible}
             } else {
                 SaveTextBox(
-                    textValue = diaryUiState.diaryDetails.diaryText,
-                ) {
+                    textValue = diaryUiState.diaryDetails.thought,
+                ){
                     valueChange(
                         diaryUiState.diaryDetails.copy(
-                            diaryText = it
+                            thought = it
                         )
                     )
                 }
