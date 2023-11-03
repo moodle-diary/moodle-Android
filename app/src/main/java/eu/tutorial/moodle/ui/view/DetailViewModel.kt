@@ -7,9 +7,6 @@ import androidx.lifecycle.ViewModel
 import eu.tutorial.moodle.data.CauseDto
 import eu.tutorial.moodle.data.DiaryDto
 import eu.tutorial.moodle.data.DiaryRepository
-import eu.tutorial.moodle.data.FoodDto
-import eu.tutorial.moodle.data.ImgDto
-import eu.tutorial.moodle.data.PeopleDto
 import eu.tutorial.moodle.data.PlaceDto
 
 class DetailViewModel (private val diaryRepository: DiaryRepository) : ViewModel(){
@@ -22,15 +19,6 @@ class DetailViewModel (private val diaryRepository: DiaryRepository) : ViewModel
     var placesUiState by mutableStateOf(emptyList<PlaceDto>())
         private set
 
-    var peopleUiState by mutableStateOf(emptyList<PeopleDto>())
-        private set
-
-    var foodsUiState by mutableStateOf(emptyList<FoodDto>())
-        private set
-
-    var imgUiState by mutableStateOf(emptyList<ImgDto>())
-        private set
-
     fun getDiaries(selectedDate : String) {
         diaryUiState = diaryRepository.getDiaries(currentDate = selectedDate)
     }
@@ -39,15 +27,6 @@ class DetailViewModel (private val diaryRepository: DiaryRepository) : ViewModel
     }
     fun getPlaces(selectedDate : String) {
         placesUiState = diaryRepository.getPlaces(currentDate = selectedDate)
-    }
-    fun getPeople(selectedDate : String) {
-        peopleUiState = diaryRepository.getPeople(currentDate = selectedDate)
-    }
-    fun getFoods(selectedDate : String) {
-        foodsUiState = diaryRepository.getFood(currentDate = selectedDate)
-    }
-    fun getImg(selectedDate : String) {
-        imgUiState = diaryRepository.getImg(currentDate = selectedDate)
     }
 
 }

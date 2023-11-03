@@ -26,8 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.CauseDto
-import eu.tutorial.moodle.data.FoodDto
-import eu.tutorial.moodle.data.PeopleDto
 import eu.tutorial.moodle.data.PlaceDto
 import eu.tutorial.moodle.data.local.allEmojis
 
@@ -36,13 +34,9 @@ fun IconsComponent(
     modifier: Modifier = Modifier,
     causeList : List<CauseDto> = emptyList(),
     placeList : List<PlaceDto> = emptyList(),
-    peopleList: List<PeopleDto> = emptyList(),
-    foodList : List<FoodDto> = emptyList(),
 ){
     val emojis : List<String> = causeList.map { it.cause } +
-            placeList.map { it.placeDescription } +
-            peopleList.map { it.peopleDescription } +
-            foodList.map { it.foodDescription }
+            placeList.map { it.placeDescription }
     Column(
         modifier = modifier
             .fillMaxWidth()

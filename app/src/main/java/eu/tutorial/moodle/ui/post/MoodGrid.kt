@@ -40,7 +40,7 @@ import java.time.LocalDate
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MoodGrid(
-    buttonStates :  SnapshotStateList<SnapshotStateList<Boolean>>,
+    buttonStates : SnapshotStateList<SnapshotStateList<Boolean>>,
     diaryUiState: DiaryUiState,
     onClick : (DiaryDetails) -> Unit
 ) {

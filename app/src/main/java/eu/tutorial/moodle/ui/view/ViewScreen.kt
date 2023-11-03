@@ -73,10 +73,6 @@ fun ViewScreen(
 
     val activityList = viewModel.causesUiState
     val placeList = viewModel.placesUiState
-    val peopleList = viewModel.peopleUiState
-    val foodList = viewModel.foodsUiState
-
-    val imgList = viewModel.imgUiState
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -88,10 +84,6 @@ fun ViewScreen(
                 viewModel.getDiaries(LocalDate.now().toString())
                 viewModel.getCauses(LocalDate.now().toString())
                 viewModel.getPlaces(LocalDate.now().toString())
-                viewModel.getPeople(LocalDate.now().toString())
-                viewModel.getFoods(LocalDate.now().toString())
-
-                viewModel.getImg((LocalDate.now().toString()))
             }
         }
 
@@ -141,8 +133,6 @@ fun ViewScreen(
         IconsComponent(
             causeList = activityList,
             placeList = placeList,
-            peopleList = peopleList,
-            foodList = foodList,
         )
 
         NotesComponent(text = getDiaryText(diaryList))

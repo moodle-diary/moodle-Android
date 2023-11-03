@@ -58,8 +58,6 @@ fun ChartScreen(
                 // 데이터베이스 쿼리를 비동기적으로 수행
                 viewModel.getActList("2023-10")
                 viewModel.getPlaceList("2023-10")
-                viewModel.getPeopleList("2023-10")
-                viewModel.getFoodList("2023-10")
             }
         }
 

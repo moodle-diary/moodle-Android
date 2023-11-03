@@ -16,16 +16,12 @@ interface DiaryDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertPlace(place: Place)
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertPeople(people: People)
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertFood(food: Food)
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertImg(img : Img)
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertComment(comment : Comment)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertCauseType(causeType: CauseType)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertPlaceType(placeType: PlaceType)
 
     @Update
     suspend fun update(diary: Diary)
@@ -38,7 +34,7 @@ interface DiaryDao {
     )
     fun getDiaries(currentDate : String) : List<DiaryDto>
 
-    // 오늘 하루의 activity
+    // 우울의 cause
     @Query(
         "SELECT cause.cause " +
         "FROM diaries " +
@@ -56,31 +52,6 @@ interface DiaryDao {
     )
     fun getPlaces(currentDate : String) : List<PlaceDto>
 
-    // 오늘 하루의 people
-    @Query(
-        "SELECT people.peopleDescription " +
-                "FROM diaries " +
-                "INNER JOIN people on people.diaryId = diaries.id "+
-                "WHERE diaries.currentDate = :currentDate"
-    )
-    fun getPeople(currentDate : String) : List<PeopleDto>
-
-    @Query(
-        "SELECT food.foodDescription " +
-                "FROM diaries " +
-                "INNER JOIN food on food.diaryId = diaries.id "+
-                "WHERE diaries.currentDate = :currentDate"
-    )
-    fun getFood(currentDate: String) : List<FoodDto>
-
-    // 우선 여러 이미지를 받을 수 있도록 만들었습니다.
-    @Query(
-        "SELECT image.imgUri " +
-                "FROM diaries " +
-                "INNER JOIN image on image.diaryId = diaries.id "+
-                "WHERE diaries.currentDate = :currentDate"
-    )
-    fun getImg(currentDate: String) : List<ImgDto>
     @Query(
         "SELECT cause, COUNT(cause_id) AS cnt FROM diaries " +
                 "INNER JOIN cause on cause.diaryId = diaries.id " +
@@ -98,25 +69,16 @@ interface DiaryDao {
     )fun getPlaceGrade(targetMonth: String) : List<PlaceGrade>
 
     @Query(
-        "SELECT peopleDescription, COUNT(people_id) AS cnt FROM diaries " +
-                "INNER JOIN people on people.diaryId = diaries.id " +
-                "WHERE diaries.currentDate LIKE :targetMonth " +
-                "GROUP BY peopleDescription " +
-                "ORDER BY COUNT(people_id) DESC"
-    )fun getPeopleGrade(targetMonth: String) : List<PeopleGrade>
-
-    @Query(
-        "SELECT foodDescription, COUNT(food_id) AS cnt FROM diaries " +
-                "INNER JOIN food on food.diaryId = diaries.id " +
-                "WHERE diaries.currentDate LIKE :targetMonth " +
-                "GROUP BY foodDescription " +
-                "ORDER BY COUNT(food_id) DESC"
-    )fun getFoodGrade(targetMonth: String) : List<FoodGrade>
-
-
-    @Query(
         "SELECT id, commentDate, comment FROM comment WHERE commentDate = :commentDate"
     )fun getComments(commentDate : String) :List<CommentDto>
+
+    @Query(
+        "SELECT causeType FROM causeType"
+    )fun getCauseTypes() : List<CauseTypeDto>
+
+    @Query(
+        "SELECT placeType FROM placeType"
+    )fun getPlaceTypes() : List<PlaceTypeDto>
 
     @Query(
         "DELETE from comment where id = :commentId"
