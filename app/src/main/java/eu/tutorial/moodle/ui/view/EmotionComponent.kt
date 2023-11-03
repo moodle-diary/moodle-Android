@@ -21,7 +21,7 @@ import eu.tutorial.moodle.R
 @Composable
 fun emotionComponent(){
     Text(
-        text = "감정",
+        text = "감정 아이콘",
         fontSize = 16.sp,
         fontFamily = FontFamily(Font(R.font.poppins_bold)),
         color = Color(0XFFDFDFDF),
@@ -31,7 +31,7 @@ fun emotionComponent(){
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 8.dp),
+            .padding(top = 8.dp, bottom = 20.dp),
         verticalArrangement = Arrangement.SpaceBetween,
     ) {
         repeat(1) {

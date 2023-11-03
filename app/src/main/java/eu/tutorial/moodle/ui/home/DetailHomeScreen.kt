@@ -112,6 +112,7 @@ fun DetailHomeScreen(
             modifier = Modifier.padding(start = 50.dp, end = 50.dp)
         ) {
             IconsComponent(
+                isHome = true,
                 activityList = activityList,
                 placeList = placeList,
                 peopleList = peopleList,

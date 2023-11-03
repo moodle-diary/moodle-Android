@@ -34,6 +34,7 @@ import eu.tutorial.moodle.data.local.allEmojis
 
 @Composable
 fun IconsComponent(
+    isHome : Boolean,
     modifier: Modifier = Modifier,
     activityList : List<ActivityDto> = emptyList(),
     placeList : List<PlaceDto> = emptyList(),
@@ -48,23 +49,25 @@ fun IconsComponent(
         modifier = modifier
             .fillMaxWidth()
     ) {
-        Row(
-            modifier = modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = "오늘의 활동",
-                fontSize = 16.sp,
-                fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                color = Color(0XFFDFDFDF)
-            )
-            Text(
-                text = "모두 보기",
-                fontSize = 12.sp,
-                fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                color = Color(0XFF7E7E7E)
-            )
+        if (isHome){
+            Row(
+                modifier = modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "오늘의 활동",
+                    fontSize = 16.sp,
+                    fontFamily = FontFamily(Font(R.font.poppins_bold)),
+                    color = Color(0XFFDFDFDF)
+                )
+                Text(
+                    text = "모두 보기",
+                    fontSize = 12.sp,
+                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                    color = Color(0XFF7E7E7E)
+                )
+            }
         }
 
         if(emojis.isNotEmpty())
