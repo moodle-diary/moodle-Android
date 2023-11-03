@@ -44,10 +44,8 @@ import eu.tutorial.moodle.data.Diary
 import eu.tutorial.moodle.data.DiaryDto
 import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.component.EmotionComponent
-import eu.tutorial.moodle.ui.component.EmotionQuadrant
 import eu.tutorial.moodle.ui.component.IconsComponent
 import eu.tutorial.moodle.ui.component.NotesComponent
-import eu.tutorial.moodle.ui.component.PhotosComponent
 import eu.tutorial.moodle.ui.theme.poppins
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -66,27 +64,18 @@ fun DetailHomeScreen(
 ){
     val diaryList = viewModel.diaryUiState
 
-    val activityList = viewModel.activitiesUiState
+    val causeList = viewModel.causeUiState
     val placeList = viewModel.placesUiState
-    val peopleList = viewModel.peopleUiState
-    val foodList = viewModel.foodsUiState
-
-    val imgList = viewModel.imgUiState
 
     val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(Unit){
-
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
                 // 데이터베이스 쿼리를 비동기적으로 수행
                 viewModel.getDiaries(LocalDate.now().toString())
-                viewModel.getActivities(LocalDate.now().toString())
+                viewModel.getCauses(LocalDate.now().toString())
                 viewModel.getPlaces(LocalDate.now().toString())
-                viewModel.getPeople(LocalDate.now().toString())
-                viewModel.getFoods(LocalDate.now().toString())
-
-                viewModel.getImg((LocalDate.now().toString()))
             }
         }
 
@@ -113,10 +102,8 @@ fun DetailHomeScreen(
         ) {
             IconsComponent(
                 isHome = true,
-                activityList = activityList,
+                causeList = causeList,
                 placeList = placeList,
-                peopleList = peopleList,
-                foodList = foodList
             )
 
         }
@@ -173,8 +160,6 @@ fun DetailHomeScreen(
                     NotesComponent(text = getDiaryText(diaryList))
                     
                     Spacer(modifier = Modifier.size(12.dp))
-
-                    PhotosComponent(imgList = imgList)
                 }
             }
         }

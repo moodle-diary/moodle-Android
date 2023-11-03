@@ -1,6 +1,5 @@
 package eu.tutorial.moodle.ui.post
 
-import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -41,18 +40,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import eu.tutorial.moodle.R
-import eu.tutorial.moodle.data.local.activitiesData
-import eu.tutorial.moodle.data.local.foodData
-import eu.tutorial.moodle.data.local.peopleData
-import eu.tutorial.moodle.data.local.placesData
 import eu.tutorial.moodle.ui.AppViewModelProvider
-import eu.tutorial.moodle.ui.navigation.HomeDestination
-import eu.tutorial.moodle.ui.navigation.NavigationDestination
-import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.Locale
-
-
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -60,20 +50,17 @@ fun PostEmotionScreen(
     navController: NavController,
     viewModel: PostViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+
+    // TODO stateList 들 viewModel 로 이전
     val localDate: LocalDate = LocalDate.now()
     val day = localDate.dayOfMonth
     val month = localDate.dayOfWeek.getDisplayName(java.time.format.TextStyle.FULL, Locale.KOREAN)
 
-    var showDialog by remember { mutableStateOf(false) }
-    var isCancel by remember { mutableStateOf(false) }
-
-    val actualPageCount = 7
+    val actualPageCount = 5
     val initialPage = 0
     val pagerState = rememberPagerState(
         initialPage = initialPage,
     )
-
-    val coroutineScope = rememberCoroutineScope()
 
     val emotionButtonStates = remember {
         mutableStateListOf(
@@ -82,6 +69,14 @@ fun PostEmotionScreen(
             mutableStateListOf(false, false, false, false),
             mutableStateListOf(false, false, false, false)
         )
+    }
+
+    val causeButtonStates = remember {
+        mutableStateListOf<Boolean>()
+    }
+
+    val placeButtonStates = remember {
+        mutableStateListOf<Boolean>()
     }
 
     Column(
@@ -109,9 +104,6 @@ fun PostEmotionScreen(
                 fontFamily = FontFamily(Font(R.font.poppins_bold)),
                 color = Color(0XFFDFDFDF),
                 text = "$day $month",
-//            platformStyle = PlatformTextStyle(
-//                includeFontPadding = false
-//            )
             )
             Icon(
                 imageVector = Icons.Default.Close,
@@ -119,8 +111,8 @@ fun PostEmotionScreen(
                 modifier = Modifier
                     .size(24.dp)
                     .clickable {
-                        showDialog = true
-                        isCancel = true
+                        viewModel.showDialog = true
+                        viewModel.isCancel = true
                     },
                 tint = Color(0XFFDFDFDF)
             )
@@ -137,26 +129,6 @@ fun PostEmotionScreen(
             selectedColor = Color(0XFF686868),
             unSelectedColor = Color(0XFF686868)
         )
-
-        val actButtonStates = remember {
-            mutableStateListOf<Boolean>()
-        }
-
-        val placeButtonStates = remember {
-            mutableStateListOf<Boolean>()
-        }
-
-        val peopleButtonStates = remember {
-            mutableStateListOf<Boolean>()
-        }
-
-        val foodButtonStates = remember {
-            mutableStateListOf<Boolean>()
-        }
-
-        val imageUri = remember {
-            mutableStateOf<Uri?>(null)
-        }
 
 
         Column(
@@ -184,29 +156,24 @@ fun PostEmotionScreen(
                             onClick = viewModel::updateDiaryUiState,
                         )
 
-                        1 -> ActGrid(
-                            actButtonStates = actButtonStates
+                        1 -> CauseGrid(
+                            causeButtonStates = causeButtonStates,
+                            viewModel = viewModel,
                         )
 
                         2 -> PlaceGrid(
-                            placeButtonStates = placeButtonStates
+                            placeButtonStates = placeButtonStates,
+                            viewModel = viewModel,
                         )
 
-                        3 -> PeopleGrid(
-                            peopleButtonStates = peopleButtonStates
-                        )
-
-                        4 -> FoodGrid(
-                            foodButtonStates = foodButtonStates
-                        )
-
-                        5 -> PostGrid(
+                        3 -> PostGrid(
                             diaryUiState = viewModel.diaryUiState,
                             valueChange = viewModel::updateDiaryUiState
                         )
 
-                        6 -> ImgGrid(
-                            imgUri = imageUri
+                        4 -> ThoughtGrid(
+                            diaryUiState = viewModel.diaryUiState,
+                            valueChange = viewModel::updateDiaryUiState
                         )
                     }
                 }
@@ -222,8 +189,8 @@ fun PostEmotionScreen(
             ) {
                 Button(
                     onClick = {
-                        showDialog = true
-                        isCancel = false
+                        viewModel.showDialog = true
+                        viewModel.isCancel = false
                     },
                     modifier = Modifier
                         .width(163.dp)
@@ -241,133 +208,14 @@ fun PostEmotionScreen(
                     )
                 }
 
-                if (showDialog) {
-                    val dialogText = if (isCancel) {
-                        "저장하지 않고 나가겠어요?"
-                    } else {
-                        "지금까지의 내용을 저장하시겠어요?"
-                    }
-                    Dialog(
-                        onDismissRequest = { showDialog = false },
-                        properties = DialogProperties(
-                            dismissOnBackPress = true,
-                            dismissOnClickOutside = true
-                        )
-                    ) {
-                        Card(
-                            shape = RoundedCornerShape(32.dp),
-                            modifier = Modifier
-                                .width(282.dp)
-                                .height(175.dp)
-                                .background(Color.Transparent)
-                                .clip(shape = CircleShape.copy(all = CornerSize(32.dp)))
-                        ) {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(Color(0XFF212122))
-                            ) {
-                                Text(
-                                    text = dialogText,
-                                    modifier = Modifier.padding(top = 38.dp, bottom = 36.dp),
-                                    fontSize = 16.sp,
-                                    color = Color(0XFFDFDFDF),
-                                    fontFamily = FontFamily(Font(R.font.poppins_regular))
-                                )
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(start = 16.dp, end = 16.dp),
-                                    horizontalArrangement = Arrangement.SpaceBetween
-                                ) {
-                                    Button(
-                                        onClick = { showDialog = false },
-                                        modifier = Modifier
-                                            .defaultMinSize(
-                                                minWidth = 131.dp,
-                                                minHeight = 46.dp
-                                            )
-                                            .clip(shape = CircleShape.copy(all = CornerSize(32.dp))),
-                                        contentPadding = PaddingValues(top = 16.dp, bottom = 16.dp, start = 26.dp, end = 26.dp),
-                                        colors = ButtonDefaults.buttonColors(
-                                            containerColor = Color.Transparent
-                                        ),
-                                        elevation = ButtonDefaults.buttonElevation( //버튼 그림자 없애기
-                                            defaultElevation = 0.dp,
-                                            pressedElevation = 0.dp
-                                        )
-                                    ) {
-                                        Text(
-                                            text = if (isCancel) {
-                                                "계속 작성하기"
-                                            } else {
-                                                "조금 더 작성하기"
-                                            },
-                                            fontSize = 12.sp,
-                                            color = Color(0XFF888888),
-                                            fontFamily = FontFamily(Font(R.font.poppins_bold))
-                                        )
-                                    }
-                                    Button(
-                                        onClick = {
-                                            //TODO : Transaction 고려
-                                            coroutineScope.launch {
-                                                navController.navigate(HomeDestination.route)
-
-                                                val key = viewModel.saveDiary()
-
-                                                for (i in 0 until actButtonStates.size)
-                                                    if(actButtonStates[i]) viewModel.saveActivity(
-                                                        activitiesData[i], key
-                                                    )
-
-                                                for (i in 0 until placeButtonStates.size)
-                                                    if(placeButtonStates[i]) viewModel.savePlace(
-                                                        placesData[i], key
-                                                    )
-
-                                                for (i in 0 until peopleButtonStates.size)
-                                                    if(peopleButtonStates[i]) viewModel.savePeople(
-                                                        peopleData[i], key
-                                                    )
-
-                                                for(i in 0 until foodButtonStates.size)
-                                                    if(foodButtonStates[i]) viewModel.saveFood(
-                                                        foodData[i], key
-                                                    )
-
-                                                if(imageUri.value != null)
-                                                    viewModel.saveImg(imageUri.value, key)
-                                            }
-                                        },
-                                        colors = ButtonDefaults.buttonColors(
-                                            containerColor = Color(0xFFD9D9D9),
-                                            contentColor = Color(0XFF151515)
-                                        ),
-                                        modifier = Modifier
-                                            .defaultMinSize(
-                                                minWidth = 98.dp,
-                                                minHeight = 46.dp
-                                            )
-                                            .clip(shape = CircleShape.copy(all = CornerSize(32.dp))),
-                                        contentPadding = PaddingValues(top = 13.dp, bottom = 13.dp, start = 21.dp, end = 21.dp),
-                                    ) {
-                                        Text(
-                                            text = if (isCancel) {
-                                                    "나가기"
-                                                } else {
-                                                    "저장하기"
-                                            },
-                                            fontSize = 14.sp,
-                                            color = Color(0XFF151515),
-                                            fontFamily = FontFamily(Font(R.font.poppins_bold))
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }
+                if (viewModel.showDialog) {
+                    SaveDialog(
+                        causeButtonStates = causeButtonStates,
+                        placeButtonStates = placeButtonStates,
+                        navController = navController,
+                        viewModel = viewModel,
+                        isCancel = viewModel.isCancel,
+                    ){ dialogVisible -> viewModel.showDialog = dialogVisible }
                 }
             }
         }
@@ -386,7 +234,6 @@ fun PageCard(page: Int, modifier: Modifier = Modifier, content: @Composable () -
         }
     }
 }
-
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable

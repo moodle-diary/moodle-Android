@@ -2,6 +2,7 @@ package eu.tutorial.moodle.ui.navigation
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,6 +23,7 @@ import eu.tutorial.moodle.ui.setting.SettingAlarmScreen
 import eu.tutorial.moodle.ui.setting.SettingPasswordScreen
 import eu.tutorial.moodle.ui.setting.SettingScreen
 
+@OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DiaryNavHost(

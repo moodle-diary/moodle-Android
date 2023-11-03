@@ -1,14 +1,11 @@
 package eu.tutorial.moodle.ui.post
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -19,16 +16,18 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Fastfood
-import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Pets
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,18 +36,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import eu.tutorial.moodle.R
-import eu.tutorial.moodle.data.Activity
-import eu.tutorial.moodle.data.People
-import eu.tutorial.moodle.data.Place
-import eu.tutorial.moodle.data.local.activitiesData
-import eu.tutorial.moodle.data.local.foodData
-import eu.tutorial.moodle.data.local.peopleData
-import eu.tutorial.moodle.data.local.placesData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun CommonGrid(
@@ -58,7 +53,11 @@ fun CommonGrid(
     buttonStates: List<Boolean>,
     onItemClick: (Int) -> Unit,
     icon: ImageVector,
+    save : (String) -> Unit,
+    dialogVisible : Boolean,
+    onChange : (Boolean) -> Unit,
 ) {
+
     Box(
         modifier = Modifier
             .fillMaxHeight()
@@ -104,8 +103,10 @@ fun CommonGrid(
 
                         IconButton(
                             onClick = {
-                                onItemClick(index)
-                            },
+                                if(item != "plus")
+                                    onItemClick(index)
+                                else
+                                    onChange(true) },
                             modifier = Modifier
                                 .size(60.dp)
                                 .clip(RoundedCornerShape(20.dp))
@@ -130,36 +131,77 @@ fun CommonGrid(
                 }
             }
         }
+
+        if (dialogVisible){
+            SaveTypeDialog(
+                save = save
+            ){
+                onChange(it)
+            }
+        }
     }
 }
 
 @Composable
-fun ActGrid(
-    actButtonStates : SnapshotStateList<Boolean>
+fun CauseGrid(
+    causeButtonStates : SnapshotStateList<Boolean>,
+    viewModel : PostViewModel,
 ) {
-    val data = activitiesData
+    val coroutineScope = rememberCoroutineScope()
+    var dialogVisible by remember { mutableStateOf(false) }
+    val data = viewModel.causeTypes.map { it.causeType } + listOf("plus")
+
+    LaunchedEffect(dialogVisible){
+        coroutineScope.launch {
+            withContext(Dispatchers.IO) {
+                // 데이터베이스 쿼리를 비동기적으로 수행
+                viewModel.getCauseTypes()
+            }
+        }
+    }
+
     for (i in data.indices) {
-        actButtonStates.add(false)
+        causeButtonStates.add(false)
     }
 
     CommonGrid(
-        title = "활동",
-        subtitle = "오늘 어떤 일을 했나요?",
+        title = "원인",
+        subtitle = "오늘 무엇이 나를 우울 하게 했나요?",
         data = data,
-        buttonStates = actButtonStates,
+        buttonStates = causeButtonStates,
         icon = Icons.Default.Pets,
         onItemClick = { index ->
             // Handle item click here
-            actButtonStates[index] = !actButtonStates[index]
+            causeButtonStates[index] = !causeButtonStates[index]
         },
-    )
+        save = {
+            coroutineScope.launch {
+                viewModel.saveCauseType(it)
+            }
+        },
+        dialogVisible = dialogVisible,
+    ){
+        dialogVisible = it
+    }
 }
 
 @Composable
 fun PlaceGrid(
-    placeButtonStates : SnapshotStateList<Boolean>
+    placeButtonStates : SnapshotStateList<Boolean>,
+    viewModel: PostViewModel,
 ) {
-    val data = placesData
+    val data = viewModel.placesTypes.map { it.placeType } + listOf("plus")
+    val coroutineScope = rememberCoroutineScope()
+    var dialogVisible by remember { mutableStateOf(false) }
+
+    LaunchedEffect(dialogVisible){
+        coroutineScope.launch {
+            withContext(Dispatchers.IO) {
+                // 데이터베이스 쿼리를 비동기적으로 수행
+                viewModel.getPlaceTypes()
+            }
+        }
+    }
 
     for (i in data.indices) {
         placeButtonStates.add(false)
@@ -167,7 +209,7 @@ fun PlaceGrid(
 
     CommonGrid(
         title = "장소",
-        subtitle = "오늘 어느 곳에서 시간을 보냈나요?",
+        subtitle = "어느 곳에서 우울 했나요?",
         data = data,
         buttonStates = placeButtonStates,
         icon = Icons.Default.Place,
@@ -175,54 +217,13 @@ fun PlaceGrid(
             // Handle item click here
             placeButtonStates[index] = !placeButtonStates[index]
         },
-
-    )
-}
-
-@Composable
-fun PeopleGrid(
-    peopleButtonStates : SnapshotStateList<Boolean>
-) {
-    val data = peopleData
-
-    for (i in data.indices) {
-        peopleButtonStates.add(false)
-    }
-
-
-    CommonGrid(
-        title = "관계",
-        subtitle = "오늘 누구를 만났나요?",
-        data = data,
-        buttonStates = peopleButtonStates,
-        icon = Icons.Default.People,
-        onItemClick = { index ->
-            // Handle item click here
-            peopleButtonStates[index] = !peopleButtonStates[index]
+        save = {
+            coroutineScope.launch {
+                viewModel.savePlaceType(it)
+            }
         },
-    )
-}
-
-@Composable
-fun FoodGrid(
-    foodButtonStates : SnapshotStateList<Boolean>
-) {
-    val data = foodData
-
-    for (i in data.indices) {
-        foodButtonStates.add(false)
+        dialogVisible = dialogVisible
+    ){
+        dialogVisible = it
     }
-
-
-    CommonGrid(
-        title = "식사",
-        subtitle = "오늘 어떤 음식을 먹었나요?",
-        data = data,
-        buttonStates = foodButtonStates,
-        icon = Icons.Default.Fastfood,
-        onItemClick = { index ->
-            // Handle item click here
-            foodButtonStates[index] = !foodButtonStates[index]
-        },
-    )
 }

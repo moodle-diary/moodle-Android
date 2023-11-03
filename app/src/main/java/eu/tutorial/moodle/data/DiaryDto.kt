@@ -6,31 +6,21 @@ data class DiaryDto(
     val diaryText : String,
 )
 
-data class ActivityDto(
-    val activityDescription : String,
+data class CauseDto(
+    val cause : String,
 )
-
 
 data class PlaceDto(
     val placeDescription : String
 )
 
-
-data class PeopleDto(
-    val peopleDescription : String
-)
-
-data class FoodDto(
-    val foodDescription : String
-)
-
-data class ImgDto(
-    val imgUri : String
-)
-
-data class ActGrade(
-    val activityDescription: String,
+data class CauseGrade(
+    val cause: String,
     val cnt : Int
+)
+
+data class CauseTypeDto(
+    val causeType : String
 )
 
 data class PlaceGrade(
@@ -38,14 +28,8 @@ data class PlaceGrade(
     val cnt : Int
 )
 
-data class PeopleGrade(
-    val peopleDescription: String,
-    val cnt : Int
-)
-
-data class FoodGrade(
-    val foodDescription: String,
-    val cnt : Int
+data class PlaceTypeDto(
+    val placeType: String
 )
 
 data class CommentDto(
