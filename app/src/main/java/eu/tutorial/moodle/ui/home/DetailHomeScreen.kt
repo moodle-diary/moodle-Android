@@ -101,6 +101,7 @@ fun DetailHomeScreen(
             modifier = Modifier.padding(start = 50.dp, end = 50.dp)
         ) {
             IconsComponent(
+                isHome = true,
                 causeList = causeList,
                 placeList = placeList,
             )
@@ -132,7 +133,7 @@ fun DetailHomeScreen(
                 )
 
                 Text(
-                    text = "Read Journal",
+                    text = "글/사진 보기",
                     color = Color(0XFFDFDFDF),
                     fontFamily = poppins,
                     modifier = Modifier.padding(top = 2.dp)

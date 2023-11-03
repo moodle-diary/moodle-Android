@@ -130,11 +130,27 @@ fun ViewScreen(
 
         emotionComponent()
 
+
+        Text(
+            text = "활동 아이콘",
+            fontSize = 16.sp,
+            fontFamily = FontFamily(Font(R.font.poppins_bold)),
+            color = Color(0XFFDFDFDF),
+            modifier = Modifier.padding(top = 24.dp)
+        )
         IconsComponent(
+            isHome = false,
             causeList = activityList,
             placeList = placeList,
         )
 
+        Text(
+            text = "글과 사진",
+            fontSize = 16.sp,
+            fontFamily = FontFamily(Font(R.font.poppins_bold)),
+            color = Color(0XFFDFDFDF),
+            modifier = Modifier.padding(top = 24.dp)
+        )
         NotesComponent(text = getDiaryText(diaryList))
 
         ImgComponent()
