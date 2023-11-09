@@ -52,6 +52,7 @@ fun PasswordTextField(
                 onValueChange(it)
             }
         },
+        readOnly = true,
         enabled = enabled,
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Number,
