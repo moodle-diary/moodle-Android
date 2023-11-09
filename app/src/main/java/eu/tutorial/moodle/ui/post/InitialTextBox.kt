@@ -29,6 +29,8 @@ import eu.tutorial.moodle.R
 fun InitialTextBox(
     changeVisible : (Boolean) -> Unit
 ) {
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
