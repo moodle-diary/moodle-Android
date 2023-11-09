@@ -17,14 +17,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,23 +32,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import eu.tutorial.moodle.R
-import eu.tutorial.moodle.data.Diary
 import eu.tutorial.moodle.data.DiaryDto
-import eu.tutorial.moodle.ui.AppViewModelProvider
-import eu.tutorial.moodle.ui.component.EmotionComponent
 import eu.tutorial.moodle.ui.component.IconsComponent
 import eu.tutorial.moodle.ui.component.NotesComponent
+import eu.tutorial.moodle.ui.component.SentenceComponent
 import eu.tutorial.moodle.ui.theme.poppins
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.time.LocalDate
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,27 +53,26 @@ import java.time.LocalDate
 fun DetailHomeScreen(
     modifier: Modifier = Modifier,
     innerPaddingValues: PaddingValues = PaddingValues(0.dp),
-    viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory),
-    navController: NavController
-){
-    val diaryList = viewModel.diaryUiState
-
-    val causeList = viewModel.causeUiState
-    val placeList = viewModel.placesUiState
+//    viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    navController: NavController = rememberNavController()
+) {
+//    val diaryList = viewModel.diaryUiState
+//    val causeList = viewModel.causeUiState
+//    val placeList = viewModel.placesUiState
 
     val coroutineScope = rememberCoroutineScope()
+    var isBottomSheetVisible by remember { mutableStateOf(false) }
 
-    LaunchedEffect(Unit){
-        coroutineScope.launch {
-            withContext(Dispatchers.IO) {
-                // 데이터베이스 쿼리를 비동기적으로 수행
-                viewModel.getDiaries(LocalDate.now().toString())
-                viewModel.getCauses(LocalDate.now().toString())
-                viewModel.getPlaces(LocalDate.now().toString())
-            }
-        }
-
-    }
+//    LaunchedEffect(Unit){
+//        coroutineScope.launch {
+//            withContext(Dispatchers.IO) {
+//                // 데이터베이스 쿼리를 비동기적으로 수행
+//                viewModel.getDiaries(LocalDate.now().toString())
+//                viewModel.getCauses(LocalDate.now().toString())
+//                viewModel.getPlaces(LocalDate.now().toString())
+//            }
+//        }
+//    }
 
     Column(
         modifier = modifier
@@ -88,29 +81,47 @@ fun DetailHomeScreen(
             .padding(innerPaddingValues)
             .verticalScroll(rememberScrollState())
     ) {
-
-//        EmotionQuadrant()
-//        Spacer(modifier = Modifier.size(12.dp))
-
         // TODO 이 부분 exist 속성 값 vm 에서 받아 와서 수정 Detail HomeScreen 이랑 통합
-        EmotionComponent( emotion = getDiaryEmotion(diaryList), navController )
 
-        Spacer(modifier = Modifier.size(12.dp))
+        // TODO : 이 부분은 명언 보여주기
+        SentenceComponent(
+//            emotion = getDiaryEmotion(diaryList),
+            modifier = Modifier.padding(start = 41.dp, end = 41.dp),
+            navController = navController
+        )
 
-        Row(
+        Spacer(modifier = Modifier.size(87.dp))
+
+
+
+        Column(
             modifier = Modifier.padding(start = 50.dp, end = 50.dp)
         ) {
-            IconsComponent(
-                isHome = true,
-                causeList = causeList,
-                placeList = placeList,
-            )
+            Row(
+                modifier = modifier
+                    .padding(bottom = 12.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "오늘의 리마인드",
+                    fontSize = 16.sp,
+                    fontFamily = FontFamily(Font(R.font.poppins_bold)),
+                    color = Color(0XFFDFDFDF)
+                )
+                Text(
+                    text = "모두 보기",
+                    fontSize = 12.sp,
+                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                    color = Color(0XFF7E7E7E)
+                )
+            }
+
+            IconsComponent()
 
         }
 
         Spacer(modifier = Modifier.size(32.dp))
-
-        var isBottomSheetVisible by remember { mutableStateOf(false) }
 
         Button(
             onClick = { isBottomSheetVisible = true },
@@ -133,7 +144,7 @@ fun DetailHomeScreen(
                 )
 
                 Text(
-                    text = "글/사진 보기",
+                    text = "생각 보기",
                     color = Color(0XFFDFDFDF),
                     fontFamily = poppins,
                     modifier = Modifier.padding(top = 2.dp)
@@ -156,26 +167,55 @@ fun DetailHomeScreen(
 
                     ) {
                     Spacer(modifier = Modifier.size(12.dp))
-                    
-                    NotesComponent(text = getDiaryText(diaryList))
-                    
+
+                    Text(
+                        text = "원인 아이콘",
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily(Font(R.font.poppins_bold)),
+                        color = Color(0XFFDFDFDF)
+                    )
+
+                    IconsComponent(
+                        modifier = Modifier.height(97.dp)
+                    )
+
+                    Spacer(modifier = Modifier.size(46.dp))
+
+                    Text(
+                        text = "장소 아이콘",
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily(Font(R.font.poppins_bold)),
+                        color = Color(0XFFDFDFDF)
+                    )
+
+                    IconsComponent(
+                        modifier = Modifier.height(97.dp)
+                    )
+
+                    Spacer(modifier = Modifier.size(43.dp))
+
+                    Text(
+                        text = "생각",
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily(Font(R.font.poppins_bold)),
+                        color = Color(0XFFDFDFDF)
+                    )
+
+                    NotesComponent(
+//                        text = getDiaryText(diaryList)
+                    )
+
                     Spacer(modifier = Modifier.size(12.dp))
                 }
             }
         }
-        
-        Spacer(modifier = Modifier.size(32.dp))
 
-//        NotesComponent(
-//            text = getDiaryText(diaryList)
-//        )
-//
-//        Spacer(modifier = Modifier.size(12.dp))
+        Spacer(modifier = Modifier.size(32.dp))
 
     }
 }
 
-fun getDiaryEmotion(diaryList: List<DiaryDto>) : Int {
+fun getDiaryEmotion(diaryList: List<DiaryDto>): Int {
     var emotion = 0
 
     for (i in diaryList)
@@ -184,17 +224,21 @@ fun getDiaryEmotion(diaryList: List<DiaryDto>) : Int {
     return emotion
 }
 
-fun getDiaryText(diaryList: List<DiaryDto>) : String {
+fun getDiaryText(diaryList: List<DiaryDto>): String {
     var result = ""
 
-    for ( i in diaryList)
+    for (i in diaryList)
         result += i.diaryText
 
     return result
 }
-fun getDiaryEmoji(diaryList: List<Diary>): String {
-    var result = ""
 
-    return result
-
+@RequiresApi(Build.VERSION_CODES.O)
+@Preview(
+    showSystemUi = true,
+    showBackground = true
+)
+@Composable
+fun PreviewMainPage() {
+    DetailHomeScreen()
 }

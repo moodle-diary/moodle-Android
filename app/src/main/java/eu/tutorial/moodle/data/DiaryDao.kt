@@ -10,21 +10,26 @@ import androidx.room.Update
 @Dao
 interface DiaryDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE) // 인수가 겹치면 새 항목을 무시 한다.
-    suspend fun insertDiary(diary: Diary) : Long // 별도의 스레드에서 실행하도록 한다. // 여기 suspend
+    suspend fun insertDiary(diary: Diary): Long // 별도의 스레드에서 실행하도록 한다. // 여기 suspend
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCause(cause: Cause)
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertPlace(place: Place)
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertComment(comment : Comment)
+    suspend fun insertComment(comment: Comment)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCauseType(causeType: CauseType)
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertPlaceType(placeType: PlaceType)
 
     @Update
     suspend fun update(diary: Diary)
+
     @Delete
     suspend fun delete(diary: Diary)
 
@@ -32,25 +37,25 @@ interface DiaryDao {
     @Query(
         "SELECT emotions, diaryText FROM diaries WHERE diaries.currentDate = :currentDate"
     )
-    fun getDiaries(currentDate : String) : List<DiaryDto>
+    fun getDiaries(currentDate: String): List<DiaryDto>
 
     // 우울의 cause
     @Query(
-        "SELECT cause.cause " +
-        "FROM diaries " +
-        "INNER JOIN cause on cause.diaryId = diaries.id "+
-        "WHERE diaries.currentDate = :currentDate"
+        "SELECT cause.cause as iconDescription " +
+                "FROM diaries " +
+                "INNER JOIN cause on cause.diaryId = diaries.id " +
+                "WHERE diaries.currentDate = :currentDate"
     )
-    fun getCauses(currentDate : String) : List<CauseDto>
+    fun getCauses(currentDate: String): List<IconDto>
 
     // 오늘 하루의 place
     @Query(
-        "SELECT place.placeDescription " +
+        "SELECT place.placeDescription as iconDescription " +
                 "FROM diaries " +
-                "INNER JOIN place on place.diaryId = diaries.id "+
+                "INNER JOIN place on place.diaryId = diaries.id " +
                 "WHERE diaries.currentDate = :currentDate"
     )
-    fun getPlaces(currentDate : String) : List<PlaceDto>
+    fun getPlaces(currentDate: String): List<IconDto>
 
     @Query(
         "SELECT cause, COUNT(cause_id) AS cnt FROM diaries " +
@@ -58,7 +63,8 @@ interface DiaryDao {
                 "WHERE diaries.currentDate LIKE :targetMonth " +
                 "GROUP BY cause " +
                 "ORDER BY COUNT(cause_id) DESC"
-    )fun getCauseGrade(targetMonth: String) : List<CauseGrade>
+    )
+    fun getCauseGrade(targetMonth: String): List<CauseGrade>
 
     @Query(
         "SELECT placeDescription, COUNT(place_id) AS cnt FROM diaries " +
@@ -66,19 +72,23 @@ interface DiaryDao {
                 "WHERE diaries.currentDate LIKE :targetMonth " +
                 "GROUP BY placeDescription " +
                 "ORDER BY COUNT(place_id) DESC"
-    )fun getPlaceGrade(targetMonth: String) : List<PlaceGrade>
+    )
+    fun getPlaceGrade(targetMonth: String): List<PlaceGrade>
 
     @Query(
         "SELECT id, commentDate, comment FROM comment WHERE commentDate = :commentDate"
-    )fun getComments(commentDate : String) :List<CommentDto>
+    )
+    fun getComments(commentDate: String): List<CommentDto>
 
     @Query(
         "SELECT causeType FROM causeType"
-    )fun getCauseTypes() : List<CauseTypeDto>
+    )
+    fun getCauseTypes(): List<CauseTypeDto>
 
     @Query(
         "SELECT placeType FROM placeType"
-    )fun getPlaceTypes() : List<PlaceTypeDto>
+    )
+    fun getPlaceTypes(): List<PlaceTypeDto>
 
     @Query(
         "DELETE from comment where id = :commentId"

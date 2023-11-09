@@ -11,9 +11,9 @@ class OfflineDiaryRepository(private val diaryDao: DiaryDao) : DiaryRepository {
     override suspend fun updateDiary(diary: Diary) = diaryDao.update(diary)
     override fun getDiaries(currentDate: String): List<DiaryDto> =
         diaryDao.getDiaries(currentDate)
-    override fun getCauses(currentDate: String): List<CauseDto> =
+    override fun getCauses(currentDate: String): List<IconDto> =
         diaryDao.getCauses(currentDate)
-    override fun getPlaces(currentDate: String): List<PlaceDto> =
+    override fun getPlaces(currentDate: String): List<IconDto> =
         diaryDao.getPlaces(currentDate)
     override fun getComments(commentDate: String): List<CommentDto> =
         diaryDao.getComments(commentDate)

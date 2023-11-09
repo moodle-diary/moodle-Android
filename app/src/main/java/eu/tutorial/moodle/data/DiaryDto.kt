@@ -6,12 +6,8 @@ data class DiaryDto(
     val diaryText : String,
 )
 
-data class CauseDto(
-    val cause : String,
-)
-
-data class PlaceDto(
-    val placeDescription : String
+data class IconDto (
+    val iconDescription : String,
 )
 
 data class CauseGrade(

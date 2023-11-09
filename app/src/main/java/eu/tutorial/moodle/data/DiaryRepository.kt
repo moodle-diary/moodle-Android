@@ -12,8 +12,8 @@ interface DiaryRepository{
     suspend fun insertPlaceType(placeType: PlaceType)
     suspend fun updateDiary(diary: Diary)
     fun getDiaries( currentDate : String ) : List<DiaryDto>
-    fun getCauses( currentDate: String ) : List<CauseDto>
-    fun getPlaces( currentDate: String ) : List<PlaceDto>
+    fun getCauses( currentDate: String ) : List<IconDto>
+    fun getPlaces( currentDate: String ) : List<IconDto>
     fun getCauseGrade(targetMonth: String) : List <CauseGrade>
     fun getPlaceGrade(targetMonth: String) : List <PlaceGrade>
     fun getCauseTypes() : List<CauseTypeDto>
