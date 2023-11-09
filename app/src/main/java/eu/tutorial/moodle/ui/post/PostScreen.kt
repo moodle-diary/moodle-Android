@@ -149,6 +149,7 @@ fun PostScreen(
                             buttonStates = emotionButtonStates,
                             diaryUiState = viewModel.diaryUiState,
                             onClick = viewModel::updateDiaryUiState,
+                            navController = navController
                         )
 
                         1 -> CauseGrid(
