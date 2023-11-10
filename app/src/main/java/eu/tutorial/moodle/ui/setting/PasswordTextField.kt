@@ -1,27 +1,27 @@
 package eu.tutorial.moodle.ui.setting
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.LockOpen
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -35,13 +35,14 @@ fun PasswordTextField(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     keyboardOptions: KeyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-    keyboardActions: KeyboardActions = KeyboardActions(),
     onValueChange: (String) -> Unit,
 ) {
     val spaceBetweenBoxes = 8.dp
     val focusManager = LocalFocusManager.current
     focusManager.clearFocus()
 
+    val density = LocalDensity.current.density
+    val context = LocalContext.current
 
     BasicTextField(
         modifier = modifier,
@@ -58,12 +59,12 @@ fun PasswordTextField(
             keyboardType = KeyboardType.Number,
             imeAction = ImeAction.Next
         ),
-        keyboardActions = keyboardActions,
         decorationBox = {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(spaceBetweenBoxes),
             ) {
                 repeat(length) { index ->
+                    val isFilled = index < value.length
                     Box(
                         modifier = Modifier
                             .size(64.dp)
@@ -71,15 +72,21 @@ fun PasswordTextField(
                             .background(Color(0XFF212122)),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(
-                            text = value.getOrNull(index)?.toString() ?: "",
-                            textAlign = TextAlign.Center,
-                            fontSize = 20.sp,
-                            color = Color(0XFFDFDFDF)
-                        )
+                        if (isFilled) {
+                            Image(
+                                painter = painterResource(id = eu.tutorial.moodle.R.drawable.password),
+                                contentDescription = "password",
+                                modifier = Modifier.size(16.dp)
+                            )
+                        } else {
+                            Text(
+                                text = ""
+                            )
+                        }
                     }
                 }
             }
         }
     )
 }
+
