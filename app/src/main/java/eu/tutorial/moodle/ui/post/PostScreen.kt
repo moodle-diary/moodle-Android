@@ -3,6 +3,7 @@ package eu.tutorial.moodle.ui.post
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -14,37 +15,59 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TimePicker
+import androidx.compose.material3.TimePickerColors
+import androidx.compose.material3.TimePickerDefaults
+import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.ui.AppViewModelProvider
+import eu.tutorial.moodle.ui.theme.poppins
 import java.time.LocalDate
 import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
+@ExperimentalMaterial3Api
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PostScreen(
     navController: NavController,
     viewModel: PostViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    var selectedHour by remember { mutableStateOf(0) }
+    var selectedMinute by remember { mutableStateOf(0) }
+    var showDialog by remember { mutableStateOf(false) }
+
+    val timePickerState = rememberTimePickerState(
+        initialHour = selectedHour,
+        initialMinute = selectedMinute
+    )
 
     // TODO stateList 들 viewModel 로 이전
     val localDate: LocalDate = LocalDate.now()
@@ -179,10 +202,44 @@ fun PostScreen(
 
             Row(
                 modifier = Modifier
+                    .padding(20.dp, 0.dp)
                     .fillMaxWidth()
                     .padding(bottom = 24.dp),
-                horizontalArrangement = Arrangement.Center
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
+                Column(
+                    modifier = Modifier
+                        .width(50.dp)
+                        .height(60.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.clock),
+                        contentDescription = "clock",
+                        modifier = Modifier
+                            .size(24.dp)
+                            .padding(bottom = 3.dp)
+                            .clickable { showDialog = true }
+                    )
+                    if (selectedHour == 0){
+                        Text(
+                            text = "시간 입력",
+                            fontSize = 11.sp,
+                            fontFamily = poppins,
+                            color = Color(0XFFEDEDED).copy(alpha = 0.6f)
+                        )
+                    }
+                    else {
+                        Text(
+                            text = "$selectedHour : $selectedMinute",
+                            fontSize = 11.sp,
+                            fontFamily = poppins,
+                            color = Color(0XFFEDEDED).copy(alpha = 0.6f)
+                        )
+                    }
+                }
                 Button(
                     onClick = {
                         viewModel.showDialog = true
@@ -197,12 +254,17 @@ fun PostScreen(
                     )
                 ) {
                     Text(
+                        text = "저장하기",
                         fontSize = 16.sp,
                         fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                        text = "저장하기",
                         color = Color(0XFFEDEDED),
                     )
                 }
+                Box(
+                    modifier = Modifier
+                        .width(50.dp)
+                        .background(Color.Transparent)
+                )
 
                 if (viewModel.showDialog) {
                     SaveDialog(
@@ -213,6 +275,78 @@ fun PostScreen(
                         isCancel = viewModel.isCancel,
                     ){ dialogVisible -> viewModel.showDialog = dialogVisible }
                 }
+
+                if (showDialog) {
+                    AlertDialog(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(
+                                color = Color(0xFFB1B1B1),
+                                shape = RoundedCornerShape(size = 12.dp)
+                            ),
+                        onDismissRequest = { showDialog = false }
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(12.dp))
+                                .background(
+                                    color = Color.LightGray.copy(alpha = 0.3f)
+                                )
+                                .padding(top = 28.dp, start = 20.dp, end = 20.dp, bottom = 12.dp),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            TimePicker(
+                                state = timePickerState,
+                                colors = TimePickerDefaults.colors(
+                                    timeSelectorSelectedContainerColor = Color(0xFFFFC7A7),         // 시, 분 표시된 네모 박스 배경화면 selected
+                                    timeSelectorUnselectedContainerColor = Color(0xFFFFE5D6),       // unselected
+                                    clockDialSelectedContentColor = Color(0xFFFF1E00),              // 내가 선택한 시계 숫자 색, just one
+                                    clockDialUnselectedContentColor = Color(0xFF000000),            // 시계 숫자 색
+                                    periodSelectorSelectedContainerColor = Color(0xFFDD9481),       // 오전, 오후 박스 선택된 컨테이너 배경
+                                    periodSelectorSelectedContentColor = Color(0xFF0F0D0D),
+                                    periodSelectorBorderColor = Color(0xFF0F0D0D),
+                                    periodSelectorUnselectedContainerColor = Color.Transparent,
+                                    periodSelectorUnselectedContentColor = Color(0xFF0F0D0D),
+                                    clockDialColor = Color.White,                                            // 시계 배경색
+                                    selectorColor = Color(0xFF6D6A6A)
+                                )
+                            )
+
+                            Row(
+                                modifier = Modifier
+                                    .padding(top = 12.dp)
+                                    .fillMaxWidth(),
+                                horizontalArrangement = Arrangement.End
+                            ) {
+                                TextButton(onClick = { showDialog = false }) {
+                                    Text(
+                                        text = "취소",
+                                        fontSize = 16.sp,
+                                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                                        color = Color(0xFF000000),
+                                    )
+                                }
+
+                                TextButton(
+                                    onClick = {
+                                        showDialog = false
+                                        selectedHour = timePickerState.hour
+                                        selectedMinute = timePickerState.minute
+                                    }
+                                ) {
+                                    Text(
+                                        text = "저장",
+                                        fontSize = 16.sp,
+                                        fontFamily = FontFamily(Font(R.font.poppins_bold)),
+                                        color = Color(0xFF000000),
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+
             }
         }
     }
@@ -236,5 +370,5 @@ fun PageCard(page: Int, modifier: Modifier = Modifier, content: @Composable () -
 @Preview
 fun PostEmotionScreenPreview() {
     val navController = rememberNavController()
-    PostScreen(navController)
+    //PostScreen(navController)
 }
