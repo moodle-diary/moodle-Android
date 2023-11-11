@@ -13,6 +13,9 @@ interface DiaryDao {
     suspend fun insertDiary(diary: Diary): Long // 별도의 스레드에서 실행하도록 한다. // 여기 suspend
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertEmotion(emotions: Emotions)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCause(cause: Cause)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -35,9 +38,17 @@ interface DiaryDao {
 
     // 오늘 하루의 emotion, text
     @Query(
-        "SELECT emotions, diaryText FROM diaries WHERE diaries.currentDate = :currentDate"
+        "SELECT diaryText FROM diaries WHERE diaries.currentDate = :currentDate"
     )
     fun getDiaries(currentDate: String): List<DiaryDto>
+
+    @Query(
+        "SELECT emotions.emotion as iconDescription " +
+                "FROM diaries " +
+                "INNER JOIN emotions on emotions.diaryId = diaries.id " +
+                "WHERE diaries.currentDate = :currentDate"
+    )
+    fun getEmotions(currentDate: String): List<IconDto>
 
     // 우울의 cause
     @Query(
