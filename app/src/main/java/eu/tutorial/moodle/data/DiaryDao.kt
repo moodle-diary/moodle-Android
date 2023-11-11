@@ -92,12 +92,12 @@ interface DiaryDao {
     fun getComments(commentDate: String): List<CommentDto>
 
     @Query(
-        "SELECT causeType FROM causeType"
+        "SELECT causeType, iconId FROM causeType"
     )
     fun getCauseTypes(): List<CauseTypeDto>
 
     @Query(
-        "SELECT placeType FROM placeType"
+        "SELECT placeType, iconId FROM placeType"
     )
     fun getPlaceTypes(): List<PlaceTypeDto>
 

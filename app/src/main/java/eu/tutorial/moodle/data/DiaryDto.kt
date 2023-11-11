@@ -14,8 +14,14 @@ data class CauseGrade(
     val cnt: Int
 )
 
+data class TypeDto(
+    val iconId: String,
+    val typeDes: String
+)
+
 data class CauseTypeDto(
-    val causeType: String
+    val causeType: String,
+    val iconId: String = "default"
 )
 
 data class PlaceGrade(
@@ -24,7 +30,8 @@ data class PlaceGrade(
 )
 
 data class PlaceTypeDto(
-    val placeType: String
+    val placeType: String,
+    val iconId: String = "default",
 )
 
 data class CommentDto(

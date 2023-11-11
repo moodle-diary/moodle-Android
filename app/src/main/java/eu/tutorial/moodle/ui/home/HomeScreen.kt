@@ -215,15 +215,6 @@ fun DetailHomeScreen(
     }
 }
 
-fun getDiaryEmotion(diaryList: List<DiaryDto>): Int {
-    var emotion = 0
-
-    for (i in diaryList)
-        emotion += i.emotions
-
-    return emotion
-}
-
 fun getDiaryText(diaryList: List<DiaryDto>): String {
     var result = ""
 

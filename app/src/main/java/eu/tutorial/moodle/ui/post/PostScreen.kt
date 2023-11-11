@@ -74,7 +74,7 @@ fun PostScreen(
     val day = localDate.dayOfMonth
     val month = localDate.dayOfWeek.getDisplayName(java.time.format.TextStyle.FULL, Locale.KOREAN)
 
-    val actualPageCount = 5
+    val actualPageCount = 4
     val initialPage = 0
     val pagerState = rememberPagerState(
         initialPage = initialPage,
@@ -170,8 +170,6 @@ fun PostScreen(
                     when (actualPage) {
                         0 -> MoodGrid(
                             buttonStates = emotionButtonStates,
-                            diaryUiState = viewModel.diaryUiState,
-                            onClick = viewModel::updateDiaryUiState,
                             navController = navController
                         )
 
@@ -186,11 +184,6 @@ fun PostScreen(
                         )
 
                         3 -> PostGrid(
-                            diaryUiState = viewModel.diaryUiState,
-                            valueChange = viewModel::updateDiaryUiState
-                        )
-
-                        4 -> ThoughtGrid(
                             diaryUiState = viewModel.diaryUiState,
                             valueChange = viewModel::updateDiaryUiState
                         )
@@ -223,15 +216,14 @@ fun PostScreen(
                             .padding(bottom = 3.dp)
                             .clickable { showDialog = true }
                     )
-                    if (selectedHour == 0){
+                    if (selectedHour == 0) {
                         Text(
                             text = "시간 입력",
                             fontSize = 11.sp,
                             fontFamily = poppins,
                             color = Color(0XFFEDEDED).copy(alpha = 0.6f)
                         )
-                    }
-                    else {
+                    } else {
                         Text(
                             text = "$selectedHour : $selectedMinute",
                             fontSize = 11.sp,
@@ -268,12 +260,13 @@ fun PostScreen(
 
                 if (viewModel.showDialog) {
                     SaveDialog(
+                        emotionButtonStates = emotionButtonStates,
                         causeButtonStates = causeButtonStates,
                         placeButtonStates = placeButtonStates,
                         navController = navController,
                         viewModel = viewModel,
                         isCancel = viewModel.isCancel,
-                    ){ dialogVisible -> viewModel.showDialog = dialogVisible }
+                    ) { dialogVisible -> viewModel.showDialog = dialogVisible }
                 }
 
                 if (showDialog) {

@@ -53,8 +53,6 @@ import java.time.LocalDate
 @Composable
 fun MoodGrid(
     buttonStates: SnapshotStateList<SnapshotStateList<Boolean>>,
-    diaryUiState: DiaryUiState,
-    onClick : (DiaryDetails) -> Unit,
     navController: NavController
 ) {
 
@@ -118,11 +116,7 @@ fun MoodGrid(
                             onClick = {
                                 // 클릭된 버튼의 상태를 토글합니다.
                                 buttonStates[index / 4][index % 4] = !isClicked
-                                onClick(
-                                    diaryUiState.diaryDetails.copy(
-                                        currentDate = LocalDate.now().toString()
-                                    )
-                                )
+
                             },
                             modifier = Modifier
                                 .size(50.dp)
@@ -160,7 +154,10 @@ fun MoodGrid(
                     modifier = Modifier
                         .defaultMinSize(minWidth = 42.dp, minHeight = 42.dp),
                     contentPadding = PaddingValues(bottom = 3.dp),
-                    border = BorderStroke(2.dp, Brush.linearGradient(listOf(Color(0XFFFFCF25), Color(0XFFF198FF)))),
+                    border = BorderStroke(
+                        2.dp,
+                        Brush.linearGradient(listOf(Color(0XFFFFCF25), Color(0XFFF198FF)))
+                    ),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0XFF363637),
                     ),

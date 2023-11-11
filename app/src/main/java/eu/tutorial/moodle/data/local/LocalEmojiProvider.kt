@@ -1,5 +1,7 @@
 package eu.tutorial.moodle.data.local
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Place
 import eu.tutorial.moodle.R
 
 val allEmojis = mapOf<String, Int>(
@@ -24,4 +26,6 @@ val allEmojis = mapOf<String, Int>(
     "패스트푸드" to R.drawable.free_icon_airplane_3182984,
     "맥시칸" to R.drawable.free_icon_airplane_3182984,
     "채식" to R.drawable.free_icon_airplane_3182984,
+    "default" to R.drawable.free_icon_airplane_3182984,
+    "none" to R.drawable.plusbutton
 )

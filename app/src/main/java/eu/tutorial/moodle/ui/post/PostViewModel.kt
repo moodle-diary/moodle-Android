@@ -1,7 +1,8 @@
 package eu.tutorial.moodle.ui.post
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
@@ -14,10 +15,18 @@ import eu.tutorial.moodle.data.Emotions
 import eu.tutorial.moodle.data.Place
 import eu.tutorial.moodle.data.PlaceType
 import eu.tutorial.moodle.data.PlaceTypeDto
+import java.time.LocalDate
 
+@RequiresApi(Build.VERSION_CODES.O)
 class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() {
 
-    var diaryUiState by mutableStateOf(DiaryUiState())
+    var diaryUiState by mutableStateOf(
+        DiaryUiState(
+            diaryDetails = DiaryDetails(
+                currentDate = LocalDate.now().toString()
+            )
+        )
+    )
         private set
 
     // TODO have to impl valid
@@ -48,6 +57,7 @@ class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() 
         placesTypes = diaryRepository.getPlaceTypes()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     suspend fun saveDiary(): Long {
         return diaryRepository.insertDiary(diaryUiState.diaryDetails.toDiary())
     }
@@ -73,9 +83,12 @@ class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() 
         )
     }
 
+    // TODO: cause iconId 추가
     suspend fun saveCauseType(causeType: String) {
         diaryRepository.insertCauseType(
-            CauseType(causeType = causeType)
+            CauseType(
+                causeType = causeType
+            )
         )
     }
 
