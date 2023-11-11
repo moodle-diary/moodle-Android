@@ -52,7 +52,7 @@ import java.time.LocalDate
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MoodGrid(
-    buttonStates : SnapshotStateList<SnapshotStateList<Boolean>>,
+    buttonStates: SnapshotStateList<SnapshotStateList<Boolean>>,
     diaryUiState: DiaryUiState,
     onClick : (DiaryDetails) -> Unit,
     navController: NavController
@@ -120,8 +120,7 @@ fun MoodGrid(
                                 buttonStates[index / 4][index % 4] = !isClicked
                                 onClick(
                                     diaryUiState.diaryDetails.copy(
-                                        currentDate = LocalDate.now().toString(),
-                                        emotions = convertToBitMap(buttonStates)
+                                        currentDate = LocalDate.now().toString()
                                     )
                                 )
                             },
@@ -197,18 +196,4 @@ fun MoodGrid(
 
         }
     }
-}
-
-fun convertToBitMap(
-    buttonStates :  SnapshotStateList<SnapshotStateList<Boolean>>,
-) : Int{
-    var result = 0b0000000000000000
-
-    for (i in 0 until 4)
-        for (j in 0 until 4 )
-            if(buttonStates[i][j]){
-                result = result or 1.shl(i * 4 + j)
-            }
-
-    return result
 }

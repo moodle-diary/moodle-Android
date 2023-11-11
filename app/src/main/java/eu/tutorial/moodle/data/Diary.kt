@@ -10,13 +10,24 @@ import androidx.room.PrimaryKey
 )
 data class Diary(
     @PrimaryKey(autoGenerate = true)
-    val id : Long = 0,
+    val id: Long = 0,
 
-    val currentDate : String,
-    val emotions : Int,
+    val currentDate: String,
 
-    val diaryText : String,
-    val thought : String,
+    val diaryText: String,
+    val thought: String,
+)
+
+@Entity(
+    tableName = "emotions"
+)
+data class Emotions(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "emotion_id")
+    val id: Long = 0,
+
+    val diaryId: Long = 0,
+    val emotion: String,
 )
 
 @Entity(
@@ -25,10 +36,10 @@ data class Diary(
 data class Cause(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "cause_id")
-    val id : Long = 0,
+    val id: Long = 0,
 
-    val diaryId : Long = 0,
-    val cause : String,
+    val diaryId: Long = 0,
+    val cause: String,
 )
 
 @Entity(
@@ -36,9 +47,9 @@ data class Cause(
 )
 data class CauseType(
     @PrimaryKey(autoGenerate = true)
-    val id : Long = 0,
+    val id: Long = 0,
 
-    val causeType : String
+    val causeType: String
 )
 
 @Entity(
@@ -47,10 +58,10 @@ data class CauseType(
 data class Place(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "place_id")
-    val id : Long = 0,
+    val id: Long = 0,
 
-    val diaryId : Long = 0,
-    val placeDescription : String,
+    val diaryId: Long = 0,
+    val placeDescription: String,
 )
 
 @Entity(
@@ -58,9 +69,9 @@ data class Place(
 )
 data class PlaceType(
     @PrimaryKey(autoGenerate = true)
-    val id : Long = 0,
+    val id: Long = 0,
 
-    val placeType : String
+    val placeType: String
 )
 
 @Entity(
@@ -68,10 +79,10 @@ data class PlaceType(
 )
 data class Comment(
     @PrimaryKey(autoGenerate = true)
-    val id : Long = 0,
+    val id: Long = 0,
 
-    val commentDate : String,
-    val comment : String,
+    val commentDate: String,
+    val comment: String,
 )
 
 
