@@ -4,15 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,44 +23,20 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
-import eu.tutorial.moodle.data.CauseDto
-import eu.tutorial.moodle.data.PlaceDto
+import eu.tutorial.moodle.data.IconDto
 import eu.tutorial.moodle.data.local.allEmojis
 
 @Composable
 fun IconsComponent(
-    isHome : Boolean,
     modifier: Modifier = Modifier,
-    causeList : List<CauseDto> = emptyList(),
-    placeList : List<PlaceDto> = emptyList(),
+    iconList : List<IconDto> = emptyList(),
 ){
-    val emojis : List<String> = causeList.map { it.cause } +
-            placeList.map { it.placeDescription }
+    val emojis : List<String> = iconList.map { it.iconDescription }
+
     Column(
         modifier = modifier
             .fillMaxWidth()
     ) {
-        if (isHome){
-            Row(
-                modifier = modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "오늘의 활동",
-                    fontSize = 16.sp,
-                    fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                    color = Color(0XFFDFDFDF)
-                )
-                Text(
-                    text = "모두 보기",
-                    fontSize = 12.sp,
-                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                    color = Color(0XFF7E7E7E)
-                )
-            }
-        }
-
         if(emojis.isNotEmpty())
             DetailCard(emojis = emojis)
         else
