@@ -9,6 +9,11 @@ data class IconDto(
     val iconDescription: String,
 )
 
+data class EmotionGrade(
+    val emotion: String,
+    val cnt: Int
+)
+
 data class CauseGrade(
     val cause: String,
     val cnt: Int

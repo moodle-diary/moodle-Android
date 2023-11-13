@@ -1,6 +1,7 @@
 package eu.tutorial.moodle.ui.chart
 
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,26 +10,28 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Pets
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.DescriptionDto
+import eu.tutorial.moodle.data.TypeDto
+import eu.tutorial.moodle.data.local.allEmojis
+import eu.tutorial.moodle.data.local.emotionList
 
 @Composable
 fun RowRankItem(
-    listState : List<DescriptionDto>
+    listState: List<DescriptionDto>,
+    typeState: List<TypeDto> = emotionList,
 ) {
-    Log.d("inital", listState.toString())
+
     Row(
         modifier = Modifier
             .padding(start = 24.dp, end = 24.dp)
@@ -36,20 +39,30 @@ fun RowRankItem(
             .height(104.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        repeat( listState.size ){
-            RankItem(
-                description = listState[it].description,
-                cnt = listState[it].cnt
-            )
+        repeat(listState.size) { it ->
+            val des = listState[it].description
+            val type = typeState.find { it.typeDes == des }
+
+            if (type != null) {
+                Log.d("ss", type.iconId + " " + des)
+
+
+                RankItem(
+                    description = des,
+                    cnt = listState[it].cnt,
+                    iconId = type.iconId
+                )
+            }
         }
     }
 }
 
 @Composable
 fun RankItem(
-    description : String,
-    cnt : Int
-){
+    description: String,
+    cnt: Int,
+    iconId: String
+) {
     Column(
         modifier = Modifier
             .width(60.dp)
@@ -57,13 +70,16 @@ fun RankItem(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Icon(
-            imageVector = Icons.Default.Pets,
-            contentDescription = "icon",
-            modifier = Modifier
-                .size(60.dp)
-                .padding(bottom = 12.dp)
-        )
+        allEmojis[iconId]?.let { painterResource(id = it) }?.let {
+            Image(
+                painter = it,
+                contentDescription = "icon",
+                modifier = Modifier
+                    .size(60.dp)
+                    .padding(bottom = 12.dp)
+            )
+        }
+
         Text(
             text = description,
             fontSize = 12.sp,

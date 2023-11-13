@@ -69,6 +69,15 @@ interface DiaryDao {
     fun getPlaces(currentDate: String): List<IconDto>
 
     @Query(
+        "SELECT emotion, COUNT(emotion_id) AS cnt FROM diaries " +
+                "INNER JOIN emotions on emotions.diaryId = diaries.id " +
+                "WHERE diaries.currentDate LIKE :targetMonth " +
+                "GROUP BY emotion " +
+                "ORDER BY COUNT(emotion_id) DESC"
+    )
+    fun getEmotionGrade(targetMonth: String): List<EmotionGrade>
+
+    @Query(
         "SELECT cause, COUNT(cause_id) AS cnt FROM diaries " +
                 "INNER JOIN cause on cause.diaryId = diaries.id " +
                 "WHERE diaries.currentDate LIKE :targetMonth " +
