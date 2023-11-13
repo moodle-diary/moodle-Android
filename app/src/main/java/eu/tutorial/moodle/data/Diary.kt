@@ -49,7 +49,8 @@ data class CauseType(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
 
-    val causeType: String
+    val causeType: String,
+    val iconId: String = "default",
 )
 
 @Entity(
@@ -71,7 +72,8 @@ data class PlaceType(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
 
-    val placeType: String
+    val placeType: String,
+    val iconId: String = "default",
 )
 
 @Entity(
