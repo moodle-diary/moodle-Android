@@ -1,7 +1,5 @@
 package eu.tutorial.moodle.ui.post
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -37,26 +35,14 @@ import androidx.navigation.NavController
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.ui.navigation.HomeDestination
 import kotlinx.coroutines.launch
-import eu.tutorial.moodle.data.local.emotionData
-import java.time.LocalDate
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun SaveDialog(
-    emotionButtonStates: SnapshotStateList<SnapshotStateList<Boolean>>,
-    causeButtonStates: SnapshotStateList<Boolean>,
-    placeButtonStates: SnapshotStateList<Boolean>,
-    isCancel: Boolean,
-    navController: NavController,
-    viewModel: PostViewModel,
-    onChange: (Boolean) -> Unit
-) {
+fun GoodDialog(
+    navController : NavController,
+    onChange : (Boolean) -> Unit
+){
     val coroutineScope = rememberCoroutineScope()
-    val dialogText = if (isCancel) {
-        "저장하지 않고 나가겠어요?"
-    } else {
-        "지금까지의 내용을 저장하시겠어요?"
-    }
+    val dialogText = "기분 좋은 상태로 저장할까요?"
     Dialog(
         onDismissRequest = { onChange(false) },
         properties = DialogProperties(
@@ -99,12 +85,7 @@ fun SaveDialog(
                                 minHeight = 46.dp
                             )
                             .clip(shape = CircleShape.copy(all = CornerSize(32.dp))),
-                        contentPadding = PaddingValues(
-                            top = 16.dp,
-                            bottom = 16.dp,
-                            start = 26.dp,
-                            end = 26.dp
-                        ),
+                        contentPadding = PaddingValues(top = 16.dp, bottom = 16.dp, start = 26.dp, end = 26.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color.Transparent
                         ),
@@ -114,11 +95,7 @@ fun SaveDialog(
                         )
                     ) {
                         Text(
-                            text = if (isCancel) {
-                                "계속 작성하기"
-                            } else {
-                                "조금 더 작성하기"
-                            },
+                            text = "취소",
                             fontSize = 12.sp,
                             color = Color(0XFF888888),
                             fontFamily = FontFamily(Font(R.font.poppins_bold))
@@ -129,27 +106,6 @@ fun SaveDialog(
                             //TODO : Transaction 고려
                             coroutineScope.launch {
                                 navController.navigate(HomeDestination.route)
-
-                                val key = viewModel.saveDiary()
-
-                                for (i in 0 until emotionButtonStates.size)
-                                    for (j in 0 until emotionButtonStates[i].size)
-                                        if (emotionButtonStates[i][j]) viewModel.saveEmotions(
-                                            description = emotionData[i * 4 + j],
-                                            diaryId = key
-                                        )
-
-                                for (i in 0 until causeButtonStates.size)
-                                    if (causeButtonStates[i]) viewModel.saveCause(
-                                        viewModel.causeTypes[i].causeType, key
-                                    )
-
-                                for (i in 0 until placeButtonStates.size)
-                                    if (placeButtonStates[i]) viewModel.savePlace(
-                                        viewModel.placesTypes[i].placeType, key
-                                    )
-
-
                             }
                         },
                         colors = ButtonDefaults.buttonColors(
@@ -162,19 +118,10 @@ fun SaveDialog(
                                 minHeight = 46.dp
                             )
                             .clip(shape = CircleShape.copy(all = CornerSize(32.dp))),
-                        contentPadding = PaddingValues(
-                            top = 13.dp,
-                            bottom = 13.dp,
-                            start = 21.dp,
-                            end = 21.dp
-                        ),
+                        contentPadding = PaddingValues(top = 13.dp, bottom = 13.dp, start = 21.dp, end = 21.dp),
                     ) {
                         Text(
-                            text = if (isCancel) {
-                                "나가기"
-                            } else {
-                                "저장하기"
-                            },
+                            text = "저장하기",
                             fontSize = 14.sp,
                             color = Color(0XFF151515),
                             fontFamily = FontFamily(Font(R.font.poppins_bold))

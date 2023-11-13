@@ -1,12 +1,13 @@
 package eu.tutorial.moodle.ui.chart
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -21,14 +22,19 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.DescriptionDto
+import eu.tutorial.moodle.data.TypeDto
+import eu.tutorial.moodle.data.local.emotionList
 
 @Composable
-fun FoodRankCard(
-    foodState : List<DescriptionDto>
+fun RankCard(
+    rankState: List<DescriptionDto>,
+    typeState: List<TypeDto> = emotionList,
+    category: String
 ) {
 
     var isFolder by remember { mutableStateOf(true) } // 접혀 있으면 true
@@ -50,7 +56,7 @@ fun FoodRankCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "식사 순위",
+                text = category,
                 fontSize = 16.sp,
                 color = Color(0XFFDFDFDF),
                 fontFamily = FontFamily(Font(R.font.poppins_bold))
@@ -61,7 +67,7 @@ fun FoodRankCard(
                     fontSize = 12.sp,
                     color = Color(0XFF7E7E7E),
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                    modifier = Modifier.clickable{isFolder = false}
+                    modifier = Modifier.clickable { isFolder = false }
                 )
             } else {
                 Text(
@@ -69,19 +75,28 @@ fun FoodRankCard(
                     fontSize = 12.sp,
                     color = Color(0XFF7E7E7E),
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                    modifier = Modifier.clickable{isFolder = true}
+                    modifier = Modifier.clickable { isFolder = true }
                 )
             }
         }
 
+        // TODO: RowRankItem 출력 시 rankState 3개로 끊기
         if (isFolder) {
             RowRankItem(
-                listState = foodState
+                listState = rankState,
+                typeState = typeState
             )
         } else {
             ColumnRankItem(
-                listState = foodState
+                listState = rankState,
             )
         }
     }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Preview
+@Composable
+fun EmotionRankCardPreview() {
+//    EmotionRankCard()
 }

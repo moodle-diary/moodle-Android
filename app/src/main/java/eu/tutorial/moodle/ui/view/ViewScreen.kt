@@ -5,7 +5,6 @@ import androidx.annotation.RequiresApi
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -58,6 +57,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
+import androidx.compose.animation.AnimatedVisibility
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -71,12 +71,12 @@ fun ViewScreen(
 ) {
     val diaryList = viewModel.diaryUiState
 
-    val activityList = viewModel.causesUiState
+    val causeList = viewModel.causesUiState
     val placeList = viewModel.placesUiState
 
     val coroutineScope = rememberCoroutineScope()
 
-    LaunchedEffect(Unit){
+    LaunchedEffect(Unit) {
 
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
@@ -128,32 +128,44 @@ fun ViewScreen(
             }
         }
 
-        emotionComponent()
-
-
         Text(
-            text = "활동 아이콘",
+            text = "감정 아이콘",
             fontSize = 16.sp,
             fontFamily = FontFamily(Font(R.font.poppins_bold)),
             color = Color(0XFFDFDFDF),
             modifier = Modifier.padding(top = 24.dp)
         )
-        IconsComponent(
-            isHome = false,
-            causeList = activityList,
-            placeList = placeList,
-        )
+
+        IconsComponent(modifier = Modifier.height(166.dp))
 
         Text(
-            text = "글과 사진",
+            text = "원인 아이콘",
+            fontSize = 16.sp,
+            fontFamily = FontFamily(Font(R.font.poppins_bold)),
+            color = Color(0XFFDFDFDF),
+            modifier = Modifier.padding(top = 24.dp)
+        )
+
+        IconsComponent(modifier = Modifier.height(97.dp))
+
+        Text(
+            text = "장소 아이콘",
+            fontSize = 16.sp,
+            fontFamily = FontFamily(Font(R.font.poppins_bold)),
+            color = Color(0XFFDFDFDF),
+            modifier = Modifier.padding(top = 24.dp)
+        )
+
+        IconsComponent(modifier = Modifier.height(97.dp))
+
+        Text(
+            text = "글",
             fontSize = 16.sp,
             fontFamily = FontFamily(Font(R.font.poppins_bold)),
             color = Color(0XFFDFDFDF),
             modifier = Modifier.padding(top = 24.dp)
         )
         NotesComponent(text = getDiaryText(diaryList))
-
-        ImgComponent()
 
         Row(
             modifier = Modifier
@@ -168,7 +180,12 @@ fun ViewScreen(
                         minHeight = 31.dp
                     )
                     .padding(top = 24.dp, bottom = 57.dp),
-                contentPadding = PaddingValues(top = 5.dp, bottom = 5.dp, start = 17.dp, end = 17.dp),
+                contentPadding = PaddingValues(
+                    top = 5.dp,
+                    bottom = 5.dp,
+                    start = 17.dp,
+                    end = 17.dp
+                ),
                 shape = RoundedCornerShape(20.dp),
                 border = BorderStroke(1.dp, Color(0XFFDFDFDF)),
                 colors = ButtonDefaults.buttonColors(
@@ -187,8 +204,8 @@ fun ViewScreen(
     Box(
         modifier = Modifier
             .background(color = Color(0X00000000))
-    ){
-        androidx.compose.animation.AnimatedVisibility(
+    ) {
+        AnimatedVisibility(
             visible = showCommentScreen,
             enter = slideInVertically(initialOffsetY = { it }),
             exit = slideOutVertically(targetOffsetY = { it }),
@@ -203,10 +220,10 @@ fun ViewScreen(
     }
 }
 
-fun getDiaryText(diaryList: List<DiaryDto>) : String {
+fun getDiaryText(diaryList: List<DiaryDto>): String {
     var result = ""
 
-    for ( i in diaryList)
+    for (i in diaryList)
         result += i.diaryText
 
     return result

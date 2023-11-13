@@ -1,7 +1,10 @@
 package eu.tutorial.moodle
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
@@ -30,4 +33,20 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    var isTextFieldFocused = false
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        if (isTextFieldFocused) {
+            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+            currentFocus!!.clearFocus()
+        }
+
+        return try {
+            super.dispatchTouchEvent(ev)
+        } catch (e: Exception) {
+            true
+        }
+    }
+
 }

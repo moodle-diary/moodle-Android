@@ -18,7 +18,7 @@ import eu.tutorial.moodle.ui.chart.ChartTopBar
 import eu.tutorial.moodle.ui.component.BottomNavBar
 import eu.tutorial.moodle.ui.home.DetailHomeScreen
 import eu.tutorial.moodle.ui.home.TopAppBar
-import eu.tutorial.moodle.ui.post.PostEmotionScreen
+import eu.tutorial.moodle.ui.post.PostScreen
 import eu.tutorial.moodle.ui.setting.SettingAlarmScreen
 import eu.tutorial.moodle.ui.setting.SettingPasswordScreen
 import eu.tutorial.moodle.ui.setting.SettingScreen
@@ -71,7 +71,7 @@ fun DiaryNavHost(
         }
 
         composable(route = PostDestination.route) {
-            PostEmotionScreen(
+            PostScreen(
                 navController = navController
             )
         }

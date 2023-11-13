@@ -22,6 +22,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import eu.tutorial.moodle.data.DescriptionDto
+import eu.tutorial.moodle.data.TypeDto
 import eu.tutorial.moodle.ui.AppViewModelProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -37,27 +38,36 @@ fun ChartScreen(
     navController: NavController,
 ) {
     val scrollState = rememberScrollState()
-    
+
+    val emotionState = viewModel.emotionList
     val causeState = viewModel.causeList
     val placeState = viewModel.placeList
-    val peopleState = viewModel.peopleList
-    val foodState = viewModel.foodList
 
-    val emptyDto = DescriptionDto(
-        description = "",
-        cnt = 0
-    )
+    val causeType = viewModel.causeTypes.map {
+        TypeDto(
+            iconId = it.iconId,
+            typeDes = it.causeType
+        )
+    }
+    val placeType = viewModel.placesTypes.map {
+        TypeDto(
+            iconId = it.iconId,
+            typeDes = it.placeType,
+        )
+    }
 
-    val maxList : ArrayList<DescriptionDto> = arrayListOf(emptyDto, emptyDto, emptyDto, emptyDto)
     val coroutineScope = rememberCoroutineScope()
 
-    // TODO : 날짜 변경 필요
-    LaunchedEffect(Unit){
+    // TODO : 날짜 변경 필요 몇 월인지를 받아온다
+    LaunchedEffect(Unit) {
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
                 // 데이터베이스 쿼리를 비동기적으로 수행
-                viewModel.getActList("2023-10")
-                viewModel.getPlaceList("2023-10")
+                viewModel.getEmotionList("2023-11")
+                viewModel.getActList("2023-11")
+                viewModel.getPlaceList("2023-11")
+                viewModel.getCauseTypes()
+                viewModel.getPlaceTypes()
             }
         }
 
@@ -71,27 +81,23 @@ fun ChartScreen(
             .padding(innerPaddingValues)
             .verticalScroll(scrollState)
     ) {
-
-        TopRankCard(
-            maxList = maxList.toList()
+//        TopRankCard(
+//            maxList = maxList.toList()
+//        )
+        RankCard(
+            rankState = emotionState,
+            category = "감정 순위"
         )
-
-        EmotionRankCard(
-            causeState = causeState
+        RankCard(
+            rankState = causeState,
+            typeState = causeType,
+            category = "원인 순위"
         )
-        ActivityRankCard(
-            causeState = causeState
+        RankCard(
+            rankState = placeState,
+            typeState = placeType,
+            category = "장소 순위"
         )
-        PlaceRankCard(
-            placeState = placeState
-        )
-        PeopleRankCard(
-            peopleState = peopleState
-        )
-        FoodRankCard(
-            foodState = foodState
-        )
-
     }
 }
 

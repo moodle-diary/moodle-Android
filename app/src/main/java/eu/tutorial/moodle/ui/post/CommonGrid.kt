@@ -1,5 +1,8 @@
 package eu.tutorial.moodle.ui.post
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,13 +37,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.data.TypeDto
+import eu.tutorial.moodle.data.local.allEmojis
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -49,13 +55,12 @@ import kotlinx.coroutines.withContext
 fun CommonGrid(
     title: String,
     subtitle: String,
-    data: List<String>,
+    data: List<TypeDto>,
     buttonStates: List<Boolean>,
     onItemClick: (Int) -> Unit,
-    icon: ImageVector,
-    save : (String) -> Unit,
-    dialogVisible : Boolean,
-    onChange : (Boolean) -> Unit,
+    save: (String) -> Unit,
+    dialogVisible: Boolean,
+    onChange: (Boolean) -> Unit,
 ) {
 
     Box(
@@ -103,22 +108,25 @@ fun CommonGrid(
 
                         IconButton(
                             onClick = {
-                                if(item != "plus")
+                                if (item.typeDes != "plus")
                                     onItemClick(index)
                                 else
-                                    onChange(true) },
+                                    onChange(true)
+                            },
                             modifier = Modifier
                                 .size(60.dp)
                                 .clip(RoundedCornerShape(20.dp))
                                 .background(backgroundColor)
                         ) {
-                            Icon(
-                                icon,
-                                contentDescription = "place"
-                            )
+                            allEmojis[item.iconId]?.let { painterResource(it) }?.let {
+                                Image(
+                                    painter = it,
+                                    contentDescription = null,
+                                )
+                            }
                         }
                         Text(
-                            text = item,
+                            text = item.typeDes,
                             fontSize = 12.sp,
                             fontFamily = FontFamily(Font(R.font.poppins_regular)),
                             textAlign = TextAlign.Center,
@@ -132,26 +140,37 @@ fun CommonGrid(
             }
         }
 
-        if (dialogVisible){
+        if (dialogVisible) {
             SaveTypeDialog(
                 save = save
-            ){
+            ) {
                 onChange(it)
             }
         }
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CauseGrid(
-    causeButtonStates : SnapshotStateList<Boolean>,
-    viewModel : PostViewModel,
+    causeButtonStates: SnapshotStateList<Boolean>,
+    viewModel: PostViewModel,
 ) {
     val coroutineScope = rememberCoroutineScope()
     var dialogVisible by remember { mutableStateOf(false) }
-    val data = viewModel.causeTypes.map { it.causeType } + listOf("plus")
+    val data = viewModel.causeTypes.map {
+        TypeDto(
+            iconId = it.iconId,
+            typeDes = it.causeType
+        )
+    } + listOf(
+        TypeDto(
+            iconId = "none",
+            typeDes = "plus"
+        )
+    )
 
-    LaunchedEffect(dialogVisible){
+    LaunchedEffect(dialogVisible) {
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
                 // 데이터베이스 쿼리를 비동기적으로 수행
@@ -169,7 +188,6 @@ fun CauseGrid(
         subtitle = "오늘 무엇이 나를 우울 하게 했나요?",
         data = data,
         buttonStates = causeButtonStates,
-        icon = Icons.Default.Pets,
         onItemClick = { index ->
             // Handle item click here
             causeButtonStates[index] = !causeButtonStates[index]
@@ -180,21 +198,33 @@ fun CauseGrid(
             }
         },
         dialogVisible = dialogVisible,
-    ){
+    ) {
         dialogVisible = it
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PlaceGrid(
-    placeButtonStates : SnapshotStateList<Boolean>,
+    placeButtonStates: SnapshotStateList<Boolean>,
     viewModel: PostViewModel,
 ) {
-    val data = viewModel.placesTypes.map { it.placeType } + listOf("plus")
     val coroutineScope = rememberCoroutineScope()
     var dialogVisible by remember { mutableStateOf(false) }
 
-    LaunchedEffect(dialogVisible){
+    val data = viewModel.placesTypes.map {
+        TypeDto(
+            iconId = it.iconId,
+            typeDes = it.placeType
+        )
+    } + listOf(
+        TypeDto(
+            iconId = "none",
+            typeDes = "plus"
+        )
+    )
+
+    LaunchedEffect(dialogVisible) {
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
                 // 데이터베이스 쿼리를 비동기적으로 수행
@@ -212,7 +242,6 @@ fun PlaceGrid(
         subtitle = "어느 곳에서 우울 했나요?",
         data = data,
         buttonStates = placeButtonStates,
-        icon = Icons.Default.Place,
         onItemClick = { index ->
             // Handle item click here
             placeButtonStates[index] = !placeButtonStates[index]
@@ -223,7 +252,7 @@ fun PlaceGrid(
             }
         },
         dialogVisible = dialogVisible
-    ){
+    ) {
         dialogVisible = it
     }
 }
