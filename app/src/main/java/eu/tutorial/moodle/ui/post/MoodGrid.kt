@@ -124,7 +124,7 @@ fun MoodGrid(
                                 .background(backgroundColor) // 배경색 설정
                         ) {
                             Icon(
-                                Icons.Default.AddCircle,
+                                imageVector = Icons.Default.AddCircle,
                                 contentDescription = "circle"
                             )
                         }

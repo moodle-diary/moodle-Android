@@ -27,10 +27,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.DescriptionDto
+import eu.tutorial.moodle.data.TypeDto
+import eu.tutorial.moodle.data.local.emotionList
 
 @Composable
 fun RankCard(
     rankState: List<DescriptionDto>,
+    typeState: List<TypeDto> = emotionList,
     category: String
 ) {
 

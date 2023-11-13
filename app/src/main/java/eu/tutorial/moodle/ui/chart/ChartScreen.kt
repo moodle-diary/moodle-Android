@@ -22,6 +22,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import eu.tutorial.moodle.data.DescriptionDto
+import eu.tutorial.moodle.data.TypeDto
 import eu.tutorial.moodle.ui.AppViewModelProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -42,6 +43,19 @@ fun ChartScreen(
     val causeState = viewModel.causeList
     val placeState = viewModel.placeList
 
+    val causeType = viewModel.causeTypes.map {
+        TypeDto(
+            iconId = it.iconId,
+            typeDes = it.causeType
+        )
+    }
+    val placeType = viewModel.placesTypes.map {
+        TypeDto(
+            iconId = it.iconId,
+            typeDes = it.placeType,
+        )
+    }
+
     val coroutineScope = rememberCoroutineScope()
 
     // TODO : 날짜 변경 필요 몇 월인지를 받아온다
@@ -52,6 +66,8 @@ fun ChartScreen(
                 viewModel.getEmotionList("2023-11")
                 viewModel.getActList("2023-11")
                 viewModel.getPlaceList("2023-11")
+                viewModel.getCauseTypes()
+                viewModel.getPlaceTypes()
             }
         }
 
@@ -74,10 +90,12 @@ fun ChartScreen(
         )
         RankCard(
             rankState = causeState,
+            typeState = causeType,
             category = "원인 순위"
         )
         RankCard(
             rankState = placeState,
+            typeState = placeType,
             category = "장소 순위"
         )
     }
