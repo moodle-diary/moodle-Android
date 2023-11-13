@@ -59,10 +59,10 @@ fun MoodGrid(
     var showDialog = remember { mutableStateOf(false) }
 
     val data = listOf(
-        "화남", "긴장됨", "행복함", "기쁨",
-        "걱정됨", "불편함", "편안함", "신남",
-        "외로음", "슬픔", "차분함", "만족함",
-        "힘없음", "실망함", "느긋함", "감사함"
+        "슬픔", "후회", "역겨움", "미움",
+        "원망", "후회", "자책", "질투",
+        "억울", "비참", "지침", "무안",
+        "민망", "허망", "아쉬움", "분노",
     )
 
     Box(
@@ -116,7 +116,6 @@ fun MoodGrid(
                             onClick = {
                                 // 클릭된 버튼의 상태를 토글합니다.
                                 buttonStates[index / 4][index % 4] = !isClicked
-
                             },
                             modifier = Modifier
                                 .size(50.dp)

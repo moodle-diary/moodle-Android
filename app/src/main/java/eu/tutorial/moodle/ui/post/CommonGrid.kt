@@ -118,7 +118,6 @@ fun CommonGrid(
                                 .clip(RoundedCornerShape(20.dp))
                                 .background(backgroundColor)
                         ) {
-
                             allEmojis[item.iconId]?.let { painterResource(it) }?.let {
                                 Image(
                                     painter = it,

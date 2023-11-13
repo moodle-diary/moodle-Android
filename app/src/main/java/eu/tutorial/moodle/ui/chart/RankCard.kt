@@ -83,11 +83,12 @@ fun RankCard(
         // TODO: RowRankItem 출력 시 rankState 3개로 끊기
         if (isFolder) {
             RowRankItem(
-                listState = rankState
+                listState = rankState,
+                typeState = typeState
             )
         } else {
             ColumnRankItem(
-                listState = rankState
+                listState = rankState,
             )
         }
     }
