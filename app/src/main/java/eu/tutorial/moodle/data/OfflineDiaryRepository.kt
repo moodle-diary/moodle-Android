@@ -26,6 +26,9 @@ class OfflineDiaryRepository(private val diaryDao: DiaryDao) : DiaryRepository {
         diaryDao.getComments(commentDate)
 
     // targetMonth 넘겨줄 때에 뒤에 "%" 추가 해야 합니다. because of LIKE
+    override fun getEmotionGrade(targetMonth: String): List<EmotionGrade> =
+        diaryDao.getEmotionGrade(targetMonth)
+
     override fun getCauseGrade(targetMonth: String): List<CauseGrade> =
         diaryDao.getCauseGrade(targetMonth)
 

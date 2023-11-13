@@ -16,6 +16,7 @@ interface DiaryRepository {
     fun getEmotions(currentDate: String): List<IconDto>
     fun getCauses(currentDate: String): List<IconDto>
     fun getPlaces(currentDate: String): List<IconDto>
+    fun getEmotionGrade(targetMonth: String): List<EmotionGrade>
     fun getCauseGrade(targetMonth: String): List<CauseGrade>
     fun getPlaceGrade(targetMonth: String): List<PlaceGrade>
     fun getCauseTypes(): List<CauseTypeDto>

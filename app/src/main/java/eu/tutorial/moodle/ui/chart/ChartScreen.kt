@@ -37,27 +37,21 @@ fun ChartScreen(
     navController: NavController,
 ) {
     val scrollState = rememberScrollState()
-    
+
+    val emotionState = viewModel.emotionList
     val causeState = viewModel.causeList
     val placeState = viewModel.placeList
-    val peopleState = viewModel.peopleList
-    val foodState = viewModel.foodList
 
-    val emptyDto = DescriptionDto(
-        description = "",
-        cnt = 0
-    )
-
-    val maxList : ArrayList<DescriptionDto> = arrayListOf(emptyDto, emptyDto, emptyDto, emptyDto)
     val coroutineScope = rememberCoroutineScope()
 
-    // TODO : 날짜 변경 필요
-    LaunchedEffect(Unit){
+    // TODO : 날짜 변경 필요 몇 월인지를 받아온다
+    LaunchedEffect(Unit) {
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
                 // 데이터베이스 쿼리를 비동기적으로 수행
-                viewModel.getActList("2023-10")
-                viewModel.getPlaceList("2023-10")
+                viewModel.getEmotionList("2023-11")
+                viewModel.getActList("2023-11")
+                viewModel.getPlaceList("2023-11")
             }
         }
 
@@ -71,27 +65,18 @@ fun ChartScreen(
             .padding(innerPaddingValues)
             .verticalScroll(scrollState)
     ) {
-
-        TopRankCard(
-            maxList = maxList.toList()
+//        TopRankCard(
+//            maxList = maxList.toList()
+//        )
+        RankCard(
+            rankState = emotionState
         )
-
-        EmotionRankCard(
-            causeState = causeState
+        RankCard(
+            rankState = causeState
         )
-        ActivityRankCard(
-            causeState = causeState
+        RankCard(
+            rankState = placeState
         )
-        PlaceRankCard(
-            placeState = placeState
-        )
-        PeopleRankCard(
-            peopleState = peopleState
-        )
-        FoodRankCard(
-            foodState = foodState
-        )
-
     }
 }
 

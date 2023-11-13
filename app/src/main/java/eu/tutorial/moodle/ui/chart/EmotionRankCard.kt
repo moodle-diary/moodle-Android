@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -30,8 +29,8 @@ import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.DescriptionDto
 
 @Composable
-fun EmotionRankCard(
-    causeState : List<DescriptionDto>
+fun RankCard(
+    rankState: List<DescriptionDto>
 ) {
 
     var isFolder by remember { mutableStateOf(true) } // 접혀 있으면 true
@@ -64,7 +63,7 @@ fun EmotionRankCard(
                     fontSize = 12.sp,
                     color = Color(0XFF7E7E7E),
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                    modifier = Modifier.clickable{isFolder = false}
+                    modifier = Modifier.clickable { isFolder = false }
                 )
             } else {
                 Text(
@@ -72,18 +71,18 @@ fun EmotionRankCard(
                     fontSize = 12.sp,
                     color = Color(0XFF7E7E7E),
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                    modifier = Modifier.clickable{isFolder = true}
+                    modifier = Modifier.clickable { isFolder = true }
                 )
             }
         }
 
         if (isFolder) {
             RowRankItem(
-                listState = causeState
+                listState = rankState
             )
         } else {
             ColumnRankItem(
-                listState = causeState
+                listState = rankState
             )
         }
     }
@@ -92,6 +91,6 @@ fun EmotionRankCard(
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
-fun EmotionRankCardPreview(){
+fun EmotionRankCardPreview() {
 //    EmotionRankCard()
 }

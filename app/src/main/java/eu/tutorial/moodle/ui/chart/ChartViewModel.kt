@@ -7,29 +7,39 @@ import androidx.lifecycle.ViewModel
 import eu.tutorial.moodle.data.CauseGrade
 import eu.tutorial.moodle.data.DescriptionDto
 import eu.tutorial.moodle.data.DiaryRepository
+import eu.tutorial.moodle.data.EmotionGrade
 import eu.tutorial.moodle.data.PlaceGrade
 
-class ChartViewModel (private val diaryRepository: DiaryRepository) : ViewModel() {
+class ChartViewModel(private val diaryRepository: DiaryRepository) : ViewModel() {
 
+    var emotionList by mutableStateOf(emptyList<DescriptionDto>())
     var causeList by mutableStateOf(emptyList<DescriptionDto>())
     var placeList by mutableStateOf(emptyList<DescriptionDto>())
-    var peopleList by mutableStateOf(emptyList<DescriptionDto>())
-    var foodList by mutableStateOf(emptyList<DescriptionDto>())
 
-    fun getActList(targetMonth : String){
+    fun getEmotionList(targetMonth: String) {
+        emotionList = diaryRepository.getEmotionGrade("$targetMonth%").map { it.toDesDto() }
+    }
+
+    fun getActList(targetMonth: String) {
         causeList = diaryRepository.getCauseGrade("$targetMonth%").map { it.toDesDto() }
     }
-    fun getPlaceList(targetMonth : String) {
+
+    fun getPlaceList(targetMonth: String) {
         placeList = diaryRepository.getPlaceGrade("$targetMonth%").map { it.toDesDto() }
     }
 }
 
-fun CauseGrade.toDesDto() : DescriptionDto = DescriptionDto(
+fun EmotionGrade.toDesDto(): DescriptionDto = DescriptionDto(
+    description = emotion,
+    cnt = cnt
+)
+
+fun CauseGrade.toDesDto(): DescriptionDto = DescriptionDto(
     description = cause,
     cnt = cnt,
 )
 
-fun PlaceGrade.toDesDto() : DescriptionDto = DescriptionDto(
+fun PlaceGrade.toDesDto(): DescriptionDto = DescriptionDto(
     description = placeDescription,
     cnt = cnt,
 )
