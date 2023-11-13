@@ -28,7 +28,7 @@ import eu.tutorial.moodle.data.DescriptionDto
 fun RowRankItem(
     listState : List<DescriptionDto>
 ) {
-    Log.d("inital", listState.toString())
+
     Row(
         modifier = Modifier
             .padding(start = 24.dp, end = 24.dp)

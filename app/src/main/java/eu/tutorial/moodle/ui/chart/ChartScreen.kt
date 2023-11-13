@@ -69,13 +69,16 @@ fun ChartScreen(
 //            maxList = maxList.toList()
 //        )
         RankCard(
-            rankState = emotionState
+            rankState = emotionState,
+            category = "감정 순위"
         )
         RankCard(
-            rankState = causeState
+            rankState = causeState,
+            category = "원인 순위"
         )
         RankCard(
-            rankState = placeState
+            rankState = placeState,
+            category = "장소 순위"
         )
     }
 }

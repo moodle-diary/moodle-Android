@@ -30,7 +30,8 @@ import eu.tutorial.moodle.data.DescriptionDto
 
 @Composable
 fun RankCard(
-    rankState: List<DescriptionDto>
+    rankState: List<DescriptionDto>,
+    category: String
 ) {
 
     var isFolder by remember { mutableStateOf(true) } // 접혀 있으면 true
@@ -52,7 +53,7 @@ fun RankCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "감정 순위",
+                text = category,
                 fontSize = 16.sp,
                 color = Color(0XFFDFDFDF),
                 fontFamily = FontFamily(Font(R.font.poppins_bold))
@@ -76,6 +77,7 @@ fun RankCard(
             }
         }
 
+        // TODO: RowRankItem 출력 시 rankState 3개로 끊기
         if (isFolder) {
             RowRankItem(
                 listState = rankState
