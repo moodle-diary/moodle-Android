@@ -1,5 +1,6 @@
 package eu.tutorial.moodle.ui.component
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,21 +25,30 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.IconDto
+import eu.tutorial.moodle.data.TypeDto
 import eu.tutorial.moodle.data.local.allEmojis
+import eu.tutorial.moodle.data.local.emotionList
 
 @Composable
 fun IconsComponent(
     modifier: Modifier = Modifier,
-    iconList : List<IconDto> = emptyList(),
-){
-    val emojis : List<String> = iconList.map { it.iconDescription }
+    iconList: List<IconDto> = emptyList(),
+    typeList: List<TypeDto> = emotionList
+) {
+    val emojis: List<String> = iconList.map { it.iconDescription }
 
+    if (iconList.isNotEmpty()) {
+        Log.d("list", iconList.toString())
+    }
     Column(
         modifier = modifier
             .fillMaxWidth()
     ) {
-        if(emojis.isNotEmpty())
-            DetailCard(emojis = emojis)
+        if (emojis.isNotEmpty())
+            DetailCard(
+                emojis = emojis,
+                typeList = typeList,
+            )
         else
             EmptyCard()
     }
@@ -46,11 +56,12 @@ fun IconsComponent(
 
 @Composable
 fun DetailCard(
-    emojis : List<String>
-){
+    emojis: List<String>,
+    typeList: List<TypeDto> = emotionList
+) {
     Box(
         modifier = Modifier
-            .height(192.dp)
+            .height(192.dp) // 고정값을 주어야함
             .background(color = colorResource(R.color.backGround)),
         contentAlignment = Alignment.Center,
     ) {
@@ -60,7 +71,9 @@ fun DetailCard(
             verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             items(emojis) { item ->
-                allEmojis[item]?.let {
+                val type = typeList.find { it.typeDes == item }?.iconId
+
+                allEmojis[type]?.let {
                     AlignYourBodyElement(
                         drawable = it,
                     )
@@ -71,7 +84,7 @@ fun DetailCard(
 }
 
 @Composable
-fun EmptyCard(){
+fun EmptyCard() {
     Column(
         modifier = Modifier
             .height(192.dp)

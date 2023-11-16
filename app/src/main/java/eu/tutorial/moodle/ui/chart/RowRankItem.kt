@@ -44,9 +44,6 @@ fun RowRankItem(
             val type = typeState.find { it.typeDes == des }
 
             if (type != null) {
-                Log.d("ss", type.iconId + " " + des)
-
-
                 RankItem(
                     description = des,
                     cnt = listState[it].cnt,

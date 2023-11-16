@@ -23,6 +23,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,42 +38,44 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.DiaryDto
+import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.component.IconsComponent
 import eu.tutorial.moodle.ui.component.NotesComponent
 import eu.tutorial.moodle.ui.component.SentenceComponent
+import eu.tutorial.moodle.ui.home.component.BottomSheet
 import eu.tutorial.moodle.ui.theme.poppins
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.time.LocalDate
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun DetailHomeScreen(
+fun HomeScreen(
     modifier: Modifier = Modifier,
     innerPaddingValues: PaddingValues = PaddingValues(0.dp),
-//    viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory),
     navController: NavController = rememberNavController()
 ) {
-//    val diaryList = viewModel.diaryUiState
-//    val causeList = viewModel.causeUiState
-//    val placeList = viewModel.placesUiState
-
+    val emotionList = viewModel.emotionUiState
     val coroutineScope = rememberCoroutineScope()
     var isBottomSheetVisible by remember { mutableStateOf(false) }
 
-//    LaunchedEffect(Unit){
-//        coroutineScope.launch {
-//            withContext(Dispatchers.IO) {
-//                // 데이터베이스 쿼리를 비동기적으로 수행
-//                viewModel.getDiaries(LocalDate.now().toString())
-//                viewModel.getCauses(LocalDate.now().toString())
-//                viewModel.getPlaces(LocalDate.now().toString())
-//            }
-//        }
-//    }
+    LaunchedEffect(Unit) {
+        coroutineScope.launch {
+            withContext(Dispatchers.IO) {
+                // 데이터베이스 쿼리를 비동기적으로 수행
+                viewModel.getEmotions(LocalDate.now().toString())
+            }
+        }
+    }
 
     Column(
         modifier = modifier
@@ -85,7 +88,6 @@ fun DetailHomeScreen(
 
         // TODO : 이 부분은 명언 보여주기
         SentenceComponent(
-//            emotion = getDiaryEmotion(diaryList),
             modifier = Modifier.padding(start = 41.dp, end = 41.dp),
             navController = navController
         )
@@ -117,7 +119,9 @@ fun DetailHomeScreen(
                 )
             }
 
-            IconsComponent()
+            IconsComponent(
+                iconList = emotionList,
+            )
 
         }
 
@@ -152,64 +156,12 @@ fun DetailHomeScreen(
             }
         }
 
-        if (isBottomSheetVisible) {
-            ModalBottomSheet(
-                onDismissRequest = { isBottomSheetVisible = false },
-                containerColor = Color(0XFF151515),
-                modifier = Modifier
-                    .fillMaxHeight(0.85f),  // 야매여서 고쳐야함
-                tonalElevation = 0.dp,
-                scrimColor = Color.Transparent,
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(start = 12.dp, end = 12.dp),
-
-                    ) {
-                    Spacer(modifier = Modifier.size(12.dp))
-
-                    Text(
-                        text = "원인 아이콘",
-                        fontSize = 16.sp,
-                        fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                        color = Color(0XFFDFDFDF)
-                    )
-
-                    IconsComponent(
-                        modifier = Modifier.height(97.dp)
-                    )
-
-                    Spacer(modifier = Modifier.size(46.dp))
-
-                    Text(
-                        text = "장소 아이콘",
-                        fontSize = 16.sp,
-                        fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                        color = Color(0XFFDFDFDF)
-                    )
-
-                    IconsComponent(
-                        modifier = Modifier.height(97.dp)
-                    )
-
-                    Spacer(modifier = Modifier.size(43.dp))
-
-                    Text(
-                        text = "생각",
-                        fontSize = 16.sp,
-                        fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                        color = Color(0XFFDFDFDF)
-                    )
-
-                    NotesComponent(
-//                        text = getDiaryText(diaryList)
-                    )
-
-                    Spacer(modifier = Modifier.size(12.dp))
-                }
-            }
+        BottomSheet(
+            visibility = isBottomSheetVisible,
+            viewModel = viewModel
+        ) { visibility ->
+            isBottomSheetVisible = visibility
         }
-
         Spacer(modifier = Modifier.size(32.dp))
 
     }
@@ -231,5 +183,5 @@ fun getDiaryText(diaryList: List<DiaryDto>): String {
 )
 @Composable
 fun PreviewMainPage() {
-    DetailHomeScreen()
+    HomeScreen()
 }

@@ -14,8 +14,8 @@ data class Diary(
 
     val currentDate: String,
 
+    val time: String,
     val diaryText: String,
-    val thought: String,
 )
 
 @Entity(
