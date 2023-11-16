@@ -58,6 +58,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import androidx.compose.animation.AnimatedVisibility
+import eu.tutorial.moodle.data.TypeDto
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -71,8 +72,22 @@ fun ViewScreen(
 ) {
     val diaryList = viewModel.diaryUiState
 
+    val emotionList = viewModel.emotionUiState
     val causeList = viewModel.causesUiState
     val placeList = viewModel.placesUiState
+
+    val causeType = viewModel.causeTypes.map {
+        TypeDto(
+            iconId = it.iconId,
+            typeDes = it.causeType
+        )
+    }
+    val placeType = viewModel.placesTypes.map {
+        TypeDto(
+            iconId = it.iconId,
+            typeDes = it.placeType,
+        )
+    }
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -82,8 +97,12 @@ fun ViewScreen(
             withContext(Dispatchers.IO) {
                 // 데이터베이스 쿼리를 비동기적으로 수행
                 viewModel.getDiaries(LocalDate.now().toString())
+                viewModel.getEmotions(LocalDate.now().toString())
                 viewModel.getCauses(LocalDate.now().toString())
                 viewModel.getPlaces(LocalDate.now().toString())
+
+                viewModel.getCauseTypes()
+                viewModel.getPlaceTypes()
             }
         }
 
@@ -136,7 +155,10 @@ fun ViewScreen(
             modifier = Modifier.padding(top = 24.dp)
         )
 
-        IconsComponent(modifier = Modifier.height(166.dp))
+        IconsComponent(
+            modifier = Modifier.height(166.dp),
+            iconList = emotionList,
+        )
 
         Text(
             text = "원인 아이콘",
@@ -146,7 +168,11 @@ fun ViewScreen(
             modifier = Modifier.padding(top = 24.dp)
         )
 
-        IconsComponent(modifier = Modifier.height(97.dp))
+        IconsComponent(
+            modifier = Modifier.height(97.dp),
+            iconList = causeList,
+            typeList = causeType
+        )
 
         Text(
             text = "장소 아이콘",
@@ -156,7 +182,11 @@ fun ViewScreen(
             modifier = Modifier.padding(top = 24.dp)
         )
 
-        IconsComponent(modifier = Modifier.height(97.dp))
+        IconsComponent(
+            modifier = Modifier.height(97.dp),
+            iconList = placeList,
+            typeList = placeType
+        )
 
         Text(
             text = "글",

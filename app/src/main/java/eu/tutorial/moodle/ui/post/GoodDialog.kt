@@ -38,97 +38,111 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun GoodDialog(
-    navController : NavController,
-    onChange : (Boolean) -> Unit
-){
-    val coroutineScope = rememberCoroutineScope()
-    val dialogText = "기분 좋은 상태로 저장할까요?"
-    Dialog(
-        onDismissRequest = { onChange(false) },
-        properties = DialogProperties(
-            dismissOnBackPress = true,
-            dismissOnClickOutside = true
-        )
-    ) {
-        Card(
-            shape = RoundedCornerShape(32.dp),
-            modifier = Modifier
-                .width(282.dp)
-                .height(175.dp)
-                .background(Color.Transparent)
-                .clip(shape = CircleShape.copy(all = CornerSize(32.dp)))
+    navController: NavController,
+    visibility: Boolean,
+    onChange: (Boolean) -> Unit
+) {
+    if (visibility) {
+        val coroutineScope = rememberCoroutineScope()
+        val dialogText = "기분 좋은 상태로 저장할까요?"
+        Dialog(
+            onDismissRequest = { onChange(false) },
+            properties = DialogProperties(
+                dismissOnBackPress = true,
+                dismissOnClickOutside = true
+            )
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
+            Card(
+                shape = RoundedCornerShape(32.dp),
                 modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color(0XFF212122))
+                    .width(282.dp)
+                    .height(175.dp)
+                    .background(Color.Transparent)
+                    .clip(shape = CircleShape.copy(all = CornerSize(32.dp)))
             ) {
-                Text(
-                    text = dialogText,
-                    modifier = Modifier.padding(top = 38.dp, bottom = 36.dp),
-                    fontSize = 16.sp,
-                    color = Color(0XFFDFDFDF),
-                    fontFamily = FontFamily(Font(R.font.poppins_regular))
-                )
-                Row(
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 16.dp, end = 16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                        .fillMaxSize()
+                        .background(Color(0XFF212122))
                 ) {
-                    Button(
-                        onClick = { onChange(false) },
+                    Text(
+                        text = dialogText,
+                        modifier = Modifier.padding(top = 38.dp, bottom = 36.dp),
+                        fontSize = 16.sp,
+                        color = Color(0XFFDFDFDF),
+                        fontFamily = FontFamily(Font(R.font.poppins_regular))
+                    )
+                    Row(
                         modifier = Modifier
-                            .defaultMinSize(
-                                minWidth = 131.dp,
-                                minHeight = 46.dp
-                            )
-                            .clip(shape = CircleShape.copy(all = CornerSize(32.dp))),
-                        contentPadding = PaddingValues(top = 16.dp, bottom = 16.dp, start = 26.dp, end = 26.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.Transparent
-                        ),
-                        elevation = ButtonDefaults.buttonElevation( //버튼 그림자 없애기
-                            defaultElevation = 0.dp,
-                            pressedElevation = 0.dp
-                        )
+                            .fillMaxWidth()
+                            .padding(start = 16.dp, end = 16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text(
-                            text = "취소",
-                            fontSize = 12.sp,
-                            color = Color(0XFF888888),
-                            fontFamily = FontFamily(Font(R.font.poppins_bold))
-                        )
-                    }
-                    Button(
-                        onClick = {
-                            //TODO : Transaction 고려
-                            coroutineScope.launch {
-                                navController.navigate(HomeDestination.route)
-                            }
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFFD9D9D9),
-                            contentColor = Color(0XFF151515)
-                        ),
-                        modifier = Modifier
-                            .defaultMinSize(
-                                minWidth = 98.dp,
-                                minHeight = 46.dp
+                        Button(
+                            onClick = { onChange(false) },
+                            modifier = Modifier
+                                .defaultMinSize(
+                                    minWidth = 131.dp,
+                                    minHeight = 46.dp
+                                )
+                                .clip(shape = CircleShape.copy(all = CornerSize(32.dp))),
+                            contentPadding = PaddingValues(
+                                top = 16.dp,
+                                bottom = 16.dp,
+                                start = 26.dp,
+                                end = 26.dp
+                            ),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.Transparent
+                            ),
+                            elevation = ButtonDefaults.buttonElevation( //버튼 그림자 없애기
+                                defaultElevation = 0.dp,
+                                pressedElevation = 0.dp
                             )
-                            .clip(shape = CircleShape.copy(all = CornerSize(32.dp))),
-                        contentPadding = PaddingValues(top = 13.dp, bottom = 13.dp, start = 21.dp, end = 21.dp),
-                    ) {
-                        Text(
-                            text = "저장하기",
-                            fontSize = 14.sp,
-                            color = Color(0XFF151515),
-                            fontFamily = FontFamily(Font(R.font.poppins_bold))
-                        )
+                        ) {
+                            Text(
+                                text = "취소",
+                                fontSize = 12.sp,
+                                color = Color(0XFF888888),
+                                fontFamily = FontFamily(Font(R.font.poppins_bold))
+                            )
+                        }
+                        Button(
+                            onClick = {
+                                //TODO : Transaction 고려
+                                coroutineScope.launch {
+                                    navController.navigate(HomeDestination.route)
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFFD9D9D9),
+                                contentColor = Color(0XFF151515)
+                            ),
+                            modifier = Modifier
+                                .defaultMinSize(
+                                    minWidth = 98.dp,
+                                    minHeight = 46.dp
+                                )
+                                .clip(shape = CircleShape.copy(all = CornerSize(32.dp))),
+                            contentPadding = PaddingValues(
+                                top = 13.dp,
+                                bottom = 13.dp,
+                                start = 21.dp,
+                                end = 21.dp
+                            ),
+                        ) {
+                            Text(
+                                text = "저장하기",
+                                fontSize = 14.sp,
+                                color = Color(0XFF151515),
+                                fontFamily = FontFamily(Font(R.font.poppins_bold))
+                            )
+                        }
                     }
                 }
             }
         }
+
     }
 }

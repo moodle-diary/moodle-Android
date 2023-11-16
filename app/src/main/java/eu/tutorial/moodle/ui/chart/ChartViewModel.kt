@@ -24,7 +24,6 @@ class ChartViewModel(private val diaryRepository: DiaryRepository) : ViewModel()
     var placesTypes by mutableStateOf(emptyList<PlaceTypeDto>())
         private set
 
-
     fun getCauseTypes() {
         causeTypes = diaryRepository.getCauseTypes()
     }

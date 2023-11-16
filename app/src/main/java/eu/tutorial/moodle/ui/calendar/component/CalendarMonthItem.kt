@@ -1,4 +1,4 @@
-package eu.tutorial.moodle.ui.component
+package eu.tutorial.moodle.ui.calendar.component
 
 import android.os.Build
 import androidx.annotation.RequiresApi

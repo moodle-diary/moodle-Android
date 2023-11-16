@@ -107,13 +107,13 @@ data class DiaryUiState(
 data class DiaryDetails(
     val currentDate: String = "",
     val diaryText: String = "",
-    val thought: String = ""
+    val time: String = "",
 )
 
 fun DiaryDetails.toDiary(): Diary = Diary(
     currentDate = currentDate,
     diaryText = diaryText,
-    thought = thought,
+    time = time
 )
 
 fun Diary.toDiaryUiState(isEntryValid: Boolean = false): DiaryUiState = DiaryUiState(
@@ -124,5 +124,5 @@ fun Diary.toDiaryUiState(isEntryValid: Boolean = false): DiaryUiState = DiaryUiS
 fun Diary.toDiaryDetails(): DiaryDetails = DiaryDetails(
     currentDate = currentDate,
     diaryText = diaryText,
-    thought = thought,
+    time = time
 )

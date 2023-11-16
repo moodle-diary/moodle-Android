@@ -27,10 +27,8 @@ import eu.tutorial.moodle.R
 
 @Composable
 fun InitialTextBox(
-    changeVisible : (Boolean) -> Unit
+    changeVisible: (Boolean) -> Unit
 ) {
-
-
     Column(
         modifier = Modifier
             .fillMaxSize()

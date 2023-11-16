@@ -140,13 +140,14 @@ fun CommonGrid(
             }
         }
 
-        if (dialogVisible) {
-            SaveTypeDialog(
-                save = save
-            ) {
-                onChange(it)
-            }
+
+        SaveTypeDialog(
+            save = save,
+            dialogVisible = dialogVisible
+        ) {
+            onChange(it)
         }
+
     }
 }
 
