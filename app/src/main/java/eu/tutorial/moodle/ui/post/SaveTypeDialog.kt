@@ -15,34 +15,38 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import eu.tutorial.moodle.ui.navigation.HomeDestination
 import kotlinx.coroutines.launch
+
 @Composable
 fun SaveTypeDialog(
-    save : (String) -> Unit,
-    onChange : (Boolean) -> Unit,
-){
-    var text by remember { mutableStateOf("") }
+    save: (String) -> Unit,
+    dialogVisible: Boolean,
+    onChange: (Boolean) -> Unit,
+) {
+    if (dialogVisible) {
+        var text by remember { mutableStateOf("") }
 
-    AlertDialog(
-        onDismissRequest = { onChange(false) },
-        title = { Text("Enter Text") },
-        text = {
-            BasicTextField(
-                value = text,
-                onValueChange = { newText ->
-                    text = newText
-                },
-                modifier = Modifier.fillMaxWidth()
-            )
-        },
-        confirmButton = {
-            Button(
-                onClick = {
-                    save(text)
-                    onChange(false)
+        AlertDialog(
+            onDismissRequest = { onChange(false) },
+            title = { Text("Enter Text") },
+            text = {
+                BasicTextField(
+                    value = text,
+                    onValueChange = { newText ->
+                        text = newText
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        save(text)
+                        onChange(false)
+                    }
+                ) {
+                    Text(text = "저장")
                 }
-            ) {
-                Text(text = "저장")
             }
-        }
-    )
+        )
+    }
 }

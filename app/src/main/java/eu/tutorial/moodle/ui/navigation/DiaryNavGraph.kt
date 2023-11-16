@@ -16,7 +16,7 @@ import eu.tutorial.moodle.ui.calendar.CalendarMainCard
 import eu.tutorial.moodle.ui.chart.ChartScreen
 import eu.tutorial.moodle.ui.chart.ChartTopBar
 import eu.tutorial.moodle.ui.component.BottomNavBar
-import eu.tutorial.moodle.ui.home.DetailHomeScreen
+import eu.tutorial.moodle.ui.home.HomeScreen
 import eu.tutorial.moodle.ui.home.TopAppBar
 import eu.tutorial.moodle.ui.post.PostScreen
 import eu.tutorial.moodle.ui.setting.SettingAlarmScreen
@@ -36,12 +36,13 @@ fun DiaryNavHost(
         composable(route = HomeDestination.route) {
             Scaffold(
                 topBar = { TopAppBar() },
-                bottomBar = { BottomNavBar(
-                    navController = navController
-                ) },
+                bottomBar = {
+                    BottomNavBar(
+                        navController = navController
+                    )
+                },
             ) { innerPadding ->
-                    DetailHomeScreen(innerPaddingValues = innerPadding, navController = navController)
-//                EmptyHomeScreen(innerPaddingValues = innerPadding)
+                HomeScreen(innerPaddingValues = innerPadding, navController = navController)
             }
         }
 
@@ -52,20 +53,21 @@ fun DiaryNavHost(
 
             Scaffold(
                 bottomBar = {
-                if (showCommentScreen) {
-                    BottomNavBar(navController = navController, isVisible = showCommentScreen)
-                } else {
-                    BottomNavBar(
-                        navController = navController,
-                        isVisible = visibleMore
-                    ) }
+                    if (showCommentScreen) {
+                        BottomNavBar(navController = navController, isVisible = showCommentScreen)
+                    } else {
+                        BottomNavBar(
+                            navController = navController,
+                            isVisible = visibleMore
+                        )
+                    }
                 },
             ) { innerPadding ->
 
                 CalendarMainCard(
                     innerPadding = innerPadding,
                     visibleMore = visibleMore,
-                    showViewScreen = {visibleMore = !visibleMore}
+                    showViewScreen = { visibleMore = !visibleMore }
                 )
             }
         }
@@ -79,9 +81,11 @@ fun DiaryNavHost(
         composable(route = ChartDestination.route) {
             Scaffold(
                 topBar = { ChartTopBar() },
-                bottomBar = { BottomNavBar(
-                    navController = navController
-                ) },
+                bottomBar = {
+                    BottomNavBar(
+                        navController = navController
+                    )
+                },
             ) { innerPadding ->
                 ChartScreen(innerPaddingValues = innerPadding, navController = navController)
             }
@@ -89,9 +93,11 @@ fun DiaryNavHost(
 
         composable(route = SettingDestination.route) {
             Scaffold(
-                bottomBar = { BottomNavBar(
-                    navController = navController
-                ) },
+                bottomBar = {
+                    BottomNavBar(
+                        navController = navController
+                    )
+                },
             ) { innerPadding ->
                 SettingScreen(innerPaddingValues = innerPadding, navController = navController)
             }

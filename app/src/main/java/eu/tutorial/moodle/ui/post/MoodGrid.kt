@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.data.local.emotionData
 import eu.tutorial.moodle.ui.theme.poppins
 import java.time.LocalDate
 
@@ -57,13 +58,6 @@ fun MoodGrid(
 ) {
 
     var showDialog = remember { mutableStateOf(false) }
-
-    val data = listOf(
-        "슬픔", "후회", "역겨움", "미움",
-        "원망", "후회", "자책", "질투",
-        "억울", "비참", "지침", "무안",
-        "민망", "허망", "아쉬움", "분노",
-    )
 
     Box(
         modifier = Modifier
@@ -98,7 +92,7 @@ fun MoodGrid(
                 modifier = Modifier.padding(25.dp, 0.dp)
                 //modifier = Modifier.padding(top = 108.dp, start = 20.dp)
             ) {
-                itemsIndexed(data) { index, item ->
+                itemsIndexed(emotionData) { index, item ->
                     // 각 데이터 아이템을 Row 컴포넌트 내에서 텍스트와 버튼으로 구성
                     Column(
                         verticalArrangement = Arrangement.SpaceAround,
@@ -184,12 +178,11 @@ fun MoodGrid(
                     )
                 }
             }
-            if (showDialog.value) {
-                GoodDialog(
-                    navController = navController,
-                ) { dialogVisible -> showDialog.value = dialogVisible }
-            }
 
+            GoodDialog(
+                navController = navController,
+                visibility = showDialog.value
+            ) { dialogVisible -> showDialog.value = dialogVisible }
         }
     }
 }

@@ -38,7 +38,7 @@ interface DiaryDao {
 
     // 오늘 하루의 emotion, text
     @Query(
-        "SELECT diaryText FROM diaries WHERE diaries.currentDate = :currentDate"
+        "SELECT time, diaryText FROM diaries WHERE diaries.currentDate = :currentDate"
     )
     fun getDiaries(currentDate: String): List<DiaryDto>
 
