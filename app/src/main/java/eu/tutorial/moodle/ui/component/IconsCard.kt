@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -28,6 +29,8 @@ import eu.tutorial.moodle.data.IconDto
 import eu.tutorial.moodle.data.TypeDto
 import eu.tutorial.moodle.data.local.allEmojis
 import eu.tutorial.moodle.data.local.emotionList
+import eu.tutorial.moodle.ui.theme.containerGray
+import eu.tutorial.moodle.ui.theme.contentGray
 
 @Composable
 fun IconsComponent(
@@ -61,8 +64,10 @@ fun DetailCard(
 ) {
     Box(
         modifier = Modifier
-            .height(192.dp) // 고정값을 주어야함
-            .background(color = colorResource(R.color.backGround)),
+            .background(containerGray)
+            .fillMaxWidth()
+            .padding(26.dp, 12.dp)
+            .clip(RoundedCornerShape(18.dp)),
         contentAlignment = Alignment.Center,
     ) {
         LazyVerticalGrid(
@@ -87,10 +92,10 @@ fun DetailCard(
 fun EmptyCard() {
     Column(
         modifier = Modifier
-            .height(192.dp)
+            .height(78.dp)
             .fillMaxWidth()
             .clip(RoundedCornerShape(18.dp))
-            .background(color = Color(0XFF212122)),
+            .background(containerGray),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -99,7 +104,7 @@ fun EmptyCard() {
             style = TextStyle(
                 fontSize = 12.sp,
                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                color = Color(0XFF686868)
+                color = contentGray
             ),
         )
     }

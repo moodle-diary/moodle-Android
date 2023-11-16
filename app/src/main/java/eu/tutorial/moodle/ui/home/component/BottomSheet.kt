@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
@@ -24,6 +26,8 @@ import eu.tutorial.moodle.ui.component.IconsComponent
 import eu.tutorial.moodle.ui.component.NotesComponent
 import eu.tutorial.moodle.ui.home.HomeViewModel
 import eu.tutorial.moodle.ui.home.getDiaryText
+import eu.tutorial.moodle.ui.theme.backgroundGray
+import eu.tutorial.moodle.ui.theme.contentBlack
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -71,9 +75,11 @@ fun BottomSheet(
             }
         }
 
+        val scrollState = rememberScrollState()
+
         ModalBottomSheet(
             onDismissRequest = { onChange(false) },
-            containerColor = Color(0XFF151515),
+            containerColor = backgroundGray,
             modifier = Modifier
                 .fillMaxHeight(0.85f),  // 야매여서 고쳐야함
             tonalElevation = 0.dp,
@@ -81,7 +87,8 @@ fun BottomSheet(
         ) {
             Column(
                 modifier = Modifier
-                    .padding(start = 12.dp, end = 12.dp),
+                    .padding(16.dp, 0.dp)
+                    .verticalScroll(scrollState),
             ) {
                 Spacer(modifier = Modifier.size(12.dp))
 
@@ -89,7 +96,7 @@ fun BottomSheet(
                     text = "원인 아이콘",
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                    color = Color(0XFFDFDFDF)
+                    color = contentBlack
                 )
 
                 IconsComponent(
@@ -103,7 +110,7 @@ fun BottomSheet(
                     text = "장소 아이콘",
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                    color = Color(0XFFDFDFDF)
+                    color = contentBlack
                 )
 
                 IconsComponent(
@@ -117,7 +124,7 @@ fun BottomSheet(
                     text = "생각",
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                    color = Color(0XFFDFDFDF)
+                    color = contentBlack
                 )
 
                 NotesComponent(

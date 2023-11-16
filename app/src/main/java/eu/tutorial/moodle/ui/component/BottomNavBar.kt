@@ -23,6 +23,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import eu.tutorial.moodle.data.navigation.navigationItemContentList
 import eu.tutorial.moodle.ui.home.TopAppBar
+import eu.tutorial.moodle.ui.theme.backgroundGray
+import eu.tutorial.moodle.ui.theme.contentBlack
+import eu.tutorial.moodle.ui.theme.navItemBackground
 
 @Composable
 fun BottomNavBar(
@@ -37,7 +40,7 @@ fun BottomNavBar(
                 .height(68.dp)
                 .clip(shape = RoundedCornerShape(18.dp))
                 .fillMaxSize(),
-            containerColor = Color(0XFF363637),
+            containerColor = backgroundGray,
         ) {
             for (navItem in navigationItemContentList) {
                 if (navItem.text == "Post"){
@@ -49,7 +52,7 @@ fun BottomNavBar(
                                 modifier = Modifier
                                     .size(44.dp)
                                     .clip(RoundedCornerShape(6.dp)),
-                                color = Color(0XFF1D1B20)
+                                color = navItemBackground
                             ) {
                                 Icon(
                                     imageVector = navItem.icon,
@@ -57,7 +60,7 @@ fun BottomNavBar(
                                     modifier = Modifier
                                         .size(30.dp)
                                         .padding(6.dp),
-                                    tint = Color(0XFFDFDFDF),
+                                    tint = backgroundGray,
                                     // 여기 dp 값 임의 수정함
                                 )
                             }
@@ -75,7 +78,7 @@ fun BottomNavBar(
                                 modifier = Modifier
                                     .width(30.dp)
                                     .height(30.dp),
-                                tint = Color(0XFFDFDFDF)
+                                tint = contentBlack
                                 // 여기 dp 값 임의 수정함
                             )
                         },

@@ -29,6 +29,8 @@ import eu.tutorial.moodle.R
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import eu.tutorial.moodle.ui.navigation.NavigationDestination
+import eu.tutorial.moodle.ui.theme.backgroundGray
+import eu.tutorial.moodle.ui.theme.contentBlack
 import java.time.LocalDate
 import java.util.Locale
 
@@ -51,7 +53,7 @@ fun TopAppBar(){
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0XFF151515))
+                .background(backgroundGray)
                 .padding(start = 50.dp),
             verticalArrangement = Arrangement.Center
         ) {
@@ -60,7 +62,7 @@ fun TopAppBar(){
                 style = TextStyle(
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                    color = Color(0xFFDFDFDF),
+                    color = contentBlack,
                     platformStyle = PlatformTextStyle(
                         includeFontPadding = false
                     ),
@@ -71,7 +73,7 @@ fun TopAppBar(){
                 style = TextStyle(
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                    color = Color(0xFFDFDFDF),
+                    color = contentBlack,
                     platformStyle = PlatformTextStyle(
                         includeFontPadding = false
                     ),
