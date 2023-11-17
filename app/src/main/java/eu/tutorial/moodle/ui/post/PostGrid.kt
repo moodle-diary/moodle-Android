@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,6 +27,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.ui.theme.backgroundGray
+import eu.tutorial.moodle.ui.theme.containerGray
+import eu.tutorial.moodle.ui.theme.contentBlack
+import eu.tutorial.moodle.ui.theme.contentGray
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -36,48 +41,42 @@ fun PostGrid(
 ) {
     var textVisible by remember { mutableStateOf(true) }
 
-    Box(
+    Column(
         modifier = Modifier
-            .fillMaxHeight()
-            .background(Color(color = 0Xff212122))
-            .clip(shape = CircleShape.copy(all = CornerSize(45.dp)))
+            .fillMaxSize()
+            .background(containerGray)
+            .clip(RoundedCornerShape(18.dp)),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                modifier = Modifier.padding(top = 20.dp),
-                text = "생각",
-                fontSize = 24.sp,
-                fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                textAlign = TextAlign.Center,
-                color = Color(0XFFEDEDED)
-            )
-            Text(
-                modifier = Modifier.padding(top = 4.dp),
-                text = "오늘 하루 생각을 간단하게 적어두면\n" +
-                        "나중에 돌아봤을때 나를 더 잘 알게 될거에요",
-                fontSize = 16.sp,
-                fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                textAlign = TextAlign.Center,
-                color = Color(0XFFEDEDED)
-            )
+        Text(
+            modifier = Modifier.padding(top = 32.dp),
+            text = "고민해보기",
+            fontSize = 16.sp,
+            fontFamily = FontFamily(Font(R.font.poppins_bold)),
+            textAlign = TextAlign.Center,
+            color = contentBlack
+        )
+        Text(
+            modifier = Modifier.padding(top = 8.dp),
+            text = "당시 어떤 상황이었나요?",
+            fontSize = 14.sp,
+            fontFamily = FontFamily(Font(R.font.poppins_regular)),
+            textAlign = TextAlign.Center,
+            color = contentGray
+        )
 
 
-            if (textVisible) {
-                InitialTextBox { visible -> textVisible = visible}
-            } else {
-                SaveTextBox(
-                    textValue = diaryUiState.diaryDetails.diaryText,
-                ) {
-                    valueChange(
-                        diaryUiState.diaryDetails.copy(
-                            diaryText = it
-                        )
+        if (textVisible) {
+            InitialTextBox { visible -> textVisible = visible}
+        } else {
+            SaveTextBox(
+                textValue = diaryUiState.diaryDetails.diaryText,
+            ) {
+                valueChange(
+                    diaryUiState.diaryDetails.copy(
+                        diaryText = it
                     )
-                }
+                )
             }
         }
     }

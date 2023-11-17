@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
@@ -60,6 +61,13 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.ui.theme.backgroundGray
+import eu.tutorial.moodle.ui.theme.containerGray
+import eu.tutorial.moodle.ui.theme.contentBlack
+import eu.tutorial.moodle.ui.theme.contentCharcoal
+import eu.tutorial.moodle.ui.theme.contentGray
+import eu.tutorial.moodle.ui.theme.mainOrange
+import eu.tutorial.moodle.ui.theme.subYellow
 
 
 fun Modifier.addFocusCleaner(focusManager: FocusManager, doOnClear: () -> Unit = {}): Modifier {
@@ -81,7 +89,8 @@ fun SaveTextBox(
     val focusRequester by remember { mutableStateOf(FocusRequester()) }
     val focusManager = LocalFocusManager.current
 
-    val brush = Brush.horizontalGradient(listOf(Color(0xFF00E1FF), Color(0xFF0099FF)))
+    //val brush = Brush.horizontalGradient(listOf(Color(0xFF00E1FF), Color(0xFF0099FF)))
+    val brush = Brush.horizontalGradient(listOf(mainOrange, subYellow))
 
     var visible by remember { mutableStateOf(false) }
     val density = LocalDensity.current
@@ -89,7 +98,7 @@ fun SaveTextBox(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(color = 0Xff212122))
+            .background(containerGray)
             .addFocusCleaner(focusManager)
             .then(Modifier.verticalScroll(rememberScrollState())),
     ) {
@@ -99,13 +108,13 @@ fun SaveTextBox(
             textStyle = TextStyle(
                 fontSize = 16.sp,
                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                color = Color(0XFFEDEDED)
+                color = contentBlack
             ),
-            cursorBrush = SolidColor(Color(0XFFEDEDED)),
+            cursorBrush = SolidColor(contentCharcoal),
             modifier = Modifier
                 .height(200.dp)
                 .padding(16.dp)
-                .background(Color(color = 0Xff212122))
+                .background(containerGray)
                 .focusRequester(focusRequester = focusRequester)
                 .onFocusChanged {
                     isTextFieldFocused = it.isFocused
@@ -116,7 +125,7 @@ fun SaveTextBox(
                         text = "이곳에 생각을 작성하세요.",
                         fontSize = 14.sp,
                         fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                        color = Color(0XFF888888)
+                        color = contentGray
                     )
                 }
                 innerTextField()
@@ -132,8 +141,8 @@ fun SaveTextBox(
             onClick = { visible = !visible},
             modifier = Modifier
                 .padding(start = 16.dp)
-                .width(if (visible) 247.dp else 247.dp)
-                .height(if (visible) 52.dp else 52.dp)
+                .width(218.dp)
+                .height(36.dp)
         )
         {
             Row(
@@ -146,14 +155,15 @@ fun SaveTextBox(
                 Icon(
                     imageVector = if (!visible) Icons.Default.Add else Icons.Default.KeyboardArrowDown,
                     contentDescription = "add",
-                    tint = Color.White
+                    tint = backgroundGray,
+                    modifier = Modifier.size(16.dp)
                 )
                 Text(
                     text = "그 사람은 왜 그런 행동을 했을까?",
                     fontSize = 12.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                    color = Color(0XFFEDEDED),
-                    modifier = Modifier.padding(start = if (!visible) 12.dp else 12.dp)
+                    color = backgroundGray,
+                    modifier = Modifier.padding(start = 10.dp)
                 )
             }
         }
@@ -176,13 +186,13 @@ fun SaveTextBox(
                 textStyle = TextStyle(
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                    color = Color(0XFFEDEDED)
+                    color = contentBlack
                 ),
-                cursorBrush = SolidColor(Color(0XFFEDEDED)),
+                cursorBrush = SolidColor(contentCharcoal),
                 modifier = Modifier
-                    .height(200.dp)
+                    .height(160.dp)
                     .padding(16.dp)
-                    .background(Color(color = 0Xff212122))
+                    .background(containerGray)
                     .focusRequester(focusRequester = focusRequester)
                     .onFocusChanged {
                         isTextFieldFocused = it.isFocused
@@ -191,9 +201,9 @@ fun SaveTextBox(
                     if (textValue.isEmpty()) {
                         Text(
                             text = "이 곳에 답변을 적어주세요.",
-                            fontSize = 14.sp,
+                            fontSize = 12.sp,
                             fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                            color = Color(0XFF888888)
+                            color = contentGray
                         )
                     }
                     innerTextField()
@@ -209,9 +219,9 @@ fun SaveTextBox(
             contentPadding = PaddingValues(),
             onClick = {  },
             modifier = Modifier
-                .padding(start = 16.dp, top = 18.dp)
-                .width(228.dp)
-                .height(52.dp)
+                .padding(start = 16.dp, top = 12.dp)
+                .width(204.dp)
+                .height(36.dp)
         )
         {
             Row(
@@ -222,16 +232,17 @@ fun SaveTextBox(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = Icons.Default.Add,
+                    imageVector = if (!visible) Icons.Default.Add else Icons.Default.KeyboardArrowDown,
                     contentDescription = "add",
-                    tint = Color.White
+                    tint = backgroundGray,
+                    modifier = Modifier.size(12.dp)
                 )
                 Text(
                     text = "나는 왜 그런 감정을 느꼈을까?",
                     fontSize = 12.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                    color = Color(0XFFEDEDED),
-                    modifier = Modifier.padding(start = 12.dp)
+                    color = backgroundGray,
+                    modifier = Modifier.padding(start = 10.dp)
                 )
             }
         }
@@ -243,9 +254,9 @@ fun SaveTextBox(
             contentPadding = PaddingValues(),
             onClick = {  },
             modifier = Modifier
-                .padding(start = 16.dp, top = 18.dp)
-                .width(191.dp)
-                .height(52.dp)
+                .padding(start = 16.dp, top = 12.dp)
+                .width(190.dp)
+                .height(36.dp)
         )
         {
             Row(
@@ -256,16 +267,17 @@ fun SaveTextBox(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = Icons.Default.Add,
+                    imageVector = if (!visible) Icons.Default.Add else Icons.Default.KeyboardArrowDown,
                     contentDescription = "add",
-                    tint = Color.White
+                    tint = backgroundGray,
+                    modifier = Modifier.size(12.dp)
                 )
                 Text(
-                    text = "다른 이유가 있을까?",
+                    text = "다르게 생각해볼 수 있을까?",
                     fontSize = 12.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                    color = Color(0XFFEDEDED),
-                    modifier = Modifier.padding(start = 12.dp)
+                    color = backgroundGray,
+                    modifier = Modifier.padding(start = 10.dp)
                 )
             }
         }

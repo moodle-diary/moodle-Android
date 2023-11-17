@@ -33,6 +33,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Brush.Companion.linearGradient
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
@@ -48,7 +50,13 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.ui.AppViewModelProvider
+import eu.tutorial.moodle.ui.theme.backgroundGray
+import eu.tutorial.moodle.ui.theme.containerGray
+import eu.tutorial.moodle.ui.theme.contentBlack
+import eu.tutorial.moodle.ui.theme.mainOrange
 import eu.tutorial.moodle.ui.theme.poppins
+import eu.tutorial.moodle.ui.theme.subYellow
+import eu.tutorial.moodle.ui.theme.unselectedIndicator
 import java.time.LocalDate
 import java.util.Locale
 
@@ -97,10 +105,12 @@ fun PostScreen(
         mutableStateListOf<Boolean>()
     }
 
+    val brush = Brush.horizontalGradient(listOf(mainOrange, subYellow))
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0XFF151515))
+            .background(backgroundGray)
             .padding(start = 20.dp, end = 20.dp)
     ) {
         Row(
@@ -120,7 +130,7 @@ fun PostScreen(
                 textAlign = TextAlign.Center,
                 fontSize = 24.sp,
                 fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                color = Color(0XFFDFDFDF),
+                color = contentBlack,
                 text = "$day $month",
             )
             Icon(
@@ -132,7 +142,7 @@ fun PostScreen(
                         viewModel.showDialog = true
                         viewModel.isCancel = true
                     },
-                tint = Color(0XFFDFDFDF)
+                tint = contentBlack
             )
         }
 
@@ -140,12 +150,12 @@ fun PostScreen(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth()
-                .padding(top = 24.dp, bottom = 24.dp, start = 9.dp, end = 9.dp),
+                .padding(60.dp, 24.dp),
             count = actualPageCount,
             dotSize = 15.dp,
             currentPage = pagerState.currentPage % actualPageCount,
-            selectedColor = Color(0XFF686868),
-            unSelectedColor = Color(0XFF686868)
+            selectedColor = mainOrange,
+            unSelectedColor = unselectedIndicator
         )
 
 
@@ -221,14 +231,14 @@ fun PostScreen(
                             text = "시간 입력",
                             fontSize = 11.sp,
                             fontFamily = poppins,
-                            color = Color(0XFFEDEDED).copy(alpha = 0.6f)
+                            color = contentBlack.copy(alpha = 0.6f)
                         )
                     } else {
                         Text(
                             text = "$selectedHour : $selectedMinute",
                             fontSize = 11.sp,
                             fontFamily = poppins,
-                            color = Color(0XFFEDEDED).copy(alpha = 0.6f)
+                            color = contentBlack.copy(alpha = 0.6f)
                         )
                     }
                 }
@@ -242,14 +252,14 @@ fun PostScreen(
                         .height(60.dp)
                         .clip(shape = CircleShape.copy(all = CornerSize(32.dp))),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF363637)
+                        containerColor = containerGray
                     )
                 ) {
                     Text(
                         text = "저장하기",
                         fontSize = 16.sp,
                         fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                        color = Color(0XFFEDEDED),
+                        color = contentBlack,
                     )
                 }
                 Box(

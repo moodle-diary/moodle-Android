@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -47,6 +48,9 @@ import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.TypeDto
 import eu.tutorial.moodle.data.local.allEmojis
+import eu.tutorial.moodle.ui.theme.containerGray
+import eu.tutorial.moodle.ui.theme.contentBlack
+import eu.tutorial.moodle.ui.theme.unselectedIndicator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -63,83 +67,69 @@ fun CommonGrid(
     onChange: (Boolean) -> Unit,
 ) {
 
-    Box(
+    Column(
         modifier = Modifier
-            .fillMaxHeight()
-            .background(Color(color = 0Xff212122))
-            .clip(shape = CircleShape.copy(all = CornerSize(45.dp)))
+            .fillMaxSize()
+            .background(containerGray)
+            .clip(RoundedCornerShape(18.dp)),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+        Text(
+            modifier = Modifier.padding(top = 32.dp, bottom = 28.dp),
+            text = title,
+            fontSize = 16.sp,
+            fontFamily = FontFamily(Font(R.font.poppins_bold)),
+            textAlign = TextAlign.Center,
+            color = contentBlack
+        )
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(4)
         ) {
-            Text(
-                modifier = Modifier.padding(top = 20.dp),
-                text = title,
-                fontSize = 24.sp,
-                fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                textAlign = TextAlign.Center,
-                color = Color(0XFFEDEDED)
-            )
-            Text(
-                modifier = Modifier.padding(top = 4.dp, bottom = 28.dp),
-                text = subtitle,
-                fontSize = 16.sp,
-                fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                textAlign = TextAlign.Center,
-                color = Color(0XFFEDEDED)
-            )
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(4)
-            ) {
-                itemsIndexed(data) { index, item ->
-                    Column(
-                        verticalArrangement = Arrangement.SpaceBetween,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        val isClicked = buttonStates[index]
+            itemsIndexed(data) { index, item ->
+                Column(
+                    verticalArrangement = Arrangement.SpaceBetween,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    val isClicked = buttonStates[index]
 
-                        val backgroundColor = if (isClicked) {
-                            Color(0XFFDFDFDF)
-                        } else {
-                            Color(0XFF363637)
-                        }
-
-                        IconButton(
-                            onClick = {
-                                if (item.typeDes != "plus")
-                                    onItemClick(index)
-                                else
-                                    onChange(true)
-                            },
-                            modifier = Modifier
-                                .size(60.dp)
-                                .clip(RoundedCornerShape(20.dp))
-                                .background(backgroundColor)
-                        ) {
-                            allEmojis[item.iconId]?.let { painterResource(it) }?.let {
-                                Image(
-                                    painter = it,
-                                    contentDescription = null,
-                                )
-                            }
-                        }
-                        Text(
-                            text = item.typeDes,
-                            fontSize = 12.sp,
-                            fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier
-                                .width(65.dp)
-                                .padding(top = 4.dp, bottom = 8.dp),
-                            color = Color(0XFFEDEDED)
-                        )
+                    val backgroundColor = if (isClicked) {
+                        containerGray
+                    } else {
+                        unselectedIndicator
                     }
+
+                    IconButton(
+                        onClick = {
+                            if (item.typeDes != "plus")
+                                onItemClick(index)
+                            else
+                                onChange(true)
+                        },
+                        modifier = Modifier
+                            .size(60.dp)
+                            .clip(RoundedCornerShape(20.dp))
+                            .background(backgroundColor)
+                    ) {
+                        allEmojis[item.iconId]?.let { painterResource(it) }?.let {
+                            Image(
+                                painter = it,
+                                contentDescription = null,
+                            )
+                        }
+                    }
+                    Text(
+                        text = item.typeDes,
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .width(65.dp)
+                            .padding(top = 4.dp, bottom = 8.dp),
+                        color = contentBlack
+                    )
                 }
             }
         }
-
 
         SaveTypeDialog(
             save = save,
@@ -185,7 +175,7 @@ fun CauseGrid(
     }
 
     CommonGrid(
-        title = "원인",
+        title = "무엇이 그런 감정을 느끼게 했나요?",
         subtitle = "오늘 무엇이 나를 우울 하게 했나요?",
         data = data,
         buttonStates = causeButtonStates,
@@ -239,7 +229,7 @@ fun PlaceGrid(
     }
 
     CommonGrid(
-        title = "장소",
+        title = "어디서 그런 감정을 느꼈나요?",
         subtitle = "어느 곳에서 우울 했나요?",
         data = data,
         buttonStates = placeButtonStates,

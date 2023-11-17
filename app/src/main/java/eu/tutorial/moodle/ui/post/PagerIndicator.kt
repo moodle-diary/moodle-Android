@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 
@@ -23,13 +24,13 @@ fun PagerIndicator(
 ) {
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
         (0 until count).forEach { index ->
             Box(
                 modifier = Modifier
-                    .size(if (index == currentPage) dotSize * 1.5f else dotSize)
+                    .size(dotSize)
                     .background(
                         color = if (index == currentPage) {
                             selectedColor
