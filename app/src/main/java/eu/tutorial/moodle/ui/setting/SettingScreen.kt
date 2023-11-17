@@ -38,6 +38,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.ui.chart.ChartScreen
+import eu.tutorial.moodle.ui.theme.backgroundGray
+import eu.tutorial.moodle.ui.theme.containerGray
+import eu.tutorial.moodle.ui.theme.contentBlack
+import eu.tutorial.moodle.ui.theme.navItemBackground
 
 @Composable
 fun SettingScreen(
@@ -51,7 +55,7 @@ fun SettingScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0XFF151515))
+            .background(backgroundGray)
     ) {
         Row(
             modifier = Modifier
@@ -63,7 +67,7 @@ fun SettingScreen(
             Text(
                 text = "설정창",
                 fontSize = 16.sp,
-                color = Color(0XFFDFDFDF),
+                color = contentBlack,
                 fontFamily = FontFamily(Font(R.font.poppins_bold))
             )
         }
@@ -72,8 +76,8 @@ fun SettingScreen(
         ) {
             Text(
                 text = "알람 설정",
-                fontSize = 14.sp,
-                color = Color(0XFFDFDFDF),
+                fontSize = 16.sp,
+                color = contentBlack,
                 fontFamily = FontFamily(Font(R.font.poppins_bold)),
                 modifier = Modifier.padding(bottom = 7.dp, start = 22.dp, top = 10.dp)
             )
@@ -83,7 +87,7 @@ fun SettingScreen(
                     .fillMaxWidth()
                     .height(67.dp)
                     .clip(RoundedCornerShape(18.dp))
-                    .background(Color(0XFF212122))
+                    .background(containerGray)
                     .padding(start = 22.dp, end = 22.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
@@ -91,7 +95,7 @@ fun SettingScreen(
                 Text(
                     text = if (checkedAlarm) "알람 켜짐" else "알람 꺼짐",
                     fontSize = 14.sp,
-                    color = Color(0XFFDFDFDF),
+                    color = contentBlack,
                     fontFamily = FontFamily(Font(R.font.poppins_regular))
                 )
                 Switch(
@@ -113,7 +117,7 @@ fun SettingScreen(
                     .fillMaxWidth()
                     .height(78.dp)
                     .clip(RoundedCornerShape(18.dp))
-                    .background(Color(0XFF212122))
+                    .background(containerGray)
                     .clickable { navController.navigate("settingAlarm") }
                     .padding(start = 22.dp, end = 22.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -125,20 +129,20 @@ fun SettingScreen(
                     Text(
                         text = "리마인드 알림 주기 설정하기",
                         fontSize = 14.sp,
-                        color = Color(0XFFDFDFDF),
+                        color = contentBlack,
                         fontFamily = FontFamily(Font(R.font.poppins_regular))
                     )
                     Text(
                         text = "이전 일기를 추천해주는 주기를 설정합니다.",
                         fontSize = 11.sp,
-                        color = Color(0XFFDFDFDF),
+                        color = contentBlack,
                         fontFamily = FontFamily(Font(R.font.poppins_regular))
                     )
                 }
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowRight,
                     contentDescription = "right",
-                    tint = Color.White,
+                    tint = navItemBackground,
                     modifier = Modifier.size(26.dp)
                 )
             }
@@ -146,8 +150,8 @@ fun SettingScreen(
 
             Text(
                 text = "잠금 설정",
-                fontSize = 14.sp,
-                color = Color(0XFFDFDFDF),
+                fontSize = 16.sp,
+                color = contentBlack,
                 fontFamily = FontFamily(Font(R.font.poppins_bold)),
                 modifier = Modifier.padding(bottom = 7.dp, start = 22.dp, top = 30.dp)
             )
@@ -157,7 +161,7 @@ fun SettingScreen(
                     .fillMaxWidth()
                     .height(67.dp)
                     .clip(RoundedCornerShape(18.dp))
-                    .background(Color(0XFF212122))
+                    .background(containerGray)
                     .padding(start = 22.dp, end = 22.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
@@ -165,7 +169,7 @@ fun SettingScreen(
                 Text(
                     text = if (checkedPassword) "잠금 켜짐" else "잠금 꺼짐",
                     fontSize = 14.sp,
-                    color = Color(0XFFDFDFDF),
+                    color = contentBlack,
                     fontFamily = FontFamily(Font(R.font.poppins_regular))
                 )
                 Switch(
@@ -187,7 +191,7 @@ fun SettingScreen(
                     .fillMaxWidth()
                     .height(67.dp)
                     .clip(RoundedCornerShape(18.dp))
-                    .background(Color(0XFF212122))
+                    .background(containerGray)
                     .clickable { navController.navigate("settingPassword") }
                     .padding(start = 22.dp, end = 22.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -196,13 +200,13 @@ fun SettingScreen(
                 Text(
                     text = "잠금 비밀번호 변경",
                     fontSize = 14.sp,
-                    color = Color(0XFFDFDFDF),
+                    color = contentBlack,
                     fontFamily = FontFamily(Font(R.font.poppins_regular))
                 )
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowRight,
                     contentDescription = "right",
-                    tint = Color.White,
+                    tint = navItemBackground,
                     modifier = Modifier.size(26.dp)
                 )
             }

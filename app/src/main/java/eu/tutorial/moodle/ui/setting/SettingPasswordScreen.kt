@@ -38,6 +38,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.ui.navigation.SettingDestination
+import eu.tutorial.moodle.ui.theme.backgroundGray
+import eu.tutorial.moodle.ui.theme.contentBlack
 
 
 @Composable
@@ -55,7 +57,7 @@ fun SettingPasswordScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0XFF151515))
+            .background(backgroundGray)
     ) {
         Row(
             modifier = Modifier
@@ -68,7 +70,7 @@ fun SettingPasswordScreen(
             Icon(
                 imageVector = Icons.Default.KeyboardArrowLeft,
                 contentDescription = "left",
-                tint = Color.White,
+                tint = contentBlack,
                 modifier = Modifier
                     .size(28.dp)
                     .clickable { navController.navigate(SettingDestination.route) }
@@ -76,7 +78,7 @@ fun SettingPasswordScreen(
             Text(
                 text = "비밀번호 설정",
                 fontSize = 16.sp,
-                color = Color(0XFFDFDFDF),
+                color = contentBlack,
                 fontFamily = FontFamily(Font(R.font.poppins_bold))
             )
             Box(modifier = Modifier.size(28.dp))
@@ -92,7 +94,7 @@ fun SettingPasswordScreen(
             Text(
                 text = "앱을 켤 때 입력할 비밀번호 입니다",
                 fontSize = 14.sp,
-                color = Color(0XFFDFDFDF),
+                color = contentBlack,
                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
                 modifier = Modifier.padding(bottom = 10.dp)
             )
@@ -136,8 +138,8 @@ fun SettingPasswordScreen(
                             Text(
                                 text = "%d".format(buttonText),
                                 fontSize = 16.sp,
-                                fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                                color = Color(0XFFDFDFDF)
+                                fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                                color = contentBlack
                             )
                         }
                     }
@@ -163,7 +165,7 @@ fun SettingPasswordScreen(
                 shape = RoundedCornerShape(10.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Transparent,
-                    contentColor = Color(0XFFDFDFDF)
+                    contentColor = contentBlack
                 ),
                 elevation = ButtonDefaults.buttonElevation(0.dp)
             ) {
@@ -182,8 +184,8 @@ fun SettingPasswordScreen(
                 Text(
                     text = "0",
                     fontSize = 16.sp,
-                    fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                    color = Color(0XFFDFDFDF)
+                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                    color = contentBlack
                 )
             }
             Button(onClick = { /*TODO*/ },
@@ -195,7 +197,7 @@ fun SettingPasswordScreen(
                 shape = RoundedCornerShape(10.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Transparent,
-                    contentColor = Color(0XFFDFDFDF)
+                    contentColor = contentBlack
                 ),
                 elevation = ButtonDefaults.buttonElevation(0.dp)
             ) {

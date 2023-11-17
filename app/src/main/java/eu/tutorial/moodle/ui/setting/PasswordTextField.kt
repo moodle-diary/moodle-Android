@@ -27,6 +27,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import eu.tutorial.moodle.ui.theme.containerGray
 
 @Composable
 fun PasswordTextField(
@@ -69,14 +70,14 @@ fun PasswordTextField(
                         modifier = Modifier
                             .size(64.dp)
                             .clip(RoundedCornerShape(18.dp))
-                            .background(Color(0XFF212122)),
+                            .background(containerGray),
                         contentAlignment = Alignment.Center
                     ) {
                         if (isFilled) {
                             Image(
                                 painter = painterResource(id = eu.tutorial.moodle.R.drawable.password),
                                 contentDescription = "password",
-                                modifier = Modifier.size(16.dp)
+                                modifier = Modifier.size(18.dp)
                             )
                         } else {
                             Text(
