@@ -41,10 +41,9 @@ fun SettingAlarmScreen(
     navController: NavController
 ) {
     val buttonItemList = listOf(
-        ButtonItem(0, "일주일에 한 번"),
-        ButtonItem(1, "격주에 한 번"),
-        ButtonItem(2, "한 달에 한 번"),
-        ButtonItem(3, "3 달에 한 번")
+        ButtonItem(0, "하루에 세 번"),
+        ButtonItem(1, "하루에 한 번"),
+        ButtonItem(2, "삼일에 세 번"),
     )
     var selectedIndex by rememberSaveable { mutableStateOf(0) }
 
@@ -93,7 +92,7 @@ fun SettingAlarmScreen(
                     .fillMaxWidth(),
                 verticalArrangement = Arrangement.SpaceAround
             ) {
-                repeat(4) { columnIndex ->
+                repeat(3) { columnIndex ->
                     val itemIndex = columnIndex
                     val item = buttonItemList.get(itemIndex)
                     AlarmButton(
