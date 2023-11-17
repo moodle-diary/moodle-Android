@@ -81,8 +81,9 @@ fun Modifier.addFocusCleaner(focusManager: FocusManager, doOnClear: () -> Unit =
 
 @Composable
 fun SaveTextBox(
-    textValue :String,
-    valueChange: (String) -> Unit
+    textValue : DiaryDetails,
+    textChange: (String) -> Unit,
+    actChange: (String) -> Unit
 ){
     var isTextFieldFocused = false
 
@@ -103,8 +104,8 @@ fun SaveTextBox(
             .then(Modifier.verticalScroll(rememberScrollState())),
     ) {
         BasicTextField(
-            value = textValue,
-            onValueChange = { valueChange(it) },
+            value = textValue.diaryText,
+            onValueChange = { textChange(it) },
             textStyle = TextStyle(
                 fontSize = 16.sp,
                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
@@ -120,7 +121,7 @@ fun SaveTextBox(
                     isTextFieldFocused = it.isFocused
                 },
             decorationBox = { innerTextField ->
-                if (textValue.isEmpty()) {
+                if (textValue.diaryText.isEmpty()) {
                     Text(
                         text = "이곳에 생각을 작성하세요.",
                         fontSize = 14.sp,
@@ -181,8 +182,8 @@ fun SaveTextBox(
                     + fadeOut(animationSpec = tween(durationMillis = 300, delayMillis = 200))
         ) {
             BasicTextField(
-                value = textValue,
-                onValueChange = { valueChange(it) },
+                value = textValue.act,
+                onValueChange = { actChange(it) },
                 textStyle = TextStyle(
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
@@ -198,7 +199,7 @@ fun SaveTextBox(
                         isTextFieldFocused = it.isFocused
                     },
                 decorationBox = { innerTextField ->
-                    if (textValue.isEmpty()) {
+                    if (textValue.act.isEmpty()) {
                         Text(
                             text = "이 곳에 답변을 적어주세요.",
                             fontSize = 12.sp,

@@ -124,6 +124,7 @@ fun HomeScreen(
             }
 
             IconsComponent(
+                modifier = Modifier.height(174.dp),
                 iconList = emotionList,
             )
 

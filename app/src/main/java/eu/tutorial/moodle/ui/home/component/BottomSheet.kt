@@ -100,6 +100,7 @@ fun BottomSheet(
                 )
 
                 IconsComponent(
+                    modifier = Modifier.height(174.dp),
                     iconList = causeList,
                     typeList = causeType,
                 )
@@ -114,6 +115,7 @@ fun BottomSheet(
                 )
 
                 IconsComponent(
+                    modifier = Modifier.height(174.dp),
                     iconList = placeList,
                     typeList = placeType
                 )
