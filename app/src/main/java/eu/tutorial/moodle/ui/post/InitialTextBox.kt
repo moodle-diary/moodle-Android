@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.Icon
@@ -24,6 +25,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.ui.theme.backgroundGray
+import eu.tutorial.moodle.ui.theme.contentCharcoal
 
 @Composable
 fun InitialTextBox(
@@ -40,14 +43,14 @@ fun InitialTextBox(
             onClick = { changeVisible(false) },
             modifier = Modifier
                 .size(50.dp)
-                .clip(shape = CircleShape.copy(all = CornerSize(20.dp)))
-                .background(Color(0XFF363637))
+                .clip(RoundedCornerShape(20.dp))
+                .background(backgroundGray)
         ) {
             Icon(
                 imageVector = Icons.Default.Create,
                 contentDescription = "생각",
                 modifier = Modifier.size(24.dp),
-                tint = Color(0XFFEDEDED)
+                tint = contentCharcoal
             )
         }
         Text(
@@ -56,7 +59,7 @@ fun InitialTextBox(
             textAlign = TextAlign.Center,
             fontSize = 12.sp,
             fontFamily = FontFamily(Font(R.font.poppins_regular)),
-            color = Color(0XFFEDEDED)
+            color = contentCharcoal
         )
     }
 

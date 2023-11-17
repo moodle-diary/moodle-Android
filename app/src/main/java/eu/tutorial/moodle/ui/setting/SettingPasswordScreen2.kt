@@ -44,7 +44,7 @@ import eu.tutorial.moodle.ui.theme.mainOrange
 
 
 @Composable
-fun SettingPasswordScreen(
+fun SettingPasswordScreen2(
     navController: NavController
 ) {
     var password by remember { mutableStateOf("") }
@@ -74,10 +74,10 @@ fun SettingPasswordScreen(
                 tint = contentBlack,
                 modifier = Modifier
                     .size(28.dp)
-                    .clickable { navController.navigate(SettingDestination.route) }
+                    .clickable { navController.navigate("settingPassword") }
             )
             Text(
-                text = "비밀번호 설정",
+                text = "비밀번호 확인",
                 fontSize = 16.sp,
                 color = contentBlack,
                 fontFamily = FontFamily(Font(R.font.poppins_bold))
@@ -93,7 +93,7 @@ fun SettingPasswordScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "앱을 켤 때 입력할 비밀번호 입니다",
+                text = "동일하게 한 번 더 입력해주세요",
                 fontSize = 14.sp,
                 color = contentBlack,
                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
@@ -192,7 +192,7 @@ fun SettingPasswordScreen(
             Button(
                 onClick = {
                     if (password.length == 4)
-                        navController.navigate("settingPassword2")
+                        navController.navigate(SettingDestination.route)
                 },
                 modifier = Modifier
                     .defaultMinSize(
@@ -216,13 +216,4 @@ fun SettingPasswordScreen(
 
         Spacer(modifier = Modifier.height(50.dp))
     }
-}
-
-
-@ExperimentalMaterial3Api
-@Composable
-@Preview
-fun SettingPasswordScreenPreview() {
-    val navController = rememberNavController()
-    SettingPasswordScreen(navController = navController)
 }

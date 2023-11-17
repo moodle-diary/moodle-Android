@@ -38,6 +38,10 @@ import eu.tutorial.moodle.R
 import eu.tutorial.moodle.ui.navigation.HomeDestination
 import kotlinx.coroutines.launch
 import eu.tutorial.moodle.data.local.emotionData
+import eu.tutorial.moodle.ui.theme.backgroundGray
+import eu.tutorial.moodle.ui.theme.containerGray
+import eu.tutorial.moodle.ui.theme.contentBlack
+import eu.tutorial.moodle.ui.theme.contentGray
 import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -76,13 +80,13 @@ fun SaveDialog(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color(0XFF212122))
+                    .background(backgroundGray)
             ) {
                 Text(
                     text = dialogText,
                     modifier = Modifier.padding(top = 38.dp, bottom = 36.dp),
                     fontSize = 16.sp,
-                    color = Color(0XFFDFDFDF),
+                    color = contentBlack,
                     fontFamily = FontFamily(Font(R.font.poppins_regular))
                 )
                 Row(
@@ -120,7 +124,7 @@ fun SaveDialog(
                                 "조금 더 작성하기"
                             },
                             fontSize = 12.sp,
-                            color = Color(0XFF888888),
+                            color = contentGray,
                             fontFamily = FontFamily(Font(R.font.poppins_bold))
                         )
                     }
@@ -153,8 +157,8 @@ fun SaveDialog(
                             }
                         },
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFFD9D9D9),
-                            contentColor = Color(0XFF151515)
+                            containerColor = containerGray,
+                            contentColor = contentBlack
                         ),
                         modifier = Modifier
                             .defaultMinSize(
@@ -176,7 +180,7 @@ fun SaveDialog(
                                 "저장하기"
                             },
                             fontSize = 14.sp,
-                            color = Color(0XFF151515),
+                            color = contentBlack,
                             fontFamily = FontFamily(Font(R.font.poppins_bold))
                         )
                     }

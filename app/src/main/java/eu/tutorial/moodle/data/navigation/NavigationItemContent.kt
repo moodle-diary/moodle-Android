@@ -1,10 +1,13 @@
 package eu.tutorial.moodle.data.navigation
 
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 
 data class NavigationItemContent(
     val mailboxType: NavType,
-    val icon: ImageVector,
+    val isSelected: Boolean,
     val text: String,
-    val route: String
+    val route: String,
+    val selectedIcon: Painter,
+    val unselectedIcon: Painter,
 )
