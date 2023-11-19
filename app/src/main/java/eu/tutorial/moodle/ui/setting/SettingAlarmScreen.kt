@@ -33,23 +33,24 @@ import androidx.navigation.compose.rememberNavController
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.ButtonItem
 import eu.tutorial.moodle.ui.navigation.SettingDestination
+import eu.tutorial.moodle.ui.theme.backgroundGray
+import eu.tutorial.moodle.ui.theme.contentBlack
 
 @Composable
 fun SettingAlarmScreen(
     navController: NavController
 ) {
     val buttonItemList = listOf(
-        ButtonItem(0, "일주일에 한 번"),
-        ButtonItem(1, "격주에 한 번"),
-        ButtonItem(2, "한 달에 한 번"),
-        ButtonItem(3, "3 달에 한 번")
+        ButtonItem(0, "하루에 세 번"),
+        ButtonItem(1, "하루에 한 번"),
+        ButtonItem(2, "삼일에 세 번"),
     )
     var selectedIndex by rememberSaveable { mutableStateOf(0) }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0XFF151515))
+            .background(backgroundGray)
     ) {
         Row(
             modifier = Modifier
@@ -62,7 +63,7 @@ fun SettingAlarmScreen(
             Icon(
                 imageVector = Icons.Default.KeyboardArrowLeft,
                 contentDescription = "left",
-                tint = Color.White,
+                tint = contentBlack,
                 modifier = Modifier
                     .size(28.dp)
                     .clickable { navController.navigate(SettingDestination.route) }
@@ -70,7 +71,7 @@ fun SettingAlarmScreen(
             Text(
                 text = "리마인드 알림 주기",
                 fontSize = 16.sp,
-                color = Color(0XFFDFDFDF),
+                color = contentBlack,
                 fontFamily = FontFamily(Font(R.font.poppins_bold))
             )
             Box(modifier = Modifier.size(28.dp))
@@ -80,8 +81,8 @@ fun SettingAlarmScreen(
         ) {
             Text(
                 text = "주기 설정",
-                fontSize = 14.sp,
-                color = Color(0XFFDFDFDF),
+                fontSize = 16.sp,
+                color = contentBlack,
                 fontFamily = FontFamily(Font(R.font.poppins_bold)),
                 modifier = Modifier.padding(bottom = 7.dp, start = 22.dp, top = 10.dp)
             )
@@ -91,7 +92,7 @@ fun SettingAlarmScreen(
                     .fillMaxWidth(),
                 verticalArrangement = Arrangement.SpaceAround
             ) {
-                repeat(4) { columnIndex ->
+                repeat(3) { columnIndex ->
                     val itemIndex = columnIndex
                     val item = buttonItemList.get(itemIndex)
                     AlarmButton(

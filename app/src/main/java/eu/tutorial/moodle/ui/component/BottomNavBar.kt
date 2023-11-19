@@ -2,13 +2,23 @@ package eu.tutorial.moodle.ui.component
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BarChart
+import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItem
@@ -16,70 +26,113 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import eu.tutorial.moodle.data.navigation.navigationItemContentList
-import eu.tutorial.moodle.ui.home.TopAppBar
+import eu.tutorial.moodle.R
+import eu.tutorial.moodle.data.navigation.NavType
+import eu.tutorial.moodle.data.navigation.NavigationItemContent
+import eu.tutorial.moodle.ui.navigation.CalendarDestination
+import eu.tutorial.moodle.ui.navigation.ChartDestination
+import eu.tutorial.moodle.ui.navigation.HomeDestination
+import eu.tutorial.moodle.ui.navigation.PostDestination
+import eu.tutorial.moodle.ui.navigation.SettingDestination
+import eu.tutorial.moodle.ui.theme.backgroundGray
+import eu.tutorial.moodle.ui.theme.contentBlack
+import eu.tutorial.moodle.ui.theme.navItemBackground
 
 @Composable
 fun BottomNavBar(
     navController: NavHostController,
     isVisible : Boolean = false
 ) {
-
-    if(!isVisible)   {
+    val navigationItemContentList = listOf(
+        NavigationItemContent(
+            mailboxType = NavType.Home,
+            isSelected = navController.currentDestination?.hierarchy?.any {
+                it.route == HomeDestination.route
+            } == true,
+            text = "Home",
+            route = HomeDestination.route,
+            selectedIcon = painterResource(id = R.drawable.nav_home_fill),
+            unselectedIcon = painterResource(id = R.drawable.nav_home),
+        ),
+        NavigationItemContent(
+            mailboxType = NavType.Calendar,
+            isSelected = navController.currentDestination?.hierarchy?.any {
+                it.route == CalendarDestination.route
+            } == true,
+            text = "Calendar",
+            route = CalendarDestination.route,
+            selectedIcon = painterResource(id = R.drawable.nav_cal),
+            unselectedIcon = painterResource(id = R.drawable.nav_cal),
+        ),
+        NavigationItemContent(
+            mailboxType = NavType.Post,
+            isSelected = navController.currentDestination?.hierarchy?.any {
+                it.route == PostDestination.route
+            } == true,
+            text = "Post",
+            route = PostDestination.route,
+            selectedIcon = painterResource(id = R.drawable.nav_edit),
+            unselectedIcon = painterResource(id = R.drawable.nav_edit),
+        ),
+        NavigationItemContent(
+            mailboxType = NavType.Chart,
+            isSelected = navController.currentDestination?.hierarchy?.any {
+                it.route == ChartDestination.route
+            } == true,
+            text = "Chart",
+            route = ChartDestination.route,
+            selectedIcon = painterResource(id = R.drawable.nav_rep_fill),
+            unselectedIcon = painterResource(id = R.drawable.nav_rep),
+        ),
+        NavigationItemContent(
+            mailboxType = NavType.Setting,
+            isSelected = navController.currentDestination?.hierarchy?.any {
+                it.route == SettingDestination.route
+            } == true,
+            text = "Setting",
+            route = SettingDestination.route,
+            selectedIcon = painterResource(id = R.drawable.nav_set),
+            unselectedIcon = painterResource(id = R.drawable.nav_set),
+        )
+    )
+    if (!isVisible) {
         BottomAppBar(
             modifier = Modifier
-                .padding(bottom = 12.dp, start = 8.dp, end = 8.dp)
                 .height(68.dp)
-                .clip(shape = RoundedCornerShape(18.dp))
+                .padding(bottom = 10.dp)
                 .fillMaxSize(),
-            containerColor = Color(0XFF363637),
+            containerColor = backgroundGray
         ) {
-            for (navItem in navigationItemContentList) {
-                if (navItem.text == "Post"){
-                    NavigationBarItem(
-                        selected = false,
-                        onClick = { navController.navigate(navItem.route) },
-                        icon = {
-                            Surface(
-                                modifier = Modifier
-                                    .size(44.dp)
-                                    .clip(RoundedCornerShape(6.dp)),
-                                color = Color(0XFF1D1B20)
-                            ) {
-                                Icon(
-                                    imageVector = navItem.icon,
-                                    contentDescription = navItem.text,
-                                    modifier = Modifier
-                                        .size(30.dp)
-                                        .padding(6.dp),
-                                    tint = Color(0XFFDFDFDF),
-                                    // 여기 dp 값 임의 수정함
-                                )
-                            }
-                        },
-                    )
-
-                } else{
-                    NavigationBarItem(
-                        selected = false,
-                        onClick = { navController.navigate(navItem.route) },
-                        icon = {
-                            Icon(
-                                imageVector = navItem.icon,
-                                contentDescription = navItem.text,
-                                modifier = Modifier
-                                    .width(30.dp)
-                                    .height(30.dp),
-                                tint = Color(0XFFDFDFDF)
-                                // 여기 dp 값 임의 수정함
-                            )
-                        },
-                    )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                for (navItem in navigationItemContentList) {
+                    if (navItem.isSelected) {
+                        Image(
+                            painter = navItem.selectedIcon,
+                            contentDescription = "image",
+                            modifier = Modifier
+                                .size(42.dp)
+                                .clickable { navController.navigate(navItem.route) }
+                        )
+                    }
+                    else {
+                        Image(
+                            painter = navItem.unselectedIcon,
+                            contentDescription = "image",
+                            modifier = Modifier
+                                .size(42.dp)
+                                .clickable { navController.navigate(navItem.route) }
+                        )
+                    }
                 }
             }
         }

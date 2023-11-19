@@ -21,6 +21,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.ui.theme.containerGray
+import eu.tutorial.moodle.ui.theme.contentBlack
+import eu.tutorial.moodle.ui.theme.contentGray
+
 @Composable
 fun NotesComponent(
     text : String = ""
@@ -31,7 +35,7 @@ fun NotesComponent(
             .padding(0.dp, 4.dp)
             .fillMaxWidth()
             .clip(RoundedCornerShape(18.dp))
-            .background(color = Color(0XFF2A292B)),
+            .background(containerGray),
     ) {
         if(text != ""){
             Text(
@@ -42,14 +46,14 @@ fun NotesComponent(
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
                     fontSize = 16.sp
                 ),
-                color = Color(0XFFDFDFDF)
+                color = contentBlack
             )
         } else{
             Box(
                 modifier = Modifier
                     .padding(0.dp, 31.dp)
                     .fillMaxWidth()
-                    .background(color = Color(0XFF2A292B)),
+                    .background(containerGray),
                 contentAlignment = Alignment.Center,
             ){
                 Text(
@@ -57,7 +61,7 @@ fun NotesComponent(
                     style = TextStyle(
                         fontSize = 12.sp,
                         fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                        color = Color(0XFF686868)
+                        color = contentGray
                     ),
                 )
             }

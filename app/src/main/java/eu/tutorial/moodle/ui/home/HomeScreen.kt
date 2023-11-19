@@ -48,6 +48,9 @@ import eu.tutorial.moodle.ui.component.IconsComponent
 import eu.tutorial.moodle.ui.component.NotesComponent
 import eu.tutorial.moodle.ui.component.SentenceComponent
 import eu.tutorial.moodle.ui.home.component.BottomSheet
+import eu.tutorial.moodle.ui.theme.backgroundGray
+import eu.tutorial.moodle.ui.theme.contentBlack
+import eu.tutorial.moodle.ui.theme.contentGray
 import eu.tutorial.moodle.ui.theme.poppins
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -80,7 +83,7 @@ fun HomeScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(Color(0XFF151515))
+            .background(backgroundGray)
             .padding(innerPaddingValues)
             .verticalScroll(rememberScrollState())
     ) {
@@ -88,7 +91,7 @@ fun HomeScreen(
 
         // TODO : 이 부분은 명언 보여주기
         SentenceComponent(
-            modifier = Modifier.padding(start = 41.dp, end = 41.dp),
+            modifier = Modifier.padding(12.dp, 0.dp),
             navController = navController
         )
 
@@ -97,7 +100,7 @@ fun HomeScreen(
 
 
         Column(
-            modifier = Modifier.padding(start = 50.dp, end = 50.dp)
+            modifier = Modifier.padding(12.dp, 0.dp)
         ) {
             Row(
                 modifier = modifier
@@ -109,17 +112,19 @@ fun HomeScreen(
                     text = "오늘의 리마인드",
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                    color = Color(0XFFDFDFDF)
+                    color = contentBlack,
+                    modifier = Modifier.padding(8.dp, 0.dp)
                 )
                 Text(
                     text = "모두 보기",
                     fontSize = 12.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                    color = Color(0XFF7E7E7E)
+                    color = contentGray
                 )
             }
 
             IconsComponent(
+                modifier = Modifier.height(174.dp),
                 iconList = emotionList,
             )
 
@@ -144,12 +149,12 @@ fun HomeScreen(
                 Image(
                     painter = painterResource(id = R.drawable.journal),
                     contentDescription = "journal",
-                    modifier = Modifier.padding(end = 8.dp)
+                    modifier = Modifier.padding(end = 8.dp).size(16.dp)
                 )
 
                 Text(
                     text = "생각 보기",
-                    color = Color(0XFFDFDFDF),
+                    color = contentBlack,
                     fontFamily = poppins,
                     modifier = Modifier.padding(top = 2.dp)
                 )

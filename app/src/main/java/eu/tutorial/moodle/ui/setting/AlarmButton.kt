@@ -26,6 +26,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.ButtonItem
+import eu.tutorial.moodle.ui.theme.containerGray
+import eu.tutorial.moodle.ui.theme.contentBlack
+import eu.tutorial.moodle.ui.theme.unselectedIndicator
 
 @Composable
 fun AlarmButton(
@@ -34,14 +37,14 @@ fun AlarmButton(
     onTap: () -> Unit
 ) {
     val backgroundColor =
-        if (isSelected) Color(0XFF363637)
-        else Color(0XFF212122)
+        if (isSelected) containerGray
+        else unselectedIndicator
     val contentColor =
-        if (isSelected) Color(0XFFDFDFDF)
+        if (isSelected) contentBlack
         else Color(0XFF888888)
     val borderColor =
-        if (isSelected) Color(0XFF363637)
-        else Color(0XFF212122)
+        if (isSelected) containerGray
+        else unselectedIndicator
 
     Box(
         modifier = Modifier
@@ -49,10 +52,10 @@ fun AlarmButton(
             .fillMaxWidth()
             .height(67.dp)
             .clip(RoundedCornerShape(18.dp))
+            .clickable { onTap() }
             .background(backgroundColor)
             .padding(start = 22.dp, end = 22.dp)
-            .border(1.dp, borderColor, RoundedCornerShape(10.dp))
-            .clickable { onTap() },
+            .border(1.dp, borderColor, RoundedCornerShape(10.dp)),
     ) {
         Row(
             modifier = Modifier

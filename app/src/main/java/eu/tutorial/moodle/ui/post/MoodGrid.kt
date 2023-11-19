@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,6 +22,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -47,6 +49,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.local.emotionData
+import eu.tutorial.moodle.ui.theme.backgroundGray
+import eu.tutorial.moodle.ui.theme.containerGray
+import eu.tutorial.moodle.ui.theme.contentBlack
+import eu.tutorial.moodle.ui.theme.contentGray
 import eu.tutorial.moodle.ui.theme.poppins
 import java.time.LocalDate
 
@@ -59,130 +65,111 @@ fun MoodGrid(
 
     var showDialog = remember { mutableStateOf(false) }
 
-    Box(
+    Column(
         modifier = Modifier
-            .fillMaxHeight()
-            .background(Color(color = 0Xff212122))
-            .clip(shape = CircleShape.copy(all = CornerSize(45.dp)))
+            .fillMaxSize()
+            .background(containerGray)
+            .clip(RoundedCornerShape(18.dp)),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+        Text(
+            modifier = Modifier.padding(top = 32.dp, bottom = 28.dp),
+            text = "어떤 감정이었나요?",
+            fontSize = 16.sp,
+            fontFamily = FontFamily(Font(R.font.poppins_bold)),
+            textAlign = TextAlign.Center,
+            color = contentBlack
+        )
+
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(4),
+            modifier = Modifier.padding(25.dp, 0.dp)
+            //modifier = Modifier.padding(top = 108.dp, start = 20.dp)
         ) {
-            Text(
-                modifier = Modifier.padding(top = 20.dp),
-                text = "감정 고르기",
-                fontSize = 24.sp,
-                fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                textAlign = TextAlign.Center,
-                color = Color(0XFFEDEDED)
-            )
-            Text(
-                modifier = Modifier.padding(top = 4.dp, bottom = 28.dp),
-                text = "어떤 감정들을 느낀것 같나요?",
-                fontSize = 16.sp,
-                fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                textAlign = TextAlign.Center,
-                color = Color(0XFFEDEDED)
-            )
+            itemsIndexed(emotionData) { index, item ->
+                // 각 데이터 아이템을 Row 컴포넌트 내에서 텍스트와 버튼으로 구성
+                Column(
+                    verticalArrangement = Arrangement.SpaceAround,
+                    horizontalAlignment = Alignment.CenterHorizontally
 
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(4),
-                modifier = Modifier.padding(25.dp, 0.dp)
-                //modifier = Modifier.padding(top = 108.dp, start = 20.dp)
-            ) {
-                itemsIndexed(emotionData) { index, item ->
-                    // 각 데이터 아이템을 Row 컴포넌트 내에서 텍스트와 버튼으로 구성
-                    Column(
-                        verticalArrangement = Arrangement.SpaceAround,
-                        horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    val isClicked = buttonStates[index / 4][index % 4]
+                    val backgroundColor = if (isClicked) {
+                        Color(0XFF414141) //클릭된 경우
+                    } else {
+                        Color(0XFFC5C1C1) //클릭되지 않은 경우
+                    }
 
+                    IconButton(
+                        onClick = {
+                            // 클릭된 버튼의 상태를 토글합니다.
+                            buttonStates[index / 4][index % 4] = !isClicked
+                        },
+                        modifier = Modifier
+                            .size(50.dp)
+                            .clip(CircleShape)
+                            .background(backgroundColor) // 배경색 설정
                     ) {
-                        val isClicked = buttonStates[index / 4][index % 4]
-                        val backgroundColor = if (isClicked) {
-                            Color(0XFF414141) //클릭된 경우
-                        } else {
-                            Color(0XFFC5C1C1) //클릭되지 않은 경우
-                        }
-
-                        IconButton(
-                            onClick = {
-                                // 클릭된 버튼의 상태를 토글합니다.
-                                buttonStates[index / 4][index % 4] = !isClicked
-                            },
-                            modifier = Modifier
-                                .size(50.dp)
-                                .clip(CircleShape)
-                                .background(backgroundColor) // 배경색 설정
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.AddCircle,
-                                contentDescription = "circle"
-                            )
-                        }
-                        Text(
-                            text = item,
-                            fontSize = 12.sp,
-                            fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier
-                                .width(40.dp)
-                                .padding(top = 4.dp, bottom = 8.dp),
-                            color = Color(0XFFEDEDED)
+                        Icon(
+                            imageVector = Icons.Default.AddCircle,
+                            contentDescription = "circle"
                         )
                     }
-                }
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 15.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Button(
-                    onClick = { showDialog.value = true },
-                    shape = CircleShape,
-                    modifier = Modifier
-                        .defaultMinSize(minWidth = 42.dp, minHeight = 42.dp),
-                    contentPadding = PaddingValues(bottom = 3.dp),
-                    border = BorderStroke(
-                        2.dp,
-                        Brush.linearGradient(listOf(Color(0XFFFFCF25), Color(0XFFF198FF)))
-                    ),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0XFF363637),
-                    ),
-                ) {
                     Text(
-                        text = "👍",
-                        fontSize = 14.sp
-                    )
-                }
-                Column(
-                    modifier = Modifier.padding(start = 15.dp),
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = "오늘은 유쾌한 날",
-                        fontSize = 14.sp,
-                        fontFamily = poppins,
-                        color = Color(0xFF999999)
-                    )
-                    Text(
-                        text = "기분이 좋으면 눌러요!",
-                        fontSize = 11.sp,
-                        fontFamily = poppins,
-                        color = Color(0xFF999999)
+                        text = item,
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .width(40.dp)
+                            .padding(top = 4.dp, bottom = 8.dp),
+                        color = Color(0XFFEDEDED)
                     )
                 }
             }
-
-            GoodDialog(
-                navController = navController,
-                visibility = showDialog.value
-            ) { dialogVisible -> showDialog.value = dialogVisible }
         }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 15.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(
+                onClick = { showDialog.value = true },
+                shape = CircleShape,
+                modifier = Modifier
+                    .defaultMinSize(minWidth = 42.dp, minHeight = 42.dp),
+                contentPadding = PaddingValues(bottom = 3.dp),
+                border = BorderStroke(
+                    2.dp,
+                    Brush.linearGradient(listOf(Color(0XFFFFCF25), Color(0XFFF198FF)))
+                ),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = backgroundGray,
+                ),
+            ) {
+                Text(
+                    text = "👍",
+                    fontSize = 14.sp
+                )
+            }
+            Column(
+                modifier = Modifier.padding(start = 15.dp),
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = "오늘은 유쾌한 날",
+                    fontSize = 14.sp,
+                    fontFamily = poppins,
+                    color = contentGray
+                )
+            }
+        }
+
+        GoodDialog(
+            navController = navController,
+            visibility = showDialog.value
+        ) { dialogVisible -> showDialog.value = dialogVisible }
     }
 }
