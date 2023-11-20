@@ -50,3 +50,8 @@ data class DescriptionDto(
     val description: String,
     val cnt: Int
 )
+
+data class ButtonItem(
+    val index: Int,
+    val label: String,
+)

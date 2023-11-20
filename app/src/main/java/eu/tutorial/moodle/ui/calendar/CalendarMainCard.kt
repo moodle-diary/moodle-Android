@@ -1,7 +1,6 @@
 package eu.tutorial.moodle.ui.calendar
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
@@ -100,7 +99,6 @@ fun CalendarMainCard(
                     pagerState = pagerState,
                     changeVisible = {
                         visibleEmotion = !visibleEmotion
-                        Log.d("visible", visibleEmotion.toString())
                     },
                     currentMonth = currentMonth,
                     viewModel = viewModel,
@@ -111,59 +109,59 @@ fun CalendarMainCard(
 
         Spacer(modifier = Modifier.size(16.dp))
 
-        AnimatedVisibility(
-            visible = visibleEmotion,
+//        AnimatedVisibility(
+//            visible = visibleEmotion,
+//        ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally
+                modifier = Modifier
+                    .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
+                    .clip(RoundedCornerShape(32.dp))
             ) {
-                Column(
+                Box(
                     modifier = Modifier
-                        .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
-                        .clip(RoundedCornerShape(32.dp))
+                        .height(226.dp)
+                        .fillMaxWidth()
+                        .background(color = Color(0XFF212122)),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Box(
+                    Button(
+                        onClick = {
+                            showViewScreen()
+                        },
                         modifier = Modifier
-                            .height(226.dp)
-                            .fillMaxWidth()
-                            .background(color = Color(0XFF212122)),
-                        contentAlignment = Alignment.Center
+                            .align(Alignment.BottomEnd)
+                            .padding(12.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.Transparent
+                        ),
                     ) {
-                        Button(
-                            onClick = {
-                                showViewScreen()
-                            },
+                        Row(
                             modifier = Modifier
-                                .align(Alignment.BottomEnd)
-                                .padding(12.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.Transparent
-                            ),
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                                horizontalArrangement = Arrangement.Center,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Image(
-                                    painter = painterResource(id = eu.tutorial.moodle.R.drawable.journal),
-                                    contentDescription = "journal",
-                                    modifier = Modifier.padding(end = 8.dp)
-                                )
+                            Image(
+                                painter = painterResource(id = eu.tutorial.moodle.R.drawable.journal),
+                                contentDescription = "journal",
+                                modifier = Modifier.padding(end = 8.dp)
+                            )
 
-                                Text(
-                                    text = "일기 조회",
-                                    color = Color(0XFFDFDFDF),
-                                    fontFamily = poppins,
-                                    modifier = Modifier.padding(top = 2.dp)
-                                )
-                            }
+                            Text(
+                                text = "일기 조회",
+                                color = Color(0XFFDFDFDF),
+                                fontFamily = poppins,
+                                modifier = Modifier.padding(top = 2.dp)
+                            )
                         }
                     }
                 }
             }
         }
+
     }
 
 
@@ -175,8 +173,6 @@ fun CalendarMainCard(
             visible = visibleMore,
             enter = slideInVertically(initialOffsetY = { it }),
             exit = slideOutVertically(targetOffsetY = { it }),
-//            modifier = Modifier
-//                .align(Alignment.BottomCenter) // 이 align 은 box scope 이기 때문에 안에서 써야 한다.
         ) {
             ViewScreen(
                 showCommentScreen = showCommentScreen,

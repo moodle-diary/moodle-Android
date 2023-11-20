@@ -45,4 +45,6 @@ val allEmojis = mapOf<String, Int>(
     "아쉬움" to R.drawable.angry,
     "분노" to R.drawable.angry,
 
+    "행복" to R.drawable.plusbutton,
+
     )
