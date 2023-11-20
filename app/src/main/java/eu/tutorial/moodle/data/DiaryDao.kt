@@ -114,4 +114,14 @@ interface DiaryDao {
         "DELETE from comment where id = :commentId"
     )
     fun deleteComment(commentId: Int)
+
+    @Query(
+        "SELECT COUNT(currentDate) as cnt FROM diaries  " +
+                "INNER JOIN emotions on emotions.diaryId = diaries.id " +
+                "where currentDate like :targetMonth " +
+                "Group by currentDate " +
+                "having COUNT(currentDate) = 1 and emotion == \"행복\"\n" +
+                ""
+    )
+    fun getGreatDays(targetMonth: String): Int
 }
