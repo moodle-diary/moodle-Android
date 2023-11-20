@@ -26,7 +26,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -52,12 +51,12 @@ import java.time.YearMonth
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CalendarMainCard(
-    innerPadding : PaddingValues = PaddingValues(0.dp),
+    innerPadding: PaddingValues = PaddingValues(0.dp),
     currentDate: LocalDate = LocalDate.now(),
-    visibleMore : Boolean,
-    showViewScreen : () -> Unit,
+    visibleMore: Boolean,
+    showViewScreen: () -> Unit,
     viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory),
-){
+) {
 
     val initialPage = (currentDate.year - 1970) * 12 + currentDate.monthValue - 1
 
@@ -129,7 +128,7 @@ fun CalendarMainCard(
                             .fillMaxWidth()
                             .background(color = Color(0XFF212122)),
                         contentAlignment = Alignment.Center
-                    ){
+                    ) {
                         Button(
                             onClick = {
                                 showViewScreen()
@@ -148,7 +147,7 @@ fun CalendarMainCard(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Image(
-                                    painter = painterResource(id = eu.tutorial.moodle.R.drawable.journal), 
+                                    painter = painterResource(id = eu.tutorial.moodle.R.drawable.journal),
                                     contentDescription = "journal",
                                     modifier = Modifier.padding(end = 8.dp)
                                 )
@@ -165,33 +164,13 @@ fun CalendarMainCard(
                 }
             }
         }
-
-        AnimatedVisibility(
-            visible = !visibleEmotion,
-        ) {
-            Column(
-                modifier = Modifier
-                    .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
-                    .clip(RoundedCornerShape(18.dp))
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(180.dp)
-                        .background(Color(0XFF212122)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    EmotionChart()
-                }
-            }
-        }
     }
 
 
     Box(
         modifier = Modifier
             .background(color = Color(0X00000000))
-    ){
+    ) {
         AnimatedVisibility(
             visible = visibleMore,
             enter = slideInVertically(initialOffsetY = { it }),
