@@ -103,7 +103,8 @@ fun ChartScreen(
             category = "장소 순위"
         )
     }
-    Log.d("great", greatDay.toString())
+
+    // TODO: impl great day rate view with value greatDays
 }
 
 @RequiresApi(Build.VERSION_CODES.O)

@@ -2,7 +2,7 @@ package eu.tutorial.moodle.data
 
 // Dto 의 네이밍은 database의 colum 이름과 같아야 한다.
 data class DiaryDto(
-    val time: String,
+    val hour: Int,
     val diaryText: String,
 )
 

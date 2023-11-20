@@ -58,8 +58,8 @@ fun PostScreen(
     navController: NavController,
     viewModel: PostViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    var selectedHour by remember { mutableStateOf(0) }
-    var selectedMinute by remember { mutableStateOf(0) }
+    var selectedHour = viewModel.diaryUiState.diaryDetails.hour
+    var selectedMinute = viewModel.diaryUiState.diaryDetails.minute
     var showDialog by remember { mutableStateOf(false) }
 
     val timePickerState = rememberTimePickerState(
@@ -276,11 +276,13 @@ fun PostScreen(
                     timePickerState = timePickerState
                 ) { hour, minute ->
                     showDialog = false
-                    selectedHour = hour
-                    selectedMinute = minute
+                    viewModel.updateDiaryUiState(
+                        diaryDetails = viewModel.diaryUiState.diaryDetails.copy(
+                            hour = hour,
+                            minute = minute
+                        )
+                    )
                 }
-
-
             }
         }
     }

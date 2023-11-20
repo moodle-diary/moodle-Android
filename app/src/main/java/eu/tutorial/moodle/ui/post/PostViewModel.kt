@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import eu.tutorial.moodle.data.Cause
@@ -19,7 +20,6 @@ import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
 class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() {
-
     var diaryUiState by mutableStateOf(
         DiaryUiState(
             diaryDetails = DiaryDetails(
@@ -109,14 +109,15 @@ data class DiaryDetails(
     val diaryText: String = "",
     val act: String = "",
     val feeling: String = "",
-    val thought:String = "",
-    val time: String = "",
+    val thought: String = "",
+    val hour: Int = 0,
+    val minute: Int = 0,
 )
 
 fun DiaryDetails.toDiary(): Diary = Diary(
     currentDate = currentDate,
     diaryText = diaryText + "\n" + act + "\n" + feeling + thought,
-    time = time
+    hour = hour
 )
 
 fun Diary.toDiaryUiState(isEntryValid: Boolean = false): DiaryUiState = DiaryUiState(
@@ -127,5 +128,5 @@ fun Diary.toDiaryUiState(isEntryValid: Boolean = false): DiaryUiState = DiaryUiS
 fun Diary.toDiaryDetails(): DiaryDetails = DiaryDetails(
     currentDate = currentDate,
     diaryText = diaryText,
-    time = time
+    hour = hour
 )
