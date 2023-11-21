@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.ui.theme.contentBlack
 import java.time.format.TextStyle
 import java.util.Locale
 
@@ -44,7 +45,7 @@ fun DayOfWeek(
                         includeFontPadding = false
                     )
                 ),
-                color = Color(0XFFDFDFDF)
+                color = contentBlack
             )
         }
 
@@ -64,7 +65,7 @@ fun DayOfWeek(
                         includeFontPadding = false
                     )
                 ),
-                color = Color(0XFFDFDFDF)
+                color = contentBlack
             )
             startIndex++
         }

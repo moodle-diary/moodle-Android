@@ -35,11 +35,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.ui.theme.backgroundGray
+import eu.tutorial.moodle.ui.theme.contentBlack
 import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ChartTopBar(){
+fun ChartTopBar() {
     val today = LocalDate.now()
 
     val currentMonth = today.monthValue
@@ -53,11 +55,11 @@ fun ChartTopBar(){
             .height(108.dp)
             .fillMaxSize(),
         contentAlignment = Alignment.Center,
-    ){
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0XFF151515))
+                .background(backgroundGray)
                 .padding(start = 50.dp),
             verticalArrangement = Arrangement.Center
         ) {
@@ -66,7 +68,7 @@ fun ChartTopBar(){
                 style = TextStyle(
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                    color = Color(0xFFDFDFDF),
+                    color = contentBlack,
                     platformStyle = PlatformTextStyle(
                         includeFontPadding = false
                     ),
@@ -83,6 +85,6 @@ fun ChartTopBar(){
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
-fun TopBarPreview(){
+fun TopBarPreview() {
     ChartTopBar()
 }
