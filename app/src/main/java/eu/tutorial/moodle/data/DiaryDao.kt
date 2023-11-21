@@ -131,7 +131,7 @@ interface DiaryDao {
                 "union all " +
                 "select n + 1 " +
                 "from tmp " +
-                "where n <= 24" +
+                "where n < 24" +
                 ") " +
                 "select tmp.n as hour, count(id) as cnt " +
                 "from tmp " +

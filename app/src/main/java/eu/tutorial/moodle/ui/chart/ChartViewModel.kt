@@ -11,12 +11,15 @@ import eu.tutorial.moodle.data.DiaryRepository
 import eu.tutorial.moodle.data.EmotionGrade
 import eu.tutorial.moodle.data.PlaceGrade
 import eu.tutorial.moodle.data.PlaceTypeDto
+import eu.tutorial.moodle.data.TimeItem
 
 class ChartViewModel(private val diaryRepository: DiaryRepository) : ViewModel() {
 
     var emotionList by mutableStateOf(emptyList<DescriptionDto>())
     var causeList by mutableStateOf(emptyList<DescriptionDto>())
     var placeList by mutableStateOf(emptyList<DescriptionDto>())
+
+    var timeList by mutableStateOf(emptyList<TimeItem>())
 
     var causeTypes by mutableStateOf(emptyList<CauseTypeDto>())
         private set
@@ -48,6 +51,10 @@ class ChartViewModel(private val diaryRepository: DiaryRepository) : ViewModel()
 
     fun getPlaceList(targetMonth: String) {
         placeList = diaryRepository.getPlaceGrade("$targetMonth%").map { it.toDesDto() }
+    }
+
+    fun getTimeList() {
+        timeList = diaryRepository.getHourRate()
     }
 }
 

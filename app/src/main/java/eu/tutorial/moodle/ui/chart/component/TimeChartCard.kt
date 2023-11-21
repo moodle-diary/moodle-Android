@@ -3,10 +3,12 @@ package eu.tutorial.moodle.ui.chart.component
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -24,25 +26,37 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.data.TimeItem
 import eu.tutorial.moodle.data.local.timeData
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun TimeChartCard() {
+fun TimeChartCard(
+    timeList: List<TimeItem> = emptyList()
+) {
     Box(
         modifier = Modifier
-            .width(336.dp)
+            .padding(12.dp, 8.dp)
+            .clip(RoundedCornerShape(18.dp))
+            .fillMaxWidth()
+            .background(color = Color.White)
+            .padding(top = 16.dp, bottom = 12.dp)
             .height(155.dp)
-            .clip(shape = RoundedCornerShape(size = 18.dp))
-
     ) {
+        Row(
+            modifier = Modifier.align(Alignment.BottomCenter)
+        ) {
+            timeList.map {
+                it.cnt
+            }
+        }
         Row(
             modifier = Modifier.align(Alignment.BottomCenter),
         ) {
-            timeData.map {
+            timeList.map {
                 EvalTimeBar(
-                    chartSize = 87,
-                    time = it
+                    chartSize = it.cnt * 5,
+                    time = it.hour
                 )
             }
         }
@@ -53,12 +67,14 @@ fun TimeChartCard() {
 @Composable
 fun EvalTimeBar(
     chartSize: Int,
-    time: String,
+    time: Int,
 ) {
     Box(
+        modifier = Modifier.fillMaxHeight()
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.align(Alignment.BottomCenter)
         ) {
             Box(
                 modifier = Modifier
@@ -66,13 +82,23 @@ fun EvalTimeBar(
                     .height(chartSize.dp)
                     .background(color = Color(0xFFF2994A))
             )
-            Text(
-                text = time,
-                fontSize = 12.sp,
-                color = Color(0xFF828282),
-                fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                fontWeight = FontWeight(700)
-            )
+            if (time % 2 == 0) {
+                Text(
+                    text = time.toString(),
+                    modifier = Modifier.height(20.dp),
+                    fontSize = 12.sp,
+                    color = Color(0xFF828282),
+                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                    fontWeight = FontWeight(700)
+                )
+            } else {
+                Spacer(
+                    modifier =
+                    Modifier
+                        .height(20.dp)
+                        .width(10.dp)
+                )
+            }
         }
     }
 }
@@ -83,5 +109,7 @@ fun EvalTimeBar(
 )
 @Composable
 fun ChartPreview() {
-    TimeChartCard()
+    TimeChartCard(
+
+    )
 }

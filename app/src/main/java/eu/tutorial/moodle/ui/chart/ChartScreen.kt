@@ -22,6 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import eu.tutorial.moodle.data.TypeDto
 import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.chart.component.RankCard
+import eu.tutorial.moodle.ui.chart.component.TimeChartCard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -39,6 +40,9 @@ fun ChartScreen(
     val causeState = viewModel.causeList
     val placeState = viewModel.placeList
 
+    val timeList = viewModel.timeList
+    val greatDay = viewModel.greatDays
+
     val causeType = viewModel.causeTypes.map {
         TypeDto(
             iconId = it.iconId,
@@ -51,8 +55,6 @@ fun ChartScreen(
             typeDes = it.placeType,
         )
     }
-
-    val greatDay = viewModel.greatDays
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -68,9 +70,11 @@ fun ChartScreen(
                 viewModel.getPlaceTypes()
 
                 viewModel.getGreatDays("2023-11")
+                viewModel.getTimeList()
             }
         }
     }
+
 
     Column(
         modifier = Modifier
@@ -79,6 +83,10 @@ fun ChartScreen(
             .padding(innerPaddingValues)
             .verticalScroll(scrollState)
     ) {
+        TimeChartCard(
+            timeList = timeList
+        )
+
         RankCard(
             rankState = emotionState,
             category = "감정 순위"
