@@ -1,4 +1,4 @@
-package eu.tutorial.moodle.ui.chart
+package eu.tutorial.moodle.ui.chart.component
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -36,7 +36,6 @@ fun RankCard(
     typeState: List<TypeDto> = emotionList,
     category: String
 ) {
-
     var isFolder by remember { mutableStateOf(true) } // 접혀 있으면 true
 
     Column(

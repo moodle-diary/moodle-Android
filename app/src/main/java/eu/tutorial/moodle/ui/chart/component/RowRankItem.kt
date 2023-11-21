@@ -1,6 +1,5 @@
-package eu.tutorial.moodle.ui.chart
+package eu.tutorial.moodle.ui.chart.component
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,7 +30,6 @@ fun RowRankItem(
     listState: List<DescriptionDto>,
     typeState: List<TypeDto> = emotionList,
 ) {
-
     Row(
         modifier = Modifier
             .padding(start = 24.dp, end = 24.dp)

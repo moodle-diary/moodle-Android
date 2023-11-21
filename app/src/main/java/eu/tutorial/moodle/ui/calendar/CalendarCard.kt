@@ -53,7 +53,6 @@ fun HorizontalCalendar(
         // 개수로 세면 1월이 0 부터 시작인데, 실제는 1
 
         while(idx != pagerState.currentPage){
-
             if (idx < (pagerState.currentPage)) {
                 pagerState.scrollToPage(page = pagerState.currentPage - 1)
             } else {

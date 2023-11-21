@@ -39,6 +39,5 @@ class OfflineDiaryRepository(private val diaryDao: DiaryDao) : DiaryRepository {
 
     override fun getCauseTypes(): List<CauseTypeDto> = diaryDao.getCauseTypes()
     override fun getPlaceTypes(): List<PlaceTypeDto> = diaryDao.getPlaceTypes()
-
-
+    override fun getHourRate(): List<TimeItem> = diaryDao.getHourRate()
 }
