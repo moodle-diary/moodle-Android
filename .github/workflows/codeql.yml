@@ -48,11 +48,20 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'
+        java-version: '11'
+
+    - name: Build with Gradle
+      run: ./gradlew build
+      
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
       with:
-        languages: ${{ matrix.language }}
+        languages: kotlin
         # If you wish to specify custom queries, you can do so here or in a config file.
         # By default, queries listed here will override any specified in a config file.
         # Prefix the list here with "+" to use these queries and those in the config file.
@@ -66,6 +75,9 @@ jobs:
     - name: Autobuild
       uses: github/codeql-action/autobuild@v2
 
+    - name: Analyze
+      uses: github/codeql-action/analyze@v1
+      
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
 
