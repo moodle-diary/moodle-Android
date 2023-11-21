@@ -64,8 +64,6 @@ import java.util.Locale
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ViewScreen(
-    showCommentScreen: Boolean,
-    setShowCommentScreen: (Boolean) -> Unit,
     showViewScreen: () -> Unit,
     selectedDate: MutableState<LocalDate>,
     viewModel: DetailViewModel = viewModel(factory = AppViewModelProvider.Factory),
@@ -202,7 +200,7 @@ fun ViewScreen(
         )
 
         if (diaryList.isNotEmpty()) {
-            eu.tutorial.moodle.ui.home.getDiaryText(diaryList).map {
+            getDiaryText(diaryList).map {
                 NotesComponent(
                     text = it
                 )
@@ -228,57 +226,20 @@ fun ViewScreen(
             }
         }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Button(
-                onClick = { setShowCommentScreen(true) },
-                modifier = Modifier
-                    .defaultMinSize(
-                        minWidth = 1.dp,
-                        minHeight = 31.dp
-                    )
-                    .padding(top = 24.dp, bottom = 57.dp),
-                contentPadding = PaddingValues(
-                    top = 5.dp,
-                    bottom = 5.dp,
-                    start = 17.dp,
-                    end = 17.dp
-                ),
-                shape = RoundedCornerShape(20.dp),
-                border = BorderStroke(1.dp, Color(0XFFDFDFDF)),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent
-                )
-            ) {
-                Text(
-                    text = "%d Comments".format(1),
-                    color = Color(0XFFDFDFDF),
-                    fontFamily = poppins
-                )
-            }
-        }
+        Text(
+            text = "댓글",
+            fontSize = 16.sp,
+            fontFamily = FontFamily(Font(R.font.poppins_bold)),
+            color = contentBlack,
+            modifier = Modifier.padding(top = 24.dp)
+        )
+
+        CommentScreen(
+            selectedDate = selectedDate.value
+        )
 
     }
-    Box(
-        modifier = Modifier
-            .background(color = Color(0X00000000))
-    ) {
-        AnimatedVisibility(
-            visible = showCommentScreen,
-            enter = slideInVertically(initialOffsetY = { it }),
-            exit = slideOutVertically(targetOffsetY = { it }),
-        ) {
-            CommentScreen(
-                onCloseClick = {
-                    setShowCommentScreen(false)
-                },
-                selectedDate = selectedDate.value
-            )
-        }
-    }
+
 }
 
 fun getDiaryText(diaryList: List<DiaryDto>): List<String> {
