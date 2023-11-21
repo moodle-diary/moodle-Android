@@ -34,6 +34,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -47,6 +48,10 @@ import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.comment.CommentScreen
 import eu.tutorial.moodle.ui.component.IconsComponent
 import eu.tutorial.moodle.ui.component.NotesComponent
+import eu.tutorial.moodle.ui.theme.backgroundGray
+import eu.tutorial.moodle.ui.theme.containerGray
+import eu.tutorial.moodle.ui.theme.contentBlack
+import eu.tutorial.moodle.ui.theme.contentGray
 import eu.tutorial.moodle.ui.theme.poppins
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -107,7 +112,7 @@ fun ViewScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0XFF151515))
+            .background(backgroundGray)
             .padding(start = 20.dp, end = 20.dp)
             .then(Modifier.verticalScroll(rememberScrollState()))
     ) {
@@ -124,7 +129,7 @@ fun ViewScreen(
                     text = format("%d월 %d년", viewDate.monthValue, viewDate.year),
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                    color = Color(0XFFDFDFDF)
+                    color = contentBlack
                 )
                 Text(
                     text = format(
@@ -134,14 +139,14 @@ fun ViewScreen(
                     ),
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                    color = Color(0XFFDFDFDF)
+                    color = contentBlack
                 )
             }
             IconButton(onClick = showViewScreen) {
                 Icon(
                     imageVector = Icons.Default.Close,
                     contentDescription = "close",
-                    tint = Color(0XFFDFDFDF),
+                    tint = contentBlack,
                     modifier = Modifier.size(24.dp)
                 )
             }
@@ -151,12 +156,12 @@ fun ViewScreen(
             text = "감정 아이콘",
             fontSize = 16.sp,
             fontFamily = FontFamily(Font(R.font.poppins_bold)),
-            color = Color(0XFFDFDFDF),
+            color = contentBlack,
             modifier = Modifier.padding(top = 24.dp)
         )
 
         IconsComponent(
-            modifier = Modifier.height(166.dp),
+            modifier = Modifier.height(82.dp),
             iconList = emotionList,
         )
 
@@ -164,12 +169,12 @@ fun ViewScreen(
             text = "원인 아이콘",
             fontSize = 16.sp,
             fontFamily = FontFamily(Font(R.font.poppins_bold)),
-            color = Color(0XFFDFDFDF),
+            color = contentBlack,
             modifier = Modifier.padding(top = 24.dp)
         )
 
         IconsComponent(
-            modifier = Modifier.height(97.dp),
+            modifier = Modifier.height(82.dp),
             iconList = causeList,
             typeList = causeType
         )
@@ -178,12 +183,12 @@ fun ViewScreen(
             text = "장소 아이콘",
             fontSize = 16.sp,
             fontFamily = FontFamily(Font(R.font.poppins_bold)),
-            color = Color(0XFFDFDFDF),
+            color = contentBlack,
             modifier = Modifier.padding(top = 24.dp)
         )
 
         IconsComponent(
-            modifier = Modifier.height(97.dp),
+            modifier = Modifier.height(82.dp),
             iconList = placeList,
             typeList = placeType
         )
@@ -192,10 +197,36 @@ fun ViewScreen(
             text = "글",
             fontSize = 16.sp,
             fontFamily = FontFamily(Font(R.font.poppins_bold)),
-            color = Color(0XFFDFDFDF),
+            color = contentBlack,
             modifier = Modifier.padding(top = 24.dp)
         )
-        NotesComponent(text = getDiaryText(diaryList))
+
+        if (diaryList.isNotEmpty()) {
+            eu.tutorial.moodle.ui.home.getDiaryText(diaryList).map {
+                NotesComponent(
+                    text = it
+                )
+            }
+        } else {
+            Box(
+                modifier = Modifier
+                    .padding(0.dp, 4.dp)
+                    .fillMaxWidth()
+                    .height(82.dp)
+                    .clip(RoundedCornerShape(18.dp))
+                    .background(containerGray),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = "아직 기록이 없어요",
+                    style = androidx.compose.ui.text.TextStyle(
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                        color = contentGray
+                    ),
+                )
+            }
+        }
 
         Row(
             modifier = Modifier
@@ -250,28 +281,6 @@ fun ViewScreen(
     }
 }
 
-fun getDiaryText(diaryList: List<DiaryDto>): String {
-    var result = ""
-
-    for (i in diaryList)
-        result += i.diaryText
-
-    return result
+fun getDiaryText(diaryList: List<DiaryDto>): List<String> {
+    return diaryList.map { it.diaryText }
 }
-
-
-//@RequiresApi(Build.VERSION_CODES.O)
-//@Preview(
-//    showBackground = true,
-//    showSystemUi = true,
-//)
-//@Composable
-//fun ShowPreview() {
-//    ViewScreen(
-//        showCommentScreen = true,
-//        setShowCommentScreen = {},
-//        showViewScreen = { /*TODO*/ },
-////        selectedDate = remember { mutableStateOf(LocalDate.now()) }
-//    )
-//}
-//

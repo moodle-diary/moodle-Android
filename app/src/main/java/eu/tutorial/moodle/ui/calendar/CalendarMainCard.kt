@@ -39,8 +39,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import eu.tutorial.moodle.R
 import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.home.HomeViewModel
+import eu.tutorial.moodle.ui.theme.backgroundGray
+import eu.tutorial.moodle.ui.theme.containerGray
+import eu.tutorial.moodle.ui.theme.contentBlack
+import eu.tutorial.moodle.ui.theme.contentGray
 import eu.tutorial.moodle.ui.theme.poppins
 import eu.tutorial.moodle.ui.view.ViewScreen
 import java.time.LocalDate
@@ -78,7 +83,7 @@ fun CalendarMainCard(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0XFF151515))
+            .background(backgroundGray)
             .padding(innerPadding)
             .verticalScroll(rememberScrollState())
     ) {
@@ -92,7 +97,7 @@ fun CalendarMainCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(394.dp)
-                    .background(Color(0XFF212122)),
+                    .background(containerGray),
                 contentAlignment = Alignment.Center
             ) {
                 HorizontalCalendar(
@@ -121,15 +126,14 @@ fun CalendarMainCard(
                     modifier = Modifier
                         .height(226.dp)
                         .fillMaxWidth()
-                        .background(color = Color(0XFF212122)),
-                    contentAlignment = Alignment.Center
+                        .background(containerGray),
+                    contentAlignment = Alignment.BottomCenter
                 ) {
                     Button(
                         onClick = {
                             showViewScreen()
                         },
                         modifier = Modifier
-                            .align(Alignment.BottomEnd)
                             .padding(12.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color.Transparent
@@ -142,14 +146,16 @@ fun CalendarMainCard(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Image(
-                                painter = painterResource(id = eu.tutorial.moodle.R.drawable.journal),
+                                painter = painterResource(id = R.drawable.journal),
                                 contentDescription = "journal",
-                                modifier = Modifier.padding(end = 8.dp)
+                                modifier = Modifier
+                                    .padding(end = 8.dp)
+                                    .size(16.dp)
                             )
 
                             Text(
-                                text = "일기 조회",
-                                color = Color(0XFFDFDFDF),
+                                text = "전체 보기",
+                                color = contentBlack,
                                 fontFamily = poppins,
                                 modifier = Modifier.padding(top = 2.dp)
                             )

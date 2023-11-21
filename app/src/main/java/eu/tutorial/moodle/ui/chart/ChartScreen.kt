@@ -23,6 +23,7 @@ import eu.tutorial.moodle.data.TypeDto
 import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.chart.component.RankCard
 import eu.tutorial.moodle.ui.chart.component.TimeChartCard
+import eu.tutorial.moodle.ui.theme.backgroundGray
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -79,7 +80,7 @@ fun ChartScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0XFF151515))
+            .background(backgroundGray)
             .padding(innerPaddingValues)
             .verticalScroll(scrollState)
     ) {

@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.ui.theme.contentBlack
 import org.threeten.bp.YearMonth
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -158,7 +159,7 @@ fun YearMonthDialog() {
                 style = TextStyle(
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                    color = Color(0xFFDFDFDF),
+                    color = contentBlack,
                     platformStyle = PlatformTextStyle(
                         includeFontPadding = false
                     ),
@@ -167,7 +168,7 @@ fun YearMonthDialog() {
             Icon(
                 imageVector = Icons.Default.KeyboardArrowDown,
                 contentDescription = "down",
-                tint = Color(0XFFDFDFDF),
+                tint = contentBlack,
                 modifier = Modifier
                     .padding(start = 4.dp)
                     .size(35.dp)
@@ -217,6 +218,6 @@ fun YearMonthDialog() {
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
-fun DatePreview(){
+fun DatePreview() {
     YearMonthDialog()
 }
