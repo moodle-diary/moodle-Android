@@ -1,6 +1,8 @@
 package eu.tutorial.moodle.ui
 
 import android.app.Application
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
@@ -14,6 +16,7 @@ import eu.tutorial.moodle.ui.post.PostViewModel
 import eu.tutorial.moodle.ui.view.DetailViewModel
 
 object AppViewModelProvider {
+    @RequiresApi(Build.VERSION_CODES.O)
     val Factory = viewModelFactory {
         // Initializer for ItemEditViewModel
         // Initializer for ItemEntryViewModel
