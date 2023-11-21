@@ -35,6 +35,7 @@ import eu.tutorial.moodle.ui.theme.containerGray
 import eu.tutorial.moodle.ui.theme.contentBlack
 import eu.tutorial.moodle.ui.theme.contentGray
 import eu.tutorial.moodle.ui.theme.currentMonth
+import eu.tutorial.moodle.ui.theme.mainOrange
 import eu.tutorial.moodle.ui.theme.todayBox
 import eu.tutorial.moodle.ui.theme.todayText
 import kotlinx.coroutines.Dispatchers
@@ -159,7 +160,7 @@ fun CalendarDay(
         else
             contentGray
 
-    val borderColor = if (isSelected) Color(0XFFEDEDED) else Color.Transparent
+    val borderColor = if (isSelected) mainOrange else Color.Transparent
 
     val coroutineScope = rememberCoroutineScope()
 

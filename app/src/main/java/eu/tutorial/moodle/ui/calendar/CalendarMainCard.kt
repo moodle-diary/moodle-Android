@@ -70,8 +70,6 @@ fun CalendarMainCard(
 
     var visibleEmotion by remember { mutableStateOf(false) }
 
-    var showCommentScreen by remember { mutableStateOf(false) }
-
     val currentSelectedDate = remember { mutableStateOf(currentDate) }
 
     LaunchedEffect(pagerState.currentPage) {
@@ -178,8 +176,6 @@ fun CalendarMainCard(
             exit = slideOutVertically(targetOffsetY = { it }),
         ) {
             ViewScreen(
-                showCommentScreen = showCommentScreen,
-                setShowCommentScreen = { showCommentScreen = it },
                 showViewScreen = showViewScreen,
                 selectedDate = currentSelectedDate
             ) {}

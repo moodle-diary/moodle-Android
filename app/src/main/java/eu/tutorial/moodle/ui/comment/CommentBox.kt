@@ -26,6 +26,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import eu.tutorial.moodle.ui.theme.containerGray
+import eu.tutorial.moodle.ui.theme.contentBlack
 import eu.tutorial.moodle.ui.theme.poppins
 
 @Composable
@@ -36,12 +38,12 @@ fun CommentBox(
 
     Card(
         modifier = Modifier
-            .padding(10.dp, 12.dp)
+            .padding(top = 6.dp, bottom = 6.dp)
             .fillMaxWidth(),
-        shape = RoundedCornerShape(32.dp),
+        shape = RoundedCornerShape(18.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0XFF363637),
-            contentColor = Color(0XFFDFDFDF)
+            containerColor = containerGray,
+            contentColor = contentBlack
         )
     ) {
         Column(
@@ -50,7 +52,9 @@ fun CommentBox(
                 .fillMaxWidth(),
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth().height(24.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(24.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -68,15 +72,15 @@ fun CommentBox(
                         tint = Color(0XFF888888),
                         modifier = Modifier
                             .size(18.dp)
-                            .clickable{isTrashIconVisible = false}
+                            .clickable { isTrashIconVisible = false }
                     )
-                } else{
+                } else {
                     Text(
                         text = "정말 삭제하시겠습니까?",
                         fontSize = 14.sp,
                         fontFamily = poppins,
                         fontWeight = FontWeight.Medium,
-                        modifier = Modifier.clickable{isTrashIconVisible = true},
+                        modifier = Modifier.clickable { isTrashIconVisible = true },
                         color = Color(0XFF888888)
                     )
                 }
