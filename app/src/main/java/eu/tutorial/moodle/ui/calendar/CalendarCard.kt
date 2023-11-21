@@ -31,6 +31,7 @@ import eu.tutorial.moodle.R
 import eu.tutorial.moodle.ui.calendar.component.CalendarMonthItem
 import eu.tutorial.moodle.ui.calendar.component.DayOfWeek
 import eu.tutorial.moodle.ui.home.HomeViewModel
+import eu.tutorial.moodle.ui.theme.contentBlack
 import java.time.LocalDate
 import java.time.YearMonth
 import java.util.Locale
@@ -47,12 +48,12 @@ fun HorizontalCalendar(
     currentSelectedDate: MutableState<LocalDate>
 ) {
     LaunchedEffect(currentSelectedDate.value) {
-
         // TODO 무한 스크롤 로 변경
-        val idx = currentSelectedDate.value.month.value + 12 * (currentSelectedDate.value.year - 1970) - 1
+        val idx =
+            currentSelectedDate.value.month.value + 12 * (currentSelectedDate.value.year - 1970) - 1
         // 개수로 세면 1월이 0 부터 시작인데, 실제는 1
 
-        while(idx != pagerState.currentPage){
+        while (idx != pagerState.currentPage) {
             if (idx < (pagerState.currentPage)) {
                 pagerState.scrollToPage(page = pagerState.currentPage - 1)
             } else {
@@ -76,14 +77,19 @@ fun HorizontalCalendar(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "%s %d".format(currentMonth.month.getDisplayName(java.time.format.TextStyle.FULL, Locale.KOREAN), currentMonth.year),
+                text = "%s %d".format(
+                    currentMonth.month.getDisplayName(
+                        java.time.format.TextStyle.FULL,
+                        Locale.KOREAN
+                    ), currentMonth.year
+                ),
                 style = androidx.compose.ui.text.TextStyle(
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_bold)),
                     platformStyle = PlatformTextStyle(
                         includeFontPadding = false
                     ),
-                    color = Color(0XFFDFDFDF)
+                    color = contentBlack
                 )
             )
 
@@ -95,7 +101,7 @@ fun HorizontalCalendar(
                 Icon(
                     imageVector = Icons.Default.Place,
                     contentDescription = "move current date",
-                    tint = Color(0XFFDFDFDF)
+                    tint = contentBlack
                 )
             }
         }

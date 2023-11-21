@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.TimeItem
 import eu.tutorial.moodle.data.local.timeData
+import eu.tutorial.moodle.ui.theme.containerGray
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -39,7 +40,7 @@ fun TimeChartCard(
             .padding(12.dp, 8.dp)
             .clip(RoundedCornerShape(18.dp))
             .fillMaxWidth()
-            .background(color = Color.White)
+            .background(containerGray)
             .padding(top = 16.dp, bottom = 12.dp)
             .height(155.dp)
     ) {

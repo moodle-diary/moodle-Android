@@ -29,6 +29,9 @@ import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.DescriptionDto
 import eu.tutorial.moodle.data.TypeDto
 import eu.tutorial.moodle.data.local.emotionList
+import eu.tutorial.moodle.ui.theme.containerGray
+import eu.tutorial.moodle.ui.theme.contentBlack
+import eu.tutorial.moodle.ui.theme.contentGray
 
 @Composable
 fun RankCard(
@@ -43,7 +46,7 @@ fun RankCard(
             .padding(12.dp, 8.dp)
             .fillMaxWidth()
             .clip(RoundedCornerShape(18.dp))
-            .background(Color(0XFF212122))
+            .background(containerGray)
             .padding(top = 16.dp, bottom = 12.dp),
         verticalArrangement = Arrangement.Center
     ) {
@@ -57,14 +60,14 @@ fun RankCard(
             Text(
                 text = category,
                 fontSize = 16.sp,
-                color = Color(0XFFDFDFDF),
+                color = contentBlack,
                 fontFamily = FontFamily(Font(R.font.poppins_bold))
             )
             if (isFolder) {
                 Text(
                     text = "더보기",
                     fontSize = 12.sp,
-                    color = Color(0XFF7E7E7E),
+                    color = contentGray,
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
                     modifier = Modifier.clickable { isFolder = false }
                 )
@@ -72,7 +75,7 @@ fun RankCard(
                 Text(
                     text = "접기",
                     fontSize = 12.sp,
-                    color = Color(0XFF7E7E7E),
+                    color = contentGray,
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
                     modifier = Modifier.clickable { isFolder = true }
                 )

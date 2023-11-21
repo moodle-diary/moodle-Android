@@ -31,6 +31,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.ui.theme.containerGray
+import eu.tutorial.moodle.ui.theme.contentBlack
+import eu.tutorial.moodle.ui.theme.contentGray
+import eu.tutorial.moodle.ui.theme.currentMonth
+import eu.tutorial.moodle.ui.theme.todayBox
+import eu.tutorial.moodle.ui.theme.todayText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -65,15 +71,15 @@ fun CalendarMonthItem(
         1, 42 - lastDays.size - days.size
     ).toList()
 
-    Column(modifier = modifier
-        .fillMaxSize()
+    Column(
+        modifier = modifier
+            .fillMaxSize()
     ) {
         LazyVerticalGrid(
             modifier = Modifier.fillMaxSize(),
             columns = GridCells.Fixed(7),
         ) {
             items(lastDays) { day ->
-
                 val date = lastMonthDate.withDayOfMonth(day)
                 val isSelected = remember(selectedDate) {
                     selectedDate.compareTo(date) == 0
@@ -143,15 +149,15 @@ fun CalendarDay(
 ) {
     val boxColor =
         if (isCurrentMonth)
-            if (isToday) Color(0XFFEDEDED) else Color(0XFF363637)
+            if (isToday) todayBox else currentMonth
         else
-            Color(0XFF212122)
+            containerGray
 
     val textColor =
         if (isCurrentMonth)
-            if (isToday) Color(0XFF151515) else Color(0XFFDFDFDF)
+            if (isToday) todayText else contentBlack
         else
-            Color(0XFF686868)
+            contentGray
 
     val borderColor = if (isSelected) Color(0XFFEDEDED) else Color.Transparent
 
