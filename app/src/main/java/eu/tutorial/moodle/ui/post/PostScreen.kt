@@ -40,6 +40,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.ui.AppViewModelProvider
+import eu.tutorial.moodle.ui.post.component.PostGrid
+import eu.tutorial.moodle.ui.post.component.SaveDialog
+import eu.tutorial.moodle.ui.post.component.TimeDialog
 import eu.tutorial.moodle.ui.theme.backgroundGray
 import eu.tutorial.moodle.ui.theme.containerGray
 import eu.tutorial.moodle.ui.theme.contentBlack

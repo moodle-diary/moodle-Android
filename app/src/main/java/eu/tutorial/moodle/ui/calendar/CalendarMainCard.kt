@@ -109,9 +109,6 @@ fun CalendarMainCard(
 
         Spacer(modifier = Modifier.size(16.dp))
 
-//        AnimatedVisibility(
-//            visible = visibleEmotion,
-//        ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

@@ -1,4 +1,4 @@
-package eu.tutorial.moodle.ui.post
+package eu.tutorial.moodle.ui.post.component
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -35,6 +35,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.ui.navigation.HomeDestination
+import eu.tutorial.moodle.ui.post.PostViewModel
 import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)

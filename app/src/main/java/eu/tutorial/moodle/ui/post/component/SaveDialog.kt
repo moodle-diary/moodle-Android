@@ -1,4 +1,4 @@
-package eu.tutorial.moodle.ui.post
+package eu.tutorial.moodle.ui.post.component
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -38,11 +38,11 @@ import eu.tutorial.moodle.R
 import eu.tutorial.moodle.ui.navigation.HomeDestination
 import kotlinx.coroutines.launch
 import eu.tutorial.moodle.data.local.emotionData
+import eu.tutorial.moodle.ui.post.PostViewModel
 import eu.tutorial.moodle.ui.theme.backgroundGray
 import eu.tutorial.moodle.ui.theme.containerGray
 import eu.tutorial.moodle.ui.theme.contentBlack
 import eu.tutorial.moodle.ui.theme.contentGray
-import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable

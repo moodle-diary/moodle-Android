@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -35,10 +36,8 @@ fun NotesComponent(
             .clip(RoundedCornerShape(18.dp))
             .background(containerGray),
     ) {
-
-        Log.d("list", text.split(R.string.split.toString()).toString())
         if (text != "") {
-            text.split(R.string.split.toString()).map {
+            text.split("\\\\\\\\\\").map {
                 Text(
                     text = it,
                     modifier = Modifier
