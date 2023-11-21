@@ -116,6 +116,7 @@ data class DiaryDetails(
 )
 
 fun DiaryDetails.toDiary(): Diary = Diary(
+    // TODO : 수정 by resource
     currentDate = currentDate,
     diaryText = diaryText + R.string.split +
             act + R.string.split +

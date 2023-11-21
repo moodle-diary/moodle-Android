@@ -1,4 +1,4 @@
-package eu.tutorial.moodle.ui.post
+package eu.tutorial.moodle.ui.post.component
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -22,6 +22,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.ui.post.DiaryDetails
+import eu.tutorial.moodle.ui.post.DiaryUiState
+import eu.tutorial.moodle.ui.post.InitialTextBox
+import eu.tutorial.moodle.ui.post.SaveTextBox
 import eu.tutorial.moodle.ui.theme.containerGray
 import eu.tutorial.moodle.ui.theme.contentBlack
 import eu.tutorial.moodle.ui.theme.contentGray

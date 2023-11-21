@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.local.emotionData
+import eu.tutorial.moodle.ui.post.component.GoodDialog
 import eu.tutorial.moodle.ui.theme.backgroundGray
 import eu.tutorial.moodle.ui.theme.containerGray
 import eu.tutorial.moodle.ui.theme.contentBlack

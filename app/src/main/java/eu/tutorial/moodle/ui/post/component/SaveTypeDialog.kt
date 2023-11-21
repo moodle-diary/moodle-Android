@@ -1,4 +1,4 @@
-package eu.tutorial.moodle.ui.post
+package eu.tutorial.moodle.ui.post.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.BasicTextField

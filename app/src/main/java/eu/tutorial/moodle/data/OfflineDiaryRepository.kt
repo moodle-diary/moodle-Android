@@ -2,14 +2,30 @@ package eu.tutorial.moodle.data
 
 
 class OfflineDiaryRepository(private val diaryDao: DiaryDao) : DiaryRepository {
-    override suspend fun insertDiary(diary: Diary) = diaryDao.insertDiary(diary)
-    override suspend fun insertEmotion(emotions: Emotions) = diaryDao.insertEmotion(emotions)
-    override suspend fun insertCause(cause: Cause) = diaryDao.insertCause(cause)
-    override suspend fun insertPlace(place: Place) = diaryDao.insertPlace(place)
-    override suspend fun insertComment(comment: Comment) = diaryDao.insertComment(comment)
-    override suspend fun insertCauseType(causeType: CauseType) = diaryDao.insertCauseType(causeType)
-    override suspend fun insertPlaceType(placeType: PlaceType) = diaryDao.insertPlaceType(placeType)
-    override suspend fun updateDiary(diary: Diary) = diaryDao.update(diary)
+    override suspend fun insertDiary(diary: Diary) =
+        diaryDao.insertDiary(diary)
+
+    override suspend fun insertEmotion(emotions: Emotions) =
+        diaryDao.insertEmotion(emotions)
+
+    override suspend fun insertCause(cause: Cause) =
+        diaryDao.insertCause(cause)
+
+    override suspend fun insertPlace(place: Place) =
+        diaryDao.insertPlace(place)
+
+    override suspend fun insertComment(comment: Comment) =
+        diaryDao.insertComment(comment)
+
+    override suspend fun insertCauseType(causeType: CauseType) =
+        diaryDao.insertCauseType(causeType)
+
+    override suspend fun insertPlaceType(placeType: PlaceType) =
+        diaryDao.insertPlaceType(placeType)
+
+    override suspend fun updateDiary(diary: Diary) =
+        diaryDao.update(diary)
+
     override fun getDiaries(currentDate: String): List<DiaryDto> =
         diaryDao.getDiaries(currentDate)
 
@@ -37,8 +53,12 @@ class OfflineDiaryRepository(private val diaryDao: DiaryDao) : DiaryRepository {
     override fun getPlaceGrade(targetMonth: String): List<PlaceGrade> =
         diaryDao.getPlaceGrade(targetMonth)
 
-    override fun getCauseTypes(): List<CauseTypeDto> = diaryDao.getCauseTypes()
-    override fun getPlaceTypes(): List<PlaceTypeDto> = diaryDao.getPlaceTypes()
+    override fun getCauseTypes(): List<CauseTypeDto> =
+        diaryDao.getCauseTypes()
 
+    override fun getPlaceTypes(): List<PlaceTypeDto> =
+        diaryDao.getPlaceTypes()
 
+    override fun getHourRate(): List<TimeItem> =
+        diaryDao.getHourRate()
 }

@@ -1,7 +1,6 @@
 package eu.tutorial.moodle.ui.chart
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
@@ -21,13 +19,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import eu.tutorial.moodle.data.DescriptionDto
 import eu.tutorial.moodle.data.TypeDto
 import eu.tutorial.moodle.ui.AppViewModelProvider
+import eu.tutorial.moodle.ui.chart.component.RankCard
+import eu.tutorial.moodle.ui.chart.component.TimeChartCard
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.withContext
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -43,6 +40,9 @@ fun ChartScreen(
     val causeState = viewModel.causeList
     val placeState = viewModel.placeList
 
+    val timeList = viewModel.timeList
+    val greatDay = viewModel.greatDays
+
     val causeType = viewModel.causeTypes.map {
         TypeDto(
             iconId = it.iconId,
@@ -55,8 +55,6 @@ fun ChartScreen(
             typeDes = it.placeType,
         )
     }
-
-    val greatDay = viewModel.greatDays
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -72,9 +70,9 @@ fun ChartScreen(
                 viewModel.getPlaceTypes()
 
                 viewModel.getGreatDays("2023-11")
+                viewModel.getTimeList()
             }
         }
-
     }
 
 
@@ -85,9 +83,10 @@ fun ChartScreen(
             .padding(innerPaddingValues)
             .verticalScroll(scrollState)
     ) {
-//        TopRankCard(
-//            maxList = maxList.toList()
-//        )
+        TimeChartCard(
+            timeList = timeList
+        )
+
         RankCard(
             rankState = emotionState,
             category = "감정 순위"

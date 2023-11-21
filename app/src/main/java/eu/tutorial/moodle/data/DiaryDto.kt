@@ -55,3 +55,8 @@ data class ButtonItem(
     val index: Int,
     val label: String,
 )
+
+data class TimeItem(
+    val hour: Int,
+    val cnt: Int
+)
