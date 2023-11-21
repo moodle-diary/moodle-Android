@@ -171,13 +171,8 @@ fun HomeScreen(
     }
 }
 
-fun getDiaryText(diaryList: List<DiaryDto>): String {
-    var result = ""
-
-    for (i in diaryList)
-        result += i.diaryText
-
-    return result
+fun getDiaryText(diaryList: List<DiaryDto>): List<String> {
+    return diaryList.map { it.diaryText }
 }
 
 @RequiresApi(Build.VERSION_CODES.O)

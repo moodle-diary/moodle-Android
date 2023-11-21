@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.Cause
 import eu.tutorial.moodle.data.CauseType
 import eu.tutorial.moodle.data.CauseTypeDto
@@ -116,7 +117,10 @@ data class DiaryDetails(
 
 fun DiaryDetails.toDiary(): Diary = Diary(
     currentDate = currentDate,
-    diaryText = diaryText + "\n" + act + "\n" + feeling + thought,
+    diaryText = diaryText + R.string.split +
+            act + R.string.split +
+            feeling + R.string.split +
+            thought,
     hour = hour
 )
 

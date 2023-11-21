@@ -1,5 +1,7 @@
 package eu.tutorial.moodle.ui.home.component
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -33,6 +35,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomSheet(
@@ -129,9 +132,11 @@ fun BottomSheet(
                     color = contentBlack
                 )
 
-                NotesComponent(
-                    text = getDiaryText(diaryList)
-                )
+                getDiaryText(diaryList).map {
+                    NotesComponent(
+                        text = it
+                    )
+                }
 
                 Spacer(modifier = Modifier.size(12.dp))
             }
