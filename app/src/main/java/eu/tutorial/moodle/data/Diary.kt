@@ -14,7 +14,7 @@ data class Diary(
 
     val currentDate: String,
 
-    val time: String,
+    val hour: Int,
     val diaryText: String,
 )
 

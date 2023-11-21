@@ -72,6 +72,11 @@ val emotionList = listOf<TypeDto>(
     TypeDto(
         iconId = "아쉬움",
         typeDes = "아쉬움"
+    ),
+
+    TypeDto(
+        iconId = "행복",
+        typeDes = "행복"
     )
 
 )

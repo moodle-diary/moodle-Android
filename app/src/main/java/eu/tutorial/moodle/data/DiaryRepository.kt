@@ -22,4 +22,5 @@ interface DiaryRepository {
     fun getCauseTypes(): List<CauseTypeDto>
     fun getPlaceTypes(): List<PlaceTypeDto>
     fun getComments(commentDate: String): List<CommentDto>
+    fun getGreatDays(targetMonth: String): Int
 }

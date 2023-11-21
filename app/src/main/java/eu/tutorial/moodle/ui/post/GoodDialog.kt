@@ -1,5 +1,7 @@
 package eu.tutorial.moodle.ui.post
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,7 +22,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,10 +37,12 @@ import eu.tutorial.moodle.R
 import eu.tutorial.moodle.ui.navigation.HomeDestination
 import kotlinx.coroutines.launch
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun GoodDialog(
     navController: NavController,
     visibility: Boolean,
+    viewModel: PostViewModel,
     onChange: (Boolean) -> Unit
 ) {
     if (visibility) {
@@ -113,6 +116,14 @@ fun GoodDialog(
                                 //TODO : Transaction 고려
                                 coroutineScope.launch {
                                     navController.navigate(HomeDestination.route)
+
+                                    val key = viewModel.saveDiary()
+
+                                    viewModel.saveEmotions(
+                                        description = "행복",
+                                        diaryId = key
+                                    )
+
                                 }
                             },
                             colors = ButtonDefaults.buttonColors(

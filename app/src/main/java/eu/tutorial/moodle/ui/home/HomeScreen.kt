@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,7 +19,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -45,7 +43,6 @@ import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.DiaryDto
 import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.component.IconsComponent
-import eu.tutorial.moodle.ui.component.NotesComponent
 import eu.tutorial.moodle.ui.component.SentenceComponent
 import eu.tutorial.moodle.ui.home.component.BottomSheet
 import eu.tutorial.moodle.ui.theme.backgroundGray
@@ -124,7 +121,7 @@ fun HomeScreen(
             }
 
             IconsComponent(
-                modifier = Modifier.height(174.dp),
+                modifier = Modifier.height(78.dp),
                 iconList = emotionList,
             )
 
@@ -149,7 +146,9 @@ fun HomeScreen(
                 Image(
                     painter = painterResource(id = R.drawable.journal),
                     contentDescription = "journal",
-                    modifier = Modifier.padding(end = 8.dp).size(16.dp)
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .size(16.dp)
                 )
 
                 Text(
@@ -172,13 +171,8 @@ fun HomeScreen(
     }
 }
 
-fun getDiaryText(diaryList: List<DiaryDto>): String {
-    var result = ""
-
-    for (i in diaryList)
-        result += i.diaryText
-
-    return result
+fun getDiaryText(diaryList: List<DiaryDto>): List<String> {
+    return diaryList.map { it.diaryText }
 }
 
 @RequiresApi(Build.VERSION_CODES.O)

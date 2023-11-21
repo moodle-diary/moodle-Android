@@ -56,6 +56,8 @@ fun ChartScreen(
         )
     }
 
+    val greatDay = viewModel.greatDays
+
     val coroutineScope = rememberCoroutineScope()
 
     // TODO : 날짜 변경 필요 몇 월인지를 받아온다
@@ -68,6 +70,8 @@ fun ChartScreen(
                 viewModel.getPlaceList("2023-11")
                 viewModel.getCauseTypes()
                 viewModel.getPlaceTypes()
+
+                viewModel.getGreatDays("2023-11")
             }
         }
 
@@ -99,6 +103,8 @@ fun ChartScreen(
             category = "장소 순위"
         )
     }
+
+    // TODO: impl great day rate view with value greatDays
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
