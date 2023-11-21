@@ -15,16 +15,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TimePicker
-import androidx.compose.material3.TimePickerDefaults
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -62,8 +58,8 @@ fun PostScreen(
     navController: NavController,
     viewModel: PostViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    var selectedHour by remember { mutableStateOf(0) }
-    var selectedMinute by remember { mutableStateOf(0) }
+    var selectedHour = viewModel.diaryUiState.diaryDetails.hour
+    var selectedMinute = viewModel.diaryUiState.diaryDetails.minute
     var showDialog by remember { mutableStateOf(false) }
 
     val timePickerState = rememberTimePickerState(
@@ -174,7 +170,8 @@ fun PostScreen(
                     when (actualPage) {
                         0 -> MoodGrid(
                             buttonStates = emotionButtonStates,
-                            navController = navController
+                            navController = navController,
+                            viewModel = viewModel
                         )
 
                         1 -> CauseGrid(
@@ -279,11 +276,13 @@ fun PostScreen(
                     timePickerState = timePickerState
                 ) { hour, minute ->
                     showDialog = false
-                    selectedHour = hour
-                    selectedMinute = minute
+                    viewModel.updateDiaryUiState(
+                        diaryDetails = viewModel.diaryUiState.diaryDetails.copy(
+                            hour = hour,
+                            minute = minute
+                        )
+                    )
                 }
-
-                
             }
         }
     }

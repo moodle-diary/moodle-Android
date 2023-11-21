@@ -24,6 +24,8 @@ class ChartViewModel(private val diaryRepository: DiaryRepository) : ViewModel()
     var placesTypes by mutableStateOf(emptyList<PlaceTypeDto>())
         private set
 
+    var greatDays = 0
+
     fun getCauseTypes() {
         causeTypes = diaryRepository.getCauseTypes()
     }
@@ -32,6 +34,9 @@ class ChartViewModel(private val diaryRepository: DiaryRepository) : ViewModel()
         placesTypes = diaryRepository.getPlaceTypes()
     }
 
+    fun getGreatDays(targetMonth: String) {
+        greatDays = diaryRepository.getGreatDays("$targetMonth%")
+    }
 
     fun getEmotionList(targetMonth: String) {
         emotionList = diaryRepository.getEmotionGrade("$targetMonth%").map { it.toDesDto() }

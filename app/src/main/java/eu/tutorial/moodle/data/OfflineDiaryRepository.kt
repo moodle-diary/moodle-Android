@@ -25,6 +25,8 @@ class OfflineDiaryRepository(private val diaryDao: DiaryDao) : DiaryRepository {
     override fun getComments(commentDate: String): List<CommentDto> =
         diaryDao.getComments(commentDate)
 
+    override fun getGreatDays(targetMonth: String): Int = diaryDao.getGreatDays(targetMonth)
+
     // targetMonth 넘겨줄 때에 뒤에 "%" 추가 해야 합니다. because of LIKE
     override fun getEmotionGrade(targetMonth: String): List<EmotionGrade> =
         diaryDao.getEmotionGrade(targetMonth)
@@ -37,4 +39,6 @@ class OfflineDiaryRepository(private val diaryDao: DiaryDao) : DiaryRepository {
 
     override fun getCauseTypes(): List<CauseTypeDto> = diaryDao.getCauseTypes()
     override fun getPlaceTypes(): List<PlaceTypeDto> = diaryDao.getPlaceTypes()
+
+
 }

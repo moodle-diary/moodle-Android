@@ -65,20 +65,7 @@ fun PostGrid(
         } else {
             SaveTextBox(
                 textValue = diaryUiState.diaryDetails,
-                textChange = {
-                    valueChange(
-                        diaryUiState.diaryDetails.copy(
-                            diaryText = it
-                        )
-                    )
-                },
-                actChange = {
-                    valueChange(
-                        diaryUiState.diaryDetails.copy(
-                            act = it
-                        )
-                    )
-                },
+                valueChange = valueChange
             )
         }
     }

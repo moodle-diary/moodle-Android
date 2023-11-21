@@ -6,4 +6,9 @@
     <string name="post_emo">postEmo</string>
     <string name="analyze_title">analyze</string>
     <string name="setting_title">setting</string>
+    <string name="split">\\\\\</string>
+    <string name="question_0">당시 어떤 상황이었나요?</string>
+    <string name="question_1">그 사람은 왜 그런 행동을 했을까?</string>
+    <string name="question_2">나는 왜 그런 감정을 느꼈을까?</string>
+    <string name="question_3">다르게 생각해 볼 수 있을까?</string>
 </resources>
