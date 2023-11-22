@@ -70,11 +70,13 @@ fun CommentAddBox(
                         coroutineScope.launch {
                             viewModel.saveComment(selectedDate)
                             changeIsAddComment(false)
+
                             viewModel.updateCommentUiState(
                                 commentUiState.commentDetails.copy(
                                     comment = ""
                                 )
                             )
+                            
                         }
                     }
                 ) {

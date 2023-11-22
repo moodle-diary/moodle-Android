@@ -55,7 +55,6 @@ import kotlinx.coroutines.withContext
 import java.time.LocalDate
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(

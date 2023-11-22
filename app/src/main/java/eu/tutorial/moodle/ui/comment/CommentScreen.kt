@@ -74,8 +74,12 @@ fun CommentScreen(
         commentList.map {
             CommentBox(
                 comment = it.comment,
-                selectedDate = selectedDate.toString()
-            )
+                commentId = it.id,
+                selectedDate = selectedDate.toString(),
+                deleteComment = viewModel::deleteComment
+            ) {
+                isAddingComment = !isAddingComment
+            }
         }
 
         CommentAddBox(

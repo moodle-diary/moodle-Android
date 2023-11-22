@@ -1,26 +1,24 @@
 package eu.tutorial.moodle.ui.home.component
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.TypeDto
+import eu.tutorial.moodle.ui.component.EmptyNote
 import eu.tutorial.moodle.ui.component.IconsComponent
 import eu.tutorial.moodle.ui.component.NotesComponent
 import eu.tutorial.moodle.ui.home.HomeViewModel
@@ -55,9 +54,7 @@ fun BottomSheet(
 ) {
     if (visibility) {
         val coroutineScope = rememberCoroutineScope()
-        val diaryList = viewModel.diaryUiState
-        val causeList = viewModel.causeUiState
-        val placeList = viewModel.placesUiState
+        var isDiaryExist by remember { mutableStateOf(false) }
 
         val causeType = viewModel.causeTypes.map {
             TypeDto(
@@ -71,7 +68,7 @@ fun BottomSheet(
                 typeDes = it.placeType,
             )
         }
-
+        val scrollState = rememberScrollState()
 
         LaunchedEffect(Unit) {
             coroutineScope.launch {
@@ -88,7 +85,6 @@ fun BottomSheet(
             }
         }
 
-        val scrollState = rememberScrollState()
 
         ModalBottomSheet(
             onDismissRequest = { onChange(false) },
@@ -113,8 +109,7 @@ fun BottomSheet(
                 )
 
                 IconsComponent(
-                    modifier = Modifier.height(82.dp),
-                    iconList = causeList,
+                    iconList = viewModel.causeUiState,
                     typeList = causeType,
                 )
 
@@ -128,8 +123,7 @@ fun BottomSheet(
                 )
 
                 IconsComponent(
-                    modifier = Modifier.height(82.dp),
-                    iconList = placeList,
+                    iconList = viewModel.placesUiState,
                     typeList = placeType
                 )
 
@@ -144,34 +138,17 @@ fun BottomSheet(
                     color = contentBlack
                 )
 
-                Log.d("testing", diaryList.toString())
-
-                if (diaryList.isNotEmpty()) {
-                    getDiaryText(diaryList).map {
+                if (viewModel.diaryUiState.isNotEmpty()) {
+                    getDiaryText(viewModel.diaryUiState).map {
                         NotesComponent(
                             text = it
-                        )
-                    }
-                } else {
-                    Box(
-                        modifier = Modifier
-                            .padding(0.dp, 4.dp)
-                            .fillMaxWidth()
-                            .height(82.dp)
-                            .clip(RoundedCornerShape(18.dp))
-                            .background(containerGray),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Text(
-                            text = "아직 기록이 없어요",
-                            style = TextStyle(
-                                fontSize = 12.sp,
-                                fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                color = contentGray
-                            ),
-                        )
+                        ) { exist ->
+                            isDiaryExist = exist
+                        }
                     }
                 }
+
+                EmptyNote(isDiaryExist = isDiaryExist)
 
                 Spacer(modifier = Modifier.size(12.dp))
             }

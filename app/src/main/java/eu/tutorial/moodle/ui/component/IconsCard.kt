@@ -34,7 +34,6 @@ import eu.tutorial.moodle.ui.theme.contentGray
 
 @Composable
 fun IconsComponent(
-    modifier: Modifier = Modifier,
     iconList: List<IconDto> = emptyList(),
     typeList: List<TypeDto> = emotionList
 ) {
@@ -73,7 +72,7 @@ fun DetailCard(
         LazyVerticalGrid(
             columns = GridCells.Fixed(4),
             horizontalArrangement = Arrangement.spacedBy(6.dp),// 가로
-            verticalArrangement = Arrangement.spacedBy(6.dp)
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             items(emojis) { item ->
                 val type = typeList.find { it.typeDes == item }?.iconId

@@ -15,7 +15,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
-import eu.tutorial.moodle.data.local.diaryText
 
 @Composable
 fun NoteComponent() {
@@ -35,7 +34,7 @@ fun NoteComponent() {
             .fillMaxWidth(),
     ) {
         Text(
-            text = diaryText,
+            text = "a",
             fontSize = 16.sp,
             fontFamily = FontFamily(Font(R.font.poppins_regular)),
             color = Color(0XFFDFDFDF),

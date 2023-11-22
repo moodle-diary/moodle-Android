@@ -25,4 +25,5 @@ interface DiaryRepository {
     fun getGreatDays(targetMonth: String): List<Int>
     fun getRemindDays(targetMonth: String): List<Int>
     fun getHourRate(targetMonth: String): List<TimeItem>
+    fun deleteComment(commentId: Int)
 }
