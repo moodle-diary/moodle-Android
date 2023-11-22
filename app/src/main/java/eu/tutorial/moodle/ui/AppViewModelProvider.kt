@@ -1,5 +1,6 @@
 package eu.tutorial.moodle.ui
 
+import android.app.Application
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
