@@ -105,7 +105,7 @@ fun SaveTextBox(
             textChange = {
                 valueChange(
                     textValue.copy(
-                        act = it
+                        diaryText = it
                     )
                 )
             },
