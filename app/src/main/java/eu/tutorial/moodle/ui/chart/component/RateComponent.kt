@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import eu.tutorial.moodle.data.RateDays
 import eu.tutorial.moodle.data.local.rateCategory
 import eu.tutorial.moodle.ui.theme.containerGray
 import eu.tutorial.moodle.ui.theme.greatGreen
@@ -22,9 +23,7 @@ import eu.tutorial.moodle.ui.theme.nothingGray
 
 @Composable
 fun RateComponent(
-    remindDays: Int,
-    greatDays: Int,
-    emptyDays: Int
+    rateDays: List<RateDays>
 ) {
     Column(
         modifier = Modifier
@@ -42,27 +41,15 @@ fun RateComponent(
                 .padding(start = 18.dp, end = 18.dp),
             columns = GridCells.Fixed(7),
         ) {
-            items(remindDays) {
-                RateBoxItem(
-                    modifier = Modifier.padding(top = 10.dp),
-                    boxColor = mainOrange
-
-                )
-            }
-            items(greatDays) {
-                RateBoxItem(
-                    modifier = Modifier.padding(top = 10.dp),
-                    boxColor = greatGreen
-                )
-            }
-            items(emptyDays) {
-                RateBoxItem(
-                    modifier = Modifier.padding(top = 8.dp),
-                    boxColor = nothingGray
-                )
+            rateDays.map { rate ->
+                items(rate.days) {
+                    RateBoxItem(
+                        boxColor = rate.color
+                    )
+                }
             }
         }
-        
+
         rateCategory.map {
             RateCategoryItem(
                 it.textValue,
@@ -78,8 +65,10 @@ fun RateComponent(
 @Composable
 fun RateComponentPreview() {
     RateComponent(
-        remindDays = 17,
-        greatDays = 8,
-        emptyDays = 5
+        listOf(
+            RateDays(17, mainOrange),
+            RateDays(8, greatGreen),
+            RateDays(6, nothingGray)
+        )
     )
 }

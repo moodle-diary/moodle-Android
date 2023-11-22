@@ -13,18 +13,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import eu.tutorial.moodle.data.RateDays
 import eu.tutorial.moodle.data.TypeDto
 import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.chart.component.RankCard
 import eu.tutorial.moodle.ui.chart.component.RateComponent
 import eu.tutorial.moodle.ui.chart.component.TimeChartCard
 import eu.tutorial.moodle.ui.theme.backgroundGray
+import eu.tutorial.moodle.ui.theme.greatGreen
+import eu.tutorial.moodle.ui.theme.mainOrange
+import eu.tutorial.moodle.ui.theme.nothingGray
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -43,6 +46,7 @@ fun ChartScreen(
     val placeState = viewModel.placeList
 
     val timeList = viewModel.timeList
+    
     val greatDay = viewModel.greatDays
 
     val causeType = viewModel.causeTypes.map {
@@ -105,13 +109,13 @@ fun ChartScreen(
         )
 
         RateComponent(
-            remindDays = 17,
-            greatDays = 8,
-            emptyDays = 5
+            listOf(
+                RateDays(17, mainOrange),
+                RateDays(8, greatGreen),
+                RateDays(6, nothingGray)
+            )
         )
     }
-
-    // TODO: impl great day rate view with value greatDays
 }
 
 @RequiresApi(Build.VERSION_CODES.O)

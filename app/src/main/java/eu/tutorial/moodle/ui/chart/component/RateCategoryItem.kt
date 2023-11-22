@@ -1,6 +1,7 @@
 package eu.tutorial.moodle.ui.chart.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
@@ -26,14 +28,16 @@ fun RateCategoryItem(
     boxColor: Color
 ) {
     Row(
-        modifier = Modifier.padding(start = 18.dp, top = 10.dp)
+        modifier = Modifier.padding(start = 24.dp, top = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
     ) {
         Box(
             modifier = Modifier
                 .width(20.dp)
                 .height(20.dp)
                 .background(
-                    color = nothingGray,
+                    color = boxColor,
                     shape = RoundedCornerShape(size = 4.dp)
                 )
                 .padding(end = 10.dp)

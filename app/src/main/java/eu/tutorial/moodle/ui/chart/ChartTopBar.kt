@@ -41,15 +41,9 @@ import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ChartTopBar() {
-    val today = LocalDate.now()
+fun ChartTopBar(
 
-    val currentMonth = today.monthValue
-    val currentYear = today.year
-
-    var isDatePicker by remember { mutableStateOf(false) } // datepicker 보여줄 때 true
-
-
+) {
     Box(
         modifier = Modifier
             .height(108.dp)

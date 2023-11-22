@@ -1,5 +1,7 @@
 package eu.tutorial.moodle.data
 
+import androidx.compose.ui.graphics.Color
+
 // Dto 의 네이밍은 database의 colum 이름과 같아야 한다.
 data class DiaryDto(
     val hour: Int,
@@ -59,4 +61,9 @@ data class ButtonItem(
 data class TimeItem(
     val hour: Int,
     val cnt: Int
+)
+
+data class RateDays(
+    val days: Int,
+    val color: Color,
 )

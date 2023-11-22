@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
@@ -22,12 +23,12 @@ import eu.tutorial.moodle.ui.theme.mainOrange
 
 @Composable
 fun RateBoxItem(
-    modifier: Modifier = Modifier,
     boxColor: Color
 ) {
     Box(
-        modifier = modifier
+        modifier = Modifier
             .wrapContentSize()
+            .padding(top = 8.dp)
             .width(36.dp)
             .height(36.dp)
             .clip(shape = RoundedCornerShape(4.dp))
