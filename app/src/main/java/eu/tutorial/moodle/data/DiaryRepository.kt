@@ -23,5 +23,5 @@ interface DiaryRepository {
     fun getPlaceTypes(): List<PlaceTypeDto>
     fun getComments(commentDate: String): List<CommentDto>
     fun getGreatDays(targetMonth: String): Int
-    fun getHourRate(): List<TimeItem>
+    fun getHourRate(targetMonth: String): List<TimeItem>
 }
