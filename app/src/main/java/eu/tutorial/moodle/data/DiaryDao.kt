@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import kotlinx.coroutines.selects.select
 
 @Dao
 interface DiaryDao {
@@ -120,10 +121,17 @@ interface DiaryDao {
                 "INNER JOIN emotions on emotions.diaryId = diaries.id " +
                 "where currentDate like :targetMonth " +
                 "Group by currentDate " +
-                "having COUNT(currentDate) = 1 and emotion == \"행복\"\n" +
-                ""
+                "having COUNT(currentDate) = 1 and emotion == \"행복\"\n"
     )
-    fun getGreatDays(targetMonth: String): Int
+    fun getGreatDays(targetMonth: String): List<Int>
+
+    @Query(
+        "select count(currentDate) from diaries " +
+                "INNER JOIN emotions on emotion_id = diaries.id " +
+                "where currentDate like :targetMonth " +
+                "group by currentDate"
+    )
+    fun getRemindDays(targetMonth: String): List<Int>
 
     @Query(
         "with recursive " +
