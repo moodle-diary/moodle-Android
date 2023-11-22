@@ -1,7 +1,6 @@
 package eu.tutorial.moodle.ui.chart
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -51,7 +50,8 @@ fun ChartScreen(
 
     val timeList = viewModel.timeList
 
-    val greatDay = viewModel.greatDays
+    val remindDays = viewModel.remindDays
+    val greatDays = viewModel.greatDays
 
     val causeType = viewModel.causeTypes.map {
         TypeDto(
@@ -73,9 +73,6 @@ fun ChartScreen(
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
                 // 데이터베이스 쿼리를 비동기적으로 수행
-
-                Log.d("a", timeList.toString())
-
                 viewModel.getEmotionList(selectedDate.toString())
                 viewModel.getActList(selectedDate.toString())
                 viewModel.getPlaceList(selectedDate.toString())
@@ -83,6 +80,7 @@ fun ChartScreen(
                 viewModel.getPlaceTypes()
 
                 viewModel.getGreatDays(selectedDate.toString())
+                viewModel.getRemindDays(selectedDate.toString())
                 viewModel.getTimeList(selectedDate.toString())
             }
         }
@@ -116,9 +114,9 @@ fun ChartScreen(
 
         RateComponent(
             listOf(
-                RateDays(17, mainOrange),
-                RateDays(8, greatGreen),
-                RateDays(6, nothingGray)
+                RateDays(remindDays - greatDays, mainOrange),
+                RateDays(greatDays, greatGreen),
+                RateDays(selectedDate.lengthOfMonth() - remindDays, nothingGray)
             )
         )
     }
