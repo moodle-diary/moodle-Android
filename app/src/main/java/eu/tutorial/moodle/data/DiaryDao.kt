@@ -126,18 +126,22 @@ interface DiaryDao {
     fun getGreatDays(targetMonth: String): Int
 
     @Query(
-        "with recursive tmp as (" +
+        "with recursive " +
+                "tmp as ( " +
                 "select 0 as n " +
-                "union all " +
-                "select n + 1 " +
+                "union all select n + 1 " +
                 "from tmp " +
                 "where n < 24" +
                 ") " +
                 "select tmp.n as hour, count(id) as cnt " +
                 "from tmp " +
-                "left join diaries on tmp.n = hour " +
+                "left join (" +
+                "select * " +
+                "from diaries " +
+                "where currentDate like :targetMonth) " +
+                "on tmp.n = hour  " +
                 "group by tmp.n " +
                 "order by tmp.n"
     )
-    fun getHourRate(): List<TimeItem>
+    fun getHourRate(targetMonth: String): List<TimeItem>
 }

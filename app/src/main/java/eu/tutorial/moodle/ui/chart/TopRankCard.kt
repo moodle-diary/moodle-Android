@@ -26,7 +26,6 @@ import java.time.LocalDate
 fun TopRankCard(
     maxList: List<DescriptionDto>
 ) {
-
     val today = LocalDate.now()
     val currentMonth = today.monthValue
 
@@ -60,6 +59,6 @@ fun TopRankCard(
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
-fun TopRankCardPreview(){
+fun TopRankCardPreview() {
 //    TopRankCard()
 }

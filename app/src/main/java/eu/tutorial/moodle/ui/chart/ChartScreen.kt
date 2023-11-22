@@ -1,6 +1,7 @@
 package eu.tutorial.moodle.ui.chart
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -11,6 +12,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,12 +43,14 @@ fun ChartScreen(
 ) {
     val scrollState = rememberScrollState()
 
+    val selectedDate by viewModel.selectedDate
+
     val emotionState = viewModel.emotionList
     val causeState = viewModel.causeList
     val placeState = viewModel.placeList
 
     val timeList = viewModel.timeList
-    
+
     val greatDay = viewModel.greatDays
 
     val causeType = viewModel.causeTypes.map {
@@ -65,22 +69,24 @@ fun ChartScreen(
     val coroutineScope = rememberCoroutineScope()
 
     // TODO : 날짜 변경 필요 몇 월인지를 받아온다
-    LaunchedEffect(Unit) {
+    LaunchedEffect(selectedDate) {
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
                 // 데이터베이스 쿼리를 비동기적으로 수행
-                viewModel.getEmotionList("2023-11")
-                viewModel.getActList("2023-11")
-                viewModel.getPlaceList("2023-11")
+
+                Log.d("a", timeList.toString())
+
+                viewModel.getEmotionList(selectedDate.toString())
+                viewModel.getActList(selectedDate.toString())
+                viewModel.getPlaceList(selectedDate.toString())
                 viewModel.getCauseTypes()
                 viewModel.getPlaceTypes()
 
-                viewModel.getGreatDays("2023-11")
-                viewModel.getTimeList()
+                viewModel.getGreatDays(selectedDate.toString())
+                viewModel.getTimeList(selectedDate.toString())
             }
         }
     }
-
 
     Column(
         modifier = Modifier
@@ -117,6 +123,7 @@ fun ChartScreen(
         )
     }
 }
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable

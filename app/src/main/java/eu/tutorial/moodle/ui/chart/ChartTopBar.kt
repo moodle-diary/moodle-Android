@@ -34,7 +34,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.theme.backgroundGray
 import eu.tutorial.moodle.ui.theme.contentBlack
 import java.time.LocalDate
@@ -42,7 +44,7 @@ import java.time.LocalDate
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ChartTopBar(
-
+    viewModel: ChartViewModel = viewModel(factory = AppViewModelProvider.Factory),
 ) {
     Box(
         modifier = Modifier
@@ -68,7 +70,9 @@ fun ChartTopBar(
                     ),
                 )
             )
-            YearMonthDialog()
+            YearMonthDialog(
+                viewModel = viewModel
+            )
         }
 
     }

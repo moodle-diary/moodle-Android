@@ -59,6 +59,6 @@ class OfflineDiaryRepository(private val diaryDao: DiaryDao) : DiaryRepository {
     override fun getPlaceTypes(): List<PlaceTypeDto> =
         diaryDao.getPlaceTypes()
 
-    override fun getHourRate(): List<TimeItem> =
-        diaryDao.getHourRate()
+    override fun getHourRate(targetMonth: String): List<TimeItem> =
+        diaryDao.getHourRate(targetMonth)
 }

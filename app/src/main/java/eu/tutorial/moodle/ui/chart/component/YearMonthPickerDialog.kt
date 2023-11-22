@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.ui.chart.ChartViewModel
 import eu.tutorial.moodle.ui.theme.contentBlack
 import org.threeten.bp.YearMonth
 
@@ -140,8 +141,10 @@ fun YearMonthPicker(
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun YearMonthDialog() {
-    var selectedDate by remember { mutableStateOf(YearMonth.now()) }
+fun YearMonthDialog(
+    viewModel: ChartViewModel
+) {
+    var selectedDate = viewModel.selectedDate
     val dateDialogState = rememberMaterialDialogState()
 
     Column(
@@ -155,7 +158,7 @@ fun YearMonthDialog() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "${selectedDate.year} ${selectedDate.monthValue}월",
+                text = "${selectedDate.value.year} ${selectedDate.value.monthValue}월",
                 style = TextStyle(
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_bold)),
@@ -207,11 +210,10 @@ fun YearMonthDialog() {
         backgroundColor = Color(0XFF212122),
     ) {
         YearMonthPicker(
-            selectedDate = selectedDate,
-            onDateSelected = {
-                selectedDate = it
-            }
-        )
+            selectedDate = selectedDate.value,
+        ) {
+            viewModel.onDateSelect(it)
+        }
     }
 }
 
@@ -219,5 +221,5 @@ fun YearMonthDialog() {
 @Preview
 @Composable
 fun DatePreview() {
-    YearMonthDialog()
+//    YearMonthDialog()
 }
