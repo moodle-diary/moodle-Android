@@ -1,10 +1,13 @@
 package eu.tutorial.moodle
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
@@ -15,6 +18,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import eu.tutorial.moodle.ui.theme.MoodleTheme
 
 class MainActivity : ComponentActivity() {
@@ -32,12 +37,14 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+        
     }
 
     var isTextFieldFocused = false
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         if (isTextFieldFocused) {
-            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val inputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
             currentFocus!!.clearFocus()
         }

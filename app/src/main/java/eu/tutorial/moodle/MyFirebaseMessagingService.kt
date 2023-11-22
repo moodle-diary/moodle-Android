@@ -36,13 +36,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // remoteMessage.notification?.body!! 여기에 내용이 저장되어있다.
         // Log.d(TAG, "Notification Message Body: " + remoteMessage.notification?.body!!)
 
-        if(remoteMessage.data.isNotEmpty()){
+        if (remoteMessage.data.isNotEmpty()) {
             Log.i("바디: ", remoteMessage.data["body"].toString())
             Log.i("타이틀: ", remoteMessage.data["title"].toString())
             sendNotification(remoteMessage)
-        }
-
-        else {
+        } else {
             Log.i("수신에러: ", "data가 비어있습니다. 메시지를 수신하지 못했습니다.")
             Log.i("data값: ", remoteMessage.data.toString())
         }
@@ -56,12 +54,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // PendingIntent : Intent 의 실행 권한을 외부의 어플리케이션에게 위임한다.
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) // Activity Stack 을 경로만 남긴다. A-B-C-D-B => A-B
-        val pendingIntent = PendingIntent.getActivity(this, uniId, intent,
-            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
+        val pendingIntent = PendingIntent.getActivity(
+            this, uniId, intent,
+            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
+        )
 
         // 알림 채널 이름
         val channelId = "Moodle"
-            // getString(R.string.firebase_notification_channel_id)
+        // getString(R.string.firebase_notification_channel_id)
 
         // 알림 소리
         val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
@@ -80,13 +80,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         // 오레오 버전 이후에는 채널이 필요하다.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(channelId, "Notice", NotificationManager.IMPORTANCE_DEFAULT)
+            val channel =
+                NotificationChannel(channelId, "Notice", NotificationManager.IMPORTANCE_DEFAULT)
             notificationManager.createNotificationChannel(channel)
         }
 
         // 알림 생성
         notificationManager.notify(uniId, notificationBuilder.build())
     }
-
-
 }
