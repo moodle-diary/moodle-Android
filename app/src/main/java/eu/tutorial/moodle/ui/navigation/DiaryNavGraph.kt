@@ -14,10 +14,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import eu.tutorial.moodle.ui.calendar.CalendarMainCard
 import eu.tutorial.moodle.ui.chart.ChartScreen
-import eu.tutorial.moodle.ui.chart.ChartTopBar
+import eu.tutorial.moodle.ui.chart.component.ChartTopBar
 import eu.tutorial.moodle.ui.component.BottomNavBar
 import eu.tutorial.moodle.ui.home.HomeScreen
-import eu.tutorial.moodle.ui.home.TopAppBar
+import eu.tutorial.moodle.ui.home.component.TopAppBar
 import eu.tutorial.moodle.ui.post.PostScreen
 import eu.tutorial.moodle.ui.setting.SettingAlarmScreen
 import eu.tutorial.moodle.ui.setting.SettingPasswordScreen

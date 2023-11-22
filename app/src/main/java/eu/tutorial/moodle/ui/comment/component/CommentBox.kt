@@ -1,4 +1,4 @@
-package eu.tutorial.moodle.ui.comment
+package eu.tutorial.moodle.ui.comment.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.ui.theme.containerGray
 import eu.tutorial.moodle.ui.theme.contentBlack
+import eu.tutorial.moodle.ui.theme.contentGray
 import eu.tutorial.moodle.ui.theme.poppins
 
 @Composable
@@ -69,7 +70,7 @@ fun CommentBox(
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = "delete",
-                        tint = Color(0XFF888888),
+                        tint = contentGray,
                         modifier = Modifier
                             .size(18.dp)
                             .clickable { isTrashIconVisible = false }
@@ -81,7 +82,7 @@ fun CommentBox(
                         fontFamily = poppins,
                         fontWeight = FontWeight.Medium,
                         modifier = Modifier.clickable { isTrashIconVisible = true },
-                        color = Color(0XFF888888)
+                        color = contentGray
                     )
                 }
             }

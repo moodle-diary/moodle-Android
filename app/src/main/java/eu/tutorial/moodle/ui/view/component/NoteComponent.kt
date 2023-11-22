@@ -1,4 +1,4 @@
-package eu.tutorial.moodle.ui.view
+package eu.tutorial.moodle.ui.view.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -33,7 +33,7 @@ fun NoteComponent() {
             .clip(shape = RoundedCornerShape(18.dp))
             .background(Color(0XFF2A292B))
             .fillMaxWidth(),
-    ){
+    ) {
         Text(
             text = diaryText,
             fontSize = 16.sp,
