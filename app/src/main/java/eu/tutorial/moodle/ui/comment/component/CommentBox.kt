@@ -29,11 +29,13 @@ import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.ui.theme.containerGray
 import eu.tutorial.moodle.ui.theme.contentBlack
 import eu.tutorial.moodle.ui.theme.contentGray
+import eu.tutorial.moodle.ui.theme.mainOrange
 import eu.tutorial.moodle.ui.theme.poppins
 
 @Composable
 fun CommentBox(
-    comment: String
+    comment: String,
+    selectedDate: String
 ) {
     var isTrashIconVisible by remember { mutableStateOf(true) } // 휴지통 아이콘 가시성 상태 변수
 
@@ -60,11 +62,11 @@ fun CommentBox(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "12.10.23",
+                    text = selectedDate,
                     fontSize = 14.sp,
                     fontFamily = poppins,
                     fontWeight = FontWeight.Medium,
-                    color = Color(0XFF888888)
+                    color = mainOrange
                 )
                 if (isTrashIconVisible) {
                     Icon(

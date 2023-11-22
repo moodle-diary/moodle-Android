@@ -21,9 +21,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.ui.comment.CommentViewModel
+import eu.tutorial.moodle.ui.theme.containerGray
+import eu.tutorial.moodle.ui.theme.contentBlack
+import eu.tutorial.moodle.ui.theme.contentGray
 import eu.tutorial.moodle.ui.theme.poppins
 import kotlinx.coroutines.launch
 
@@ -35,17 +39,16 @@ fun CommentAddBox(
     changeIsAddComment: (Boolean) -> Unit
 ) {
     if (isAddingComment) {
-
         val commentUiState = viewModel.commentUiState
         val coroutineScope = rememberCoroutineScope()
 
         Column(
             modifier = Modifier
-                .padding(top = 12.dp, bottom = 12.dp, start = 10.dp, end = 10.dp)
+                .padding(top = 12.dp, bottom = 12.dp)
                 .height(160.dp)
                 .fillMaxSize()
-                .clip(RoundedCornerShape(32.dp))
-                .background(Color(0XFFEDEDED)),
+                .clip(RoundedCornerShape(18.dp))
+                .background(containerGray),
         ) {
             Row(
                 modifier = Modifier
@@ -56,10 +59,11 @@ fun CommentAddBox(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "24년 12월 23일",
-                    fontSize = 12.sp,
+                    text = selectedDate,
+                    fontSize = 14.sp,
                     fontFamily = poppins,
-                    color = Color(0XFF414141)
+                    fontWeight = FontWeight.Medium,
+                    color = contentGray
                 )
                 TextButton(
                     onClick = {
@@ -77,7 +81,7 @@ fun CommentAddBox(
                     Text(
                         text = "저장하기",
                         fontSize = 12.sp,
-                        color = Color.Black
+                        color = contentBlack
                     )
                 }
             }
@@ -97,17 +101,17 @@ fun CommentAddBox(
                 },
                 singleLine = false,
                 textStyle = LocalTextStyle.current.copy(
-                    color = Color.Black,
+                    color = contentBlack,
                     fontSize = 16.sp
                 ),
                 decorationBox = { innerTextField ->
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(Color(0XFFEDEDED))
+                            .background(containerGray)
                             .border(
                                 width = 1.dp,
-                                color = Color(0XFFEDEDED),
+                                color = containerGray,
                                 shape = RoundedCornerShape(size = 32.dp)
                             )
                             .padding(20.dp, 12.dp),
@@ -116,7 +120,7 @@ fun CommentAddBox(
                             Text(
                                 text = "일기에 코멘트를 남겨봐요!",
                                 fontSize = 16.sp,
-                                color = Color.LightGray
+                                color = contentGray
                             )
                         }
                         innerTextField()

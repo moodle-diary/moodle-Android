@@ -50,10 +50,7 @@ fun CommentScreen(
     selectedDate: LocalDate,
 ) {
     var isAddingComment by remember { mutableStateOf(false) }
-
-
     val commentList = viewModel.commentList
-
     val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(isAddingComment) {
@@ -75,7 +72,10 @@ fun CommentScreen(
         )
 
         commentList.map {
-            CommentBox(comment = it.comment)
+            CommentBox(
+                comment = it.comment,
+                selectedDate = selectedDate.toString()
+            )
         }
 
         CommentAddBox(

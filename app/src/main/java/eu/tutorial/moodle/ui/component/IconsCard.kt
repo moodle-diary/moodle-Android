@@ -44,7 +44,7 @@ fun IconsComponent(
         Log.d("list", iconList.toString())
     }
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
     ) {
         if (emojis.isNotEmpty())
@@ -64,10 +64,10 @@ fun DetailCard(
 ) {
     Box(
         modifier = Modifier
-            .background(containerGray)
+            .height(214.dp)
             .fillMaxWidth()
-            .padding(26.dp, 12.dp)
-            .clip(RoundedCornerShape(18.dp)),
+            .background(containerGray, shape = RoundedCornerShape(size = 18.dp))
+            .padding(26.dp, 12.dp),
         contentAlignment = Alignment.Center,
     ) {
         LazyVerticalGrid(
