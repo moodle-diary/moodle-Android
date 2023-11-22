@@ -1,4 +1,4 @@
-package eu.tutorial.moodle.ui.home
+package eu.tutorial.moodle.ui.home.component
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -10,15 +10,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarColors
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -27,8 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
-import eu.tutorial.moodle.ui.navigation.NavigationDestination
 import eu.tutorial.moodle.ui.theme.backgroundGray
 import eu.tutorial.moodle.ui.theme.contentBlack
 import java.time.LocalDate
@@ -36,7 +29,7 @@ import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun TopAppBar(){
+fun TopAppBar() {
     val today = LocalDate.now()
 
     val currentMonth = today.monthValue
@@ -49,7 +42,7 @@ fun TopAppBar(){
             .height(108.dp)
             .fillMaxWidth(),
         contentAlignment = Alignment.Center,
-    ){
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -69,7 +62,7 @@ fun TopAppBar(){
                 )
             )
             Text(
-                text="%s일  %s".format(currentDate, currentDay),
+                text = "%s일  %s".format(currentDate, currentDay),
                 style = TextStyle(
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_bold)),
@@ -87,6 +80,6 @@ fun TopAppBar(){
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
-fun TopBarPreview(){
+fun TopBarPreview() {
     TopAppBar()
 }

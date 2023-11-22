@@ -8,7 +8,7 @@ import eu.tutorial.moodle.data.Comment
 import eu.tutorial.moodle.data.CommentDto
 import eu.tutorial.moodle.data.DiaryRepository
 
-class CommentViewModel (private val diaryRepository: DiaryRepository) : ViewModel(){
+class CommentViewModel(private val diaryRepository: DiaryRepository) : ViewModel() {
     // 초기값 할당해 주어야 합니다.
     var commentUiState by mutableStateOf(CommentUiState())
         private set
@@ -31,19 +31,24 @@ class CommentViewModel (private val diaryRepository: DiaryRepository) : ViewMode
             commentUiState.commentDetails.toComment()
         )
     }
+
     fun getComment(commentDate: String) {
         commentList = diaryRepository.getComments(commentDate)
+    }
+
+    fun deleteComment(commentId: Int) {
+        diaryRepository.deleteComment(commentId)
     }
 }
 
 data class CommentUiState(
     val commentDetails: CommentDetails = CommentDetails(),
-    val valid : Boolean = false,
+    val valid: Boolean = false,
 )
 
 data class CommentDetails(
-    var commentDate : String = "",
-    val comment : String = "",
+    var commentDate: String = "",
+    val comment: String = "",
 )
 
 fun CommentDetails.toComment(): Comment = Comment(
@@ -51,7 +56,7 @@ fun CommentDetails.toComment(): Comment = Comment(
     comment = comment,
 )
 
-fun Comment.toCommentDetails() : CommentDetails = CommentDetails(
+fun Comment.toCommentDetails(): CommentDetails = CommentDetails(
     commentDate = commentDate,
     comment = comment
 )

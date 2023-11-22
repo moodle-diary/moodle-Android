@@ -66,4 +66,7 @@ class OfflineDiaryRepository(private val diaryDao: DiaryDao) : DiaryRepository {
 
     override fun getHourRate(targetMonth: String): List<TimeItem> =
         diaryDao.getHourRate(targetMonth)
+
+    override fun deleteComment(commentId: Int) =
+        diaryDao.deleteComment(commentId)
 }

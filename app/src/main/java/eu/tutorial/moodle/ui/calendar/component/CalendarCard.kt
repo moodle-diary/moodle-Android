@@ -1,4 +1,4 @@
-package eu.tutorial.moodle.ui.calendar
+package eu.tutorial.moodle.ui.calendar.component
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -21,15 +21,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
-import eu.tutorial.moodle.ui.calendar.component.CalendarMonthItem
-import eu.tutorial.moodle.ui.calendar.component.DayOfWeek
 import eu.tutorial.moodle.ui.home.HomeViewModel
 import eu.tutorial.moodle.ui.theme.contentBlack
 import java.time.LocalDate

@@ -1,4 +1,4 @@
-package eu.tutorial.moodle.ui.comment
+package eu.tutorial.moodle.ui.comment.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,13 +29,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.ui.theme.containerGray
 import eu.tutorial.moodle.ui.theme.contentBlack
+import eu.tutorial.moodle.ui.theme.contentGray
+import eu.tutorial.moodle.ui.theme.mainOrange
 import eu.tutorial.moodle.ui.theme.poppins
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun CommentBox(
-    comment: String
+    comment: String,
+    commentId: Int,
+    selectedDate: String,
+    deleteComment: (Int) -> Unit,
+    changeIsAddComment: () -> Unit
 ) {
     var isTrashIconVisible by remember { mutableStateOf(true) } // 휴지통 아이콘 가시성 상태 변수
+    val coroutineScope = rememberCoroutineScope()
 
     Card(
         modifier = Modifier
@@ -59,17 +70,17 @@ fun CommentBox(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "12.10.23",
+                    text = selectedDate,
                     fontSize = 14.sp,
                     fontFamily = poppins,
                     fontWeight = FontWeight.Medium,
-                    color = Color(0XFF888888)
+                    color = mainOrange
                 )
                 if (isTrashIconVisible) {
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = "delete",
-                        tint = Color(0XFF888888),
+                        tint = contentGray,
                         modifier = Modifier
                             .size(18.dp)
                             .clickable { isTrashIconVisible = false }
@@ -80,8 +91,16 @@ fun CommentBox(
                         fontSize = 14.sp,
                         fontFamily = poppins,
                         fontWeight = FontWeight.Medium,
-                        modifier = Modifier.clickable { isTrashIconVisible = true },
-                        color = Color(0XFF888888)
+                        modifier = Modifier.clickable {
+                            isTrashIconVisible = true
+                            coroutineScope.launch {
+                                withContext(Dispatchers.IO) {
+                                    deleteComment(commentId)
+                                    changeIsAddComment()
+                                }
+                            }
+                        },
+                        color = contentGray
                     )
                 }
             }

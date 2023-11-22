@@ -55,7 +55,6 @@ import kotlinx.coroutines.withContext
 import java.time.LocalDate
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(
@@ -84,8 +83,6 @@ fun HomeScreen(
             .padding(innerPaddingValues)
             .verticalScroll(rememberScrollState())
     ) {
-        // TODO 이 부분 exist 속성 값 vm 에서 받아 와서 수정 Detail HomeScreen 이랑 통합
-
         // TODO : 이 부분은 명언 보여주기
         SentenceComponent(
             modifier = Modifier.padding(12.dp, 0.dp),
@@ -121,7 +118,6 @@ fun HomeScreen(
             }
 
             IconsComponent(
-                modifier = Modifier.height(78.dp),
                 iconList = emotionList,
             )
 
@@ -166,6 +162,7 @@ fun HomeScreen(
         ) { visibility ->
             isBottomSheetVisible = visibility
         }
+
         Spacer(modifier = Modifier.size(32.dp))
 
     }
