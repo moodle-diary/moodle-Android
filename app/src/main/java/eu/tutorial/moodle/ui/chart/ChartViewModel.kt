@@ -40,6 +40,8 @@ class ChartViewModel(private val diaryRepository: DiaryRepository) : ViewModel()
 
     var greatDays = 0
 
+    var remindDays = 0
+
     private val _selectedDate = mutableStateOf(YearMonth.now())
     val selectedDate: State<YearMonth> = _selectedDate
     fun onDateSelect(selected: YearMonth) {
@@ -56,7 +58,11 @@ class ChartViewModel(private val diaryRepository: DiaryRepository) : ViewModel()
     }
 
     fun getGreatDays(targetMonth: String) {
-        greatDays = diaryRepository.getGreatDays("$targetMonth%")
+        greatDays = diaryRepository.getGreatDays("$targetMonth%").size
+    }
+
+    fun getRemindDays(targetMonth: String) {
+        remindDays = diaryRepository.getRemindDays("$targetMonth%").size
     }
 
     fun getEmotionList(targetMonth: String) {
