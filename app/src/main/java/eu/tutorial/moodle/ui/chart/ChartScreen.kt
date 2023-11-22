@@ -22,6 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import eu.tutorial.moodle.data.TypeDto
 import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.chart.component.RankCard
+import eu.tutorial.moodle.ui.chart.component.RateComponent
 import eu.tutorial.moodle.ui.chart.component.TimeChartCard
 import eu.tutorial.moodle.ui.theme.backgroundGray
 import kotlinx.coroutines.Dispatchers
@@ -101,6 +102,12 @@ fun ChartScreen(
             rankState = placeState,
             typeState = placeType,
             category = "장소 순위"
+        )
+
+        RateComponent(
+            remindDays = 17,
+            greatDays = 8,
+            emptyDays = 5
         )
     }
 
