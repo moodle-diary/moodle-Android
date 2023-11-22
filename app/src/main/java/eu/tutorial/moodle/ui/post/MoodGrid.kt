@@ -118,7 +118,7 @@ fun MoodGrid(
                         modifier = Modifier
                             .width(40.dp)
                             .padding(top = 4.dp, bottom = 8.dp),
-                        color = Color(0XFFEDEDED)
+                        color = contentBlack
                     )
                 }
             }

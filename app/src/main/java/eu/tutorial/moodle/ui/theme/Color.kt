@@ -23,3 +23,6 @@ val contentCharcoal = Color(0XFF363637)
 val currentMonth = Color(0xFFEDEDED)
 val todayBox = Color(0xFF212122)
 val todayText = Color(0xFFF2F2F2)
+
+val greatGreen = Color(0xFF6FCF97)
+val nothingGray = Color(0xFFD9D9D9)
