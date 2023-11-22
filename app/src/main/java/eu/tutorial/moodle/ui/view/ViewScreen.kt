@@ -31,7 +31,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,6 +50,7 @@ import eu.tutorial.moodle.data.DiaryDto
 import eu.tutorial.moodle.data.TypeDto
 import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.comment.CommentScreen
+import eu.tutorial.moodle.ui.component.EmptyNote
 import eu.tutorial.moodle.ui.component.IconsComponent
 import eu.tutorial.moodle.ui.component.NotesComponent
 import eu.tutorial.moodle.ui.theme.backgroundGray
@@ -70,11 +75,8 @@ fun ViewScreen(
     onCloseClick: () -> Unit,
 ) {
     val viewDate = selectedDate.value
-    val diaryList = viewModel.diaryUiState
 
-    val emotionList = viewModel.emotionUiState
-    val causeList = viewModel.causesUiState
-    val placeList = viewModel.placesUiState
+    var isDiaryExist by remember { mutableStateOf(false) }
 
     val causeType = viewModel.causeTypes.map {
         TypeDto(
@@ -159,8 +161,7 @@ fun ViewScreen(
         )
 
         IconsComponent(
-            modifier = Modifier.height(82.dp),
-            iconList = emotionList,
+            iconList = viewModel.emotionUiState,
         )
 
         Text(
@@ -172,8 +173,7 @@ fun ViewScreen(
         )
 
         IconsComponent(
-            modifier = Modifier.height(82.dp),
-            iconList = causeList,
+            iconList = viewModel.causesUiState,
             typeList = causeType
         )
 
@@ -186,8 +186,7 @@ fun ViewScreen(
         )
 
         IconsComponent(
-            modifier = Modifier.height(82.dp),
-            iconList = placeList,
+            iconList = viewModel.placesUiState,
             typeList = placeType
         )
 
@@ -199,32 +198,19 @@ fun ViewScreen(
             modifier = Modifier.padding(top = 24.dp)
         )
 
-        if (diaryList.isNotEmpty()) {
-            getDiaryText(diaryList).map {
+        if (viewModel.diaryUiState.isNotEmpty()) {
+            getDiaryText(viewModel.diaryUiState).map {
                 NotesComponent(
                     text = it
-                )
-            }
-        } else {
-            Box(
-                modifier = Modifier
-                    .padding(0.dp, 4.dp)
-                    .fillMaxWidth()
-                    .height(82.dp)
-                    .clip(RoundedCornerShape(18.dp))
-                    .background(containerGray),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    text = "아직 기록이 없어요",
-                    style = androidx.compose.ui.text.TextStyle(
-                        fontSize = 12.sp,
-                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                        color = contentGray
-                    ),
-                )
+                ) { exist ->
+                    isDiaryExist = exist
+                }
             }
         }
+
+        EmptyNote(
+            isDiaryExist = isDiaryExist
+        )
 
         Text(
             text = "댓글",

@@ -41,17 +41,7 @@ fun ChartScreen(
     navController: NavController,
 ) {
     val scrollState = rememberScrollState()
-
     val selectedDate by viewModel.selectedDate
-
-    val emotionState = viewModel.emotionList
-    val causeState = viewModel.causeList
-    val placeState = viewModel.placeList
-
-    val timeList = viewModel.timeList
-
-    val remindDays = viewModel.remindDays
-    val greatDays = viewModel.greatDays
 
     val causeType = viewModel.causeTypes.map {
         TypeDto(
@@ -68,7 +58,6 @@ fun ChartScreen(
 
     val coroutineScope = rememberCoroutineScope()
 
-    // TODO : 날짜 변경 필요 몇 월인지를 받아온다
     LaunchedEffect(selectedDate) {
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
@@ -78,7 +67,6 @@ fun ChartScreen(
                 viewModel.getPlaceList(selectedDate.toString())
                 viewModel.getCauseTypes()
                 viewModel.getPlaceTypes()
-
                 viewModel.getGreatDays(selectedDate.toString())
                 viewModel.getRemindDays(selectedDate.toString())
                 viewModel.getTimeList(selectedDate.toString())
@@ -94,29 +82,29 @@ fun ChartScreen(
             .verticalScroll(scrollState)
     ) {
         TimeChartCard(
-            timeList = timeList
+            timeList = viewModel.timeList
         )
 
         RankCard(
-            rankState = emotionState,
+            rankState = viewModel.emotionList,
             category = "감정 순위"
         )
         RankCard(
-            rankState = causeState,
+            rankState = viewModel.causeList,
             typeState = causeType,
             category = "원인 순위"
         )
         RankCard(
-            rankState = placeState,
+            rankState = viewModel.placeList,
             typeState = placeType,
             category = "장소 순위"
         )
 
         RateComponent(
             listOf(
-                RateDays(remindDays - greatDays, mainOrange),
-                RateDays(greatDays, greatGreen),
-                RateDays(selectedDate.lengthOfMonth() - remindDays, nothingGray)
+                RateDays(viewModel.remindDays - viewModel.greatDays, mainOrange),
+                RateDays(viewModel.greatDays, greatGreen),
+                RateDays(selectedDate.lengthOfMonth() - viewModel.remindDays, nothingGray)
             )
         )
     }

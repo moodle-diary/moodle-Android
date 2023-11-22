@@ -1,5 +1,6 @@
 package eu.tutorial.moodle.ui.component
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,38 +28,40 @@ import eu.tutorial.moodle.ui.theme.contentGray
 
 @Composable
 fun NotesComponent(
-    text: String = ""
+    text: String = "",
+    changeDiaryExist: (Boolean) -> Unit,
 ) {
-
-    Column(
-        // TODO 이 부분 코드 개선.. value를 빼서 Composable 줄이는 방향
-        modifier = Modifier
-            .padding(0.dp, 4.dp)
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(18.dp))
-            .background(containerGray),
-    ) {
-
-        text.split("\\\\\\\\\\").mapIndexed() { index, element ->
-            Text(
-                text = stringResource(id = questionList[index]),
-                fontSize = 12.sp,
-                modifier = Modifier
-                    .padding(start = 18.dp, top = 16.dp),
-                fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                fontWeight = FontWeight(700),
-                color = Color(0xFFFF8923)
-            )
-            Text(
-                text = element,
-                modifier = Modifier
-                    .padding(start = 18.dp, end = 18.dp),
-                style = TextStyle(
+    if (text != "\\\\\\\\\\".repeat(3)) {
+        Column(
+            // TODO 이 부분 코드 개선.. value를 빼서 Composable 줄이는 방향
+            modifier = Modifier
+                .padding(0.dp, 4.dp)
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(18.dp))
+                .background(containerGray),
+        ) {
+            text.split("\\\\\\\\\\").mapIndexed() { index, element ->
+                Text(
+                    text = stringResource(id = questionList[index]),
+                    fontSize = 12.sp,
+                    modifier = Modifier
+                        .padding(start = 18.dp, top = 16.dp),
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                    fontSize = 16.sp
-                ),
-                color = contentBlack
-            )
+                    fontWeight = FontWeight(700),
+                    color = Color(0xFFFF8923)
+                )
+                Text(
+                    text = element,
+                    modifier = Modifier
+                        .padding(start = 18.dp, end = 18.dp),
+                    style = TextStyle(
+                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                        fontSize = 16.sp
+                    ),
+                    color = contentBlack
+                )
+            }
         }
+        changeDiaryExist(true)
     }
 }

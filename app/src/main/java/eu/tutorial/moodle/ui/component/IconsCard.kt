@@ -34,7 +34,6 @@ import eu.tutorial.moodle.ui.theme.contentGray
 
 @Composable
 fun IconsComponent(
-    modifier: Modifier = Modifier,
     iconList: List<IconDto> = emptyList(),
     typeList: List<TypeDto> = emotionList
 ) {
@@ -44,7 +43,7 @@ fun IconsComponent(
         Log.d("list", iconList.toString())
     }
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
     ) {
         if (emojis.isNotEmpty())
@@ -64,16 +63,16 @@ fun DetailCard(
 ) {
     Box(
         modifier = Modifier
-            .background(containerGray)
+            .height(214.dp)
             .fillMaxWidth()
-            .padding(26.dp, 12.dp)
-            .clip(RoundedCornerShape(18.dp)),
+            .background(containerGray, shape = RoundedCornerShape(size = 18.dp))
+            .padding(26.dp, 12.dp),
         contentAlignment = Alignment.Center,
     ) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(4),
             horizontalArrangement = Arrangement.spacedBy(6.dp),// 가로
-            verticalArrangement = Arrangement.spacedBy(6.dp)
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             items(emojis) { item ->
                 val type = typeList.find { it.typeDes == item }?.iconId

@@ -50,5 +50,4 @@ class DetailViewModel(private val diaryRepository: DiaryRepository) : ViewModel(
     fun getPlaces(selectedDate: String) {
         placesUiState = diaryRepository.getPlaces(currentDate = selectedDate)
     }
-
 }

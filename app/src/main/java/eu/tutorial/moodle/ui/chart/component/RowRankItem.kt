@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,6 +25,7 @@ import eu.tutorial.moodle.data.DescriptionDto
 import eu.tutorial.moodle.data.TypeDto
 import eu.tutorial.moodle.data.local.allEmojis
 import eu.tutorial.moodle.data.local.emotionList
+import eu.tutorial.moodle.ui.theme.contentBlack
 
 @Composable
 fun RowRankItem(
@@ -35,12 +37,12 @@ fun RowRankItem(
             .padding(start = 24.dp, end = 24.dp)
             .fillMaxWidth()
             .height(104.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.Center
     ) {
         repeat(listState.size) { it ->
             val des = listState[it].description
             val type = typeState.find { it.typeDes == des }
-
+            Spacer(modifier = Modifier.width(16.dp))
             if (type != null) {
                 RankItem(
                     description = des,
@@ -48,6 +50,7 @@ fun RowRankItem(
                     iconId = type.iconId
                 )
             }
+            Spacer(modifier = Modifier.width(16.dp))
         }
     }
 }
@@ -78,13 +81,13 @@ fun RankItem(
         Text(
             text = description,
             fontSize = 12.sp,
-            color = Color(0XFFEDEDED),
+            color = contentBlack,
             fontFamily = FontFamily(Font(R.font.poppins_regular))
         )
         Text(
             text = cnt.toString() + "번",
             fontSize = 12.sp,
-            color = Color(0XFFEDEDED).copy(alpha = 0.5f),
+            color = contentBlack,
             fontFamily = FontFamily(Font(R.font.poppins_regular))
         )
     }
