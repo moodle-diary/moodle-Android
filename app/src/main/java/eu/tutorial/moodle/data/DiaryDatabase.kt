@@ -4,13 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverter
-import androidx.room.TypeConverters
 
 // 이때의 version??
 @Database(
-    entities = [Diary::class, Emotions::class, Cause::class, Place::class,
-        Comment::class, CauseType::class, PlaceType::class],
+    entities = [
+        Diary::class, Emotions::class, Cause::class, Place::class,
+        Comment::class, CauseType::class, PlaceType::class
+    ],
     version = 3, exportSchema = false
 ) // 백업 스키마 유지 하지 않도록
 abstract class DiaryDatabase : RoomDatabase() {
@@ -23,7 +23,6 @@ abstract class DiaryDatabase : RoomDatabase() {
         private var Instance: DiaryDatabase? = null
 
         fun getDatabase(context: Context): DiaryDatabase {
-
             return Instance ?: synchronized(this) {
                 Room.databaseBuilder(context, DiaryDatabase::class.java, "diary_database")
                     .build()
@@ -31,5 +30,4 @@ abstract class DiaryDatabase : RoomDatabase() {
             }
         }
     }
-
 }

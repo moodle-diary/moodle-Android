@@ -1,13 +1,10 @@
 package eu.tutorial.moodle.ui.chart
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import eu.tutorial.moodle.data.CauseGrade
 import eu.tutorial.moodle.data.CauseTypeDto
 import eu.tutorial.moodle.data.DescriptionDto
@@ -16,11 +13,7 @@ import eu.tutorial.moodle.data.EmotionGrade
 import eu.tutorial.moodle.data.PlaceGrade
 import eu.tutorial.moodle.data.PlaceTypeDto
 import eu.tutorial.moodle.data.TimeItem
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.threeten.bp.YearMonth
-import kotlin.properties.Delegates
 
 class ChartViewModel(private val diaryRepository: DiaryRepository) : ViewModel() {
 
@@ -81,7 +74,6 @@ class ChartViewModel(private val diaryRepository: DiaryRepository) : ViewModel()
     fun getTimeList(targetMonth: String) {
         timeList = diaryRepository.getHourRate("$targetMonth%")
     }
-
 }
 
 fun EmotionGrade.toDesDto(): DescriptionDto = DescriptionDto(

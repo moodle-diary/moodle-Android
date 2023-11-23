@@ -11,21 +11,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BarChart
-import androidx.compose.material.icons.filled.CalendarMonth
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,13 +29,11 @@ import eu.tutorial.moodle.ui.navigation.HomeDestination
 import eu.tutorial.moodle.ui.navigation.PostDestination
 import eu.tutorial.moodle.ui.navigation.SettingDestination
 import eu.tutorial.moodle.ui.theme.backgroundGray
-import eu.tutorial.moodle.ui.theme.contentBlack
-import eu.tutorial.moodle.ui.theme.navItemBackground
 
 @Composable
 fun BottomNavBar(
     navController: NavHostController,
-    isVisible : Boolean = false
+    isVisible: Boolean = false
 ) {
     val navigationItemContentList = listOf(
         NavigationItemContent(
@@ -123,8 +109,7 @@ fun BottomNavBar(
                                 .size(42.dp)
                                 .clickable { navController.navigate(navItem.route) }
                         )
-                    }
-                    else {
+                    } else {
                         Image(
                             painter = navItem.unselectedIcon,
                             contentDescription = "image",
@@ -142,7 +127,7 @@ fun BottomNavBar(
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
-fun TopBarPreview(){
+fun TopBarPreview() {
     var navController = rememberNavController()
     BottomNavBar(navController = navController)
 }

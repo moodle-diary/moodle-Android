@@ -19,11 +19,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
@@ -36,9 +33,7 @@ import eu.tutorial.moodle.ui.component.NotesComponent
 import eu.tutorial.moodle.ui.home.HomeViewModel
 import eu.tutorial.moodle.ui.home.getDiaryText
 import eu.tutorial.moodle.ui.theme.backgroundGray
-import eu.tutorial.moodle.ui.theme.containerGray
 import eu.tutorial.moodle.ui.theme.contentBlack
-import eu.tutorial.moodle.ui.theme.contentGray
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -85,12 +80,11 @@ fun BottomSheet(
             }
         }
 
-
         ModalBottomSheet(
             onDismissRequest = { onChange(false) },
             containerColor = backgroundGray,
             modifier = Modifier
-                .fillMaxHeight(0.85f),  // 야매여서 고쳐야함
+                .fillMaxHeight(0.85f),
             tonalElevation = 0.dp,
             scrimColor = Color.Transparent,
         ) {

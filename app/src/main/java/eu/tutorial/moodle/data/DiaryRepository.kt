@@ -1,8 +1,5 @@
 package eu.tutorial.moodle.data
 
-import androidx.annotation.WorkerThread
-import kotlinx.coroutines.flow.Flow
-
 interface DiaryRepository {
     suspend fun insertDiary(diary: Diary): Long
     suspend fun insertEmotion(emotions: Emotions)
