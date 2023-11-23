@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.ui.theme.contentGray
-import eu.tutorial.moodle.ui.theme.nothingGray
 
 @Composable
 fun RateCategoryItem(

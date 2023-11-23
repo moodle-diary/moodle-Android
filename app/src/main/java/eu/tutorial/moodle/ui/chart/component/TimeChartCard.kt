@@ -22,12 +22,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.TimeItem
-import eu.tutorial.moodle.data.local.timeData
 import eu.tutorial.moodle.ui.theme.containerGray
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -102,15 +100,4 @@ fun EvalTimeBar(
             }
         }
     }
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-@Preview(
-    showBackground = true,
-)
-@Composable
-fun ChartPreview() {
-    TimeChartCard(
-
-    )
 }

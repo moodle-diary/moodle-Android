@@ -1,6 +1,5 @@
 package eu.tutorial.moodle.data
 
-
 class OfflineDiaryRepository(private val diaryDao: DiaryDao) : DiaryRepository {
     override suspend fun insertDiary(diary: Diary) =
         diaryDao.insertDiary(diary)
@@ -47,8 +46,6 @@ class OfflineDiaryRepository(private val diaryDao: DiaryDao) : DiaryRepository {
     override fun getRemindDays(targetMonth: String): List<Int> =
         diaryDao.getRemindDays(targetMonth)
 
-
-    // targetMonth 넘겨줄 때에 뒤에 "%" 추가 해야 합니다. because of LIKE
     override fun getEmotionGrade(targetMonth: String): List<EmotionGrade> =
         diaryDao.getEmotionGrade(targetMonth)
 
