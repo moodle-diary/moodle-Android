@@ -97,7 +97,7 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "오늘 리마인드",
+                    text = "오늘 감정 리마인드",
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_bold)),
                     color = contentBlack,
