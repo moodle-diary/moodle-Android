@@ -23,7 +23,9 @@ import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.DescriptionDto
 import eu.tutorial.moodle.data.TypeDto
 import eu.tutorial.moodle.data.local.allEmojis
+import eu.tutorial.moodle.data.local.causeEmojiList
 import eu.tutorial.moodle.data.local.emotionList
+import eu.tutorial.moodle.data.local.placeEmojiList
 import eu.tutorial.moodle.ui.theme.contentBlack
 import eu.tutorial.moodle.ui.theme.contentGray
 import kotlin.math.min
@@ -44,6 +46,7 @@ fun RowRankItem(
         val maxItemsToShow = 3
         var rank = 1
         repeat(min(listState.size, maxItemsToShow)) { it ->
+
             val des = listState[it].description
             val type = typeState.find { it.typeDes == des }
             Spacer(modifier = Modifier.width(16.dp))
@@ -58,9 +61,6 @@ fun RowRankItem(
             }
             Spacer(modifier = Modifier.width(16.dp))
         }
-
-        if (listState.size > maxItemsToShow) {
-        }
     }
 }
 
@@ -71,6 +71,7 @@ fun RankItem(
     iconId: String,
     rank: Int
 ) {
+    val allEmojiMap = allEmojis + causeEmojiList + placeEmojiList
     Column(
         modifier = Modifier
             .width(60.dp)
@@ -78,7 +79,7 @@ fun RankItem(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        allEmojis[iconId]?.let { painterResource(id = it) }?.let {
+        allEmojiMap[iconId]?.let { painterResource(id = it) }?.let {
             Image(
                 painter = it,
                 contentDescription = "icon",

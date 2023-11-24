@@ -3,6 +3,7 @@ package eu.tutorial.moodle.ui.chart.component
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,24 +25,36 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.DescriptionDto
+import eu.tutorial.moodle.data.TypeDto
+import eu.tutorial.moodle.data.local.allEmojis
+import eu.tutorial.moodle.data.local.causeEmojiList
+import eu.tutorial.moodle.data.local.emotionList
+import eu.tutorial.moodle.data.local.placeEmojiList
+import eu.tutorial.moodle.ui.theme.containerGray
+import eu.tutorial.moodle.ui.theme.contentBlack
+import eu.tutorial.moodle.ui.theme.mainOrange
 
 @Composable
 fun ColumnRankItem(
-    listState: List<DescriptionDto>
+    listState: List<DescriptionDto>,
+    typeState: List<TypeDto> = emotionList,
 ) {
 
     val brush = Brush.horizontalGradient(
-        listOf(Color(0XFFF3F3F3), Color(0xFFFF8923))
+        listOf(containerGray, mainOrange)
     )
 
-    val totalSize = getTotalSize(listState)
+    val maxCnt = listState[0].cnt
+    val rate = 200 / maxCnt
 
     Column(
         modifier = Modifier
@@ -49,13 +62,19 @@ fun ColumnRankItem(
             .fillMaxWidth()
     ) {
         repeat(listState.size) {
-            ChartBar(
-                brush = brush,
-                description = listState[it].description,
-                chartSize = 200 * listState[it].cnt / totalSize
-            )
+
+            val des = listState[it].description
+            val type = typeState.find { it.typeDes == des }
+
+            if (type != null) {
+                ChartBar(
+                    brush = brush,
+                    description = listState[it].description,
+                    iconId = type.iconId,
+                    chartSize = listState[it].cnt * rate
+                )
+            }
         }
-        Log.d("listState", listState.toString())
     }
 }
 
@@ -63,8 +82,11 @@ fun ColumnRankItem(
 fun ChartBar(
     brush: Brush,
     description: String,
+    iconId: String,
     chartSize: Int,
 ) {
+    val allEmojiMap = allEmojis + causeEmojiList + placeEmojiList
+
     Row(
         modifier = Modifier
             .height(90.dp)
@@ -77,17 +99,19 @@ fun ChartBar(
             modifier = Modifier
                 .padding(end = 12.dp)
         ) {
-            Icon(
-                imageVector = Icons.Default.Pets,
-                contentDescription = "icon",
-                modifier = Modifier
-                    .size(50.dp)
-                    .padding(bottom = 4.dp)
-            )
+            allEmojiMap[iconId]?.let { painterResource(id = it) }?.let {
+                Image(
+                    painter = it,
+                    contentDescription = "icon",
+                    modifier = Modifier
+                        .size(60.dp)
+                        .padding(bottom = 12.dp)
+                )
+            }
             Text(
                 text = description,
                 fontSize = 12.sp,
-                color = Color(0XFFEDEDED),
+                color = contentBlack,
                 fontFamily = FontFamily(Font(R.font.poppins_regular))
             )
         }
