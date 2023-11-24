@@ -45,7 +45,6 @@ import eu.tutorial.moodle.ui.component.SentenceComponent
 import eu.tutorial.moodle.ui.home.component.BottomSheet
 import eu.tutorial.moodle.ui.theme.backgroundGray
 import eu.tutorial.moodle.ui.theme.contentBlack
-import eu.tutorial.moodle.ui.theme.contentGray
 import eu.tutorial.moodle.ui.theme.poppins
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -82,11 +81,11 @@ fun HomeScreen(
     ) {
         // TODO : 이 부분은 명언 보여주기
         SentenceComponent(
-            modifier = Modifier.padding(12.dp, 0.dp),
+            modifier = Modifier.padding(20.dp, 10.dp),
             navController = navController
         )
 
-        Spacer(modifier = Modifier.size(87.dp))
+        Spacer(modifier = Modifier.size(30.dp))
 
         Column(
             modifier = Modifier.padding(12.dp, 0.dp)
@@ -98,17 +97,11 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "오늘의 리마인드",
+                    text = "오늘 리마인드",
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_bold)),
                     color = contentBlack,
                     modifier = Modifier.padding(8.dp, 0.dp)
-                )
-                Text(
-                    text = "모두 보기",
-                    fontSize = 12.sp,
-                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                    color = contentGray
                 )
             }
 
@@ -116,7 +109,7 @@ fun HomeScreen(
                 iconList = emotionList,
             )
         }
-        Spacer(modifier = Modifier.size(32.dp))
+        Spacer(modifier = Modifier.size(20.dp))
 
         Button(
             onClick = { isBottomSheetVisible = true },
