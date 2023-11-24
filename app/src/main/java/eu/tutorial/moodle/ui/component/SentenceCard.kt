@@ -14,22 +14,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.data.local.wiseSentence
 import eu.tutorial.moodle.ui.theme.contentGray
 import eu.tutorial.moodle.ui.theme.mainOrange
 
 @Composable
 fun SentenceComponent(
-    emotion: Int = 0,
     modifier: Modifier,
-    navController: NavController
 ) {
-    val emotionItem = if (emotion != 0) emotion.toString() else "기분이 어떠신가요?"
+    val random = java.util.Random()
 
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
         Text(
-            text = "“행복은 몸에 좋다, 그러나\n마음의 힘을 길러주는 것은 슬픔이다”",
+            text = wiseSentence[random.nextInt(wiseSentence.size)],
             style = TextStyle(
                 fontSize = 14.sp,
                 fontFamily = FontFamily(Font(R.font.poppins_regular)),

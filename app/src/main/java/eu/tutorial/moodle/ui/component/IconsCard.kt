@@ -37,7 +37,7 @@ fun IconsComponent(
     typeList: List<TypeDto> = emotionList
 ) {
     val emojis: List<String> = iconList.map { it.iconDescription }
-    
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -99,38 +99,12 @@ fun DetailCard(
     }
 }
 
-
-//    Box(
-//        modifier = Modifier
-//            .height(214.dp)
-//            .fillMaxWidth()
-//            .background(containerGray, shape = RoundedCornerShape(size = 18.dp))
-//            .padding(26.dp, 12.dp),
-//        contentAlignment = Alignment.Center,
-//    ) {
-//        LazyVerticalGrid(
-//            columns = GridCells.Fixed(4),
-//            horizontalArrangement = Arrangement.spacedBy(6.dp),
-//            verticalArrangement = Arrangement.spacedBy(6.dp),
-//        ) {
-//            items(emojis) { item ->
-//                val type = typeList.find { it.typeDes == item }?.iconId
-//
-//                allEmojis[type]?.let {
-//                    AlignYourBodyElement(
-//                        drawable = it,
-//                    )
-//                }
-//            }
-//        }
-//    }
-//}
-
-
 @Composable
-fun EmptyCard() {
+fun EmptyCard(
+    modifier: Modifier = Modifier
+) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .height(78.dp)
             .fillMaxWidth()
             .clip(RoundedCornerShape(18.dp))
@@ -139,7 +113,7 @@ fun EmptyCard() {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "오늘 기록한 아이콘이 없어요",
+            text = "기록한 아이콘이 없어요",
             style = TextStyle(
                 fontSize = 12.sp,
                 fontFamily = FontFamily(Font(R.font.poppins_regular)),

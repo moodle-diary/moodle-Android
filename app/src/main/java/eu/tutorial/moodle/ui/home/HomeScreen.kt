@@ -82,7 +82,6 @@ fun HomeScreen(
         // TODO : 이 부분은 명언 보여주기
         SentenceComponent(
             modifier = Modifier.padding(20.dp, 10.dp),
-            navController = navController
         )
 
         Spacer(modifier = Modifier.size(30.dp))

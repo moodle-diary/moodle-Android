@@ -1,17 +1,11 @@
 package eu.tutorial.moodle.ui.post
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import eu.tutorial.moodle.AlarmReceiver
 import eu.tutorial.moodle.data.Cause
 import eu.tutorial.moodle.data.CauseType
 import eu.tutorial.moodle.data.CauseTypeDto
@@ -22,15 +16,16 @@ import eu.tutorial.moodle.data.Place
 import eu.tutorial.moodle.data.PlaceType
 import eu.tutorial.moodle.data.PlaceTypeDto
 import java.time.LocalDate
-import java.util.Calendar
-import androidx.compose.ui.platform.LocalContext
+import java.time.LocalDateTime
 
 @RequiresApi(Build.VERSION_CODES.O)
 class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() {
     var diaryUiState by mutableStateOf(
         DiaryUiState(
             diaryDetails = DiaryDetails(
-                currentDate = LocalDate.now().toString()
+                currentDate = LocalDate.now().toString(),
+                hour = LocalDateTime.now().hour,
+                minute = LocalDateTime.now().minute
             )
         )
     )
