@@ -24,13 +24,16 @@ import eu.tutorial.moodle.data.PlaceTypeDto
 import java.time.LocalDate
 import java.util.Calendar
 import androidx.compose.ui.platform.LocalContext
+import java.time.LocalDateTime
 
 @RequiresApi(Build.VERSION_CODES.O)
 class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() {
     var diaryUiState by mutableStateOf(
         DiaryUiState(
             diaryDetails = DiaryDetails(
-                currentDate = LocalDate.now().toString()
+                currentDate = LocalDate.now().toString(),
+                hour = LocalDateTime.now().hour,
+                minute = LocalDateTime.now().minute
             )
         )
     )
