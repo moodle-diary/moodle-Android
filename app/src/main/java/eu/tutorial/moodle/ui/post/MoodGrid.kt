@@ -6,6 +6,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -29,7 +30,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -39,6 +39,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.local.allEmojis
@@ -103,13 +104,26 @@ fun MoodGrid(
                             .size(55.dp)
                             .background(backgroundColor) // 배경색 설정
                             .clip(RoundedCornerShape(if (isClicked) 25.dp else 0.dp))
-                            .blur(if (isClicked) 3.dp else 0.dp)
                     ) {
                         allEmojis[item]?.let { painterResource(it) }?.let {
-                            Image(
-                                painter = it,
-                                contentDescription = null,
-                            )
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier.fillMaxSize()
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(55.dp)
+                                        .background(containerGray.copy(alpha = .5f))
+                                )
+
+                                val clickedZIndex = if (isClicked) -1f else 1f
+
+                                Image(
+                                    painter = it,
+                                    contentDescription = null,
+                                    modifier = Modifier.zIndex(clickedZIndex)
+                                )
+                            }
                         }
                     }
 
