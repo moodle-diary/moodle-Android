@@ -24,6 +24,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.ui.theme.containerGray
+import eu.tutorial.moodle.ui.theme.mainOrange
 
 @ExperimentalMaterial3Api
 @Composable
@@ -38,16 +40,16 @@ fun TimeDialog(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
-                    color = Color(0xFFB1B1B1),
-                    shape = RoundedCornerShape(size = 12.dp)
+                    color = containerGray,
+                    shape = RoundedCornerShape(size = 18.dp)
                 ),
             onDismissRequest = { onDismissRequest() }
         ) {
             Column(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(12.dp))
+                    .clip(RoundedCornerShape(18.dp))
                     .background(
-                        color = Color.LightGray.copy(alpha = 0.3f)
+                        color = containerGray
                     )
                     .padding(top = 28.dp, start = 20.dp, end = 20.dp, bottom = 12.dp),
                 verticalArrangement = Arrangement.Center,
@@ -56,7 +58,19 @@ fun TimeDialog(
                 TimePicker(
                     state = timePickerState,
                     colors = TimePickerDefaults.colors(
-                        // Customize TimePicker colors as needed
+                        timeSelectorSelectedContainerColor = containerGray,
+                        timeSelectorUnselectedContainerColor = containerGray,
+                        timeSelectorSelectedContentColor = Color.Black,
+                        timeSelectorUnselectedContentColor = Color(0XFFAEAEB2),
+                        clockDialSelectedContentColor = Color.White,
+                        clockDialUnselectedContentColor = Color.Black,
+                        periodSelectorSelectedContainerColor = mainOrange,
+                        periodSelectorSelectedContentColor = Color.Black,
+                        periodSelectorBorderColor = containerGray,
+                        periodSelectorUnselectedContainerColor = Color.White,
+                        periodSelectorUnselectedContentColor = Color.Black,
+                        clockDialColor = Color.White,
+                        selectorColor = mainOrange
                     )
                 )
 
