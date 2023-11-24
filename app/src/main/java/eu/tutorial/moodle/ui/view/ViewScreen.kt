@@ -106,7 +106,6 @@ fun ViewScreen(
                 viewModel.getPlaceTypes()
             }
         }
-
     }
 
     Column(

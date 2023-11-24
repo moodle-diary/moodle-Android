@@ -1,6 +1,7 @@
 package eu.tutorial.moodle.ui.calendar
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
@@ -31,6 +32,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,12 +44,16 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.calendar.component.HorizontalCalendar
+import eu.tutorial.moodle.ui.component.IconsComponent
 import eu.tutorial.moodle.ui.home.HomeViewModel
 import eu.tutorial.moodle.ui.theme.backgroundGray
 import eu.tutorial.moodle.ui.theme.containerGray
 import eu.tutorial.moodle.ui.theme.contentBlack
 import eu.tutorial.moodle.ui.theme.poppins
 import eu.tutorial.moodle.ui.view.ViewScreen
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.YearMonth
 
@@ -69,13 +75,23 @@ fun CalendarMainCard(
     val pagerState = rememberPagerState(initialPage = initialPage)
 
     var visibleEmotion by remember { mutableStateOf(false) }
-
     val currentSelectedDate = remember { mutableStateOf(currentDate) }
+    val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(pagerState.currentPage) {
         val addMonth = (pagerState.currentPage - currentPage).toLong()
         currentMonth = currentMonth.plusMonths(addMonth)
         currentPage = pagerState.currentPage
+    }
+
+    LaunchedEffect(currentSelectedDate.value) {
+        Log.d("a", "A")
+        coroutineScope.launch {
+            withContext(Dispatchers.IO) {
+                // 데이터베이스 쿼리를 비동기적으로 수행
+                viewModel.getEmotions(currentSelectedDate.value.toString())
+            }
+        }
     }
 
     Column(
@@ -113,56 +129,47 @@ fun CalendarMainCard(
         Spacer(modifier = Modifier.size(16.dp))
 
         Column(
+            modifier = Modifier
+                .padding(start = 12.dp, end = 12.dp, bottom = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-                modifier = Modifier
-                    .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
-                    .clip(RoundedCornerShape(32.dp))
-            ) {
-                Box(
-                    modifier = Modifier
-                        .height(226.dp)
-                        .fillMaxWidth()
-                        .background(containerGray),
-                    contentAlignment = Alignment.BottomCenter
-                ) {
-                    Button(
-                        onClick = {
-                            showViewScreen()
-                        },
-                        modifier = Modifier
-                            .padding(12.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.Transparent
-                        ),
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.journal),
-                                contentDescription = "journal",
-                                modifier = Modifier
-                                    .padding(end = 8.dp)
-                                    .size(16.dp)
-                            )
+            IconsComponent(
+                iconList = viewModel.emotionUiState
+            )
 
-                            Text(
-                                text = "전체 보기",
-                                color = contentBlack,
-                                fontFamily = poppins,
-                                modifier = Modifier.padding(top = 2.dp)
-                            )
-                        }
-                    }
+            Button(
+                onClick = {
+                    showViewScreen()
+                },
+                modifier = Modifier
+                    .padding(12.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Transparent
+                ),
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.journal),
+                        contentDescription = "journal",
+                        modifier = Modifier
+                            .padding(end = 8.dp)
+                            .size(16.dp)
+                    )
+
+                    Text(
+                        text = "전체 보기",
+                        color = contentBlack,
+                        fontFamily = poppins,
+                        modifier = Modifier.padding(top = 2.dp)
+                    )
                 }
             }
         }
-
     }
 
 
