@@ -19,7 +19,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,8 +29,8 @@ import eu.tutorial.moodle.data.DescriptionDto
 import eu.tutorial.moodle.data.TypeDto
 import eu.tutorial.moodle.data.local.emotionList
 import eu.tutorial.moodle.ui.theme.containerGray
-import eu.tutorial.moodle.ui.theme.contentBlack
 import eu.tutorial.moodle.ui.theme.contentGray
+import eu.tutorial.moodle.ui.theme.mainOrange
 
 @Composable
 fun RankCard(
@@ -45,53 +44,61 @@ fun RankCard(
         modifier = Modifier
             .padding(12.dp, 8.dp)
             .fillMaxWidth()
-            .clip(RoundedCornerShape(18.dp))
-            .background(containerGray)
-            .padding(top = 16.dp, bottom = 12.dp),
-        verticalArrangement = Arrangement.Center
+            .padding(top = 24.dp)
     ) {
-        Row(
+        Text(
+            text = " •  ${category}",
+            fontSize = 16.sp,
+            color = mainOrange,
+            fontFamily = FontFamily(Font(R.font.poppins_bold)),
             modifier = Modifier
-                .padding(start = 38.dp, end = 23.dp, bottom = 12.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+                .padding(bottom = 10.dp)
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(18.dp))
+                .background(containerGray)
+                .padding(top = 10.dp, bottom = 10.dp),
+            verticalArrangement = Arrangement.Center
         ) {
-            Text(
-                text = category,
-                fontSize = 16.sp,
-                color = contentBlack,
-                fontFamily = FontFamily(Font(R.font.poppins_bold))
-            )
+            Row(
+                modifier = Modifier
+                    .padding(start = 38.dp, end = 23.dp, bottom = 12.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if (isFolder) {
+                    Text(
+                        text = "더보기",
+                        fontSize = 12.sp,
+                        color = contentGray,
+                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                        modifier = Modifier.clickable { isFolder = false }
+                    )
+                } else {
+                    Text(
+                        text = "접기",
+                        fontSize = 12.sp,
+                        color = contentGray,
+                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                        modifier = Modifier.clickable { isFolder = true }
+                    )
+                }
+            }
+
+            // TODO: RowRankItem 출력 시 rankState 3개로 끊기
             if (isFolder) {
-                Text(
-                    text = "더보기",
-                    fontSize = 12.sp,
-                    color = contentGray,
-                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                    modifier = Modifier.clickable { isFolder = false }
+                RowRankItem(
+                    listState = rankState,
+                    typeState = typeState
                 )
             } else {
-                Text(
-                    text = "접기",
-                    fontSize = 12.sp,
-                    color = contentGray,
-                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                    modifier = Modifier.clickable { isFolder = true }
+                ColumnRankItem(
+                    listState = rankState,
                 )
             }
-        }
-
-        // TODO: RowRankItem 출력 시 rankState 3개로 끊기
-        if (isFolder) {
-            RowRankItem(
-                listState = rankState,
-                typeState = typeState
-            )
-        } else {
-            ColumnRankItem(
-                listState = rankState,
-            )
         }
     }
 }

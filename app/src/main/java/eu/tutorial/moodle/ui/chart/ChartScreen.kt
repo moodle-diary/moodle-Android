@@ -87,17 +87,17 @@ fun ChartScreen(
 
         RankCard(
             rankState = viewModel.emotionList,
-            category = "감정 순위"
+            category = "가장 힘들게 한 원인 감정"
         )
         RankCard(
             rankState = viewModel.causeList,
             typeState = causeType,
-            category = "원인 순위"
+            category = "가장 힘들게 한 원인"
         )
         RankCard(
             rankState = viewModel.placeList,
             typeState = placeType,
-            category = "장소 순위"
+            category = "가장 힘들었던 장소"
         )
 
         RateComponent(

@@ -34,11 +34,11 @@ import eu.tutorial.moodle.data.DescriptionDto
 
 @Composable
 fun ColumnRankItem(
-    listState : List<DescriptionDto>
+    listState: List<DescriptionDto>
 ) {
 
     val brush = Brush.horizontalGradient(
-        listOf(Color(0xFF202020), Color(0xFFD1D1D1))
+        listOf(Color(0XFFF3F3F3), Color(0xFFFF8923))
     )
 
     val totalSize = getTotalSize(listState)
@@ -48,7 +48,7 @@ fun ColumnRankItem(
             .padding(start = 24.dp, end = 24.dp)
             .fillMaxWidth()
     ) {
-        repeat( listState.size ) {
+        repeat(listState.size) {
             ChartBar(
                 brush = brush,
                 description = listState[it].description,
@@ -63,8 +63,8 @@ fun ColumnRankItem(
 fun ChartBar(
     brush: Brush,
     description: String,
-    chartSize : Int,
-){
+    chartSize: Int,
+) {
     Row(
         modifier = Modifier
             .height(90.dp)
@@ -115,9 +115,9 @@ fun ChartBar(
 
 fun getTotalSize(
     list: List<DescriptionDto>
-) : Int{
+): Int {
     var result = 0
-    for ( i in list.indices){
+    for (i in list.indices) {
         result += list[i].cnt
     }
     return result
@@ -126,7 +126,7 @@ fun getTotalSize(
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
-fun ColumnRankItemPreview(){
+fun ColumnRankItemPreview() {
 //    ColumnRankItem(
 //
 //    )
