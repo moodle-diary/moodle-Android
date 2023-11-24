@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -15,6 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.ui.theme.contentGray
+import eu.tutorial.moodle.ui.theme.mainOrange
 
 @Composable
 fun SentenceComponent(
@@ -33,7 +34,7 @@ fun SentenceComponent(
                 fontSize = 14.sp,
                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
                 fontWeight = FontWeight(400),
-                color = Color(0XFFF2994A),
+                color = mainOrange,
                 lineHeight = 20.sp
             )
         )
@@ -44,7 +45,7 @@ fun SentenceComponent(
                 fontSize = 12.sp,
                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
                 fontWeight = FontWeight(300),
-                color = Color(0XFF828282),
+                color = contentGray,
             )
         )
     }

@@ -70,7 +70,7 @@ fun DetailCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp, bottom = 4.dp),
+                .padding(top = 8.dp),
 
             ) {
             val rows = (emojis.size) / 4 + 1

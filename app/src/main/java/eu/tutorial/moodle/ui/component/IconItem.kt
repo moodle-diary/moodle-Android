@@ -36,9 +36,9 @@ fun AlignYourBodyElement(
     ) {
         Column(
             modifier = Modifier
-                .padding(bottom = 4.dp)
+                .padding(top = 4.dp, bottom = 4.dp)
                 .width(75.dp)
-                .height(85.dp)
+                .height(90.dp)
                 .clip(shape = RoundedCornerShape(20.dp)),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -56,7 +56,7 @@ fun AlignYourBodyElement(
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 4.dp, bottom = 8.dp),
+                    .padding(top = 8.dp),
                 color = contentBlack
             )
         }
