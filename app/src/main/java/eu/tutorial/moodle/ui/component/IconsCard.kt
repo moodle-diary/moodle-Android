@@ -37,10 +37,7 @@ fun IconsComponent(
     typeList: List<TypeDto> = emotionList
 ) {
     val emojis: List<String> = iconList.map { it.iconDescription }
-
-    if (iconList.isNotEmpty()) {
-        Log.d("list", iconList.toString())
-    }
+    
     Column(
         modifier = Modifier
             .fillMaxWidth()
