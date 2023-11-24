@@ -61,9 +61,7 @@ fun SaveDialog(
     viewModel: PostViewModel,
     onChange: (Boolean) -> Unit
 ) {
-    val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-    var clickTime by remember { mutableLongStateOf(0L) }
 
     val dialogText = if (isCancel) {
         "저장하지 않고 나가겠어요?"

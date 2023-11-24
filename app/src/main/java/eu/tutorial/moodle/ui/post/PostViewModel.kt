@@ -91,17 +91,21 @@ class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() 
     }
 
     // TODO: cause iconId 추가
-    suspend fun saveCauseType(causeType: String) {
+    suspend fun saveCauseType(causeType: String, iconId: String) {
         diaryRepository.insertCauseType(
             CauseType(
-                causeType = causeType
+                causeType = causeType,
+                iconId = iconId
             )
         )
     }
 
-    suspend fun savePlaceType(placeType: String) {
+    suspend fun savePlaceType(placeType: String, iconId: String) {
         diaryRepository.insertPlaceType(
-            PlaceType(placeType = placeType)
+            PlaceType(
+                placeType = placeType,
+                iconId = iconId
+            )
         )
     }
 }
