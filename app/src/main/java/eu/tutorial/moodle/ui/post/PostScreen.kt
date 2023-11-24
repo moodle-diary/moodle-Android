@@ -218,21 +218,12 @@ fun PostScreen(
                             .padding(bottom = 3.dp)
                             .clickable { showDialog = true }
                     )
-                    if (selectedHour == 0) {
-                        Text(
-                            text = "시간 입력",
-                            fontSize = 11.sp,
-                            fontFamily = poppins,
-                            color = contentBlack.copy(alpha = 0.6f)
-                        )
-                    } else {
-                        Text(
-                            text = "$selectedHour : $selectedMinute",
-                            fontSize = 11.sp,
-                            fontFamily = poppins,
-                            color = contentBlack.copy(alpha = 0.6f)
-                        )
-                    }
+                    Text(
+                        text = "$selectedHour : $selectedMinute",
+                        fontSize = 11.sp,
+                        fontFamily = poppins,
+                        color = contentBlack.copy(alpha = 0.6f)
+                    )
                 }
                 Button(
                     onClick = {
