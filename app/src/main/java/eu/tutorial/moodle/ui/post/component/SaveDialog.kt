@@ -21,12 +21,18 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
@@ -56,6 +62,7 @@ fun SaveDialog(
     onChange: (Boolean) -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
+
     val dialogText = if (isCancel) {
         "저장하지 않고 나가겠어요?"
     } else {
@@ -152,8 +159,6 @@ fun SaveDialog(
                                     if (placeButtonStates[i]) viewModel.savePlace(
                                         viewModel.placesTypes[i].placeType, key
                                     )
-
-
                             }
                         },
                         colors = ButtonDefaults.buttonColors(
