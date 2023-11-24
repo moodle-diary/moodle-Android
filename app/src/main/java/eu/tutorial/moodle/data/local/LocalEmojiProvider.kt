@@ -21,7 +21,7 @@ val allEmojis = mapOf<String, Int>(
     "맥시칸" to R.drawable.free_icon_airplane_3182984,
     "채식" to R.drawable.free_icon_airplane_3182984,
     "default" to R.drawable.free_icon_airplane_3182984,
-    "none" to R.drawable.plusbutton,
+    "none" to R.drawable.plus,
 
 
     "분노" to R.drawable.angry,

@@ -73,7 +73,7 @@ fun EmojiTypeDialog(
                 // TODO : 여기 아무것도 없는 걸로
                 Image(
                     painter = painterResource(
-                        id = categoryList[iconId] ?: R.drawable.plusbutton
+                        id = categoryList[iconId] ?: R.drawable.question
                     ),
                     contentDescription = "image description",
                     contentScale = ContentScale.FillBounds,
@@ -86,10 +86,11 @@ fun EmojiTypeDialog(
                 BasicTextField(
                     value = text,
                     onValueChange = { newText ->
-                        text = newText
+                        if (newText.length < 6) text = newText
                     },
+                    singleLine = true,
                     modifier = Modifier
-                        .width(120.dp)
+                        .width(100.dp)
                         .height(29.dp)
                         .border(
                             width = 1.dp,
@@ -100,16 +101,19 @@ fun EmojiTypeDialog(
                             color = containerGray,
                             shape = RoundedCornerShape(size = 14.5.dp)
                         )
-                ) {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = text,
-                        )
+                        .padding(15.dp, 5.dp),
+                    decorationBox = { innerTextField ->
+                        if (text.isEmpty()) {
+                            Text(
+                                text = "이름 입력",
+                                fontSize = 14.sp,
+                                fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                                color = contentBlack,
+                            )
+                        }
+                        innerTextField()
                     }
-                }
+                )
 
                 Spacer(modifier = Modifier.size(40.dp))
 
@@ -123,7 +127,7 @@ fun EmojiTypeDialog(
                     textAlign = TextAlign.Center,
                 )
 
-                Spacer(modifier = Modifier.size(16.dp))
+                Spacer(modifier = Modifier.size(8.dp))
 
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(4),
@@ -173,8 +177,10 @@ fun EmojiTypeDialog(
                     }
                     Button(
                         onClick = {
-                            save(text, iconId)
-                            visibleChange(false)
+                            if (text != "") {
+                                save(text, iconId)
+                                visibleChange(false)
+                            }
                         },
                         colors = ButtonDefaults.buttonColors(containerGray),
                     ) {

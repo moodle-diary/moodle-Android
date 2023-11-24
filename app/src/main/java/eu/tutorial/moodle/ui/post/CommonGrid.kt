@@ -91,7 +91,7 @@ fun CommonGrid(
 
                     IconButton(
                         onClick = {
-                            if (item.typeDes != "plus")
+                            if (item.typeDes != "추가하기")
                                 onItemClick(index)
                             else
                                 visibleChange(true)
@@ -107,7 +107,6 @@ fun CommonGrid(
                             )
                         }
                     }
-                    
                     Text(
                         text = item.typeDes,
                         fontSize = 12.sp,
@@ -149,7 +148,7 @@ fun CauseGrid(
     } + listOf(
         TypeDto(
             iconId = "none",
-            typeDes = "plus"
+            typeDes = "추가하기"
         )
     )
 
@@ -203,7 +202,7 @@ fun PlaceGrid(
     } + listOf(
         TypeDto(
             iconId = "none",
-            typeDes = "plus"
+            typeDes = "추가하기"
         )
     )
 
