@@ -9,34 +9,16 @@ val emotionList = listOf<TypeDto>(
     ),
 
     TypeDto(
-        iconId = "슬픔",
-        typeDes = "슬픔"
-    ),
-    TypeDto(
-        iconId = "후회",
-        typeDes = "후회"
-    ),
-    TypeDto(
-        iconId = "역겨움",
-        typeDes = "역겨움"
-    ),
-
-
-    TypeDto(
-        iconId = "미움",
-        typeDes = "미움"
-    ),
-    TypeDto(
         iconId = "원망",
         typeDes = "원망"
     ),
     TypeDto(
-        iconId = "후회",
-        typeDes = "후회"
+        iconId = "두려움",
+        typeDes = "두려움"
     ),
     TypeDto(
-        iconId = "자책",
-        typeDes = "자책"
+        iconId = "불안",
+        typeDes = "불안"
     ),
 
 
@@ -45,33 +27,51 @@ val emotionList = listOf<TypeDto>(
         typeDes = "질투"
     ),
     TypeDto(
-        iconId = "억울",
-        typeDes = "억울"
+        iconId = "스트레스",
+        typeDes = "스트레스"
     ),
     TypeDto(
-        iconId = "비참",
-        typeDes = "비참"
+        iconId = "걱정",
+        typeDes = "걱정"
     ),
     TypeDto(
-        iconId = "지침",
-        typeDes = "지침"
+        iconId = "부담",
+        typeDes = "부담"
+    ),
+
+
+    TypeDto(
+        iconId = "회의적",
+        typeDes = "회의적"
+    ),
+    TypeDto(
+        iconId = "자신없는",
+        typeDes = "자신없는"
+    ),
+    TypeDto(
+        iconId = "외로움",
+        typeDes = "외로움"
+    ),
+    TypeDto(
+        iconId = "슬픔",
+        typeDes = "슬픔"
     ),
 
     TypeDto(
-        iconId = "무안",
-        typeDes = "무안"
+        iconId = "우울",
+        typeDes = "우울"
     ),
     TypeDto(
-        iconId = "민망",
-        typeDes = "민망"
+        iconId = "실망",
+        typeDes = "실망"
     ),
     TypeDto(
-        iconId = "허망",
-        typeDes = "허망"
+        iconId = "그리움",
+        typeDes = "그리움"
     ),
     TypeDto(
-        iconId = "아쉬움",
-        typeDes = "아쉬움"
+        iconId = "지친",
+        typeDes = "지친"
     ),
 
     TypeDto(

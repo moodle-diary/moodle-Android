@@ -90,13 +90,13 @@ fun BottomSheet(
         ) {
             Column(
                 modifier = Modifier
-                    .padding(16.dp, 0.dp)
+                    .padding(16.dp, 10.dp)
                     .verticalScroll(scrollState),
             ) {
                 Spacer(modifier = Modifier.size(12.dp))
 
                 Text(
-                    text = "원인 아이콘",
+                    text = "원인",
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_bold)),
                     color = contentBlack
@@ -110,7 +110,7 @@ fun BottomSheet(
                 Spacer(modifier = Modifier.size(46.dp))
 
                 Text(
-                    text = "장소 아이콘",
+                    text = "장소",
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_bold)),
                     color = contentBlack
@@ -126,7 +126,7 @@ fun BottomSheet(
                 )
 
                 Text(
-                    text = "생각",
+                    text = "나의 생각",
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.poppins_bold)),
                     color = contentBlack

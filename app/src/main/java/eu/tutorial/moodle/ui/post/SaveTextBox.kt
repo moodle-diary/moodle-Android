@@ -38,7 +38,7 @@ fun SaveTextBox(
     val focusRequester by remember { mutableStateOf(FocusRequester()) }
     val focusManager = LocalFocusManager.current
 
-    var currentIndex by remember { mutableStateOf(0) }
+    var currentIndex by remember { mutableStateOf(-1) }
 
     Column(
         modifier = Modifier
@@ -61,9 +61,11 @@ fun SaveTextBox(
                     )
                 )
             },
-        ) {
-            currentIndex = 0
-        }
+            visibleChange = {
+                // 현재 버튼을 클릭하면 해당 버튼의 가시성을 켜고 다른 버튼들의 가시성을 끕니다.
+                currentIndex = if (currentIndex == 0) -1 else 0
+            }
+        )
         //1
         PostItemBox(
             textValue = textValue.act,
@@ -79,9 +81,11 @@ fun SaveTextBox(
                     )
                 )
             },
-        ) {
-            currentIndex = 1
-        }
+            visibleChange = {
+                // 현재 버튼을 클릭하면 해당 버튼의 가시성을 켜고 다른 버튼들의 가시성을 끕니다.
+                currentIndex = if (currentIndex == 1) -1 else 1
+            }
+        )
         PostItemBox(
             textValue = textValue.thought,
             currentIndex = currentIndex,
@@ -96,10 +100,11 @@ fun SaveTextBox(
                     )
                 )
             },
-
-            ) {
-            currentIndex = 2
-        }
+            visibleChange = {
+                // 현재 버튼을 클릭하면 해당 버튼의 가시성을 켜고 다른 버튼들의 가시성을 끕니다.
+                currentIndex = if (currentIndex == 2) -1 else 2
+            }
+        )
         PostItemBox(
             textValue = textValue.feeling,
             currentIndex = currentIndex,
@@ -113,10 +118,12 @@ fun SaveTextBox(
                         feeling = it
                     )
                 )
+            },
+            visibleChange = {
+                // 현재 버튼을 클릭하면 해당 버튼의 가시성을 켜고 다른 버튼들의 가시성을 끕니다.
+                currentIndex = if (currentIndex == 3) -1 else 3
             }
-        ) {
-            currentIndex = 3
-        }
+        )
     }
 
 }

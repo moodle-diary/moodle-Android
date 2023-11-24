@@ -55,7 +55,7 @@ fun PostGrid(
             color = contentBlack
         )
         Text(
-            modifier = Modifier.padding(top = 8.dp),
+            modifier = Modifier.padding(top = 8.dp, bottom = 16.dp),
             text = "당시 어떤 상황이었나요?",
             fontSize = 14.sp,
             fontFamily = FontFamily(Font(R.font.poppins_regular)),

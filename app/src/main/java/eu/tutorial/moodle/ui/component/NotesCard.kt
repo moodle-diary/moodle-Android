@@ -34,14 +34,15 @@ fun NotesComponent(
                 .padding(0.dp, 4.dp)
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(18.dp))
-                .background(containerGray),
+                .background(containerGray)
+                .padding(0.dp, 4.dp),
         ) {
             text.split("\\\\\\\\\\").mapIndexed() { index, element ->
                 Text(
-                    text = stringResource(id = questionList[index]),
+                    text = "●  ${stringResource(id = questionList[index])}",
                     fontSize = 12.sp,
                     modifier = Modifier
-                        .padding(start = 18.dp, top = 16.dp),
+                        .padding(start = 18.dp, top = 12.dp, bottom = 8.dp),
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
                     fontWeight = FontWeight(700),
                     color = Color(0xFFFF8923)
@@ -49,7 +50,7 @@ fun NotesComponent(
                 Text(
                     text = element,
                     modifier = Modifier
-                        .padding(start = 18.dp, end = 18.dp),
+                        .padding(start = 18.dp, end = 18.dp, bottom = 12.dp),
                     style = TextStyle(
                         fontFamily = FontFamily(Font(R.font.poppins_regular)),
                         fontSize = 16.sp

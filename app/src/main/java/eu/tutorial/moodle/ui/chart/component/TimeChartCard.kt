@@ -27,36 +27,51 @@ import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.TimeItem
 import eu.tutorial.moodle.ui.theme.containerGray
+import eu.tutorial.moodle.ui.theme.mainOrange
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TimeChartCard(
     timeList: List<TimeItem> = emptyList()
 ) {
-    Box(
+    Column(
         modifier = Modifier
             .padding(12.dp, 8.dp)
-            .clip(RoundedCornerShape(18.dp))
             .fillMaxWidth()
-            .background(containerGray)
-            .padding(top = 16.dp, bottom = 12.dp)
-            .height(155.dp)
+            .padding(top = 12.dp)
     ) {
-        Row(
-            modifier = Modifier.align(Alignment.BottomCenter)
+        Text(
+            text = " •  우울한 시간대",
+            fontSize = 16.sp,
+            color = mainOrange,
+            fontFamily = FontFamily(Font(R.font.poppins_bold)),
+            modifier = Modifier
+                .padding(bottom = 10.dp)
+        )
+        Box(
+            modifier = Modifier
+                .clip(RoundedCornerShape(18.dp))
+                .fillMaxWidth()
+                .background(containerGray)
+                .padding(top = 16.dp, bottom = 12.dp)
+                .height(155.dp)
         ) {
-            timeList.map {
-                it.cnt
+            Row(
+                modifier = Modifier.align(Alignment.BottomCenter)
+            ) {
+                timeList.map {
+                    it.cnt
+                }
             }
-        }
-        Row(
-            modifier = Modifier.align(Alignment.BottomCenter),
-        ) {
-            timeList.map {
-                EvalTimeBar(
-                    chartSize = it.cnt * 5,
-                    time = it.hour
-                )
+            Row(
+                modifier = Modifier.align(Alignment.BottomCenter),
+            ) {
+                timeList.map {
+                    EvalTimeBar(
+                        chartSize = it.cnt * 5,
+                        time = it.hour
+                    )
+                }
             }
         }
     }
@@ -84,7 +99,9 @@ fun EvalTimeBar(
             if (time % 2 == 0) {
                 Text(
                     text = time.toString(),
-                    modifier = Modifier.height(20.dp),
+                    modifier = Modifier
+                        .height(20.dp)
+                        .padding(1.dp), // padding 줌
                     fontSize = 12.sp,
                     color = Color(0xFF828282),
                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
