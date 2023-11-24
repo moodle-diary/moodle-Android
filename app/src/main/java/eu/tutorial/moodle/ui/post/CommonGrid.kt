@@ -5,7 +5,6 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -34,7 +33,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.zIndex
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.TypeDto
 import eu.tutorial.moodle.data.local.allEmojis
@@ -101,7 +99,6 @@ fun CommonGrid(
                             .clip(RoundedCornerShape(20.dp))
                             .background(backgroundColor)
                     ) {
-<<<<<<< Updated upstream
                         allEmojis[item.iconId]?.let { painterResource(it) }?.let {
                             Image(
                                 painter = it,
@@ -109,30 +106,7 @@ fun CommonGrid(
                             )
                         }
                     }
-=======
-                        allEmojiMap[item.iconId]?.let { painterResource(it) }?.let {
-                            Box(
-                                contentAlignment = Alignment.Center,
-                                modifier = Modifier.fillMaxSize()
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(50.dp)
-                                        .background(containerGray.copy(alpha = .5f))
-                                )
 
-                                val clickedZIndex = if (isClicked) -1f else 1f
-
-                                Image(
-                                    painter = it,
-                                    contentDescription = null,
-                                    modifier = Modifier.zIndex(clickedZIndex)
-                                )
-                            }
-                        }
-                    }
-
->>>>>>> Stashed changes
                     Text(
                         text = item.typeDes,
                         fontSize = 12.sp,
