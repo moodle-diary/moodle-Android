@@ -12,9 +12,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import eu.tutorial.moodle.R
-import eu.tutorial.moodle.data.local.wiseSentence
+import eu.tutorial.moodle.data.local.wiseSentencesList
 import eu.tutorial.moodle.ui.theme.contentGray
 import eu.tutorial.moodle.ui.theme.mainOrange
 
@@ -23,12 +22,14 @@ fun SentenceComponent(
     modifier: Modifier,
 ) {
     val random = java.util.Random()
+    val randomIndex = random.nextInt(wiseSentencesList.size)
+    val randomSentence = wiseSentencesList[randomIndex]
 
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
         Text(
-            text = wiseSentence[random.nextInt(wiseSentence.size)],
+            text = "\"${randomSentence.sentence}\"",
             style = TextStyle(
                 fontSize = 14.sp,
                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
@@ -38,7 +39,7 @@ fun SentenceComponent(
             )
         )
         Text(
-            text = "마르셀 프루스트",
+            text = "${randomSentence.writer}",
             modifier = Modifier.padding(top = 4.dp),
             style = TextStyle(
                 fontSize = 12.sp,
