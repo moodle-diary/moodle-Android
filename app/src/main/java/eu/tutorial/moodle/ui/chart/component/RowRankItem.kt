@@ -23,8 +23,12 @@ import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.DescriptionDto
 import eu.tutorial.moodle.data.TypeDto
 import eu.tutorial.moodle.data.local.allEmojis
+import eu.tutorial.moodle.data.local.causeEmojiList
 import eu.tutorial.moodle.data.local.emotionList
+import eu.tutorial.moodle.data.local.placeEmojiList
 import eu.tutorial.moodle.ui.theme.contentBlack
+import eu.tutorial.moodle.ui.theme.contentGray
+import kotlin.math.min
 
 @Composable
 fun RowRankItem(
@@ -36,9 +40,13 @@ fun RowRankItem(
             .padding(start = 24.dp, end = 24.dp)
             .fillMaxWidth()
             .height(104.dp),
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        repeat(listState.size) { it ->
+        val maxItemsToShow = 3
+        var rank = 1
+        repeat(min(listState.size, maxItemsToShow)) { it ->
+
             val des = listState[it].description
             val type = typeState.find { it.typeDes == des }
             Spacer(modifier = Modifier.width(16.dp))
@@ -46,8 +54,10 @@ fun RowRankItem(
                 RankItem(
                     description = des,
                     cnt = listState[it].cnt,
-                    iconId = type.iconId
+                    iconId = type.iconId,
+                    rank = rank
                 )
+                rank += 1
             }
             Spacer(modifier = Modifier.width(16.dp))
         }
@@ -58,8 +68,10 @@ fun RowRankItem(
 fun RankItem(
     description: String,
     cnt: Int,
-    iconId: String
+    iconId: String,
+    rank: Int
 ) {
+    val allEmojiMap = allEmojis + causeEmojiList + placeEmojiList
     Column(
         modifier = Modifier
             .width(60.dp)
@@ -67,7 +79,7 @@ fun RankItem(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        allEmojis[iconId]?.let { painterResource(id = it) }?.let {
+        allEmojiMap[iconId]?.let { painterResource(id = it) }?.let {
             Image(
                 painter = it,
                 contentDescription = "icon",
@@ -84,10 +96,10 @@ fun RankItem(
             fontFamily = FontFamily(Font(R.font.poppins_regular))
         )
         Text(
-            text = cnt.toString() + "번",
+            text = "${rank}위", // cnt.toString() + "번",
             fontSize = 12.sp,
-            color = contentBlack,
-            fontFamily = FontFamily(Font(R.font.poppins_regular))
+            color = contentGray,
+            fontFamily = FontFamily(Font(R.font.poppins_bold))
         )
     }
 }

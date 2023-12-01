@@ -2,15 +2,15 @@ package eu.tutorial.moodle.ui.component
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +29,7 @@ import eu.tutorial.moodle.data.local.allEmojis
 import eu.tutorial.moodle.data.local.emotionList
 import eu.tutorial.moodle.ui.theme.containerGray
 import eu.tutorial.moodle.ui.theme.contentGray
+import kotlin.math.min
 
 @Composable
 fun IconsComponent(
@@ -37,9 +38,6 @@ fun IconsComponent(
 ) {
     val emojis: List<String> = iconList.map { it.iconDescription }
 
-    if (iconList.isNotEmpty()) {
-        Log.d("list", iconList.toString())
-    }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -61,24 +59,40 @@ fun DetailCard(
 ) {
     Box(
         modifier = Modifier
-            .height(214.dp)
             .fillMaxWidth()
             .background(containerGray, shape = RoundedCornerShape(size = 18.dp))
             .padding(26.dp, 12.dp),
         contentAlignment = Alignment.Center,
     ) {
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(4),
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
-        ) {
-            items(emojis) { item ->
-                val type = typeList.find { it.typeDes == item }?.iconId
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
 
-                allEmojis[type]?.let {
-                    AlignYourBodyElement(
-                        drawable = it,
-                    )
+            ) {
+            val rows = (emojis.size) / 4 + 1
+
+            repeat(rows) { rowIndex ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .horizontalScroll(rememberScrollState()),
+                    horizontalArrangement = Arrangement.Center,
+                ) {
+                    val startIndex = rowIndex * 4
+                    val endIndex = min(startIndex + 4, emojis.size)
+
+                    for (i in startIndex until endIndex) {
+                        val emoji = emojis[i]
+                        val type = typeList.find { it.typeDes == emoji }?.iconId
+
+                        allEmojis[type]?.let {
+                            AlignYourBodyElement(
+                                drawable = it,
+                                text = emoji
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -86,9 +100,11 @@ fun DetailCard(
 }
 
 @Composable
-fun EmptyCard() {
+fun EmptyCard(
+    modifier: Modifier = Modifier
+) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .height(78.dp)
             .fillMaxWidth()
             .clip(RoundedCornerShape(18.dp))
@@ -97,7 +113,7 @@ fun EmptyCard() {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "오늘 기록한 아이콘이 없어요",
+            text = "기록한 아이콘이 없어요",
             style = TextStyle(
                 fontSize = 12.sp,
                 fontFamily = FontFamily(Font(R.font.poppins_regular)),

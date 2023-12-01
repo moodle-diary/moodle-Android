@@ -53,7 +53,7 @@ fun BottomNavBar(
             } == true,
             text = "Calendar",
             route = CalendarDestination.route,
-            selectedIcon = painterResource(id = R.drawable.nav_cal),
+            selectedIcon = painterResource(id = R.drawable.nav_cal_fill),
             unselectedIcon = painterResource(id = R.drawable.nav_cal),
         ),
         NavigationItemContent(
@@ -83,7 +83,7 @@ fun BottomNavBar(
             } == true,
             text = "Setting",
             route = SettingDestination.route,
-            selectedIcon = painterResource(id = R.drawable.nav_set),
+            selectedIcon = painterResource(id = R.drawable.nav_set_fill),
             unselectedIcon = painterResource(id = R.drawable.nav_set),
         )
     )

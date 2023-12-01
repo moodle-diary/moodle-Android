@@ -43,6 +43,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tutorial.moodle.R
@@ -138,7 +139,7 @@ fun PostItemBox(
             cursorBrush = SolidColor(contentCharcoal),
             modifier = Modifier
                 .height(160.dp)
-                .padding(16.dp)
+                .padding(20.dp, 3.dp)
                 .background(containerGray)
                 .focusRequester(focusRequester = focusRequester)
                 .onFocusChanged {
@@ -148,10 +149,10 @@ fun PostItemBox(
                 if (textValue.isEmpty()) {
                     Text(
                         text = "이 곳에 답변을 적어주세요.",
-                        fontSize = 12.sp,
+                        fontSize = 14.sp,
                         fontFamily = FontFamily(Font(R.font.poppins_regular)),
                         color = contentGray,
-                        modifier = Modifier.padding(start = 16.dp)
+                        textAlign = TextAlign.Center
                     )
                 }
                 innerTextField()

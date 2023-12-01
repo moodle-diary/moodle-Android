@@ -9,11 +9,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.RateDays
 import eu.tutorial.moodle.data.local.rateCategory
 import eu.tutorial.moodle.ui.theme.containerGray
@@ -25,39 +30,52 @@ import eu.tutorial.moodle.ui.theme.nothingGray
 fun RateComponent(
     rateDays: List<RateDays>
 ) {
+
     Column(
         modifier = Modifier
             .padding(12.dp, 8.dp)
-            .height(350.dp)
             .fillMaxWidth()
-            .clip(RoundedCornerShape(18.dp))
-            .background(containerGray)
-            .padding(top = 16.dp, bottom = 12.dp),
-        verticalArrangement = Arrangement.Center
+            .padding(top = 24.dp, bottom = 10.dp)
     ) {
-        LazyVerticalGrid(
+        Text(
+            text = " •  비중",
+            fontSize = 16.sp,
+            color = mainOrange,
+            fontFamily = FontFamily(Font(R.font.poppins_bold))
+        )
+        Column(
             modifier = Modifier
+                .padding(12.dp, 8.dp)
+                .height(350.dp)
                 .fillMaxWidth()
-                .padding(start = 18.dp, end = 18.dp),
-            columns = GridCells.Fixed(7),
+                .clip(RoundedCornerShape(18.dp))
+                .background(containerGray)
+                .padding(top = 16.dp, bottom = 12.dp),
+            verticalArrangement = Arrangement.Center
         ) {
-            rateDays.map { rate ->
-                items(rate.days) {
-                    RateBoxItem(
-                        boxColor = rate.color
-                    )
+            LazyVerticalGrid(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 18.dp, end = 18.dp),
+                columns = GridCells.Fixed(7),
+            ) {
+                rateDays.map { rate ->
+                    items(rate.days) {
+                        RateBoxItem(
+                            boxColor = rate.color
+                        )
+                    }
                 }
             }
-        }
 
-        rateCategory.map {
-            RateCategoryItem(
-                it.textValue,
-                it.boxColor
-            )
+            rateCategory.map {
+                RateCategoryItem(
+                    it.textValue,
+                    it.boxColor
+                )
+            }
         }
     }
-
 }
 
 

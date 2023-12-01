@@ -11,10 +11,13 @@ import eu.tutorial.moodle.data.IconDto
 import eu.tutorial.moodle.data.PlaceTypeDto
 
 class HomeViewModel(private val diaryRepository: DiaryRepository) : ViewModel() {
+
     var diaryUiState by mutableStateOf(emptyList<DiaryDto>())
         private set
+
     var emotionUiState by mutableStateOf(emptyList<IconDto>())
         private set
+    
     var causeUiState by mutableStateOf(emptyList<IconDto>())
         private set
 

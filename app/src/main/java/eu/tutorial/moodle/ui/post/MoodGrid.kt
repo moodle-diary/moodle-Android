@@ -3,8 +3,10 @@ package eu.tutorial.moodle.ui.post
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -13,17 +15,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,13 +33,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import eu.tutorial.moodle.R
+import eu.tutorial.moodle.data.local.allEmojis
 import eu.tutorial.moodle.data.local.emotionData
 import eu.tutorial.moodle.ui.post.component.GoodDialog
 import eu.tutorial.moodle.ui.theme.backgroundGray
@@ -90,33 +91,49 @@ fun MoodGrid(
                 ) {
                     val isClicked = buttonStates[index / 4][index % 4]
                     val backgroundColor = if (isClicked) {
-                        Color(0XFF414141) //클릭된 경우
+                        Color.Transparent //클릭된 경우
                     } else {
-                        Color(0XFFC5C1C1) //클릭되지 않은 경우
+                        Color.Transparent //클릭되지 않은 경우
                     }
 
                     IconButton(
                         onClick = {
-                            // 클릭된 버튼의 상태를 토글합니다.
                             buttonStates[index / 4][index % 4] = !isClicked
                         },
                         modifier = Modifier
-                            .size(50.dp)
-                            .clip(CircleShape)
+                            .size(55.dp)
                             .background(backgroundColor) // 배경색 설정
+                            .clip(RoundedCornerShape(if (isClicked) 25.dp else 0.dp))
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.AddCircle,
-                            contentDescription = "circle"
-                        )
+                        allEmojis[item]?.let { painterResource(it) }?.let {
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier.fillMaxSize()
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(55.dp)
+                                        .background(containerGray.copy(alpha = .5f))
+                                )
+
+                                val clickedZIndex = if (isClicked) -1f else 1f
+
+                                Image(
+                                    painter = it,
+                                    contentDescription = null,
+                                    modifier = Modifier.zIndex(clickedZIndex)
+                                )
+                            }
+                        }
                     }
+
                     Text(
                         text = item,
                         fontSize = 12.sp,
                         fontFamily = FontFamily(Font(R.font.poppins_regular)),
                         textAlign = TextAlign.Center,
                         modifier = Modifier
-                            .width(40.dp)
+                            .fillMaxWidth()
                             .padding(top = 4.dp, bottom = 8.dp),
                         color = contentBlack
                     )

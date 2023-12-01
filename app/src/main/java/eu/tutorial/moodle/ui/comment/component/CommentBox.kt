@@ -70,7 +70,7 @@ fun CommentBox(
             ) {
                 Text(
                     text = selectedDate,
-                    fontSize = 14.sp,
+                    fontSize = 12.sp,
                     fontFamily = poppins,
                     fontWeight = FontWeight.Medium,
                     color = mainOrange

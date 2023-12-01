@@ -61,8 +61,8 @@ fun PostScreen(
     navController: NavController,
     viewModel: PostViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    var selectedHour = viewModel.diaryUiState.diaryDetails.hour
-    var selectedMinute = viewModel.diaryUiState.diaryDetails.minute
+    val selectedHour = viewModel.diaryUiState.diaryDetails.hour
+    val selectedMinute = viewModel.diaryUiState.diaryDetails.minute
     var showDialog by remember { mutableStateOf(false) }
 
     val timePickerState = rememberTimePickerState(
@@ -97,8 +97,6 @@ fun PostScreen(
     val placeButtonStates = remember {
         mutableStateListOf<Boolean>()
     }
-
-    val brush = Brush.horizontalGradient(listOf(mainOrange, subYellow))
 
     Column(
         modifier = Modifier
@@ -220,21 +218,12 @@ fun PostScreen(
                             .padding(bottom = 3.dp)
                             .clickable { showDialog = true }
                     )
-                    if (selectedHour == 0) {
-                        Text(
-                            text = "시간 입력",
-                            fontSize = 11.sp,
-                            fontFamily = poppins,
-                            color = contentBlack.copy(alpha = 0.6f)
-                        )
-                    } else {
-                        Text(
-                            text = "$selectedHour : $selectedMinute",
-                            fontSize = 11.sp,
-                            fontFamily = poppins,
-                            color = contentBlack.copy(alpha = 0.6f)
-                        )
-                    }
+                    Text(
+                        text = "$selectedHour : $selectedMinute",
+                        fontSize = 11.sp,
+                        fontFamily = poppins,
+                        color = contentBlack.copy(alpha = 0.6f)
+                    )
                 }
                 Button(
                     onClick = {

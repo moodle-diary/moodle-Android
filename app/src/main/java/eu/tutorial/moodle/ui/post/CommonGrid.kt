@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -33,10 +34,13 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.TypeDto
 import eu.tutorial.moodle.data.local.allEmojis
-import eu.tutorial.moodle.ui.post.component.SaveTypeDialog
+import eu.tutorial.moodle.data.local.causeEmojiList
+import eu.tutorial.moodle.data.local.placeEmojiList
+import eu.tutorial.moodle.ui.post.component.EmojiTypeDialog
 import eu.tutorial.moodle.ui.theme.containerGray
 import eu.tutorial.moodle.ui.theme.contentBlack
 import eu.tutorial.moodle.ui.theme.unselectedIndicator
@@ -47,20 +51,20 @@ import kotlinx.coroutines.withContext
 @Composable
 fun CommonGrid(
     title: String,
-    subtitle: String,
+    categoryList: Map<String, Int>,
     data: List<TypeDto>,
     buttonStates: List<Boolean>,
     onItemClick: (Int) -> Unit,
-    save: (String) -> Unit,
+    save: (String, String) -> Unit,
     dialogVisible: Boolean,
-    onChange: (Boolean) -> Unit,
+    visibleChange: (Boolean) -> Unit,
 ) {
+    val allEmojiMap = allEmojis + causeEmojiList + placeEmojiList
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(containerGray)
-            .clip(RoundedCornerShape(18.dp)),
+            .background(containerGray),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -89,22 +93,36 @@ fun CommonGrid(
 
                     IconButton(
                         onClick = {
-                            if (item.typeDes != "plus")
+                            if (item.typeDes != "추가하기")
                                 onItemClick(index)
                             else
-                                onChange(true)
+                                visibleChange(true)
                         },
                         modifier = Modifier
-                            .size(60.dp)
-                            .clip(RoundedCornerShape(20.dp))
-                            .background(backgroundColor)
+                            .size(50.dp)
+                            .clip(shape = RoundedCornerShape(0.dp))
                     ) {
-                        allEmojis[item.iconId]?.let { painterResource(it) }?.let {
-                            Image(
-                                painter = it,
-                                contentDescription = null,
-                            )
+                        allEmojiMap[item.iconId]?.let { painterResource(it) }?.let {
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier.fillMaxSize()
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(50.dp)
+                                        .background(containerGray.copy(alpha = .5f))
+                                )
+
+                                val clickedZIndex = if (isClicked) -1f else 1f
+
+                                Image(
+                                    painter = it,
+                                    contentDescription = null,
+                                    modifier = Modifier.zIndex(clickedZIndex)
+                                )
+                            }
                         }
+
                     }
                     Text(
                         text = item.typeDes,
@@ -120,11 +138,12 @@ fun CommonGrid(
             }
         }
 
-        SaveTypeDialog(
+        EmojiTypeDialog(
             save = save,
-            dialogVisible = dialogVisible
+            dialogVisible = dialogVisible,
+            categoryList = categoryList,
         ) {
-            onChange(it)
+            visibleChange(it)
         }
 
     }
@@ -146,7 +165,7 @@ fun CauseGrid(
     } + listOf(
         TypeDto(
             iconId = "none",
-            typeDes = "plus"
+            typeDes = "추가하기"
         )
     )
 
@@ -165,16 +184,16 @@ fun CauseGrid(
 
     CommonGrid(
         title = "무엇이 그런 감정을 느끼게 했나요?",
-        subtitle = "오늘 무엇이 나를 우울 하게 했나요?",
+        categoryList = causeEmojiList,
         data = data,
         buttonStates = causeButtonStates,
         onItemClick = { index ->
             // Handle item click here
             causeButtonStates[index] = !causeButtonStates[index]
         },
-        save = {
+        save = { text, iconId ->
             coroutineScope.launch {
-                viewModel.saveCauseType(it)
+                viewModel.saveCauseType(text, iconId)
             }
         },
         dialogVisible = dialogVisible,
@@ -200,7 +219,7 @@ fun PlaceGrid(
     } + listOf(
         TypeDto(
             iconId = "none",
-            typeDes = "plus"
+            typeDes = "추가하기"
         )
     )
 
@@ -219,16 +238,16 @@ fun PlaceGrid(
 
     CommonGrid(
         title = "어디서 그런 감정을 느꼈나요?",
-        subtitle = "어느 곳에서 우울 했나요?",
+        categoryList = placeEmojiList,
         data = data,
         buttonStates = placeButtonStates,
         onItemClick = { index ->
             // Handle item click here
             placeButtonStates[index] = !placeButtonStates[index]
         },
-        save = {
+        save = { text, iconId ->
             coroutineScope.launch {
-                viewModel.savePlaceType(it)
+                viewModel.savePlaceType(text, iconId)
             }
         },
         dialogVisible = dialogVisible

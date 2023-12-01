@@ -1,5 +1,6 @@
 package eu.tutorial.moodle.ui.comment
 
+import CommentButton
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
@@ -20,7 +21,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tutorial.moodle.ui.AppViewModelProvider
 import eu.tutorial.moodle.ui.comment.component.CommentAddBox
 import eu.tutorial.moodle.ui.comment.component.CommentBox
-import eu.tutorial.moodle.ui.comment.component.CommentButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

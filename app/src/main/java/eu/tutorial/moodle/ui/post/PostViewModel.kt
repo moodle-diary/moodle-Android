@@ -4,10 +4,8 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.Cause
 import eu.tutorial.moodle.data.CauseType
 import eu.tutorial.moodle.data.CauseTypeDto
@@ -18,13 +16,16 @@ import eu.tutorial.moodle.data.Place
 import eu.tutorial.moodle.data.PlaceType
 import eu.tutorial.moodle.data.PlaceTypeDto
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 @RequiresApi(Build.VERSION_CODES.O)
 class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() {
     var diaryUiState by mutableStateOf(
         DiaryUiState(
             diaryDetails = DiaryDetails(
-                currentDate = LocalDate.now().toString()
+                currentDate = LocalDate.now().toString(),
+                hour = LocalDateTime.now().hour,
+                minute = LocalDateTime.now().minute
             )
         )
     )
@@ -85,17 +86,21 @@ class PostViewModel(private val diaryRepository: DiaryRepository) : ViewModel() 
     }
 
     // TODO: cause iconId 추가
-    suspend fun saveCauseType(causeType: String) {
+    suspend fun saveCauseType(causeType: String, iconId: String) {
         diaryRepository.insertCauseType(
             CauseType(
-                causeType = causeType
+                causeType = causeType,
+                iconId = iconId
             )
         )
     }
 
-    suspend fun savePlaceType(placeType: String) {
+    suspend fun savePlaceType(placeType: String, iconId: String) {
         diaryRepository.insertPlaceType(
-            PlaceType(placeType = placeType)
+            PlaceType(
+                placeType = placeType,
+                iconId = iconId
+            )
         )
     }
 }
@@ -135,3 +140,4 @@ fun Diary.toDiaryDetails(): DiaryDetails = DiaryDetails(
     diaryText = diaryText,
     hour = hour
 )
+
