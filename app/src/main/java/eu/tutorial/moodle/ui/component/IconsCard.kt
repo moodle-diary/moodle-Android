@@ -26,7 +26,9 @@ import eu.tutorial.moodle.R
 import eu.tutorial.moodle.data.IconDto
 import eu.tutorial.moodle.data.TypeDto
 import eu.tutorial.moodle.data.local.allEmojis
+import eu.tutorial.moodle.data.local.causeEmojiList
 import eu.tutorial.moodle.data.local.emotionList
+import eu.tutorial.moodle.data.local.placeEmojiList
 import eu.tutorial.moodle.ui.theme.containerGray
 import eu.tutorial.moodle.ui.theme.contentGray
 import kotlin.math.min
@@ -57,6 +59,7 @@ fun DetailCard(
     emojis: List<String>,
     typeList: List<TypeDto> = emotionList
 ) {
+    val emojiArchive = allEmojis + causeEmojiList + placeEmojiList
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -68,10 +71,8 @@ fun DetailCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp),
-
-            ) {
+        ) {
             val rows = (emojis.size) / 4 + 1
-
             repeat(rows) { rowIndex ->
                 Row(
                     modifier = Modifier
@@ -85,8 +86,7 @@ fun DetailCard(
                     for (i in startIndex until endIndex) {
                         val emoji = emojis[i]
                         val type = typeList.find { it.typeDes == emoji }?.iconId
-
-                        allEmojis[type]?.let {
+                        emojiArchive[type]?.let {
                             AlignYourBodyElement(
                                 drawable = it,
                                 text = emoji

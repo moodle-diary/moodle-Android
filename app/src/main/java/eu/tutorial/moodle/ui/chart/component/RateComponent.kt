@@ -1,5 +1,6 @@
 package eu.tutorial.moodle.ui.chart.component
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,7 +31,6 @@ import eu.tutorial.moodle.ui.theme.nothingGray
 fun RateComponent(
     rateDays: List<RateDays>
 ) {
-
     Column(
         modifier = Modifier
             .padding(12.dp, 8.dp)
